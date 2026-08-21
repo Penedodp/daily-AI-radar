@@ -1,3 +1,5 @@
+import math
+
 def estimated_cost(row, input_tokens, output_tokens):
     return (
         (input_tokens / 1_000_000) * row["input_usd_per_million"]
@@ -12,10 +14,7 @@ def costs_by_task(row, task_profiles):
 
 def weighted_daily_cost(row, task_profiles):
     costs = costs_by_task(row, task_profiles)
-    return sum(
-        costs[key] * task_profiles[key].get("weight", 0)
-        for key in task_profiles
-    )
+    return sum(costs[k] * task_profiles[k].get("weight", 0) for k in task_profiles)
 
 def price_change(current, previous):
     if previous is None or previous <= 0:
@@ -23,13 +22,16 @@ def price_change(current, previous):
     return ((current - previous) / previous) * 100.0
 
 def value_score(quality_score, task_cost, anchor_usd=0.05):
-    """
-    0..100 aprox.
-    - gratis: quality * 10
-    - cuanto más sube el coste por tarea, más baja el valor
-    """
     if quality_score is None:
         return None
+    if task_cost <= 0:
+        return round(float(quality_score) * 10.0, 1)
     anchor = max(float(anchor_usd), 1e-9)
-    affordability = 1.0 / (1.0 + (max(task_cost, 0.0) / anchor))
+    affordability = 1.0 / math.sqrt(1.0 + (task_cost / anchor))
     return round(float(quality_score) * 10.0 * affordability, 1)
+
+def is_free(row):
+    return (
+        row.get("input_usd_per_million", 0) == 0
+        and row.get("output_usd_per_million", 0) == 0
+    )

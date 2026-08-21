@@ -1,12 +1,12 @@
 import re
 
-def match_quality_profile(model_id, quality_config):
+def match_quality_profile(canonical_model, raw_model_id, quality_config):
+    haystack = f"{canonical_model} {raw_model_id}"
     for rule in quality_config.get("rules", []):
-        if re.search(rule["pattern"], model_id or "", flags=re.IGNORECASE):
+        if re.search(rule["pattern"], haystack, flags=re.IGNORECASE):
             return {
-                "label": rule.get("label", model_id),
+                "label": rule.get("label", canonical_model),
                 "confidence": rule.get("confidence", "desconocida"),
-                "source_note": rule.get("source_note", ""),
                 "scores": rule.get("scores", {}),
             }
     return None
