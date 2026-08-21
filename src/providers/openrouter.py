@@ -1,68 +1,42 @@
+import os
 import requests
+from .common import to_float, base_row
 
-MODELS_URL = "https://openrouter.ai/api/v1/models"
-
-def _to_float(value):
-    if value is None or value == "":
-        return None
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+URL = "https://openrouter.ai/api/v1/models"
 
 def fetch_models():
-    r = requests.get(MODELS_URL, timeout=30)
+    headers = {}
+    key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    if key:
+        headers["Authorization"] = f"Bearer {key}"
+
+    r = requests.get(URL, params={"output_modalities": "text"}, headers=headers, timeout=40)
     r.raise_for_status()
-    payload = r.json()
     rows = []
-
-    for m in payload.get("data", []):
-        pricing = m.get("pricing") or {}
-        prompt = _to_float(pricing.get("prompt"))
-        completion = _to_float(pricing.get("completion"))
-
-        # Para nuestro radar LLM necesitamos precio por token de entrada y salida.
-        if prompt is None or completion is None or prompt < 0 or completion < 0:
+    for m in r.json().get("data", []):
+        p = m.get("pricing") or {}
+        inp = to_float(p.get("prompt"))
+        out = to_float(p.get("completion"))
+        if inp is None or out is None or inp < 0 or out < 0:
             continue
-
         arch = m.get("architecture") or {}
-        input_modalities = (
-            m.get("input_modalities")
-            or arch.get("input_modalities")
-            or []
+        row = base_row(
+            source="openrouter",
+            provider="OpenRouter",
+            model_id=m.get("id"),
+            name=m.get("name") or m.get("id"),
+            context_length=m.get("context_length"),
+            input_price=inp * 1_000_000,
+            output_price=out * 1_000_000,
+            cache_read=(to_float(p.get("input_cache_read") or p.get("cache_read")) or 0) * 1_000_000 or None,
+            cache_write=(to_float(p.get("input_cache_write") or p.get("cache_write")) or 0) * 1_000_000 or None,
+            description=m.get("description") or "",
+            metadata={
+                "supported_parameters": m.get("supported_parameters") or [],
+                "canonical_slug": m.get("canonical_slug"),
+            },
         )
-        output_modalities = (
-            m.get("output_modalities")
-            or arch.get("output_modalities")
-            or []
-        )
-
-        cache_read = _to_float(
-            pricing.get("input_cache_read")
-            or pricing.get("cache_read")
-        )
-        cache_write = _to_float(
-            pricing.get("input_cache_write")
-            or pricing.get("cache_write")
-        )
-
-        rows.append({
-            "source": "openrouter",
-            "provider": "openrouter",
-            "model_id": m.get("id"),
-            "name": m.get("name") or m.get("id"),
-            "description": (m.get("description") or "")[:800],
-            "context_length": m.get("context_length"),
-            "input_modalities": input_modalities,
-            "output_modalities": output_modalities,
-            "supported_parameters": m.get("supported_parameters") or [],
-            "input_usd_per_million": prompt * 1_000_000,
-            "output_usd_per_million": completion * 1_000_000,
-            "cache_read_usd_per_million": (
-                cache_read * 1_000_000 if cache_read is not None else None
-            ),
-            "cache_write_usd_per_million": (
-                cache_write * 1_000_000 if cache_write is not None else None
-            ),
-        })
+        row["input_modalities"] = arch.get("input_modalities") or ["text"]
+        row["output_modalities"] = arch.get("output_modalities") or ["text"]
+        rows.append(row)
     return rows
