@@ -1,42 +1,28 @@
-# AI Price Radar
+# AI Price Radar v2
 
-Radar diario de precios de modelos de IA.
+Radar diario de precios de LLMs con GitHub Actions.
 
-## Qué hace la v1
+## V2
 
-- Lee el catálogo de OpenRouter.
-- Normaliza precios a USD por millón de tokens.
-- Calcula un coste estimado según perfiles de uso.
-- Guarda un snapshot diario en `data/`.
-- Compara con el snapshot anterior.
-- Genera `reports/latest.md`.
-- Usa `openrouter/free` opcionalmente para redactar el resumen diario.
-- Se ejecuta cada día con GitHub Actions.
+- Filtra modelos de moderación, embeddings, rerank, audio e imagen.
+- Calcula coste estimado por tipo de tarea.
+- Usa `quality_profiles.json` para scores auditables.
+- Ranking de calidad/precio para coding, agentic coding, reasoning y general.
+- Distingue mejores opciones gratis.
+- Detecta bajadas/subidas comparando con el snapshot anterior.
+- Mantiene el informe aunque falle la llamada al LLM gratuito.
+- `openrouter/free` sólo redacta el resumen; los números salen de Python.
 
-## Puesta en marcha
+## Archivos nuevos/importantes
 
-1. Crea un repositorio en GitHub y sube estos archivos.
-2. Crea una API key en OpenRouter.
-3. En GitHub: Settings → Secrets and variables → Actions → New repository secret.
-4. Crea `OPENROUTER_API_KEY`.
-5. Abre Actions → AI Price Radar → Run workflow.
-6. Comprueba `reports/latest.md`.
+- `quality_profiles.json`: heurísticas de calidad editables.
+- `src/filters.py`: filtros de modelos irrelevantes.
+- `src/quality.py`: asignación de perfiles.
+- `src/scoring.py`: coste y Value Score.
+- `src/main.py`: ranking e informe.
 
-## Próxima fase
+## Actualización sobre una instalación v1
 
-Añadir collectors directos para proveedores/enrutadores:
-- DeepSeek
-- Moonshot/Kimi
-- CheaperInference
-- SiliconFlow
-- Together
-- Fireworks
-- Novita
-
-Cada collector devolverá el mismo esquema normalizado para poder comparar precios sin cambiar el motor.
-
-## Nota
-
-La v1 usa únicamente datos de precio para el ranking automático. No atribuye "calidad"
-a un modelo sin una fuente explícita. En una fase posterior se puede añadir un fichero
-de benchmarks/ratings para calcular una puntuación calidad/precio.
+Conserva tus carpetas `data/` y `reports/`.
+Reemplaza los archivos de código/configuración con los de este paquete y ejecuta
+Actions → AI Price Radar → Run workflow.
