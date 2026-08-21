@@ -1,0 +1,249 @@
+{
+  "_meta": {
+    "scale": "0-10",
+    "method": "Heurística curada para ordenar calidad/precio. No son benchmarks oficiales.",
+    "warning": "Los scores deben revisarse con el tiempo. Un modelo sin regla no entra en recomendaciones de calidad/precio."
+  },
+  "rules": [
+    {
+      "pattern": "(?i)muse[-_/ ]?spark[-_/ ]?1\\.2",
+      "label": "Muse Spark 1.2",
+      "confidence": "alta",
+      "source_note": "Especializado en razonamiento, coding y tareas agentic.",
+      "scores": {
+        "coding": 9.7,
+        "agentic": 9.8,
+        "reasoning": 9.4,
+        "general": 9.0
+      }
+    },
+    {
+      "pattern": "(?i)glm[-_/ ]?5\\.2",
+      "label": "GLM 5.2",
+      "confidence": "alta",
+      "source_note": "Modelo de razonamiento orientado a coding, tool use y agentes largos.",
+      "scores": {
+        "coding": 9.5,
+        "agentic": 9.6,
+        "reasoning": 9.5,
+        "general": 9.2
+      }
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3[-_/ ]?ultra",
+      "label": "Nemotron 3 Ultra",
+      "confidence": "alta",
+      "source_note": "Modelo de razonamiento/orquestación con buen posicionamiento en programación.",
+      "scores": {
+        "coding": 9.3,
+        "agentic": 9.5,
+        "reasoning": 9.4,
+        "general": 8.8
+      }
+    },
+    {
+      "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash",
+      "label": "Ling 3.0 Flash",
+      "confidence": "media-alta",
+      "source_note": "Modelo eficiente con orientación agentic y buen posicionamiento en programación.",
+      "scores": {
+        "coding": 9.1,
+        "agentic": 9.1,
+        "reasoning": 8.8,
+        "general": 8.7
+      }
+    },
+    {
+      "pattern": "(?i)laguna.*(xs|s).*(2\\.1)",
+      "label": "Poolside Laguna 2.1",
+      "confidence": "media-alta",
+      "source_note": "Familia enfocada a software engineering y agentic coding.",
+      "scores": {
+        "coding": 8.9,
+        "agentic": 9.1,
+        "reasoning": 8.4,
+        "general": 8.0
+      }
+    },
+    {
+      "pattern": "(?i)qwen.*coder",
+      "label": "Qwen Coder",
+      "confidence": "media-alta",
+      "source_note": "Familia enfocada a generación de código, herramientas y repositorios.",
+      "scores": {
+        "coding": 9.3,
+        "agentic": 9.3,
+        "reasoning": 8.8,
+        "general": 8.3
+      }
+    },
+    {
+      "pattern": "(?i)qwen3\\.(7|6).*max",
+      "label": "Qwen Max",
+      "confidence": "media",
+      "source_note": "Familia frontier orientada a coding, agentes y razonamiento largo.",
+      "scores": {
+        "coding": 9.3,
+        "agentic": 9.4,
+        "reasoning": 9.3,
+        "general": 9.2
+      }
+    },
+    {
+      "pattern": "(?i)claude.*opus[-_/ ]?5",
+      "label": "Claude Opus 5",
+      "confidence": "alta",
+      "source_note": "Frontier para coding, razonamiento y agentes largos.",
+      "scores": {
+        "coding": 9.9,
+        "agentic": 9.9,
+        "reasoning": 9.9,
+        "general": 9.7
+      }
+    },
+    {
+      "pattern": "(?i)claude.*sonnet[-_/ ]?(4\\.6|latest)",
+      "label": "Claude Sonnet",
+      "confidence": "alta",
+      "source_note": "Muy fuerte en coding iterativo, navegación de codebases y agentes.",
+      "scores": {
+        "coding": 9.7,
+        "agentic": 9.7,
+        "reasoning": 9.5,
+        "general": 9.5
+      }
+    },
+    {
+      "pattern": "(?i)kimi.*(k2\\.5|k2\\.6|k3|latest)",
+      "label": "Kimi",
+      "confidence": "media-alta",
+      "source_note": "Familia fuerte en coding, tool calling y flujos agentic.",
+      "scores": {
+        "coding": 9.2,
+        "agentic": 9.5,
+        "reasoning": 9.2,
+        "general": 9.1
+      }
+    },
+    {
+      "pattern": "(?i)deepseek.*r1",
+      "label": "DeepSeek R1",
+      "confidence": "media-alta",
+      "source_note": "Familia enfocada a razonamiento; coding sólido.",
+      "scores": {
+        "coding": 8.9,
+        "agentic": 8.8,
+        "reasoning": 9.5,
+        "general": 8.8
+      }
+    },
+    {
+      "pattern": "(?i)deepseek.*(v4|chat)",
+      "label": "DeepSeek",
+      "confidence": "media",
+      "source_note": "Familia general/coding de alta capacidad.",
+      "scores": {
+        "coding": 9.3,
+        "agentic": 9.2,
+        "reasoning": 9.2,
+        "general": 9.2
+      }
+    },
+    {
+      "pattern": "(?i)mimo.*v?2\\.5.*pro",
+      "label": "MiMo V2.5 Pro",
+      "confidence": "media",
+      "source_note": "Variante especializada en coding y agentes.",
+      "scores": {
+        "coding": 9.3,
+        "agentic": 9.4,
+        "reasoning": 9.1,
+        "general": 8.9
+      }
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3\\.5[-_/ ]?lightning",
+      "label": "Nemotron 3.5 Lightning",
+      "confidence": "media",
+      "source_note": "Familia rápida orientada a razonamiento y agentes.",
+      "scores": {
+        "coding": 8.9,
+        "agentic": 9.0,
+        "reasoning": 9.0,
+        "general": 8.6
+      }
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3[-_/ ]?super",
+      "label": "Nemotron 3 Super",
+      "confidence": "media",
+      "source_note": "Familia de capacidad intermedia/alta para agentes y razonamiento.",
+      "scores": {
+        "coding": 8.7,
+        "agentic": 8.9,
+        "reasoning": 8.9,
+        "general": 8.5
+      }
+    },
+    {
+      "pattern": "(?i)nemotron.*nano.*reason",
+      "label": "Nemotron Nano Reasoning",
+      "confidence": "media",
+      "source_note": "Modelo pequeño orientado a razonamiento.",
+      "scores": {
+        "coding": 7.8,
+        "agentic": 8.0,
+        "reasoning": 8.2,
+        "general": 7.6
+      }
+    },
+    {
+      "pattern": "(?i)nemotron.*nano",
+      "label": "Nemotron Nano",
+      "confidence": "media",
+      "source_note": "Modelo pequeño/eficiente.",
+      "scores": {
+        "coding": 7.6,
+        "agentic": 7.8,
+        "reasoning": 7.8,
+        "general": 7.6
+      }
+    },
+    {
+      "pattern": "(?i)gpt[-_/ ]?oss[-_/ ]?20b",
+      "label": "GPT-OSS 20B",
+      "confidence": "media",
+      "source_note": "Modelo pequeño con reasoning, tools y structured outputs.",
+      "scores": {
+        "coding": 7.5,
+        "agentic": 7.5,
+        "reasoning": 7.8,
+        "general": 7.5
+      }
+    },
+    {
+      "pattern": "(?i)step[-_/ ]?3\\.5[-_/ ]?flash",
+      "label": "Step 3.5 Flash",
+      "confidence": "media",
+      "source_note": "Modelo de razonamiento eficiente.",
+      "scores": {
+        "coding": 8.6,
+        "agentic": 8.5,
+        "reasoning": 8.9,
+        "general": 8.5
+      }
+    },
+    {
+      "pattern": "(?i)mistral[-_/ ]?nemo",
+      "label": "Mistral Nemo",
+      "confidence": "media",
+      "source_note": "Modelo general eficiente de generación de texto.",
+      "scores": {
+        "coding": 6.8,
+        "agentic": 6.5,
+        "reasoning": 6.6,
+        "general": 7.2
+      }
+    }
+  ]
+}

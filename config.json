@@ -1,36 +1,53 @@
 {
   "timezone": "Europe/Lisbon",
   "report_language": "es",
-  "usage_profiles": {
+  "summary_model": "openrouter/free",
+  "max_models_in_ai_summary": 20,
+  "discount_threshold_pct": 10,
+  "price_increase_threshold_pct": 10,
+  "value_cost_anchor_usd": 0.05,
+  "recommendation_candidates_only_scored": true,
+  "filters": {
+    "require_text_output": true,
+    "exclude_patterns": [
+      "content[-_ ]?safety",
+      "moderation",
+      "(^|[/_-])guard($|[/_:-])",
+      "embedding",
+      "(^|[/_-])embed($|[/_:-])",
+      "rerank",
+      "lyria",
+      "whisper",
+      "transcri",
+      "text[-_ ]?to[-_ ]?speech",
+      "(^|[/_-])tts($|[/_:-])",
+      "seedream",
+      "sora",
+      "(^|[/_-])veo($|[/_:-])",
+      "gpt[-_ ]?image",
+      "flux[-_/]"
+    ]
+  },
+  "task_profiles": {
     "coding": {
       "input_tokens": 30000,
       "output_tokens": 6000,
-      "weight": 0.65
+      "weight": 0.5
+    },
+    "agentic": {
+      "input_tokens": 60000,
+      "output_tokens": 12000,
+      "weight": 0.25
     },
     "reasoning": {
       "input_tokens": 12000,
       "output_tokens": 3500,
-      "weight": 0.2
+      "weight": 0.15
     },
-    "cheap_general": {
+    "general": {
       "input_tokens": 5000,
       "output_tokens": 1200,
-      "weight": 0.15
+      "weight": 0.1
     }
-  },
-  "tracked_authors": [
-    "deepseek",
-    "moonshotai",
-    "qwen",
-    "z-ai",
-    "minimax",
-    "mistralai",
-    "google",
-    "anthropic",
-    "openai",
-    "x-ai",
-    "meta-llama",
-    "nvidia"
-  ],
-  "max_models_in_ai_summary": 25
+  }
 }
