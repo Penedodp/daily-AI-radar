@@ -1,28 +1,54 @@
-# AI Price Radar v2
+# AI Price Radar v3
 
-Radar diario de precios de LLMs con GitHub Actions.
+## Qué cambia
 
-## V2
+- Separa completamente rankings GRATIS y DE PAGO.
+- Añade un ranking premium por calidad.
+- Compara el mismo modelo entre proveedores/rutas.
+- Añade collectors opcionales para:
+  - OpenRouter
+  - CheaperInference
+  - Together AI
+  - Novita AI
+  - rutas internas de OpenRouter (si la key tiene permisos)
+- Solo llama "bajada/descuento" a una reducción histórica del mismo proveedor/ruta.
+- Las diferencias simultáneas entre proveedores se muestran como "ahorro entre rutas".
 
-- Filtra modelos de moderación, embeddings, rerank, audio e imagen.
-- Calcula coste estimado por tipo de tarea.
-- Usa `quality_profiles.json` para scores auditables.
-- Ranking de calidad/precio para coding, agentic coding, reasoning y general.
-- Distingue mejores opciones gratis.
-- Detecta bajadas/subidas comparando con el snapshot anterior.
-- Mantiene el informe aunque falle la llamada al LLM gratuito.
-- `openrouter/free` sólo redacta el resumen; los números salen de Python.
+## Secrets
 
-## Archivos nuevos/importantes
+Ya existente:
+- `OPENROUTER_API_KEY`
 
-- `quality_profiles.json`: heurísticas de calidad editables.
-- `src/filters.py`: filtros de modelos irrelevantes.
-- `src/quality.py`: asignación de perfiles.
-- `src/scoring.py`: coste y Value Score.
-- `src/main.py`: ranking e informe.
+Opcionales:
+- `CHEAPER_INFERENCE_API_KEY`
+- `TOGETHER_API_KEY`
+- `NOVITA_API_KEY`
+- `OPENROUTER_MANAGEMENT_API_KEY`
 
-## Actualización sobre una instalación v1
+Si un secret opcional no existe, el collector se salta sin romper el workflow.
 
-Conserva tus carpetas `data/` y `reports/`.
-Reemplaza los archivos de código/configuración con los de este paquete y ejecuta
-Actions → AI Price Radar → Run workflow.
+## Actualización desde v2
+
+Conserva `data/` y `reports/`.
+
+Reemplaza:
+- `.github/workflows/daily.yml`
+- `config.json`
+- `quality_profiles.json`
+- `requirements.txt`
+- `src/main.py`
+- `src/filters.py`
+- `src/quality.py`
+- `src/scoring.py`
+- `src/report_ai.py`
+- `src/providers/openrouter.py`
+
+Añade:
+- `model_aliases.json`
+- `src/normalize.py`
+- `src/providers/common.py`
+- `src/providers/registry.py`
+- `src/providers/cheaperinference.py`
+- `src/providers/together.py`
+- `src/providers/novita.py`
+- `src/providers/openrouter_routes.py`
