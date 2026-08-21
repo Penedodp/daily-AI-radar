@@ -1,84 +1,88 @@
 # AI Price Radar — 2026-08-21
 
-> Analizados **410** modelos de texto; filtrados **4** no relevantes. Con score de calidad: **55**.
+> **410 rutas/modelos** útiles · **1 fuentes con datos** · **67 rutas puntuadas**.
 
-## 🎯 Recomendación por tipo de uso
+## 📡 Fuentes
 
-| Uso | Mejor calidad/precio | Coste/tarea | Calidad* | Value | Mejor gratis |
-|---|---|---:|---:|---:|---|
-| 💻 Coding | **z-ai/glm-5.2:free** | $0.00000 | 9.5 | 95.0 | **z-ai/glm-5.2:free** |
-| 🤖 Agentic coding | **z-ai/glm-5.2:free** | $0.00000 | 9.6 | 96.0 | **z-ai/glm-5.2:free** |
-| 🧠 Razonamiento | **z-ai/glm-5.2:free** | $0.00000 | 9.5 | 95.0 | **z-ai/glm-5.2:free** |
-| ⚡ General | **z-ai/glm-5.2:free** | $0.00000 | 9.2 | 92.0 | **z-ai/glm-5.2:free** |
+| Fuente | Estado | Registros |
+|---|---|---:|
+| openrouter | `ok` | 414 |
+| cheaperinference | `not_configured_or_empty` | 0 |
+| together | `not_configured_or_empty` | 0 |
+| novita | `not_configured_or_empty` | 0 |
+| openrouter_routes | `no_key` | 0 |
 
-\* *Calidad = score heurístico curado (0–10), no benchmark oficial.*
+## 🆓 Mejor opción gratuita
 
-## 🏆 Top calidad/precio
+| Uso | Modelo | Calidad* | Proveedor/ruta |
+|---|---|---:|---|
+| 💻 Coding | **glm-5.2** | 9.5/10 | OpenRouter |
+| 🤖 Agentic coding | **glm-5.2** | 9.6/10 | OpenRouter |
+| 🧠 Razonamiento | **glm-5.2** | 9.5/10 | OpenRouter |
+| ⚡ General | **glm-5.2** | 9.2/10 | OpenRouter |
+
+## 💰 Mejor relación calidad/precio DE PAGO
+
+| Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* | Value |
+|---|---|---|---:|---:|---:|
+| 💻 Coding | **qwen3-coder** | **OpenRouter** | $0.00378 | 9.4/10 | 90.6 |
+| 🤖 Agentic coding | **ling-3.0-flash** | **OpenRouter** | $0.00202 | 9.1/10 | 89.2 |
+| 🧠 Razonamiento | **deepseek-v4-flash** | **OpenRouter** | $0.00141 | 9.2/10 | 90.7 |
+| ⚡ General | **deepseek-v4-flash** | **OpenRouter** | $0.00054 | 9.2/10 | 91.5 |
+
+## 🧠 Opción premium por calidad
+
+| Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* |
+|---|---|---|---:|---:|
+| 💻 Coding | **claude-opus-5-fast** | OpenRouter | $0.60000 | 9.9/10 |
+| 🤖 Agentic coding | **claude-opus-5-fast** | OpenRouter | $1.20000 | 9.9/10 |
+| 🧠 Razonamiento | **claude-opus-5-fast** | OpenRouter | $0.29500 | 9.9/10 |
+| ⚡ General | **claude-opus-5-fast** | OpenRouter | $0.11000 | 9.7/10 |
+
+\* *Calidad = heurística curada 0–10, no benchmark oficial.*
+
+## 🔀 Mismo modelo, proveedor/ruta más barata
+
+Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay diferencias ≥ al umbral.
+
+## 🏆 Top 5 DE PAGO por calidad/precio
 
 ### 💻 Coding
-1. **z-ai/glm-5.2:free** — value **95.0**, calidad 9.5/10, coste/tarea $0.00000 · **GRATIS**
-2. **nvidia/nemotron-3-ultra-550b-a55b:free** — value **93.0**, calidad 9.3/10, coste/tarea $0.00000 · **GRATIS**
-3. **inclusionai/ling-3.0-flash** — value **89.2**, calidad 9.1/10, coste/tarea $0.00101
-4. **nvidia/nemotron-3.5-lightning:free** — value **89.0**, calidad 8.9/10, coste/tarea $0.00000 · **GRATIS**
-5. **poolside/laguna-s-2.1:free** — value **89.0**, calidad 8.9/10, coste/tarea $0.00000 · **GRATIS**
+1. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00378 · value 90.6
+2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00303 · value 90.3
+3. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00101 · value 90.1
+4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00347 · value 89.9
+5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00588 · value 88.0
 
 ### 🤖 Agentic coding
-1. **z-ai/glm-5.2:free** — value **96.0**, calidad 9.6/10, coste/tarea $0.00000 · **GRATIS**
-2. **nvidia/nemotron-3-ultra-550b-a55b:free** — value **95.0**, calidad 9.5/10, coste/tarea $0.00000 · **GRATIS**
-3. **poolside/laguna-s-2.1:free** — value **91.0**, calidad 9.1/10, coste/tarea $0.00000 · **GRATIS**
-4. **poolside/laguna-xs-2.1:free** — value **91.0**, calidad 9.1/10, coste/tarea $0.00000 · **GRATIS**
-5. **nvidia/nemotron-3.5-lightning:free** — value **90.0**, calidad 9.0/10, coste/tarea $0.00000 · **GRATIS**
+1. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00202 · value 89.2
+2. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00756 · value 87.6
+3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00606 · value 86.9
+4. **poolside-laguna-xs-2.1** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00504 · value 86.7
+5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00694 · value 86.2
 
 ### 🧠 Razonamiento
-1. **z-ai/glm-5.2:free** — value **95.0**, calidad 9.5/10, coste/tarea $0.00000 · **GRATIS**
-2. **nvidia/nemotron-3-ultra-550b-a55b:free** — value **94.0**, calidad 9.4/10, coste/tarea $0.00000 · **GRATIS**
-3. **nvidia/nemotron-3.5-lightning:free** — value **90.0**, calidad 9.0/10, coste/tarea $0.00000 · **GRATIS**
-4. **~deepseek/deepseek-v4-flash-latest** — value **89.6**, calidad 9.2/10, coste/tarea $0.00135
-5. **deepseek/deepseek-v4-flash** — value **89.2**, calidad 9.2/10, coste/tarea $0.00157
+1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00141 · value 90.7
+2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00157 · value 90.6
+3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00266 · value 89.6
+4. **nemotron-3.5-lightning** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00166 · value 88.5
+5. **gpt-oss-120b** vía **OpenRouter** — calidad 8.9/10 · coste/tarea $0.00096 · value 88.2
 
 ### ⚡ General
-1. **z-ai/glm-5.2:free** — value **92.0**, calidad 9.2/10, coste/tarea $0.00000 · **GRATIS**
-2. **~deepseek/deepseek-v4-flash-latest** — value **91.1**, calidad 9.2/10, coste/tarea $0.00052
-3. **deepseek/deepseek-v4-flash** — value **90.9**, calidad 9.2/10, coste/tarea $0.00061
-4. **deepseek/deepseek-v4-flash-0731** — value **90.1**, calidad 9.2/10, coste/tarea $0.00104
-5. **nvidia/nemotron-3-ultra-550b-a55b:free** — value **88.0**, calidad 8.8/10, coste/tarea $0.00000 · **GRATIS**
+1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00054 · value 91.5
+2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00061 · value 91.4
+3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00104 · value 91.1
+4. **deepseek-v3.2** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00183 · value 88.4
+5. **deepseek-v3.2** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00184 · value 88.4
 
-## 🔥 Cambios de precio
+## 🔥 Bajadas reales de precio
 
-Todavía no hay un día anterior para comparar. A partir de la próxima ejecución podremos detectar bajadas y subidas.
+Todavía no hay snapshot de un día anterior para comparar.
 
-## 🆓 Mejores gratuitos puntuados
+## 🧪 Notas
 
-- **z-ai/glm-5.2:free** — coding 9.5, agentic 9.6, reasoning 9.5, general 9.2
-- **nvidia/nemotron-3-ultra-550b-a55b:free** — coding 9.3, agentic 9.5, reasoning 9.4, general 8.8
-- **poolside/laguna-s-2.1:free** — coding 8.9, agentic 9.1, reasoning 8.4, general 8.0
-- **poolside/laguna-xs-2.1:free** — coding 8.9, agentic 9.1, reasoning 8.4, general 8.0
-- **nvidia/nemotron-3.5-lightning:free** — coding 8.9, agentic 9.0, reasoning 9.0, general 8.6
-- **nvidia/nemotron-3-super-120b-a12b:free** — coding 8.7, agentic 8.9, reasoning 8.9, general 8.5
-- **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** — coding 7.8, agentic 8.0, reasoning 8.2, general 7.6
-- **nvidia/nemotron-3-nano-30b-a3b:free** — coding 7.6, agentic 7.8, reasoning 7.8, general 7.6
-- **nvidia/nemotron-nano-12b-v2-vl:free** — coding 7.6, agentic 7.8, reasoning 7.8, general 7.6
-- **nvidia/nemotron-nano-9b-v2:free** — coding 7.6, agentic 7.8, reasoning 7.8, general 7.6
-
-## 💸 Modelos de texto más baratos
-
-1. **stealth/ox-alpha** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-2. **dots-studio/dots-3-note-preview:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-3. **liquid/lfm-2.5-2.6b:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-4. **nvidia/nemotron-3.5-lightning:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: Nemotron 3.5 Lightning
-5. **poolside/laguna-s-2.1:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: Poolside Laguna 2.1
-6. **poolside/laguna-xs-2.1:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: Poolside Laguna 2.1
-7. **cohere/north-mini-code:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-8. **z-ai/glm-5.2:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: GLM 5.2
-9. **nvidia/nemotron-3-ultra-550b-a55b:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: Nemotron 3 Ultra
-10. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000 · score conocido: Nemotron Nano Reasoning
-11. **google/gemma-4-26b-a4b-it:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-12. **google/gemma-4-31b-it:free** — in $0.0000/M, out $0.0000/M, coste perfil $0.00000
-
-## 🧪 Cómo interpretar el ranking
-
-- El **coste/tarea** usa los tamaños de prompt/respuesta definidos en `config.json`.
-- El **Value Score** combina el score de calidad con el coste estimado de esa tarea.
-- Los scores de calidad viven en `quality_profiles.json` y son editables/auditables.
-- Un modelo sin score puede aparecer entre los baratos, pero no se recomienda automáticamente.
-- Los modelos gratuitos pueden tener límites de velocidad, cuota o disponibilidad.
+- **Gratis** y **pago** se rankean por separado; los modelos `$0` ya no dominan el ranking de compra.
+- Una diferencia entre proveedores se llama **ahorro entre rutas**, no descuento.
+- **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico.
+- Los proveedores opcionales sin API key simplemente se omiten; el workflow sigue funcionando.
+- El resumen IA redacta la conclusión, pero no calcula precios ni rankings.
