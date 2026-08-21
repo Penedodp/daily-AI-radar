@@ -1,0 +1,132 @@
+{
+  "_meta": {
+    "purpose": "Normaliza IDs distintos para comparar el mismo modelo entre proveedores.",
+    "note": "Se aplica la primera regla que coincida."
+  },
+  "rules": [
+    {
+      "pattern": "(?i)glm[-_/ ]?5\\.2",
+      "canonical": "glm-5.2"
+    },
+    {
+      "pattern": "(?i)glm[-_/ ]?5\\.1",
+      "canonical": "glm-5.1"
+    },
+    {
+      "pattern": "(?i)glm[-_/ ]?5($|[:/_-])",
+      "canonical": "glm-5"
+    },
+    {
+      "pattern": "(?i)deepseek[-_/ ]?v4[-_/ ]?flash",
+      "canonical": "deepseek-v4-flash"
+    },
+    {
+      "pattern": "(?i)deepseek[-_/ ]?v4[-_/ ]?pro",
+      "canonical": "deepseek-v4-pro"
+    },
+    {
+      "pattern": "(?i)deepseek.*v3\\.2",
+      "canonical": "deepseek-v3.2"
+    },
+    {
+      "pattern": "(?i)deepseek.*r1",
+      "canonical": "deepseek-r1"
+    },
+    {
+      "pattern": "(?i)kimi[-_/ ]?k3",
+      "canonical": "kimi-k3"
+    },
+    {
+      "pattern": "(?i)kimi[-_/ ]?k2\\.7.*code.*high",
+      "canonical": "kimi-k2.7-code-highspeed"
+    },
+    {
+      "pattern": "(?i)kimi[-_/ ]?k2\\.7.*code",
+      "canonical": "kimi-k2.7-code"
+    },
+    {
+      "pattern": "(?i)kimi[-_/ ]?k2\\.6",
+      "canonical": "kimi-k2.6"
+    },
+    {
+      "pattern": "(?i)kimi[-_/ ]?k2\\.5",
+      "canonical": "kimi-k2.5"
+    },
+    {
+      "pattern": "(?i)minimax[-_/ ]?m?3($|[:/_-])",
+      "canonical": "minimax-m3"
+    },
+    {
+      "pattern": "(?i)minimax[-_/ ]?m?2\\.7",
+      "canonical": "minimax-m2.7"
+    },
+    {
+      "pattern": "(?i)mimo[-_/ ]?v?2\\.5[-_/ ]?pro",
+      "canonical": "mimo-v2.5-pro"
+    },
+    {
+      "pattern": "(?i)mimo[-_/ ]?v?2\\.5",
+      "canonical": "mimo-v2.5"
+    },
+    {
+      "pattern": "(?i)qwen3\\.8[-_/ ]?max",
+      "canonical": "qwen3.8-max"
+    },
+    {
+      "pattern": "(?i)qwen3\\.7[-_/ ]?max",
+      "canonical": "qwen3.7-max"
+    },
+    {
+      "pattern": "(?i)qwen3.*coder.*next",
+      "canonical": "qwen3-coder-next"
+    },
+    {
+      "pattern": "(?i)qwen3.*coder",
+      "canonical": "qwen3-coder"
+    },
+    {
+      "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash.*fast",
+      "canonical": "ling-3.0-flash-fast"
+    },
+    {
+      "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash",
+      "canonical": "ling-3.0-flash"
+    },
+    {
+      "pattern": "(?i)step[-_/ ]?3\\.7[-_/ ]?flash",
+      "canonical": "step-3.7-flash"
+    },
+    {
+      "pattern": "(?i)gpt[-_/ ]?oss[-_/ ]?120b",
+      "canonical": "gpt-oss-120b"
+    },
+    {
+      "pattern": "(?i)gpt[-_/ ]?oss[-_/ ]?20b",
+      "canonical": "gpt-oss-20b"
+    },
+    {
+      "pattern": "(?i)mistral[-_/ ]?nemo",
+      "canonical": "mistral-nemo"
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3[-_/ ]?ultra",
+      "canonical": "nemotron-3-ultra"
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3\\.5[-_/ ]?lightning",
+      "canonical": "nemotron-3.5-lightning"
+    },
+    {
+      "pattern": "(?i)nemotron[-_/ ]?3[-_/ ]?super",
+      "canonical": "nemotron-3-super"
+    },
+    {
+      "pattern": "(?i)laguna[-_/ ]?s[-_/ ]?2\\.1",
+      "canonical": "poolside-laguna-s-2.1"
+    },
+    {
+      "pattern": "(?i)laguna[-_/ ]?xs[-_/ ]?2\\.1",
+      "canonical": "poolside-laguna-xs-2.1"
+    }
+  ]
+}
