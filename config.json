@@ -1,0 +1,36 @@
+{
+  "timezone": "Europe/Lisbon",
+  "report_language": "es",
+  "usage_profiles": {
+    "coding": {
+      "input_tokens": 30000,
+      "output_tokens": 6000,
+      "weight": 0.65
+    },
+    "reasoning": {
+      "input_tokens": 12000,
+      "output_tokens": 3500,
+      "weight": 0.2
+    },
+    "cheap_general": {
+      "input_tokens": 5000,
+      "output_tokens": 1200,
+      "weight": 0.15
+    }
+  },
+  "tracked_authors": [
+    "deepseek",
+    "moonshotai",
+    "qwen",
+    "z-ai",
+    "minimax",
+    "mistralai",
+    "google",
+    "anthropic",
+    "openai",
+    "x-ai",
+    "meta-llama",
+    "nvidia"
+  ],
+  "max_models_in_ai_summary": 25
+}
