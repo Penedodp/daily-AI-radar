@@ -2,11 +2,33 @@
   "timezone": "Europe/Lisbon",
   "report_language": "es",
   "summary_model": "openrouter/free",
-  "max_models_in_ai_summary": 20,
+  "max_models_in_ai_summary": 25,
   "discount_threshold_pct": 10,
   "price_increase_threshold_pct": 10,
+  "cross_provider_min_saving_pct": 5,
   "value_cost_anchor_usd": 0.05,
-  "recommendation_candidates_only_scored": true,
+  "route_tracking_max_models": 35,
+  "providers": {
+    "openrouter": {
+      "enabled": true
+    },
+    "cheaperinference": {
+      "enabled": true,
+      "optional": true
+    },
+    "together": {
+      "enabled": true,
+      "optional": true
+    },
+    "novita": {
+      "enabled": true,
+      "optional": true
+    },
+    "openrouter_routes": {
+      "enabled": true,
+      "optional": true
+    }
+  },
   "filters": {
     "require_text_output": true,
     "exclude_patterns": [
@@ -25,7 +47,8 @@
       "sora",
       "(^|[/_-])veo($|[/_:-])",
       "gpt[-_ ]?image",
-      "flux[-_/]"
+      "flux[-_/]",
+      "ocr"
     ]
   },
   "task_profiles": {
@@ -49,5 +72,11 @@
       "output_tokens": 1200,
       "weight": 0.1
     }
+  },
+  "paid_min_quality": {
+    "coding": 8.6,
+    "agentic": 8.7,
+    "reasoning": 8.7,
+    "general": 8.4
   }
 }
