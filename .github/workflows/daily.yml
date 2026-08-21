@@ -3,7 +3,8 @@ name: AI Price Radar
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 9 * * *"
+    - cron: "15 8 * * *"
+      timezone: "Europe/Lisbon"
 
 permissions:
   contents: write
@@ -27,6 +28,10 @@ jobs:
       - name: Ejecutar AI Price Radar
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MANAGEMENT_API_KEY: ${{ secrets.OPENROUTER_MANAGEMENT_API_KEY }}
+          CHEAPER_INFERENCE_API_KEY: ${{ secrets.CHEAPER_INFERENCE_API_KEY }}
+          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
+          NOVITA_API_KEY: ${{ secrets.NOVITA_API_KEY }}
         run: python src/main.py
 
       - name: Guardar informe
