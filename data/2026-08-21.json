@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T09:55:05.769013+01:00",
+  "generated_at": "2026-08-21T11:22:53.297407+01:00",
   "provider_status": {
     "openrouter": {
       "status": "ok",
@@ -112,6 +112,19 @@
         },
         {
           "model": "deepseek-v4-flash",
+          "raw_model": "deepseek/deepseek-v4-flash-0731",
+          "provider": "OpenRouter",
+          "source": "openrouter",
+          "free": false,
+          "input": 0.08,
+          "output": 0.18,
+          "weighted_cost": 0.00378,
+          "task_cost": 0.00348,
+          "quality_score": 9.3,
+          "value_score": 89.9
+        },
+        {
+          "model": "deepseek-v4-flash",
           "raw_model": "deepseek/deepseek-v4-flash",
           "provider": "OpenRouter",
           "source": "openrouter",
@@ -122,19 +135,6 @@
           "task_cost": 0.003469,
           "quality_score": 9.3,
           "value_score": 89.9
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.14,
-          "output": 0.28,
-          "weighted_cost": 0.006383,
-          "task_cost": 0.00588,
-          "quality_score": 9.3,
-          "value_score": 88.0
         }
       ],
       "top_free": [
@@ -300,14 +300,14 @@
         },
         {
           "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash",
+          "raw_model": "deepseek/deepseek-v4-flash-0731",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.0826,
-          "output": 0.1652,
-          "weighted_cost": 0.003766,
-          "task_cost": 0.006938,
+          "input": 0.08,
+          "output": 0.18,
+          "weighted_cost": 0.00378,
+          "task_cost": 0.00696,
           "quality_score": 9.2,
           "value_score": 86.2
         }
@@ -436,6 +436,19 @@
         },
         {
           "model": "deepseek-v4-flash",
+          "raw_model": "deepseek/deepseek-v4-flash-0731",
+          "provider": "OpenRouter",
+          "source": "openrouter",
+          "free": false,
+          "input": 0.08,
+          "output": 0.18,
+          "weighted_cost": 0.00378,
+          "task_cost": 0.00159,
+          "quality_score": 9.2,
+          "value_score": 90.6
+        },
+        {
+          "model": "deepseek-v4-flash",
           "raw_model": "deepseek/deepseek-v4-flash",
           "provider": "OpenRouter",
           "source": "openrouter",
@@ -446,19 +459,6 @@
           "task_cost": 0.001569,
           "quality_score": 9.2,
           "value_score": 90.6
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.14,
-          "output": 0.28,
-          "weighted_cost": 0.006383,
-          "task_cost": 0.00266,
-          "quality_score": 9.2,
-          "value_score": 89.6
         },
         {
           "model": "nemotron-3.5-lightning",
@@ -611,6 +611,19 @@
         },
         {
           "model": "deepseek-v4-flash",
+          "raw_model": "deepseek/deepseek-v4-flash-0731",
+          "provider": "OpenRouter",
+          "source": "openrouter",
+          "free": false,
+          "input": 0.08,
+          "output": 0.18,
+          "weighted_cost": 0.00378,
+          "task_cost": 0.000616,
+          "quality_score": 9.2,
+          "value_score": 91.4
+        },
+        {
+          "model": "deepseek-v4-flash",
           "raw_model": "deepseek/deepseek-v4-flash",
           "provider": "OpenRouter",
           "source": "openrouter",
@@ -621,19 +634,6 @@
           "task_cost": 0.000611,
           "quality_score": 9.2,
           "value_score": 91.4
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.14,
-          "output": 0.28,
-          "weighted_cost": 0.006383,
-          "task_cost": 0.001036,
-          "quality_score": 9.2,
-          "value_score": 91.1
         },
         {
           "model": "deepseek-v3.2",
@@ -1931,9 +1931,9 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.14,
-      "output_usd_per_million": 0.28,
-      "cache_read_usd_per_million": 0.028,
+      "input_usd_per_million": 0.08,
+      "output_usd_per_million": 0.18,
+      "cache_read_usd_per_million": 0.016,
       "cache_write_usd_per_million": null,
       "metadata": {
         "supported_parameters": [
@@ -1974,17 +1974,17 @@
         }
       },
       "costs_by_task": {
-        "coding": 0.005880000000000001,
-        "agentic": 0.011760000000000001,
-        "reasoning": 0.0026600000000000005,
-        "general": 0.001036
+        "coding": 0.0034799999999999996,
+        "agentic": 0.006959999999999999,
+        "reasoning": 0.00159,
+        "general": 0.000616
       },
-      "weighted_cost": 0.0063826,
+      "weighted_cost": 0.0037800999999999998,
       "value_scores": {
-        "coding": 88.0,
-        "agentic": 82.8,
-        "reasoning": 89.6,
-        "general": 91.1
+        "coding": 89.9,
+        "agentic": 86.2,
+        "reasoning": 90.6,
+        "general": 91.4
       },
       "change_pct": null
     },

@@ -51,27 +51,27 @@ Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay difer
 1. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00378 · value 90.6
 2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00303 · value 90.3
 3. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00101 · value 90.1
-4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00347 · value 89.9
-5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00588 · value 88.0
+4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00348 · value 89.9
+5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00347 · value 89.9
 
 ### 🤖 Agentic coding
 1. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00202 · value 89.2
 2. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00756 · value 87.6
 3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00606 · value 86.9
 4. **poolside-laguna-xs-2.1** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00504 · value 86.7
-5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00694 · value 86.2
+5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00696 · value 86.2
 
 ### 🧠 Razonamiento
 1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00141 · value 90.7
-2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00157 · value 90.6
-3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00266 · value 89.6
+2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00159 · value 90.6
+3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00157 · value 90.6
 4. **nemotron-3.5-lightning** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00166 · value 88.5
 5. **gpt-oss-120b** vía **OpenRouter** — calidad 8.9/10 · coste/tarea $0.00096 · value 88.2
 
 ### ⚡ General
 1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00054 · value 91.5
-2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00061 · value 91.4
-3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00104 · value 91.1
+2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00062 · value 91.4
+3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00061 · value 91.4
 4. **deepseek-v3.2** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00183 · value 88.4
 5. **deepseek-v3.2** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00184 · value 88.4
 
