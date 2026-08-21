@@ -1,0 +1,38 @@
+name: AI Price Radar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 9 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar AI Price Radar
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python src/main.py
+
+      - name: Guardar informe
+        run: |
+          git config user.name "ai-price-radar[bot]"
+          git config user.email "actions@users.noreply.github.com"
+          git add data reports
+          git diff --cached --quiet || git commit -m "chore: daily AI price report"
+          git push
