@@ -3,6 +3,25 @@ import requests
 
 URL = "https://openrouter.ai/api/v1/chat/completions"
 
+# Known-good fallback: a real OpenRouter free-tier slug, used only if we can't
+# find any free model in today's snapshot to route the summary through.
+FALLBACK_FREE_MODEL = "meta-llama/llama-3.1-8b-instruct:free"
+
+def pick_free_model(snapshot, config):
+    configured = (config.get("summary_model") or "").strip()
+    # "openrouter/free" and similar shortcuts are not real OpenRouter slugs
+    # (free models are addressed as "<provider>/<model>:free"), so only trust
+    # a configured value that actually looks like one.
+    if configured and configured.endswith(":free"):
+        return configured
+
+    for rec in (snapshot.get("recommendations") or {}).values():
+        best_free = rec.get("best_free")
+        if best_free and best_free.get("raw_model", "").endswith(":free"):
+            return best_free["raw_model"]
+
+    return FALLBACK_FREE_MODEL
+
 def generate_summary(snapshot, config):
     key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not key:
@@ -44,14 +63,21 @@ DATOS:
                 "X-Title": "AI Price Radar",
             },
             json={
-                "model": config.get("summary_model", "openrouter/free"),
+                "model": pick_free_model(snapshot, config),
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.15,
             },
             timeout=90,
         )
-        r.raise_for_status()
-        return r.json()["choices"][0]["message"]["content"]
+        if not r.ok:
+            print(f"[WARN] Resumen IA no disponible: HTTP {r.status_code} — {r.text[:300]}")
+            return None
+        body = r.json()
+        choices = body.get("choices") or []
+        if not choices:
+            print(f"[WARN] Resumen IA no disponible: respuesta sin choices — {str(body)[:300]}")
+            return None
+        return choices[0]["message"]["content"]
     except Exception as exc:
-        print(f"[WARN] Resumen IA no disponible: {type(exc).__name__}")
+        print(f"[WARN] Resumen IA no disponible: {type(exc).__name__}: {str(exc)[:200]}")
         return None

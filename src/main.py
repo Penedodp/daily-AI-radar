@@ -8,7 +8,7 @@ from providers.registry import collect_all
 from providers.openrouter_routes import fetch_routes
 from filters import is_relevant_text_model
 from normalize import canonicalize
-from quality import match_quality_profile
+from quality_bench import fetch_leaderboard, match_models as match_bench_models
 from scoring import costs_by_task, weighted_daily_cost, price_change, value_score, is_free
 from report_ai import generate_summary
 
@@ -155,7 +155,6 @@ def cross_provider_opportunities(models, config):
 def main():
     config = load_json(ROOT / "config.json", {})
     aliases = load_json(ROOT / "model_aliases.json", {"rules": []})
-    quality_cfg = load_json(ROOT / "quality_profiles.json", {"rules": []})
 
     now = datetime.now(ZoneInfo(config.get("timezone", "Europe/Lisbon")))
     day = now.date().isoformat()
@@ -170,15 +169,17 @@ def main():
 
     raw_rows, provider_status = collect_all(config)
 
+    bench_cache = data_dir / "benchmarks" / "aider_polyglot.json"
+    bench_entries, bench_status = fetch_leaderboard(bench_cache)
+    provider_status["aider_polyglot"] = {"status": bench_status, "count": len(bench_entries)}
+
     # OpenRouter underlying routes: track only useful/scored model IDs, not all 400+.
+    openrouter_only = [r for r in raw_rows if r["source"] == "openrouter"]
+    bench_candidates = match_bench_models(bench_entries, openrouter_only)
     openrouter_candidates = []
     seen = set()
-    for r in raw_rows:
-        if r["source"] != "openrouter":
-            continue
-        canonical = canonicalize(r["model_id"], aliases)
-        q = match_quality_profile(canonical, r["model_id"], quality_cfg)
-        if q and r["model_id"] not in seen:
+    for r in openrouter_only:
+        if route_key(r) in bench_candidates and r["model_id"] not in seen:
             openrouter_candidates.append(r["model_id"])
             seen.add(r["model_id"])
 
@@ -201,6 +202,10 @@ def main():
                 "error": f"{type(exc).__name__}: {str(exc)[:180]}",
             }
 
+    # Final bench match over the full row set (openrouter + routes + other providers),
+    # now that all sources/routes have been collected.
+    bench_matches = match_bench_models(bench_entries, raw_rows)
+
     models = []
     filtered = 0
     task_profiles = config.get("task_profiles", {})
@@ -213,9 +218,16 @@ def main():
             continue
 
         row["canonical_model"] = canonicalize(row["model_id"], aliases)
-        row["quality"] = match_quality_profile(
-            row["canonical_model"], row["model_id"], quality_cfg
-        )
+
+        bench_q = bench_matches.get(route_key(row))
+        row["quality"] = None
+        if bench_q:
+            row["quality"] = {
+                "label": bench_q["label"],
+                "confidence": f"auto:{bench_q['source']}",
+                "scores": dict(bench_q["scores"]),
+            }
+
         row["costs_by_task"] = costs_by_task(row, task_profiles)
         row["weighted_cost"] = weighted_daily_cost(row, task_profiles)
         row["value_scores"] = {}
@@ -250,6 +262,15 @@ def main():
 
     recs = recommendations(models, config)
     opportunities = cross_provider_opportunities(models, config)
+
+    # Categories with at least one automated/manual quality score. Categories
+    # without a benchmark source yet (agentic/reasoning/general, for now) get
+    # an explanatory note in the report instead of empty rows.
+    scored_categories = {
+        cat for cat in LABELS
+        if any(r.get("quality") and r["quality"]["scores"].get(cat) is not None for r in models)
+    }
+    NO_BENCH_NOTE = "_Sin benchmark automatizado disponible todavía para esta categoría._"
 
     snapshot = {
         "generated_at": now.isoformat(),
@@ -295,6 +316,9 @@ def main():
         "|---|---|---:|---|",
     ]
     for cat, label in LABELS.items():
+        if cat not in scored_categories:
+            lines.append(f"| {label} | {NO_BENCH_NOTE} | | |")
+            continue
         r = recs[cat]["best_free"]
         if r:
             lines.append(
@@ -311,6 +335,9 @@ def main():
         "|---|---|---|---:|---:|---:|",
     ]
     for cat, label in LABELS.items():
+        if cat not in scored_categories:
+            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | |")
+            continue
         r = recs[cat]["best_paid_value"]
         if r:
             lines.append(
@@ -329,6 +356,9 @@ def main():
         "|---|---|---|---:|---:|",
     ]
     for cat, label in LABELS.items():
+        if cat not in scored_categories:
+            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | |")
+            continue
         r = recs[cat]["best_paid_quality"]
         if r:
             lines.append(
@@ -340,7 +370,9 @@ def main():
 
     lines += [
         "",
-        "\\* *Calidad = heurística curada 0–10, no benchmark oficial.*",
+        "\\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard escalado a 0–10, "
+        "emparejado automáticamente por nombre de modelo (sin intervención manual). "
+        "Cuando no hay match fiable, el modelo queda sin puntuar en vez de estimarse.*",
         "",
         "## 🔀 Mismo modelo, proveedor/ruta más barata",
         "",
@@ -365,6 +397,10 @@ def main():
     lines += ["", "## 🏆 Top 5 DE PAGO por calidad/precio", ""]
     for cat, label in LABELS.items():
         lines.append(f"### {label}")
+        if cat not in scored_categories:
+            lines.append(f"- {NO_BENCH_NOTE}")
+            lines.append("")
+            continue
         top = recs[cat]["top_paid_value"]
         if not top:
             lines.append("- Sin candidatos de pago que superen el mínimo de calidad configurado.")
@@ -403,6 +439,10 @@ def main():
         "- **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico.",
         "- Los proveedores opcionales sin API key simplemente se omiten; el workflow sigue funcionando.",
         "- El resumen IA redacta la conclusión, pero no calcula precios ni rankings.",
+        "- La calidad de **coding** se obtiene automáticamente del Aider Polyglot Leaderboard "
+        "(fuente pública, sin API key) y no requiere mantenimiento manual. "
+        "**Agentic/razonamiento/general** aún no tienen una fuente de benchmark automatizada "
+        "igual de fiable — se añadirán cuando se identifique una.",
     ]
 
     ai = generate_summary(snapshot, config)
