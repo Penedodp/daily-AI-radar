@@ -1,7 +1,7 @@
 {
   "timezone": "Europe/Lisbon",
   "report_language": "es",
-  "summary_model": "openrouter/free",
+  "summary_model": "",
   "max_models_in_ai_summary": 25,
   "discount_threshold_pct": 10,
   "price_increase_threshold_pct": 10,
@@ -74,9 +74,6 @@
     }
   },
   "paid_min_quality": {
-    "coding": 8.6,
-    "agentic": 8.7,
-    "reasoning": 8.7,
-    "general": 8.4
+    "coding": 5.5
   }
 }
