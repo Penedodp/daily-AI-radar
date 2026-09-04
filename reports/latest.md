@@ -57,10 +57,10 @@
 | **qwen3-max** | **OpenRouter** | $0.05111 | Novita AI ($0.12430) | **58.9%** |
 | **mistral-small-24b-instruct-2501** | **OpenRouter** | $0.00215 | Together AI ($0.00522) | **58.9%** |
 | **llama-3.1-8b-instruct** | **Novita AI** | $0.00098 | OpenRouter ($0.00215) | **54.4%** |
+| **glm-5.2** | **CheaperInference** | $0.02455 | OpenRouter ($0.05138) | **52.2%** |
 | **gemini-2.5-pro-preview-05-06** | **OpenRouter → Google AI Studio** | $0.05341 | OpenRouter ($0.10683) | **50.0%** |
 | **gpt-5.6-sol** | **CheaperInference** | $0.06552 | OpenRouter ($0.13105) | **50.0%** |
 | **deepseek-v3.1** | **Novita AI** | $0.01537 | Together AI ($0.03068) | **49.9%** |
-| **deepseek-v4-pro** | **CheaperInference** | $0.02413 | OpenRouter ($0.04752) | **49.2%** |
 
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
