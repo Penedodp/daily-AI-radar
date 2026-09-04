@@ -1,80 +1,301 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Price Radar — 2026-09-04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0b0f14; --panel: #121821; --border: #232c38; --text: #e6edf3;
-  --muted: #8b98a5; --accent: #4fa3ff; --pos: #3fd88a; --neg: #ff6b6b;
+  --bg: #f6f4ef; --panel: #ffffff; --border: #e6e2d8; --text: #171a1f; --muted: #6b7280;
+  --accent: #b8720a; --accent-soft: #fef3e0; --pos: #0f9d68; --neg: #dc4444;
+  --shadow: 0 1px 2px rgba(20,20,10,0.04);
+  --font-display: "Bricolage Grotesque", "Manrope", sans-serif;
+  --font-body: "Manrope", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0; background: var(--bg); color: var(--text);
-  font: 15px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif;
-  padding: 24px 16px 64px;
-}
-main { max-width: 1080px; margin: 0 auto; }
-h1 { font-size: 1.5rem; margin-bottom: 4px; }
-h2 { font-size: 1.15rem; margin: 40px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-h3 { font-size: 1rem; margin: 20px 0 8px; color: var(--accent); }
-.subtitle { color: var(--muted); margin-bottom: 8px; }
-.panel {
-  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-  padding: 16px 20px; margin-bottom: 8px;
-}
-.table-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-th { color: var(--muted); font-weight: 600; }
-tr:last-child td { border-bottom: none; }
-.muted { color: var(--muted); white-space: normal; }
-.pos { color: var(--pos); font-weight: 600; }
-.neg { color: var(--neg); font-weight: 600; }
-code { background: #1c2530; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; }
-ol, ul { padding-left: 20px; }
-li { margin-bottom: 6px; }
-footer { color: var(--muted); font-size: 0.85rem; margin-top: 48px; }
-.note { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
-.ai-summary { white-space: pre-wrap; }
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    --bg: #f7f8fa; --panel: #ffffff; --border: #e2e6eb; --text: #1a2027; --muted: #64707c;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0d12; --panel: #12161d; --border: #1e2530; --text: #e8ecf1; --muted: #8a94a3;
+    --accent: #f5a623; --accent-soft: rgba(245,166,35,0.12); --pos: #34d399; --neg: #f87171;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
 }
+:root[data-theme="dark"] {
+  --bg: #0a0d12; --panel: #12161d; --border: #1e2530; --text: #e8ecf1; --muted: #8a94a3;
+  --accent: #f5a623; --accent-soft: rgba(245,166,35,0.12); --pos: #34d399; --neg: #f87171;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 var(--font-body);
+}
+a { color: inherit; }
+main { max-width: 1120px; margin: 0 auto; padding: 0 20px 96px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { text-wrap: pretty; }
+::selection { background: var(--accent-soft); }
+
+/* ---------- top bar ---------- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1120px; margin: 0 auto; padding: 18px 20px;
+  font-size: 0.82rem; color: var(--muted); letter-spacing: .02em;
+}
+.topbar .brand { display: flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; }
+.topbar .brand-mark { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative; max-width: 1120px; margin: 0 auto; padding: 8px 20px 40px;
+  overflow: hidden;
+}
+.hero-inner { position: relative; z-index: 2; max-width: 640px; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px; display: inline-block;
+}
+.hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.01em; }
+.hero p.lede { color: var(--muted); font-size: 1.02rem; margin: 16px 0 0; max-width: 52ch; }
+.stat-row { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+.stat-tile .stat-num {
+  font-family: var(--font-mono); font-size: 1.9rem; font-weight: 500; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.stat-tile .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+.radar-wrap {
+  position: absolute; top: -60px; right: -60px; width: 340px; height: 340px; z-index: 1;
+  pointer-events: none;
+}
+.radar-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--border); }
+.radar-ring.r2 { inset: 42px; }
+.radar-ring.r3 { inset: 84px; }
+.radar-sweep {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, color-mix(in srgb, var(--accent) 65%, transparent), transparent 65%);
+  animation: spin 7s linear infinite;
+  opacity: 0.55;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .radar-sweep { animation: none; } }
+@media (max-width: 760px) { .radar-wrap { display: none; } }
+
+/* ---------- status chips ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 4px; }
+.chip {
+  display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 100px; padding: 6px 14px 6px 10px; font-size: 0.82rem; box-shadow: var(--shadow);
+}
+.chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.chip-dot.chip-ok { background: var(--pos); }
+.chip-dot.chip-warn { background: var(--accent); }
+.chip-dot.chip-off { background: var(--muted); opacity: .5; }
+.chip-name { color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; }
+.chip-count { font-family: var(--font-mono); font-weight: 600; }
+
+/* ---------- sections ---------- */
+section.block { margin: 64px 0; }
+.block-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+.block-head .idx {
+  font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; letter-spacing: .04em;
+}
+.block-head h2 { font-size: 1.4rem; font-weight: 600; }
+.block-note { color: var(--muted); font-size: 0.88rem; margin: -8px 0 18px; max-width: 62ch; }
+
+/* ---------- tables ---------- */
+.table-scroll { overflow-x: auto; }
+table.grid { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table.grid th {
+  text-align: left; padding: 10px 14px; color: var(--muted); font-weight: 600; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border);
+  white-space: nowrap; user-select: none;
+}
+table.grid[data-sortable] th[data-key] { cursor: pointer; }
+table.grid[data-sortable] th[data-key]:hover { color: var(--text); }
+table.grid td { padding: 12px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+table.grid td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+table.grid tbody tr:last-child td { border-bottom: none; }
+table.grid tbody tr:hover { background: var(--accent-soft); }
+table.grid td.usage { color: var(--muted); font-size: 0.85rem; width: 1%; }
+table.grid td.muted { color: var(--muted); white-space: normal; }
+
+.provider { display: inline-flex; align-items: center; gap: 8px; }
+.provider-dot {
+  width: 20px; height: 20px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; font-weight: 700; color: #0a0d12; flex: none;
+}
+
+.qcell { display: inline-flex; align-items: center; gap: 8px; }
+.qbar { width: 46px; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.qbar-fill { display: block; height: 100%; border-radius: 3px; }
+.qbar-fill.tier-good { background: var(--pos); }
+.qbar-fill.tier-mid { background: var(--accent); }
+.qbar-fill.tier-low { background: var(--neg); }
+.qval { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); }
+
+.pill {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; padding: 3px 9px; border-radius: 100px;
+}
+.pill.pos { color: var(--pos); background: color-mix(in srgb, var(--pos) 16%, transparent); }
+.pill.neg { color: var(--neg); background: color-mix(in srgb, var(--neg) 16%, transparent); }
+
+/* ---------- top5 ---------- */
+h3 { font-size: 1rem; font-weight: 600; margin: 28px 0 12px; }
+h3:first-child { margin-top: 0; }
+ol.top5 { list-style: none; padding: 0; margin: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+ol.top5 li { display: flex; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+ol.top5 li:last-child { border-bottom: none; }
+ol.top5 .rank {
+  font-family: var(--font-mono); color: var(--muted); font-size: 0.85rem; width: 18px; flex: none; padding-top: 2px;
+}
+ol.top5 .meta { color: var(--muted); font-size: 0.82rem; margin-top: 3px; }
+
+ul.changes { list-style: none; padding: 0; margin: 0 0 20px; }
+ul.changes li { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--border); }
+ul.changes li:last-child { border-bottom: none; }
+ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
+
+.muted { color: var(--muted); }
+.note { color: var(--muted); font-size: 0.85rem; }
+.ai-summary { white-space: pre-wrap; line-height: 1.65; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); }
+
+footer { color: var(--muted); font-size: 0.82rem; margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border); }
+footer code { font-family: var(--font-mono); background: var(--accent-soft); padding: 2px 6px; border-radius: 4px; }
+
+/* reveal-on-scroll: hidden state only applied once GSAP is confirmed running */
+.gsap-ready .reveal { opacity: 0; }
 </style>
 </head>
 <body>
+<div class="topbar">
+  <span class="brand"><span class="brand-mark"></span>AI Price Radar</span>
+  <span>Actualizado 2026-09-04</span>
+</div>
+
+<header class="hero">
+  <div class="radar-wrap" aria-hidden="true">
+    <div class="radar-ring"></div>
+    <div class="radar-ring r2"></div>
+    <div class="radar-ring r3"></div>
+    <div class="radar-sweep"></div>
+  </div>
+  <div class="hero-inner">
+    <span class="eyebrow">Escaneo diario de mercado</span>
+    <h1>El mejor modelo de IA para programar, al precio de hoy.</h1>
+    <p class="lede">Cada mañana comparamos catálogo y precios de varios proveedores contra un benchmark público de programación, y ordenamos las opciones por coste real de tarea — no por lista de precios sin más.</p>
+    <div class="stat-row">
+      <div class="stat-tile"><span class="stat-num" data-value="417">417</span><div class="stat-label">rutas / modelos</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="2">2</span><div class="stat-label">fuentes con datos</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="28">28</span><div class="stat-label">rutas puntuadas</div></div>
+    </div>
+    <div class="chips"><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>openrouter</span><span class='chip-count'>422</span></span><span class='chip'><span class='chip-dot chip-off'></span><span class='chip-name'>cheaperinference</span><span class='chip-count'>0</span></span><span class='chip'><span class='chip-dot chip-off'></span><span class='chip-name'>together</span><span class='chip-count'>0</span></span><span class='chip'><span class='chip-dot chip-off'></span><span class='chip-name'>novita</span><span class='chip-count'>0</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>aider_polyglot</span><span class='chip-count'>53</span></span><span class='chip'><span class='chip-dot chip-off'></span><span class='chip-name'>openrouter_routes</span><span class='chip-count'>0</span></span></div>
+  </div>
+</header>
+
 <main>
-  <h1>📡 AI Price Radar</h1>
-  <p class="subtitle">2026-09-04 · 417 rutas/modelos útiles · 2 fuentes con datos · 28 rutas puntuadas</p>
 
-  <h2>Fuentes</h2>
-  <div class="panel table-scroll"><table><thead><tr><th>Fuente</th><th>Estado</th><th>Registros</th></tr></thead><tbody><tr><td>openrouter</td><td><code>ok</code></td><td>422</td></tr><tr><td>cheaperinference</td><td><code>not_configured_or_empty</code></td><td>0</td></tr><tr><td>together</td><td><code>not_configured_or_empty</code></td><td>0</td></tr><tr><td>novita</td><td><code>not_configured_or_empty</code></td><td>0</td></tr><tr><td>aider_polyglot</td><td><code>ok</code></td><td>53</td></tr><tr><td>openrouter_routes</td><td><code>no_key</code></td><td>0</td></tr></tbody></table></div>
-
-  <h2>🆓 Mejor opción gratuita</h2>
-  <div class="panel table-scroll"><table><thead><tr><th>Uso</th><th>Modelo</th><th>Calidad*</th><th>Proveedor/ruta</th><th>$/M in / out</th></tr></thead><tbody><tr><td>💻 Coding</td><td colspan='4' class='muted'>—</td></tr><tr><td>🤖 Agentic coding</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>🧠 Razonamiento</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>⚡ General</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
-
-  <h2>💰 Mejor relación calidad/precio DE PAGO</h2>
-  <div class="panel table-scroll"><table><thead><tr><th>Uso</th><th>Modelo</th><th>Proveedor/ruta</th><th>Coste/tarea</th><th>$/M in</th><th>$/M out</th><th>Calidad*</th><th>Value</th></tr></thead><tbody><tr><td>💻 Coding</td><td><strong>deepseek-v3.2</strong></td><td>OpenRouter</td><td>$0.01047</td><td>$0.2690</td><td>$0.4000</td><td>7.4/10</td><td>67.3</td></tr><tr><td>🤖 Agentic coding</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>🧠 Razonamiento</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>⚡ General</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
-
-  <h2>🧠 Opción premium por calidad</h2>
-  <div class="panel table-scroll"><table><thead><tr><th>Uso</th><th>Modelo</th><th>Proveedor/ruta</th><th>Coste/tarea</th><th>$/M in</th><th>$/M out</th><th>Calidad*</th></tr></thead><tbody><tr><td>💻 Coding</td><td><strong>gpt-5</strong></td><td>OpenRouter</td><td>$0.09750</td><td>$1.2500</td><td>$10.0000</td><td>8.8/10</td></tr><tr><td>🤖 Agentic coding</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>🧠 Razonamiento</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td>⚡ General</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
-  <p class="note">* Calidad (coding) = pass-rate del Aider Polyglot Leaderboard escalado a 0–10, emparejado automáticamente por nombre de modelo. Sin match fiable → sin puntuar, nunca estimado.</p>
-
-  <h2>🔀 Mismo modelo, proveedor/ruta más barata</h2>
-  <div class="panel table-scroll"><p class='muted'>Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay diferencias ≥ al umbral.</p></div>
-
-  <h2>🏆 Top 5 DE PAGO por calidad/precio</h2>
-  <div class="panel"><h3>💻 Coding</h3><ol><li><strong>deepseek-v3.2</strong> vía <strong>OpenRouter</strong> — calidad 7.4/10 · coste/tarea $0.01047 ($0.2690 in / $0.4000 out) · value 67.3</li><li><strong>deepseek-r1</strong> vía <strong>OpenRouter</strong> — calidad 7.1/10 · coste/tarea $0.03600 ($0.7000 in / $2.5000 out) · value 54.1</li><li><strong>gpt-5</strong> vía <strong>OpenRouter</strong> — calidad 8.8/10 · coste/tarea $0.09750 ($1.2500 in / $10.0000 out) · value 51.2</li><li><strong>o4-mini</strong> vía <strong>OpenRouter</strong> — calidad 7.2/10 · coste/tarea $0.05940 ($1.1000 in / $4.4000 out) · value 48.7</li><li><strong>kimi-k2</strong> vía <strong>OpenRouter</strong> — calidad 5.9/10 · coste/tarea $0.03090 ($0.5700 in / $2.3000 out) · value 46.4</li></ol><h3>🤖 Agentic coding</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p><h3>🧠 Razonamiento</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p><h3>⚡ General</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p></div>
-
-  <h2>🔥 Cambios de precio</h2>
-  <div class="panel"><h3>Bajadas</h3><ul><li><strong>remm-slerp-l2-13b</strong> vía <strong>OpenRouter</strong> — <span class='pos'>-17.1%</span> (ahora $0.3500 in / $0.6500 out)</li></ul><h3>Subidas</h3><ul><li><strong>qwen2.5-vl-72b-instruct</strong> vía <strong>OpenRouter</strong> — <span class='neg'>+148.8%</span> (ahora $0.8000 in / $1.0000 out)</li><li><strong>deepseek-chat-v3.1</strong> vía <strong>OpenRouter</strong> — <span class='neg'>+99.7%</span> (ahora $0.5500 in / $1.6500 out)</li><li><strong>nemotron-3-ultra</strong> vía <strong>OpenRouter</strong> — <span class='neg'>+15.9%</span> (ahora $0.6250 in / $3.1250 out)</li></ul></div>
-
+<section class="block reveal">
+  <div class="block-head"><span class="idx">01</span><h2>Mejor opción gratuita</h2></div>
   
+  <div class='table-scroll'><table class='grid'><thead><tr><th>Uso</th><th>Modelo</th><th>Calidad</th><th>Proveedor</th><th>$/M input</th><th>$/M output</th></tr></thead><tbody><tr><td class='usage'>Coding</td><td colspan='4' class='muted'>Sin candidato gratis puntuado</td></tr><tr><td class='usage'>Agentic coding</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>Razonamiento</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>General</td><td colspan='4' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
+</section>
 
-  <footer>Generado automáticamente. Los precios se recogen cada mañana; el histórico completo está en <code>data/</code> y <code>reports/</code> del repositorio.</footer>
+<section class="block reveal">
+  <div class="block-head"><span class="idx">02</span><h2>Mejor relación calidad/precio de pago</h2></div>
+  <p class='block-note'>Solo entra un modelo cuando el benchmark de coding lo respalda — un modelo barato sin score todavía no aparece aquí, aunque merezca la pena; lo verás en las tablas de precio de arriba.</p>
+  <div class='table-scroll'><table class='grid'><thead><tr><th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste/tarea</th><th>$/M input</th><th>$/M output</th><th>Calidad</th><th>Value</th></tr></thead><tbody><tr><td class='usage'>Coding</td><td><strong>deepseek-v3.2</strong></td><td><span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span></td><td data-value='0.01047' class='num'>$0.01047</td><td data-value='0.269' class='num'>$0.2690</td><td data-value='0.4' class='num'>$0.4000</td><td data-value='7.4'><span class='qcell'><span class='qbar'><span class='qbar-fill tier-good' style='width:74%'></span></span><span class='qval'>7.4</span></span></td><td data-value='67.3' class='num'>67.3</td></tr><tr><td class='usage'>Agentic coding</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>Razonamiento</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>General</td><td colspan='6' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
+</section>
+
+<section class="block reveal">
+  <div class="block-head"><span class="idx">03</span><h2>Opción premium por calidad</h2></div>
+  
+  <div class='table-scroll'><table class='grid'><thead><tr><th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste/tarea</th><th>$/M input</th><th>$/M output</th><th>Calidad</th></tr></thead><tbody><tr><td class='usage'>Coding</td><td><strong>gpt-5</strong></td><td><span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span></td><td data-value='0.0975' class='num'>$0.09750</td><td data-value='1.25' class='num'>$1.2500</td><td data-value='10.0' class='num'>$10.0000</td><td data-value='8.8'><span class='qcell'><span class='qbar'><span class='qbar-fill tier-good' style='width:88%'></span></span><span class='qval'>8.8</span></span></td></tr><tr><td class='usage'>Agentic coding</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>Razonamiento</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr><tr><td class='usage'>General</td><td colspan='5' class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</td></tr></tbody></table></div>
+</section>
+
+<section class="block reveal">
+  <div class="block-head"><span class="idx">04</span><h2>Mismo modelo, ruta más barata</h2></div>
+  <p class='block-note'>Compara el mismo modelo entre proveedores — no es una bajada de precio, es elegir mejor ruta hoy.</p>
+  <p class='muted'>Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay diferencias ≥ al umbral.</p>
+</section>
+
+<section class="block reveal">
+  <div class="block-head"><span class="idx">05</span><h2>Top 5 de pago por calidad/precio</h2></div>
+  
+  <h3>Coding</h3><ol class='top5'><li><span class='rank'>1</span><div><strong>deepseek-v3.2</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span><div class='meta'>calidad 7.4/10 · coste/tarea $0.01047 ($0.2690 in / $0.4000 out) · value 67.3</div></div></li><li><span class='rank'>2</span><div><strong>deepseek-r1</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span><div class='meta'>calidad 7.1/10 · coste/tarea $0.03600 ($0.7000 in / $2.5000 out) · value 54.1</div></div></li><li><span class='rank'>3</span><div><strong>gpt-5</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span><div class='meta'>calidad 8.8/10 · coste/tarea $0.09750 ($1.2500 in / $10.0000 out) · value 51.2</div></div></li><li><span class='rank'>4</span><div><strong>o4-mini</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span><div class='meta'>calidad 7.2/10 · coste/tarea $0.05940 ($1.1000 in / $4.4000 out) · value 48.7</div></div></li><li><span class='rank'>5</span><div><strong>kimi-k2</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span><div class='meta'>calidad 5.9/10 · coste/tarea $0.03090 ($0.5700 in / $2.3000 out) · value 46.4</div></div></li></ol><h3>Agentic coding</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p><h3>Razonamiento</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p><h3>General</h3><p class='muted'>Sin benchmark automatizado disponible todavía para esta categoría.</p>
+</section>
+
+<section class="block reveal">
+  <div class="block-head"><span class="idx">06</span><h2>Movimientos de precio</h2></div>
+  
+  <h3>Bajadas</h3><ul class='changes'><li><strong>remm-slerp-l2-13b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-17.1%</span> <span class='meta'>ahora $0.3500 in / $0.6500 out</span></li></ul><h3>Subidas</h3><ul class='changes'><li><strong>qwen2.5-vl-72b-instruct</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+148.8%</span> <span class='meta'>ahora $0.8000 in / $1.0000 out</span></li><li><strong>deepseek-chat-v3.1</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+99.7%</span> <span class='meta'>ahora $0.5500 in / $1.6500 out</span></li><li><strong>nemotron-3-ultra</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+15.9%</span> <span class='meta'>ahora $0.6250 in / $3.1250 out</span></li></ul>
+</section>
+
 </main>
+<footer><div style="max-width:1120px;margin:0 auto;padding:0 20px;">Generado automáticamente cada mañana. Histórico completo en <code>data/</code> y <code>reports/</code> del repositorio. Calidad de coding = pass-rate del Aider Polyglot Leaderboard, emparejado automáticamente por nombre de modelo — sin match fiable, sin puntuar.</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- sortable tables ---
+  document.querySelectorAll('table[data-sortable]').forEach(function (table) {
+    table.querySelectorAll('th[data-key]').forEach(function (th) {
+      th.addEventListener('click', function () {
+        var key = th.getAttribute('data-key');
+        var dir = th.getAttribute('data-dir') === 'asc' ? 'desc' : 'asc';
+        table.querySelectorAll('th[data-key]').forEach(function (x) { x.removeAttribute('data-dir'); });
+        th.setAttribute('data-dir', dir);
+        var tbody = table.querySelector('tbody');
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+        rows.sort(function (ra, rb) {
+          var ta = ra.querySelector('[data-key="' + key + '"]');
+          var tb = rb.querySelector('[data-key="' + key + '"]');
+          var va = ta ? parseFloat(ta.getAttribute('data-value')) : -Infinity;
+          var vb = tb ? parseFloat(tb.getAttribute('data-value')) : -Infinity;
+          var cmp = va - vb;
+          return dir === 'asc' ? cmp : -cmp;
+        });
+        rows.forEach(function (r) { tbody.appendChild(r); });
+      });
+    });
+  });
+
+  // --- scroll reveal + hero counters (skipped entirely under reduced motion) ---
+  if (reduceMotion || !window.gsap) { return; }
+  var hasScrollTrigger = !!window.ScrollTrigger;
+  if (hasScrollTrigger) { gsap.registerPlugin(ScrollTrigger); }
+  document.documentElement.classList.add('gsap-ready');
+
+  document.querySelectorAll('.reveal').forEach(function (section) {
+    var rows = section.querySelectorAll('tbody tr, ol.top5 > li, ul.changes > li');
+    var tl = gsap.timeline({
+      scrollTrigger: hasScrollTrigger
+        ? { trigger: section, start: 'top 85%', once: true }
+        : undefined,
+    });
+    tl.fromTo(section, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+    if (rows.length) {
+      tl.fromTo(rows, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, stagger: 0.035, ease: 'power2.out' }, '-=0.3');
+    }
+    if (!hasScrollTrigger) { tl.play(); }
+  });
+
+  document.querySelectorAll('.stat-num').forEach(function (el) {
+    var target = parseFloat(el.getAttribute('data-value'));
+    if (isNaN(target)) { return; }
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1, ease: 'power1.out', delay: 0.15,
+      onUpdate: function () { el.textContent = Math.round(obj.v); },
+    });
+  });
+})();
+</script>
 </body>
 </html>
