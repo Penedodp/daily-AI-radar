@@ -57,13 +57,13 @@ def _provider_badge(name):
     )
 
 
-def _quality_cell(score, label=None, ratio=None, sortable=False):
+def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=False):
     key = " data-key='quality'" if sortable else ""
     if score is None:
         return f"<td{key} data-value='-1' class='muted'>—</td>"
     pct = max(0.0, min(100.0, score * 10))
     tier = "tier-good" if score >= 6.5 else ("tier-mid" if score >= 3.5 else "tier-low")
-    tooltip = f"Aider Polyglot: {score * 10:.0f}% pass-rate"
+    tooltip = f"{source_label or 'Match automático'}: {score:.1f}/10"
     if label:
         tooltip += f" · match ‘{label}’"
     if ratio is not None:
@@ -93,7 +93,7 @@ def _section_free(recs, scored_categories):
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}"
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}</tr>"
         )
@@ -115,7 +115,7 @@ def _section_paid_value(recs, scored_categories):
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}"
             f"{_num_td(r.get('value_score'), r.get('value_score', '—'))}</tr>"
         )
     return "".join(rows)
@@ -136,7 +136,7 @@ def _section_paid_quality(recs, scored_categories):
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}</tr>"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}</tr>"
         )
     return "".join(rows)
 
@@ -587,7 +587,7 @@ SECTION_TEMPLATE = """
 
 PAGE_TAIL = """
 </main>
-<footer><div style="max-width:1120px;margin:0 auto;padding:0 20px;">Generado automáticamente cada mañana. Histórico completo en <code>data/</code> y <code>reports/</code> del repositorio. Calidad de coding = pass-rate del Aider Polyglot Leaderboard, emparejado automáticamente por nombre de modelo — sin match fiable, sin puntuar.</div></footer>
+<footer><div style="max-width:1120px;margin:0 auto;padding:0 20px;">Generado automáticamente cada mañana. Histórico completo en <code>data/</code> y <code>reports/</code> del repositorio. Calidad de coding = Aider Polyglot Leaderboard (prioritario) o LMArena WebDev Arena (respaldo), emparejados automáticamente por nombre de modelo — sin match fiable, sin puntuar.</div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

@@ -8,7 +8,7 @@ from providers.registry import collect_all
 from providers.openrouter_routes import fetch_routes
 from filters import is_relevant_text_model
 from normalize import canonicalize
-from quality_bench import fetch_leaderboard, match_models as match_bench_models
+from quality_bench import fetch_aider_leaderboard, fetch_lmarena_webdev, match_models as match_bench_models
 from scoring import costs_by_task, weighted_daily_cost, price_change, value_score, is_free
 from report_ai import generate_summary
 from report_html import build_html
@@ -77,6 +77,7 @@ def compact(row, category=None):
             result["value_score"] = row["value_scores"].get(category)
             result["quality_label"] = row["quality"].get("label")
             result["quality_match_ratio"] = row["quality"].get("match_ratio")
+            result["quality_source_label"] = row["quality"].get("source_label")
     if row.get("change_pct") is not None:
         result["change_pct"] = round(row["change_pct"], 1)
     return result
@@ -208,13 +209,24 @@ def main():
 
     raw_rows, provider_status = collect_all(config)
 
-    bench_cache = data_dir / "benchmarks" / "aider_polyglot.json"
-    bench_entries, bench_status = fetch_leaderboard(bench_cache)
-    provider_status["aider_polyglot"] = {"status": bench_status, "count": len(bench_entries)}
+    aider_cache = data_dir / "benchmarks" / "aider_polyglot.json"
+    aider_entries, aider_status = fetch_aider_leaderboard(aider_cache)
+    provider_status["aider_polyglot"] = {"status": aider_status, "count": len(aider_entries)}
+
+    arena_cache = data_dir / "benchmarks" / "lmarena_webdev.json"
+    arena_entries, arena_status = fetch_lmarena_webdev(arena_cache)
+    provider_status["lmarena_webdev"] = {"status": arena_status, "count": len(arena_entries)}
+
+    def bench_match_union(rows):
+        """Aider first (objective pass/fail correctness test); LMArena WebDev
+        Arena (crowd Elo, broader/faster coverage) fills in whatever Aider misses."""
+        arena_matches = match_bench_models(arena_entries, rows, "lmarena_webdev")
+        aider_matches = match_bench_models(aider_entries, rows, "aider_polyglot")
+        return {**arena_matches, **aider_matches}
 
     # OpenRouter underlying routes: track only useful/scored model IDs, not all 400+.
     openrouter_only = [r for r in raw_rows if r["source"] == "openrouter"]
-    bench_candidates = match_bench_models(bench_entries, openrouter_only)
+    bench_candidates = bench_match_union(openrouter_only)
     openrouter_candidates = []
     seen = set()
     for r in openrouter_only:
@@ -243,7 +255,7 @@ def main():
 
     # Final bench match over the full row set (openrouter + routes + other providers),
     # now that all sources/routes have been collected.
-    bench_matches = match_bench_models(bench_entries, raw_rows)
+    bench_matches = bench_match_union(raw_rows)
 
     models = []
     filtered = 0
@@ -264,6 +276,7 @@ def main():
             row["quality"] = {
                 "label": bench_q["label"],
                 "confidence": f"auto:{bench_q['source']}",
+                "source_label": bench_q.get("source_label", bench_q["source"]),
                 "scores": dict(bench_q["scores"]),
                 "match_ratio": bench_q.get("match_ratio"),
             }
@@ -423,9 +436,10 @@ def main():
 
     lines += [
         "",
-        "\\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard escalado a 0–10, "
-        "emparejado automáticamente por nombre de modelo (sin intervención manual). "
-        "Cuando no hay match fiable, el modelo queda sin puntuar en vez de estimarse.*",
+        "\\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard (prioritario) o, si no está, "
+        "rating Elo de LMArena WebDev Arena (respaldo con más cobertura), escalados a 0–10 y emparejados "
+        "automáticamente por nombre de modelo (sin intervención manual). "
+        "Cuando no hay match fiable en ninguna de las dos, el modelo queda sin puntuar en vez de estimarse.*",
         "",
         "## 🔀 Mismo modelo, proveedor/ruta más barata",
         "",
@@ -497,8 +511,10 @@ def main():
         "- **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico.",
         "- Los proveedores opcionales sin API key simplemente se omiten; el workflow sigue funcionando.",
         "- El resumen IA redacta la conclusión, pero no calcula precios ni rankings.",
-        "- La calidad de **coding** se obtiene automáticamente del Aider Polyglot Leaderboard "
-        "(fuente pública, sin API key) y no requiere mantenimiento manual. "
+        "- La calidad de **coding** se obtiene automáticamente de dos fuentes públicas sin API key: "
+        "**Aider Polyglot Leaderboard** (test de corrección fijo, prioritario cuando existe) y "
+        "**LMArena WebDev Arena** (ranking Elo por voto humano, respaldo con cobertura mucho más amplia "
+        "y rápida para modelos recién publicados). No requiere mantenimiento manual. "
         "**Agentic/razonamiento/general** aún no tienen una fuente de benchmark automatizada "
         "igual de fiable — se añadirán cuando se identifique una.",
     ]
