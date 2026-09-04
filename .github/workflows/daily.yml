@@ -27,11 +27,12 @@ jobs:
 
       - name: Ejecutar AI Price Radar
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # Nombres de secret tal como están creados en este repo (Settings > Secrets and variables > Actions).
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER }}
           OPENROUTER_MANAGEMENT_API_KEY: ${{ secrets.OPENROUTER_MANAGEMENT_API_KEY }}
-          CHEAPER_INFERENCE_API_KEY: ${{ secrets.CHEAPER_INFERENCE_API_KEY }}
-          TOGETHER_API_KEY: ${{ secrets.TOGETHER_API_KEY }}
-          NOVITA_API_KEY: ${{ secrets.NOVITA_API_KEY }}
+          CHEAPER_INFERENCE_API_KEY: ${{ secrets.CHEAPERINFERENCE }}
+          TOGETHER_API_KEY: ${{ secrets.TOGETHERAI }}
+          NOVITA_API_KEY: ${{ secrets.NOVIA_AI }}
         run: python src/main.py
 
       - name: Guardar informe
