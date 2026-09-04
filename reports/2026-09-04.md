@@ -1,6 +1,6 @@
 # AI Price Radar — 2026-09-04
 
-> **417 rutas/modelos** útiles · **1 fuentes con datos** · **69 rutas puntuadas**.
+> **417 rutas/modelos** útiles · **2 fuentes con datos** · **28 rutas puntuadas**.
 
 ## 📡 Fuentes
 
@@ -10,36 +10,37 @@
 | cheaperinference | `not_configured_or_empty` | 0 |
 | together | `not_configured_or_empty` | 0 |
 | novita | `not_configured_or_empty` | 0 |
+| aider_polyglot | `ok` | 53 |
 | openrouter_routes | `no_key` | 0 |
 
 ## 🆓 Mejor opción gratuita
 
 | Uso | Modelo | Calidad* | Proveedor/ruta |
 |---|---|---:|---|
-| 💻 Coding | **glm-5.2** | 9.5/10 | OpenRouter |
-| 🤖 Agentic coding | **glm-5.2** | 9.6/10 | OpenRouter |
-| 🧠 Razonamiento | **glm-5.2** | 9.5/10 | OpenRouter |
-| ⚡ General | **glm-5.2** | 9.2/10 | OpenRouter |
+| 💻 Coding | — | — | — |
+| 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
+| 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
+| ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
 
 ## 💰 Mejor relación calidad/precio DE PAGO
 
 | Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* | Value |
 |---|---|---|---:|---:|---:|
-| 💻 Coding | **deepseek-v4-flash** | **OpenRouter** | $0.00246 | 9.3/10 | 90.8 |
-| 🤖 Agentic coding | **ling-3.0-flash** | **OpenRouter** | $0.00202 | 9.1/10 | 89.2 |
-| 🧠 Razonamiento | **deepseek-v4-flash** | **OpenRouter** | $0.00116 | 9.2/10 | 91.0 |
-| ⚡ General | **deepseek-v4-flash** | **OpenRouter** | $0.00044 | 9.2/10 | 91.6 |
+| 💻 Coding | **deepseek-v3.2** | **OpenRouter** | $0.01047 | 7.4/10 | 67.3 |
+| 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
+| 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
+| ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
 
 ## 🧠 Opción premium por calidad
 
 | Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* |
 |---|---|---|---:|---:|
-| 💻 Coding | **claude-opus-5** | OpenRouter | $0.30000 | 9.9/10 |
-| 🤖 Agentic coding | **claude-opus-5** | OpenRouter | $0.60000 | 9.9/10 |
-| 🧠 Razonamiento | **claude-opus-5** | OpenRouter | $0.14750 | 9.9/10 |
-| ⚡ General | **claude-opus-5** | OpenRouter | $0.05500 | 9.7/10 |
+| 💻 Coding | **gpt-5** | OpenRouter | $0.09750 | 8.8/10 |
+| 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | |
+| 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | |
+| ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | |
 
-\* *Calidad = heurística curada 0–10, no benchmark oficial.*
+\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard escalado a 0–10, emparejado automáticamente por nombre de modelo (sin intervención manual). Cuando no hay match fiable, el modelo queda sin puntuar en vez de estimarse.*
 
 ## 🔀 Mismo modelo, proveedor/ruta más barata
 
@@ -48,32 +49,20 @@ Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay difer
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
 ### 💻 Coding
-1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00246 · value 90.8
-2. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00378 · value 90.6
-3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00303 · value 90.3
-4. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00101 · value 90.1
-5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.3/10 · coste/tarea $0.00372 · value 89.7
+1. **deepseek-v3.2** vía **OpenRouter** — calidad 7.4/10 · coste/tarea $0.01047 · value 67.3
+2. **deepseek-v3.2** vía **OpenRouter** — calidad 7.4/10 · coste/tarea $0.01056 · value 67.2
+3. **deepseek-r1** vía **OpenRouter** — calidad 7.1/10 · coste/tarea $0.03600 · value 54.1
+4. **gpt-5** vía **OpenRouter** — calidad 8.8/10 · coste/tarea $0.09750 · value 51.2
+5. **o4-mini** vía **OpenRouter** — calidad 7.2/10 · coste/tarea $0.05940 · value 48.7
 
 ### 🤖 Agentic coding
-1. **ling-3.0-flash** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00202 · value 89.2
-2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00492 · value 87.8
-3. **qwen3-coder** vía **OpenRouter** — calidad 9.4/10 · coste/tarea $0.00756 · value 87.6
-4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00606 · value 86.9
-5. **poolside-laguna-xs-2.1** vía **OpenRouter** — calidad 9.1/10 · coste/tarea $0.00504 · value 86.7
+- _Sin benchmark automatizado disponible todavía para esta categoría._
 
 ### 🧠 Razonamiento
-1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00116 · value 91.0
-2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00141 · value 90.7
-3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00168 · value 90.5
-4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00266 · value 89.6
-5. **nemotron-3.5-lightning** vía **OpenRouter** — calidad 9.0/10 · coste/tarea $0.00166 · value 88.5
+- _Sin benchmark automatizado disponible todavía para esta categoría._
 
 ### ⚡ General
-1. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00044 · value 91.6
-2. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00054 · value 91.5
-3. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00066 · value 91.4
-4. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00104 · value 91.1
-5. **deepseek-v4-flash** vía **OpenRouter** — calidad 9.2/10 · coste/tarea $0.00189 · value 90.3
+- _Sin benchmark automatizado disponible todavía para esta categoría._
 
 ## 🔥 Bajadas reales de precio
 
@@ -92,3 +81,4 @@ Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay difer
 - **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico.
 - Los proveedores opcionales sin API key simplemente se omiten; el workflow sigue funcionando.
 - El resumen IA redacta la conclusión, pero no calcula precios ni rankings.
+- La calidad de **coding** se obtiene automáticamente del Aider Polyglot Leaderboard (fuente pública, sin API key) y no requiere mantenimiento manual. **Agentic/razonamiento/general** aún no tienen una fuente de benchmark automatizada igual de fiable — se añadirán cuando se identifique una.

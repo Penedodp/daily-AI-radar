@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T12:05:21.070745+01:00",
+  "generated_at": "2026-09-04T12:10:58.401335+01:00",
   "provider_status": {
     "openrouter": {
       "status": "ok",
@@ -17,6 +17,10 @@
       "status": "not_configured_or_empty",
       "count": 0
     },
+    "aider_polyglot": {
+      "status": "ok",
+      "count": 53
+    },
     "openrouter_routes": {
       "status": "no_key",
       "count": 0
@@ -26,737 +30,134 @@
     "raw_rows": 422,
     "models_kept": 417,
     "models_filtered": 5,
-    "providers_with_data": 1,
-    "scored_routes": 69
+    "providers_with_data": 2,
+    "scored_routes": 28
   },
   "recommendations": {
     "coding": {
-      "best_free": {
-        "model": "glm-5.2",
-        "raw_model": "z-ai/glm-5.2:free",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": true,
-        "input": 0.0,
-        "output": 0.0,
-        "weighted_cost": 0.0,
-        "task_cost": 0.0,
-        "quality_score": 9.5,
-        "value_score": 95.0
-      },
+      "best_free": null,
       "best_paid_value": {
-        "model": "deepseek-v4-flash",
-        "raw_model": "~deepseek/deepseek-v4-flash-latest",
+        "model": "deepseek-v3.2",
+        "raw_model": "deepseek/deepseek-v3.2",
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 0.05,
-        "output": 0.16,
-        "weighted_cost": 0.002678,
-        "task_cost": 0.00246,
-        "quality_score": 9.3,
-        "value_score": 90.8,
+        "input": 0.269,
+        "output": 0.4,
+        "weighted_cost": 0.011347,
+        "task_cost": 0.01047,
+        "quality_score": 7.4,
+        "value_score": 67.3,
         "change_pct": 0.0
       },
       "best_paid_quality": {
-        "model": "claude-opus-5",
-        "raw_model": "anthropic/claude-opus-5",
+        "model": "gpt-5",
+        "raw_model": "openai/gpt-5",
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 5.0,
-        "output": 25.0,
-        "weighted_cost": 0.327625,
-        "task_cost": 0.3,
-        "quality_score": 9.9,
-        "value_score": 37.4,
+        "input": 1.25,
+        "output": 10.0,
+        "weighted_cost": 0.106825,
+        "task_cost": 0.0975,
+        "quality_score": 8.8,
+        "value_score": 51.2,
         "change_pct": 0.0
       },
       "top_paid_value": [
         {
-          "model": "deepseek-v4-flash",
-          "raw_model": "~deepseek/deepseek-v4-flash-latest",
+          "model": "deepseek-v3.2",
+          "raw_model": "deepseek/deepseek-v3.2",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.05,
-          "output": 0.16,
-          "weighted_cost": 0.002678,
-          "task_cost": 0.00246,
-          "quality_score": 9.3,
-          "value_score": 90.8,
+          "input": 0.269,
+          "output": 0.4,
+          "weighted_cost": 0.011347,
+          "task_cost": 0.01047,
+          "quality_score": 7.4,
+          "value_score": 67.3,
           "change_pct": 0.0
         },
         {
-          "model": "qwen3-coder",
-          "raw_model": "qwen/qwen3-coder-30b-a3b-instruct",
+          "model": "deepseek-v3.2",
+          "raw_model": "deepseek/deepseek-v3.2-exp",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.07,
-          "output": 0.28,
-          "weighted_cost": 0.004122,
-          "task_cost": 0.00378,
-          "quality_score": 9.4,
-          "value_score": 90.6,
+          "input": 0.27,
+          "output": 0.41,
+          "weighted_cost": 0.011445,
+          "task_cost": 0.01056,
+          "quality_score": 7.4,
+          "value_score": 67.2,
           "change_pct": 0.0
         },
         {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
+          "model": "deepseek-r1",
+          "raw_model": "deepseek/deepseek-r1",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.065,
-          "output": 0.18,
-          "weighted_cost": 0.003296,
-          "task_cost": 0.00303,
-          "quality_score": 9.3,
-          "value_score": 90.3,
+          "input": 0.7,
+          "output": 2.5,
+          "weighted_cost": 0.039222,
+          "task_cost": 0.036,
+          "quality_score": 7.1,
+          "value_score": 54.1,
           "change_pct": 0.0
         },
         {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash",
+          "model": "gpt-5",
+          "raw_model": "openai/gpt-5",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.021,
-          "output": 0.063,
-          "weighted_cost": 0.001097,
-          "task_cost": 0.001008,
-          "quality_score": 9.1,
-          "value_score": 90.1,
+          "input": 1.25,
+          "output": 10.0,
+          "weighted_cost": 0.106825,
+          "task_cost": 0.0975,
+          "quality_score": 8.8,
+          "value_score": 51.2,
           "change_pct": 0.0
         },
         {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash",
+          "model": "o4-mini",
+          "raw_model": "openai/o4-mini",
           "provider": "OpenRouter",
           "source": "openrouter",
           "free": false,
-          "input": 0.088606,
-          "output": 0.177212,
-          "weighted_cost": 0.00404,
-          "task_cost": 0.003721,
-          "quality_score": 9.3,
-          "value_score": 89.7,
+          "input": 1.1,
+          "output": 4.4,
+          "weighted_cost": 0.064768,
+          "task_cost": 0.0594,
+          "quality_score": 7.2,
+          "value_score": 48.7,
           "change_pct": 0.0
         }
       ],
-      "top_free": [
-        {
-          "model": "glm-5.2",
-          "raw_model": "z-ai/glm-5.2:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.5,
-          "value_score": 95.0
-        },
-        {
-          "model": "nemotron-3-ultra",
-          "raw_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.3,
-          "value_score": 93.0
-        },
-        {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash-fin:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.1,
-          "value_score": 91.0
-        },
-        {
-          "model": "minimax-m3",
-          "raw_model": "minimax/minimax-m3:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.0,
-          "value_score": 90.0
-        },
-        {
-          "model": "nemotron-3.5-lightning",
-          "raw_model": "nvidia/nemotron-3.5-lightning:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.9,
-          "value_score": 89.0
-        }
-      ]
+      "top_free": []
     },
     "agentic": {
-      "best_free": {
-        "model": "glm-5.2",
-        "raw_model": "z-ai/glm-5.2:free",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": true,
-        "input": 0.0,
-        "output": 0.0,
-        "weighted_cost": 0.0,
-        "task_cost": 0.0,
-        "quality_score": 9.6,
-        "value_score": 96.0
-      },
-      "best_paid_value": {
-        "model": "ling-3.0-flash",
-        "raw_model": "inclusionai/ling-3.0-flash",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.021,
-        "output": 0.063,
-        "weighted_cost": 0.001097,
-        "task_cost": 0.002016,
-        "quality_score": 9.1,
-        "value_score": 89.2,
-        "change_pct": 0.0
-      },
-      "best_paid_quality": {
-        "model": "claude-opus-5",
-        "raw_model": "anthropic/claude-opus-5",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 5.0,
-        "output": 25.0,
-        "weighted_cost": 0.327625,
-        "task_cost": 0.6,
-        "quality_score": 9.9,
-        "value_score": 27.5,
-        "change_pct": 0.0
-      },
-      "top_paid_value": [
-        {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.021,
-          "output": 0.063,
-          "weighted_cost": 0.001097,
-          "task_cost": 0.002016,
-          "quality_score": 9.1,
-          "value_score": 89.2,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "~deepseek/deepseek-v4-flash-latest",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.05,
-          "output": 0.16,
-          "weighted_cost": 0.002678,
-          "task_cost": 0.00492,
-          "quality_score": 9.2,
-          "value_score": 87.8,
-          "change_pct": 0.0
-        },
-        {
-          "model": "qwen3-coder",
-          "raw_model": "qwen/qwen3-coder-30b-a3b-instruct",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.07,
-          "output": 0.28,
-          "weighted_cost": 0.004122,
-          "task_cost": 0.00756,
-          "quality_score": 9.4,
-          "value_score": 87.6,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.065,
-          "output": 0.18,
-          "weighted_cost": 0.003296,
-          "task_cost": 0.00606,
-          "quality_score": 9.2,
-          "value_score": 86.9,
-          "change_pct": 0.0
-        },
-        {
-          "model": "poolside-laguna-xs-2.1",
-          "raw_model": "poolside/laguna-xs-2.1",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.06,
-          "output": 0.12,
-          "weighted_cost": 0.002735,
-          "task_cost": 0.00504,
-          "quality_score": 9.1,
-          "value_score": 86.7,
-          "change_pct": 0.0
-        }
-      ],
-      "top_free": [
-        {
-          "model": "glm-5.2",
-          "raw_model": "z-ai/glm-5.2:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.6,
-          "value_score": 96.0
-        },
-        {
-          "model": "nemotron-3-ultra",
-          "raw_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.5,
-          "value_score": 95.0
-        },
-        {
-          "model": "minimax-m3",
-          "raw_model": "minimax/minimax-m3:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.2,
-          "value_score": 92.0
-        },
-        {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash-fin:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.1,
-          "value_score": 91.0
-        },
-        {
-          "model": "poolside-laguna-s-2.1",
-          "raw_model": "poolside/laguna-s-2.1:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.1,
-          "value_score": 91.0
-        }
-      ]
+      "best_free": null,
+      "best_paid_value": null,
+      "best_paid_quality": null,
+      "top_paid_value": [],
+      "top_free": []
     },
     "reasoning": {
-      "best_free": {
-        "model": "glm-5.2",
-        "raw_model": "z-ai/glm-5.2:free",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": true,
-        "input": 0.0,
-        "output": 0.0,
-        "weighted_cost": 0.0,
-        "task_cost": 0.0,
-        "quality_score": 9.5,
-        "value_score": 95.0
-      },
-      "best_paid_value": {
-        "model": "deepseek-v4-flash",
-        "raw_model": "~deepseek/deepseek-v4-flash-latest",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.05,
-        "output": 0.16,
-        "weighted_cost": 0.002678,
-        "task_cost": 0.00116,
-        "quality_score": 9.2,
-        "value_score": 91.0,
-        "change_pct": 0.0
-      },
-      "best_paid_quality": {
-        "model": "claude-opus-5",
-        "raw_model": "anthropic/claude-opus-5",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 5.0,
-        "output": 25.0,
-        "weighted_cost": 0.327625,
-        "task_cost": 0.1475,
-        "quality_score": 9.9,
-        "value_score": 49.8,
-        "change_pct": 0.0
-      },
-      "top_paid_value": [
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "~deepseek/deepseek-v4-flash-latest",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.05,
-          "output": 0.16,
-          "weighted_cost": 0.002678,
-          "task_cost": 0.00116,
-          "quality_score": 9.2,
-          "value_score": 91.0,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.065,
-          "output": 0.18,
-          "weighted_cost": 0.003296,
-          "task_cost": 0.00141,
-          "quality_score": 9.2,
-          "value_score": 90.7,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.088606,
-          "output": 0.177212,
-          "weighted_cost": 0.00404,
-          "task_cost": 0.001684,
-          "quality_score": 9.2,
-          "value_score": 90.5,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731:batch",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.14,
-          "output": 0.28,
-          "weighted_cost": 0.006383,
-          "task_cost": 0.00266,
-          "quality_score": 9.2,
-          "value_score": 89.6,
-          "change_pct": 0.0
-        },
-        {
-          "model": "nemotron-3.5-lightning",
-          "raw_model": "nvidia/nemotron-3.5-lightning",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.08,
-          "output": 0.2,
-          "weighted_cost": 0.003913,
-          "task_cost": 0.00166,
-          "quality_score": 9.0,
-          "value_score": 88.5,
-          "change_pct": 0.0
-        }
-      ],
-      "top_free": [
-        {
-          "model": "glm-5.2",
-          "raw_model": "z-ai/glm-5.2:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.5,
-          "value_score": 95.0
-        },
-        {
-          "model": "nemotron-3-ultra",
-          "raw_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.4,
-          "value_score": 94.0
-        },
-        {
-          "model": "nemotron-3.5-lightning",
-          "raw_model": "nvidia/nemotron-3.5-lightning:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.0,
-          "value_score": 90.0
-        },
-        {
-          "model": "minimax-m3",
-          "raw_model": "minimax/minimax-m3:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.9,
-          "value_score": 89.0
-        },
-        {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash-fin:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.8,
-          "value_score": 88.0
-        }
-      ]
+      "best_free": null,
+      "best_paid_value": null,
+      "best_paid_quality": null,
+      "top_paid_value": [],
+      "top_free": []
     },
     "general": {
-      "best_free": {
-        "model": "glm-5.2",
-        "raw_model": "z-ai/glm-5.2:free",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": true,
-        "input": 0.0,
-        "output": 0.0,
-        "weighted_cost": 0.0,
-        "task_cost": 0.0,
-        "quality_score": 9.2,
-        "value_score": 92.0
-      },
-      "best_paid_value": {
-        "model": "deepseek-v4-flash",
-        "raw_model": "~deepseek/deepseek-v4-flash-latest",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.05,
-        "output": 0.16,
-        "weighted_cost": 0.002678,
-        "task_cost": 0.000442,
-        "quality_score": 9.2,
-        "value_score": 91.6,
-        "change_pct": 0.0
-      },
-      "best_paid_quality": {
-        "model": "claude-opus-5",
-        "raw_model": "anthropic/claude-opus-5",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 5.0,
-        "output": 25.0,
-        "weighted_cost": 0.327625,
-        "task_cost": 0.055,
-        "quality_score": 9.7,
-        "value_score": 66.9,
-        "change_pct": 0.0
-      },
-      "top_paid_value": [
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "~deepseek/deepseek-v4-flash-latest",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.05,
-          "output": 0.16,
-          "weighted_cost": 0.002678,
-          "task_cost": 0.000442,
-          "quality_score": 9.2,
-          "value_score": 91.6,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.065,
-          "output": 0.18,
-          "weighted_cost": 0.003296,
-          "task_cost": 0.000541,
-          "quality_score": 9.2,
-          "value_score": 91.5,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.088606,
-          "output": 0.177212,
-          "weighted_cost": 0.00404,
-          "task_cost": 0.000656,
-          "quality_score": 9.2,
-          "value_score": 91.4,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-0731:batch",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.14,
-          "output": 0.28,
-          "weighted_cost": 0.006383,
-          "task_cost": 0.001036,
-          "quality_score": 9.2,
-          "value_score": 91.1,
-          "change_pct": 0.0
-        },
-        {
-          "model": "deepseek-v4-flash",
-          "raw_model": "deepseek/deepseek-v4-flash-vision-exp",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": false,
-          "input": 0.22,
-          "output": 0.66,
-          "weighted_cost": 0.011492,
-          "task_cost": 0.001892,
-          "quality_score": 9.2,
-          "value_score": 90.3,
-          "change_pct": 0.0
-        }
-      ],
-      "top_free": [
-        {
-          "model": "glm-5.2",
-          "raw_model": "z-ai/glm-5.2:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 9.2,
-          "value_score": 92.0
-        },
-        {
-          "model": "minimax-m3",
-          "raw_model": "minimax/minimax-m3:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.9,
-          "value_score": 89.0
-        },
-        {
-          "model": "nemotron-3-ultra",
-          "raw_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.8,
-          "value_score": 88.0
-        },
-        {
-          "model": "ling-3.0-flash",
-          "raw_model": "inclusionai/ling-3.0-flash-fin:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.7,
-          "value_score": 87.0
-        },
-        {
-          "model": "nemotron-3.5-lightning",
-          "raw_model": "nvidia/nemotron-3.5-lightning:free",
-          "provider": "OpenRouter",
-          "source": "openrouter",
-          "free": true,
-          "input": 0.0,
-          "output": 0.0,
-          "weighted_cost": 0.0,
-          "task_cost": 0.0,
-          "quality_score": 8.6,
-          "value_score": 86.0
-        }
-      ]
+      "best_free": null,
+      "best_paid_value": null,
+      "best_paid_quality": null,
+      "top_paid_value": [],
+      "top_free": []
     }
   },
   "cross_provider_opportunities": [],
@@ -1284,16 +685,7 @@
         "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827"
       },
       "canonical_model": "ling-3.0-flash",
-      "quality": {
-        "label": "Ling 3.0 Flash",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.1,
-          "agentic": 9.1,
-          "reasoning": 8.8,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0028799999999999997,
         "agentic": 0.0057599999999999995,
@@ -1301,12 +693,7 @@
         "general": 0.000516
       },
       "weighted_cost": 0.0031341,
-      "value_scores": {
-        "coding": 88.5,
-        "agentic": 86.2,
-        "reasoning": 86.8,
-        "general": 86.6
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -1347,16 +734,7 @@
         "canonical_slug": "inclusionai/ling-3.0-flash-fin-20260827"
       },
       "canonical_model": "ling-3.0-flash",
-      "quality": {
-        "label": "Ling 3.0 Flash",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.1,
-          "agentic": 9.1,
-          "reasoning": 8.8,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -1364,12 +742,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 91.0,
-        "agentic": 91.0,
-        "reasoning": 88.0,
-        "general": 87.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -1685,16 +1058,7 @@
         "canonical_slug": "deepseek/deepseek-v4-flash-vision-exp-20260821"
       },
       "canonical_model": "deepseek-v4-flash",
-      "quality": {
-        "label": "DeepSeek V4 Flash",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.2,
-          "reasoning": 9.2,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.01056,
         "agentic": 0.02112,
@@ -1702,12 +1066,7 @@
         "general": 0.001892
       },
       "weighted_cost": 0.0114917,
-      "value_scores": {
-        "coding": 84.5,
-        "agentic": 77.1,
-        "reasoning": 87.8,
-        "general": 90.3
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -2381,16 +1740,7 @@
         "canonical_slug": "deepseek/deepseek-v4-pro-20260813"
       },
       "canonical_model": "deepseek-v4-pro",
-      "quality": {
-        "label": "DeepSeek V4 Pro",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.5,
-          "agentic": 9.5,
-          "reasoning": 9.6,
-          "general": 9.4
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.053539199999999995,
         "agentic": 0.10707839999999999,
@@ -2398,12 +1748,7 @@
         "general": 0.009592439999999999
       },
       "weighted_cost": 0.058262918999999996,
-      "value_scores": {
-        "coding": 66.0,
-        "agentic": 53.6,
-        "reasoning": 78.3,
-        "general": 86.1
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -2446,16 +1791,7 @@
         "canonical_slug": "deepseek/deepseek-v4-pro-20260813"
       },
       "canonical_model": "deepseek-v4-pro",
-      "quality": {
-        "label": "DeepSeek V4 Pro",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.5,
-          "agentic": 9.5,
-          "reasoning": 9.6,
-          "general": 9.4
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.06336,
         "agentic": 0.12672,
@@ -2463,12 +1799,7 @@
         "general": 0.011352000000000001
       },
       "weighted_cost": 0.0689502,
-      "value_scores": {
-        "coding": 63.1,
-        "agentic": 50.5,
-        "reasoning": 76.0,
-        "general": 84.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -2617,16 +1948,7 @@
         "canonical_slug": "nvidia/nemotron-3.5-lightning-20260807"
       },
       "canonical_model": "nemotron-3.5-lightning",
-      "quality": {
-        "label": "Nemotron 3.5 Lightning",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.0,
-          "reasoning": 9.0,
-          "general": 8.6
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0036,
         "agentic": 0.0072,
@@ -2634,12 +1956,7 @@
         "general": 0.0006399999999999999
       },
       "weighted_cost": 0.003913,
-      "value_scores": {
-        "coding": 86.0,
-        "agentic": 84.1,
-        "reasoning": 88.5,
-        "general": 85.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -2673,16 +1990,7 @@
         "canonical_slug": "nvidia/nemotron-3.5-lightning-20260807"
       },
       "canonical_model": "nemotron-3.5-lightning",
-      "quality": {
-        "label": "Nemotron 3.5 Lightning",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.0,
-          "reasoning": 9.0,
-          "general": 8.6
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -2690,12 +1998,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 89.0,
-        "agentic": 90.0,
-        "reasoning": 90.0,
-        "general": 86.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -2986,16 +2289,7 @@
         "canonical_slug": "qwen/qwen3.8-max-20260803"
       },
       "canonical_model": "qwen3.8-max",
-      "quality": {
-        "label": "Qwen3.8 Max",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.6,
-          "agentic": 9.6,
-          "reasoning": 9.6,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.096,
         "agentic": 0.192,
@@ -3003,12 +2297,7 @@
         "general": 0.0172
       },
       "weighted_cost": 0.10447000000000001,
-      "value_scores": {
-        "coding": 56.2,
-        "agentic": 43.6,
-        "reasoning": 69.6,
-        "general": 81.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3056,16 +2345,7 @@
         "canonical_slug": "~deepseek/deepseek-v4-flash-latest"
       },
       "canonical_model": "deepseek-v4-flash",
-      "quality": {
-        "label": "DeepSeek V4 Flash",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.2,
-          "reasoning": 9.2,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.00246,
         "agentic": 0.00492,
@@ -3073,12 +2353,7 @@
         "general": 0.000442
       },
       "weighted_cost": 0.0026782,
-      "value_scores": {
-        "coding": 90.8,
-        "agentic": 87.8,
-        "reasoning": 91.0,
-        "general": 91.6
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3126,16 +2401,7 @@
         "canonical_slug": "deepseek/deepseek-v4-flash-20260731"
       },
       "canonical_model": "deepseek-v4-flash",
-      "quality": {
-        "label": "DeepSeek V4 Flash",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.2,
-          "reasoning": 9.2,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0030299999999999997,
         "agentic": 0.006059999999999999,
@@ -3143,12 +2409,7 @@
         "general": 0.000541
       },
       "weighted_cost": 0.0032955999999999997,
-      "value_scores": {
-        "coding": 90.3,
-        "agentic": 86.9,
-        "reasoning": 90.7,
-        "general": 91.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3191,16 +2452,7 @@
         "canonical_slug": "deepseek/deepseek-v4-flash-20260731"
       },
       "canonical_model": "deepseek-v4-flash",
-      "quality": {
-        "label": "DeepSeek V4 Flash",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.2,
-          "reasoning": 9.2,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.005880000000000001,
         "agentic": 0.011760000000000001,
@@ -3208,12 +2460,7 @@
         "general": 0.001036
       },
       "weighted_cost": 0.0063826,
-      "value_scores": {
-        "coding": 88.0,
-        "agentic": 82.8,
-        "reasoning": 89.6,
-        "general": 91.1
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3455,16 +2702,7 @@
         "canonical_slug": "anthropic/claude-opus-5-20260723"
       },
       "canonical_model": "claude-opus-5",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -3472,12 +2710,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3515,16 +2748,7 @@
         "canonical_slug": "anthropic/claude-opus-5-20260723"
       },
       "canonical_model": "claude-opus-5:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.15,
         "agentic": 0.3,
@@ -3532,12 +2756,7 @@
         "general": 0.0275
       },
       "weighted_cost": 0.1638125,
-      "value_scores": {
-        "coding": 49.5,
-        "agentic": 37.4,
-        "reasoning": 62.9,
-        "general": 77.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3581,16 +2800,7 @@
         "canonical_slug": "inclusionai/ling-3.0-flash-20260723"
       },
       "canonical_model": "ling-3.0-flash",
-      "quality": {
-        "label": "Ling 3.0 Flash",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.1,
-          "agentic": 9.1,
-          "reasoning": 8.8,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.001008,
         "agentic": 0.002016,
@@ -3598,12 +2808,7 @@
         "general": 0.0001806
       },
       "weighted_cost": 0.001096935,
-      "value_scores": {
-        "coding": 90.1,
-        "agentic": 89.2,
-        "reasoning": 87.6,
-        "general": 86.8
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3635,16 +2840,7 @@
         "canonical_slug": "poolside/laguna-s-2.1-20260720"
       },
       "canonical_model": "poolside-laguna-s-2.1",
-      "quality": {
-        "label": "Poolside Laguna 2.1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.1,
-          "reasoning": 8.4,
-          "general": 8.0
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0037799999999999995,
         "agentic": 0.007559999999999999,
@@ -3652,12 +2848,7 @@
         "general": 0.0006659999999999999
       },
       "weighted_cost": 0.004103099999999999,
-      "value_scores": {
-        "coding": 85.8,
-        "agentic": 84.8,
-        "reasoning": 82.6,
-        "general": 79.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -3689,16 +2880,7 @@
         "canonical_slug": "poolside/laguna-s-2.1-20260720"
       },
       "canonical_model": "poolside-laguna-s-2.1",
-      "quality": {
-        "label": "Poolside Laguna 2.1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.1,
-          "reasoning": 8.4,
-          "general": 8.0
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -3706,12 +2888,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 89.0,
-        "agentic": 91.0,
-        "reasoning": 84.0,
-        "general": 80.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -4155,16 +3332,7 @@
         "canonical_slug": "moonshotai/kimi-k3-20260715"
       },
       "canonical_model": "kimi-k3",
-      "quality": {
-        "label": "Kimi K3",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.8,
-          "reasoning": 9.6,
-          "general": 9.4
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.18,
         "agentic": 0.36,
@@ -4172,12 +3340,7 @@
         "general": 0.033
       },
       "weighted_cost": 0.196575,
-      "value_scores": {
-        "coding": 45.2,
-        "agentic": 34.2,
-        "reasoning": 57.7,
-        "general": 73.0
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -4222,16 +3385,7 @@
         "canonical_slug": "moonshotai/kimi-k3-20260715"
       },
       "canonical_model": "kimi-k3",
-      "quality": {
-        "label": "Kimi K3",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.8,
-          "reasoning": 9.6,
-          "general": 9.4
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.18,
         "agentic": 0.36,
@@ -4239,12 +3393,7 @@
         "general": 0.033
       },
       "weighted_cost": 0.196575,
-      "value_scores": {
-        "coding": 45.2,
-        "agentic": 34.2,
-        "reasoning": 57.7,
-        "general": 73.0
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -5158,16 +4307,7 @@
         "canonical_slug": "poolside/laguna-xs-2.1-20260625"
       },
       "canonical_model": "poolside-laguna-xs-2.1",
-      "quality": {
-        "label": "Poolside Laguna 2.1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.1,
-          "reasoning": 8.4,
-          "general": 8.0
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0025199999999999997,
         "agentic": 0.005039999999999999,
@@ -5175,12 +4315,7 @@
         "general": 0.00044399999999999995
       },
       "weighted_cost": 0.0027354,
-      "value_scores": {
-        "coding": 86.8,
-        "agentic": 86.7,
-        "reasoning": 83.1,
-        "general": 79.6
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -5212,16 +4347,7 @@
         "canonical_slug": "poolside/laguna-xs-2.1-20260625"
       },
       "canonical_model": "poolside-laguna-xs-2.1",
-      "quality": {
-        "label": "Poolside Laguna 2.1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.1,
-          "reasoning": 8.4,
-          "general": 8.0
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -5229,12 +4355,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 89.0,
-        "agentic": 91.0,
-        "reasoning": 84.0,
-        "general": 80.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -5273,16 +4394,7 @@
         "canonical_slug": "anthropic/claude-sonnet-5-20260630"
       },
       "canonical_model": "claude-sonnet-5",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.12,
         "agentic": 0.24,
@@ -5290,12 +4402,7 @@
         "general": 0.022
       },
       "weighted_cost": 0.13105,
-      "value_scores": {
-        "coding": 52.6,
-        "agentic": 40.3,
-        "reasoning": 64.3,
-        "general": 79.2
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -5333,16 +4440,7 @@
         "canonical_slug": "anthropic/claude-sonnet-5-20260630"
       },
       "canonical_model": "claude-sonnet-5:batch",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.06,
         "agentic": 0.12,
@@ -5350,12 +4448,7 @@
         "general": 0.011
       },
       "weighted_cost": 0.065525,
-      "value_scores": {
-        "coding": 65.4,
-        "agentic": 52.6,
-        "reasoning": 75.3,
-        "general": 86.0
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -5673,16 +4766,7 @@
         "canonical_slug": "z-ai/glm-5.2-20260616"
       },
       "canonical_model": "glm-5.2",
-      "quality": {
-        "label": "GLM 5.2",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.5,
-          "agentic": 9.6,
-          "reasoning": 9.5,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.047196,
         "agentic": 0.094392,
@@ -5690,12 +4774,7 @@
         "general": 0.0084732
       },
       "weighted_cost": 0.05137602,
-      "value_scores": {
-        "coding": 68.1,
-        "agentic": 56.5,
-        "reasoning": 79.0,
-        "general": 85.1
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -5738,16 +4817,7 @@
         "canonical_slug": "z-ai/glm-5.2-20260616"
       },
       "canonical_model": "glm-5.2",
-      "quality": {
-        "label": "GLM 5.2",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.5,
-          "agentic": 9.6,
-          "reasoning": 9.5,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -5755,12 +4825,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 95.0,
-        "agentic": 96.0,
-        "reasoning": 95.0,
-        "general": 92.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -5807,16 +4872,7 @@
         "canonical_slug": "moonshotai/kimi-k2.7-code-20260612"
       },
       "canonical_model": "kimi-k2.7-code",
-      "quality": {
-        "label": "Kimi K2.7 Code",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.4,
-          "reasoning": 9.0,
-          "general": 8.8
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0402,
         "agentic": 0.0804,
@@ -5824,12 +4880,7 @@
         "general": 0.007379999999999999
       },
       "weighted_cost": 0.043911,
-      "value_scores": {
-        "coding": 69.2,
-        "agentic": 58.2,
-        "reasoning": 76.2,
-        "general": 82.1
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -6058,16 +5109,7 @@
         "canonical_slug": "nvidia/nemotron-3-ultra-550b-a55b-20260604"
       },
       "canonical_model": "nemotron-3-ultra",
-      "quality": {
-        "label": "Nemotron 3 Ultra",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.5,
-          "reasoning": 9.4,
-          "general": 8.8
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0375,
         "agentic": 0.075,
@@ -6075,12 +5117,7 @@
         "general": 0.006875
       },
       "weighted_cost": 0.040953125,
-      "value_scores": {
-        "coding": 70.3,
-        "agentic": 60.1,
-        "reasoning": 80.3,
-        "general": 82.5
-      },
+      "value_scores": {},
       "change_pct": 15.922568500905804
     },
     {
@@ -6115,16 +5152,7 @@
         "canonical_slug": "nvidia/nemotron-3-ultra-550b-a55b-20260604"
       },
       "canonical_model": "nemotron-3-ultra",
-      "quality": {
-        "label": "Nemotron 3 Ultra",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.5,
-          "reasoning": 9.4,
-          "general": 8.8
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -6132,12 +5160,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 93.0,
-        "agentic": 95.0,
-        "reasoning": 94.0,
-        "general": 88.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -6235,16 +5258,7 @@
         "canonical_slug": "minimax/minimax-m3-20260531"
       },
       "canonical_model": "minimax-m3",
-      "quality": {
-        "label": "MiniMax M3",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.0,
-          "agentic": 9.2,
-          "reasoning": 8.9,
-          "general": 8.9
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0162,
         "agentic": 0.0324,
@@ -6252,12 +5266,7 @@
         "general": 0.00294
       },
       "weighted_cost": 0.017664,
-      "value_scores": {
-        "coding": 78.2,
-        "agentic": 71.7,
-        "reasoning": 82.8,
-        "general": 86.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -6301,16 +5310,7 @@
         "canonical_slug": "minimax/minimax-m3-20260531"
       },
       "canonical_model": "minimax-m3",
-      "quality": {
-        "label": "MiniMax M3",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.0,
-          "agentic": 9.2,
-          "reasoning": 8.9,
-          "general": 8.9
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0162,
         "agentic": 0.0324,
@@ -6318,12 +5318,7 @@
         "general": 0.00294
       },
       "weighted_cost": 0.017664,
-      "value_scores": {
-        "coding": 78.2,
-        "agentic": 71.7,
-        "reasoning": 82.8,
-        "general": 86.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -6360,16 +5355,7 @@
         "canonical_slug": "minimax/minimax-m3-20260531"
       },
       "canonical_model": "minimax-m3",
-      "quality": {
-        "label": "MiniMax M3",
-        "confidence": "media",
-        "scores": {
-          "coding": 9.0,
-          "agentic": 9.2,
-          "reasoning": 8.9,
-          "general": 8.9
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0,
         "agentic": 0.0,
@@ -6377,12 +5363,7 @@
         "general": 0.0
       },
       "weighted_cost": 0.0,
-      "value_scores": {
-        "coding": 90.0,
-        "agentic": 92.0,
-        "reasoning": 89.0,
-        "general": 89.0
-      },
+      "value_scores": {},
       "change_pct": null
     },
     {
@@ -6430,16 +5411,7 @@
         "canonical_slug": "stepfun/step-3.7-flash-20260528"
       },
       "canonical_model": "step-3.7-flash",
-      "quality": {
-        "label": "Step 3.7 Flash",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.8,
-          "agentic": 8.8,
-          "reasoning": 9.0,
-          "general": 8.6
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.012899999999999998,
         "agentic": 0.025799999999999997,
@@ -6447,12 +5419,7 @@
         "general": 0.0023799999999999997
       },
       "weighted_cost": 0.014101749999999998,
-      "value_scores": {
-        "coding": 78.5,
-        "agentic": 71.5,
-        "reasoning": 84.7,
-        "general": 84.0
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -6492,16 +5459,7 @@
         "canonical_slug": "anthropic/claude-4.8-opus-20260528"
       },
       "canonical_model": "claude-opus-4.8",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -6509,12 +5467,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -6552,16 +5505,7 @@
         "canonical_slug": "anthropic/claude-4.8-opus-20260528"
       },
       "canonical_model": "claude-opus-4.8:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.15,
         "agentic": 0.3,
@@ -6569,12 +5513,7 @@
         "general": 0.0275
       },
       "weighted_cost": 0.1638125,
-      "value_scores": {
-        "coding": 49.5,
-        "agentic": 37.4,
-        "reasoning": 62.9,
-        "general": 77.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -7540,16 +6479,7 @@
         "canonical_slug": "~anthropic/claude-sonnet-latest"
       },
       "canonical_model": "claude-sonnet",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.12,
         "agentic": 0.24,
@@ -7557,12 +6487,7 @@
         "general": 0.022
       },
       "weighted_cost": 0.13105,
-      "value_scores": {
-        "coding": 52.6,
-        "agentic": 40.3,
-        "reasoning": 64.3,
-        "general": 79.2
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8100,16 +7025,7 @@
         "canonical_slug": "deepseek/deepseek-v4-pro-20260423"
       },
       "canonical_model": "deepseek-v4-pro",
-      "quality": {
-        "label": "DeepSeek V4 Pro",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.5,
-          "agentic": 9.5,
-          "reasoning": 9.6,
-          "general": 9.4
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.043774919999999995,
         "agentic": 0.08754983999999999,
@@ -8117,12 +7033,7 @@
         "general": 0.007712724
       },
       "weighted_cost": 0.047516633399999994,
-      "value_scores": {
-        "coding": 69.4,
-        "agentic": 57.3,
-        "reasoning": 81.2,
-        "general": 87.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8170,16 +7081,7 @@
         "canonical_slug": "deepseek/deepseek-v4-flash-20260423"
       },
       "canonical_model": "deepseek-v4-flash",
-      "quality": {
-        "label": "DeepSeek V4 Flash",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.3,
-          "agentic": 9.2,
-          "reasoning": 9.2,
-          "general": 9.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.003721452,
         "agentic": 0.007442904,
@@ -8187,12 +7089,7 @@
         "general": 0.0006556844
       },
       "weighted_cost": 0.00403954754,
-      "value_scores": {
-        "coding": 89.7,
-        "agentic": 85.8,
-        "reasoning": 90.5,
-        "general": 91.4
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8280,16 +7177,7 @@
         "canonical_slug": "xiaomi/mimo-v2.5-pro-20260422"
       },
       "canonical_model": "mimo-v2.5-pro",
-      "quality": {
-        "label": "MiMo V2.5 Pro",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.5,
-          "reasoning": 9.2,
-          "general": 9.0
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.018269999999999998,
         "agentic": 0.036539999999999996,
@@ -8297,12 +7185,7 @@
         "general": 0.0032189999999999996
       },
       "weighted_cost": 0.01983165,
-      "value_scores": {
-        "coding": 80.4,
-        "agentic": 72.2,
-        "reasoning": 85.2,
-        "general": 87.2
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8348,16 +7231,7 @@
         "canonical_slug": "xiaomi/mimo-v2.5-20260422"
       },
       "canonical_model": "mimo-v2.5",
-      "quality": {
-        "label": "MiMo V2.5",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 9.0,
-          "reasoning": 8.8,
-          "general": 8.8
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.005880000000000001,
         "agentic": 0.011760000000000001,
@@ -8365,12 +7239,7 @@
         "general": 0.001036
       },
       "weighted_cost": 0.0063826,
-      "value_scores": {
-        "coding": 84.2,
-        "agentic": 81.0,
-        "reasoning": 85.7,
-        "general": 87.1
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8460,16 +7329,7 @@
         "canonical_slug": "~anthropic/claude-opus-latest"
       },
       "canonical_model": "claude-opus",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -8477,12 +7337,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8529,16 +7384,7 @@
         "canonical_slug": "moonshotai/kimi-k2.6-20260420"
       },
       "canonical_model": "kimi-k2.6",
-      "quality": {
-        "label": "Kimi K2.6",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.1,
-          "agentic": 9.3,
-          "reasoning": 9.1,
-          "general": 9.1
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0525,
         "agentic": 0.105,
@@ -8546,12 +7392,7 @@
         "general": 0.00955
       },
       "weighted_cost": 0.057264999999999996,
-      "value_scores": {
-        "coding": 63.6,
-        "agentic": 52.8,
-        "reasoning": 74.1,
-        "general": 83.4
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8590,16 +7431,7 @@
         "canonical_slug": "anthropic/claude-4.7-opus-20260416"
       },
       "canonical_model": "claude-opus-4.7",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -8607,12 +7439,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -8650,16 +7477,7 @@
         "canonical_slug": "anthropic/claude-4.7-opus-20260416"
       },
       "canonical_model": "claude-opus-4.7:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.15,
         "agentic": 0.3,
@@ -8667,12 +7485,7 @@
         "general": 0.0275
       },
       "weighted_cost": 0.1638125,
-      "value_scores": {
-        "coding": 49.5,
-        "agentic": 37.4,
-        "reasoning": 62.9,
-        "general": 77.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -10796,16 +9609,7 @@
         "canonical_slug": "anthropic/claude-4.6-sonnet-20260217"
       },
       "canonical_model": "claude-sonnet-4.6",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.18,
         "agentic": 0.36,
@@ -10813,12 +9617,7 @@
         "general": 0.033
       },
       "weighted_cost": 0.196575,
-      "value_scores": {
-        "coding": 45.2,
-        "agentic": 33.9,
-        "reasoning": 57.1,
-        "general": 73.7
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -10858,16 +9657,7 @@
         "canonical_slug": "anthropic/claude-4.6-sonnet-20260217"
       },
       "canonical_model": "claude-sonnet-4.6:batch",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.09,
         "agentic": 0.18,
@@ -10875,12 +9665,7 @@
         "general": 0.0165
       },
       "weighted_cost": 0.0982875,
-      "value_scores": {
-        "coding": 58.0,
-        "agentic": 45.2,
-        "reasoning": 69.2,
-        "general": 82.4
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -11185,16 +9970,7 @@
         "canonical_slug": "anthropic/claude-4.6-opus-20260205"
       },
       "canonical_model": "claude-opus-4.6",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -11202,12 +9978,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -11247,16 +10018,7 @@
         "canonical_slug": "anthropic/claude-4.6-opus-20260205"
       },
       "canonical_model": "claude-opus-4.6:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.15,
         "agentic": 0.3,
@@ -11264,12 +10026,7 @@
         "general": 0.0275
       },
       "weighted_cost": 0.1638125,
-      "value_scores": {
-        "coding": 49.5,
-        "agentic": 37.4,
-        "reasoning": 62.9,
-        "general": 77.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -11311,16 +10068,7 @@
         "canonical_slug": "qwen/qwen3-coder-next-2025-02-03"
       },
       "canonical_model": "qwen3-coder-next",
-      "quality": {
-        "label": "Qwen3 Coder",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.4,
-          "reasoning": 8.9,
-          "general": 8.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0084,
         "agentic": 0.0168,
@@ -11328,12 +10076,7 @@
         "general": 0.0015599999999999998
       },
       "weighted_cost": 0.009191999999999999,
-      "value_scores": {
-        "coding": 87.0,
-        "agentic": 81.3,
-        "reasoning": 85.5,
-        "general": 83.7
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -12833,13 +11576,10 @@
       },
       "canonical_model": "deepseek-v3.2",
       "quality": {
-        "label": "DeepSeek V3.2",
-        "confidence": "media",
+        "label": "DeepSeek-V3.2-Exp (Reasoner)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 9.0,
-          "agentic": 8.9,
-          "reasoning": 9.2,
-          "general": 9.0
+          "coding": 7.4
         }
       },
       "costs_by_task": {
@@ -12850,10 +11590,10 @@
       },
       "weighted_cost": 0.011346699999999998,
       "value_scores": {
-        "coding": 81.8,
-        "agentic": 74.7,
-        "reasoning": 88.0,
-        "general": 88.4
+        "coding": 67.3,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -12894,16 +11634,7 @@
         "canonical_slug": "anthropic/claude-4.5-opus-20251124"
       },
       "canonical_model": "claude-opus-4.5",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.3,
         "agentic": 0.6,
@@ -12911,12 +11642,7 @@
         "general": 0.055
       },
       "weighted_cost": 0.327625,
-      "value_scores": {
-        "coding": 37.4,
-        "agentic": 27.5,
-        "reasoning": 49.8,
-        "general": 66.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -12954,16 +11680,7 @@
         "canonical_slug": "anthropic/claude-4.5-opus-20251124"
       },
       "canonical_model": "claude-opus-4.5:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.15,
         "agentic": 0.3,
@@ -12971,12 +11688,7 @@
         "general": 0.0275
       },
       "weighted_cost": 0.1638125,
-      "value_scores": {
-        "coding": 49.5,
-        "agentic": 37.4,
-        "reasoning": 62.9,
-        "general": 77.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -13243,7 +11955,13 @@
         "canonical_slug": "moonshotai/kimi-k2-thinking-20251106"
       },
       "canonical_model": "kimi-k2-thinking",
-      "quality": null,
+      "quality": {
+        "label": "Kimi K2",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 5.9
+        }
+      },
       "costs_by_task": {
         "coding": 0.033,
         "agentic": 0.066,
@@ -13251,7 +11969,12 @@
         "general": 0.006
       },
       "weighted_cost": 0.035992500000000004,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 45.8,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -14203,16 +12926,7 @@
         "canonical_slug": "anthropic/claude-4.5-sonnet-20250929"
       },
       "canonical_model": "claude-sonnet-4.5",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.18,
         "agentic": 0.36,
@@ -14220,12 +12934,7 @@
         "general": 0.033
       },
       "weighted_cost": 0.196575,
-      "value_scores": {
-        "coding": 45.2,
-        "agentic": 33.9,
-        "reasoning": 57.1,
-        "general": 73.7
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -14264,16 +12973,7 @@
         "canonical_slug": "anthropic/claude-4.5-sonnet-20250929"
       },
       "canonical_model": "claude-sonnet-4.5:batch",
-      "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.09,
         "agentic": 0.18,
@@ -14281,12 +12981,7 @@
         "general": 0.0165
       },
       "weighted_cost": 0.0982875,
-      "value_scores": {
-        "coding": 58.0,
-        "agentic": 45.2,
-        "reasoning": 69.2,
-        "general": 82.4
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -14332,13 +13027,10 @@
       },
       "canonical_model": "deepseek-v3.2",
       "quality": {
-        "label": "DeepSeek V3.2",
-        "confidence": "media",
+        "label": "DeepSeek-V3.2-Exp (Reasoner)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 9.0,
-          "agentic": 8.9,
-          "reasoning": 9.2,
-          "general": 9.0
+          "coding": 7.4
         }
       },
       "costs_by_task": {
@@ -14349,10 +13041,10 @@
       },
       "weighted_cost": 0.01144545,
       "value_scores": {
-        "coding": 81.8,
-        "agentic": 74.6,
-        "reasoning": 88.0,
-        "general": 88.4
+        "coding": 67.2,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -14630,16 +13322,7 @@
         "canonical_slug": "qwen/qwen3-coder-plus"
       },
       "canonical_model": "qwen3-coder",
-      "quality": {
-        "label": "Qwen3 Coder",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.4,
-          "reasoning": 8.9,
-          "general": 8.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.039,
         "agentic": 0.078,
@@ -14647,12 +13330,7 @@
         "general": 0.00715
       },
       "weighted_cost": 0.04259125,
-      "value_scores": {
-        "coding": 70.5,
-        "agentic": 58.8,
-        "reasoning": 75.7,
-        "general": 79.5
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -14742,16 +13420,7 @@
         "canonical_slug": "qwen/qwen3-coder-flash"
       },
       "canonical_model": "qwen3-coder",
-      "quality": {
-        "label": "Qwen3 Coder",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.4,
-          "reasoning": 8.9,
-          "general": 8.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0117,
         "agentic": 0.0234,
@@ -14759,12 +13428,7 @@
         "general": 0.0021449999999999998
       },
       "weighted_cost": 0.012777375,
-      "value_scores": {
-        "coding": 84.6,
-        "agentic": 77.6,
-        "reasoning": 84.3,
-        "general": 83.2
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15283,7 +13947,13 @@
         "canonical_slug": "openai/gpt-5-2025-08-07"
       },
       "canonical_model": "gpt-5",
-      "quality": null,
+      "quality": {
+        "label": "gpt-5 (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 8.8
+        }
+      },
       "costs_by_task": {
         "coding": 0.0975,
         "agentic": 0.195,
@@ -15291,7 +13961,12 @@
         "general": 0.01825
       },
       "weighted_cost": 0.106825,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 51.2,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -15566,13 +14241,10 @@
       },
       "canonical_model": "gpt-oss-120b",
       "quality": {
-        "label": "GPT-OSS 120B",
-        "confidence": "media",
+        "label": "gpt-oss-120b (high)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 8.7,
-          "agentic": 8.7,
-          "reasoning": 8.9,
-          "general": 8.7
+          "coding": 4.2
         }
       },
       "costs_by_task": {
@@ -15583,10 +14255,10 @@
       },
       "weighted_cost": 0.00232475,
       "value_scores": {
-        "coding": 85.2,
-        "agentic": 83.5,
-        "reasoning": 88.1,
-        "general": 86.7
+        "coding": 41.1,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -15630,16 +14302,7 @@
         "canonical_slug": "openai/gpt-oss-120b"
       },
       "canonical_model": "gpt-oss-120b",
-      "quality": {
-        "label": "GPT-OSS 120B",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.7,
-          "agentic": 8.7,
-          "reasoning": 8.9,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0081,
         "agentic": 0.0162,
@@ -15647,12 +14310,7 @@
         "general": 0.00147
       },
       "weighted_cost": 0.008832,
-      "value_scores": {
-        "coding": 80.7,
-        "agentic": 75.6,
-        "reasoning": 85.7,
-        "general": 85.7
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15698,16 +14356,7 @@
         "canonical_slug": "openai/gpt-oss-20b"
       },
       "canonical_model": "gpt-oss-20b",
-      "quality": {
-        "label": "GPT-OSS 20B",
-        "confidence": "media",
-        "scores": {
-          "coding": 7.5,
-          "agentic": 7.5,
-          "reasoning": 7.8,
-          "general": 7.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.00168,
         "agentic": 0.00336,
@@ -15715,12 +14364,7 @@
         "general": 0.00030599999999999996
       },
       "weighted_cost": 0.00183285,
-      "value_scores": {
-        "coding": 73.8,
-        "agentic": 72.6,
-        "reasoning": 77.4,
-        "general": 74.8
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15761,16 +14405,7 @@
         "canonical_slug": "openai/gpt-oss-20b"
       },
       "canonical_model": "gpt-oss-20b",
-      "quality": {
-        "label": "GPT-OSS 20B",
-        "confidence": "media",
-        "scores": {
-          "coding": 7.5,
-          "agentic": 7.5,
-          "reasoning": 7.8,
-          "general": 7.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0026999999999999997,
         "agentic": 0.005399999999999999,
@@ -15778,12 +14413,7 @@
         "general": 0.00049
       },
       "weighted_cost": 0.0029439999999999996,
-      "value_scores": {
-        "coding": 73.1,
-        "agentic": 71.3,
-        "reasoning": 77.0,
-        "general": 74.6
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15820,16 +14450,7 @@
         "canonical_slug": "anthropic/claude-4.1-opus-20250805"
       },
       "canonical_model": "claude-opus-4.1",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.8999999999999999,
         "agentic": 1.7999999999999998,
@@ -15837,12 +14458,7 @@
         "general": 0.16499999999999998
       },
       "weighted_cost": 0.9828749999999999,
-      "value_scores": {
-        "coding": 22.7,
-        "agentic": 16.3,
-        "reasoning": 31.5,
-        "general": 46.8
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15879,16 +14495,7 @@
         "canonical_slug": "anthropic/claude-4.1-opus-20250805"
       },
       "canonical_model": "claude-opus-4.1:batch",
-      "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
-        "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.44999999999999996,
         "agentic": 0.8999999999999999,
@@ -15896,12 +14503,7 @@
         "general": 0.08249999999999999
       },
       "weighted_cost": 0.49143749999999997,
-      "value_scores": {
-        "coding": 31.3,
-        "agentic": 22.7,
-        "reasoning": 42.5,
-        "general": 59.6
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -15989,16 +14591,7 @@
         "canonical_slug": "qwen/qwen3-coder-30b-a3b-instruct"
       },
       "canonical_model": "qwen3-coder",
-      "quality": {
-        "label": "Qwen3 Coder",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.4,
-          "reasoning": 8.9,
-          "general": 8.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0037800000000000004,
         "agentic": 0.007560000000000001,
@@ -16006,12 +14599,7 @@
         "general": 0.000686
       },
       "weighted_cost": 0.0041216000000000004,
-      "value_scores": {
-        "coding": 90.6,
-        "agentic": 87.6,
-        "reasoning": 87.4,
-        "general": 84.4
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -16244,16 +14832,7 @@
         "canonical_slug": "qwen/qwen3-coder-480b-a35b-07-25"
       },
       "canonical_model": "qwen3-coder",
-      "quality": {
-        "label": "Qwen3 Coder",
-        "confidence": "media-alta",
-        "scores": {
-          "coding": 9.4,
-          "agentic": 9.4,
-          "reasoning": 8.9,
-          "general": 8.5
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.015,
         "agentic": 0.03,
@@ -16261,12 +14840,7 @@
         "general": 0.0027
       },
       "weighted_cost": 0.016335,
-      "value_scores": {
-        "coding": 82.4,
-        "agentic": 74.3,
-        "reasoning": 83.3,
-        "general": 82.8
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -16500,7 +15074,13 @@
         "canonical_slug": "moonshotai/kimi-k2"
       },
       "canonical_model": "kimi-k2",
-      "quality": null,
+      "quality": {
+        "label": "Kimi K2",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 5.9
+        }
+      },
       "costs_by_task": {
         "coding": 0.0309,
         "agentic": 0.0618,
@@ -16508,7 +15088,12 @@
         "general": 0.00561
       },
       "weighted_cost": 0.0336945,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 46.4,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17048,7 +15633,13 @@
         "canonical_slug": "openai/o3-pro-2025-06-10"
       },
       "canonical_model": "o3-pro",
-      "quality": null,
+      "quality": {
+        "label": "o3-pro (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 8.5
+        }
+      },
       "costs_by_task": {
         "coding": 1.08,
         "agentic": 2.16,
@@ -17056,7 +15647,12 @@
         "general": 0.196
       },
       "weighted_cost": 1.1776,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 17.9,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17149,16 +15745,7 @@
         "canonical_slug": "deepseek/deepseek-r1-0528"
       },
       "canonical_model": "deepseek-r1",
-      "quality": {
-        "label": "DeepSeek R1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 8.8,
-          "reasoning": 9.5,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.0279,
         "agentic": 0.0558,
@@ -17166,12 +15753,7 @@
         "general": 0.00508
       },
       "weighted_cost": 0.030436750000000002,
-      "value_scores": {
-        "coding": 71.3,
-        "agentic": 60.5,
-        "reasoning": 84.3,
-        "general": 82.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -17208,13 +15790,10 @@
       },
       "canonical_model": "claude-opus-4",
       "quality": {
-        "label": "Claude Opus",
-        "confidence": "alta",
+        "label": "claude-opus-4-20250514 (32k thinking)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 9.9,
-          "agentic": 9.9,
-          "reasoning": 9.9,
-          "general": 9.7
+          "coding": 7.2
         }
       },
       "costs_by_task": {
@@ -17225,10 +15804,10 @@
       },
       "weighted_cost": 0.9828749999999999,
       "value_scores": {
-        "coding": 22.7,
-        "agentic": 16.3,
-        "reasoning": 31.5,
-        "general": 46.8
+        "coding": 16.5,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -17267,13 +15846,10 @@
       },
       "canonical_model": "claude-sonnet-4",
       "quality": {
-        "label": "Claude Sonnet",
-        "confidence": "alta",
+        "label": "claude-sonnet-4-20250514 (32k thinking)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 9.7,
-          "agentic": 9.7,
-          "reasoning": 9.5,
-          "general": 9.5
+          "coding": 6.1
         }
       },
       "costs_by_task": {
@@ -17284,10 +15860,10 @@
       },
       "weighted_cost": 0.196575,
       "value_scores": {
-        "coding": 45.2,
-        "agentic": 33.9,
-        "reasoning": 57.1,
-        "general": 73.7
+        "coding": 28.4,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -17376,7 +15952,13 @@
         "canonical_slug": "google/gemini-2.5-pro-preview-03-25"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
-      "quality": null,
+      "quality": {
+        "label": "Gemini 2.5 Pro Preview 05-06",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 7.7
+        }
+      },
       "costs_by_task": {
         "coding": 0.0975,
         "agentic": 0.195,
@@ -17384,7 +15966,12 @@
         "general": 0.01825
       },
       "weighted_cost": 0.106825,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 44.8,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17577,7 +16164,13 @@
         "canonical_slug": "qwen/qwen3-32b-04-28"
       },
       "canonical_model": "qwen3-32b",
-      "quality": null,
+      "quality": {
+        "label": "Qwen3 32B",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 4.0
+        }
+      },
       "costs_by_task": {
         "coding": 0.00408,
         "agentic": 0.00816,
@@ -17585,7 +16178,12 @@
         "general": 0.000736
       },
       "weighted_cost": 0.0044446,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 38.5,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17713,7 +16311,13 @@
         "canonical_slug": "openai/o3-2025-04-16"
       },
       "canonical_model": "o3",
-      "quality": null,
+      "quality": {
+        "label": "o3 (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 8.1
+        }
+      },
       "costs_by_task": {
         "coding": 0.108,
         "agentic": 0.216,
@@ -17721,7 +16325,12 @@
         "general": 0.0196
       },
       "weighted_cost": 0.11776,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 45.6,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17801,7 +16410,13 @@
         "canonical_slug": "openai/o4-mini-2025-04-16"
       },
       "canonical_model": "o4-mini",
-      "quality": null,
+      "quality": {
+        "label": "o4-mini (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 7.2
+        }
+      },
       "costs_by_task": {
         "coding": 0.05940000000000001,
         "agentic": 0.11880000000000002,
@@ -17809,7 +16424,12 @@
         "general": 0.010780000000000001
       },
       "weighted_cost": 0.064768,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 48.7,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17890,7 +16510,13 @@
         "canonical_slug": "openai/gpt-4.1-2025-04-14"
       },
       "canonical_model": "gpt-4.1",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4.1",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 5.2
+        }
+      },
       "costs_by_task": {
         "coding": 0.108,
         "agentic": 0.216,
@@ -17898,7 +16524,12 @@
         "general": 0.0196
       },
       "weighted_cost": 0.11776,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 29.3,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -17979,7 +16610,13 @@
         "canonical_slug": "openai/gpt-4.1-mini-2025-04-14"
       },
       "canonical_model": "gpt-4.1-mini",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4.1-mini",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 3.2
+        }
+      },
       "costs_by_task": {
         "coding": 0.021599999999999998,
         "agentic": 0.043199999999999995,
@@ -17987,7 +16624,12 @@
         "general": 0.00392
       },
       "weighted_cost": 0.023551999999999997,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 26.7,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -18068,7 +16710,13 @@
         "canonical_slug": "openai/gpt-4.1-nano-2025-04-14"
       },
       "canonical_model": "gpt-4.1-nano",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4.1-nano",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 0.9
+        }
+      },
       "costs_by_task": {
         "coding": 0.005399999999999999,
         "agentic": 0.010799999999999999,
@@ -18076,7 +16724,12 @@
         "general": 0.00098
       },
       "weighted_cost": 0.005887999999999999,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 8.6,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -18164,7 +16817,13 @@
         "canonical_slug": "meta-llama/llama-4-maverick-17b-128e-instruct"
       },
       "canonical_model": "llama-4-maverick",
-      "quality": null,
+      "quality": {
+        "label": "Llama 4 Maverick",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 1.6
+        }
+      },
       "costs_by_task": {
         "coding": 0.010176,
         "agentic": 0.020352,
@@ -18172,7 +16831,12 @@
         "general": 0.0018352
       },
       "weighted_cost": 0.01108492,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 14.6,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -18596,7 +17260,13 @@
         "canonical_slug": "google/gemma-3-27b-it"
       },
       "canonical_model": "gemma-3-27b-it",
-      "quality": null,
+      "quality": {
+        "label": "gemma-3-27b-it",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 0.5
+        }
+      },
       "costs_by_task": {
         "coding": 0.0050999999999999995,
         "agentic": 0.010199999999999999,
@@ -18604,7 +17274,12 @@
         "general": 0.0009399999999999999
       },
       "weighted_cost": 0.005574249999999999,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 4.8,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -19040,7 +17715,13 @@
         "canonical_slug": "openai/o3-mini-2025-01-31"
       },
       "canonical_model": "o3-mini",
-      "quality": null,
+      "quality": {
+        "label": "o3-mini (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 6.0
+        }
+      },
       "costs_by_task": {
         "coding": 0.05940000000000001,
         "agentic": 0.11880000000000002,
@@ -19048,7 +17729,12 @@
         "general": 0.010780000000000001
       },
       "weighted_cost": 0.064768,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 40.6,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -19217,16 +17903,7 @@
         "canonical_slug": "deepseek/deepseek-r1-distill-llama-70b"
       },
       "canonical_model": "deepseek-r1",
-      "quality": {
-        "label": "DeepSeek R1",
-        "confidence": "media",
-        "scores": {
-          "coding": 8.9,
-          "agentic": 8.8,
-          "reasoning": 9.5,
-          "general": 8.7
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.028799999999999996,
         "agentic": 0.05759999999999999,
@@ -19234,12 +17911,7 @@
         "general": 0.00496
       },
       "weighted_cost": 0.031155999999999996,
-      "value_scores": {
-        "coding": 70.9,
-        "agentic": 60.0,
-        "reasoning": 85.0,
-        "general": 83.0
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -19281,13 +17953,10 @@
       },
       "canonical_model": "deepseek-r1",
       "quality": {
-        "label": "DeepSeek R1",
-        "confidence": "media",
+        "label": "DeepSeek R1 (0528)",
+        "confidence": "auto:aider_polyglot",
         "scores": {
-          "coding": 8.9,
-          "agentic": 8.8,
-          "reasoning": 9.5,
-          "general": 8.7
+          "coding": 7.1
         }
       },
       "costs_by_task": {
@@ -19298,10 +17967,10 @@
       },
       "weighted_cost": 0.039222499999999993,
       "value_scores": {
-        "coding": 67.9,
-        "agentic": 56.3,
-        "reasoning": 82.0,
-        "general": 81.8
+        "coding": 54.1,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
       },
       "change_pct": 0.0
     },
@@ -19518,7 +18187,13 @@
         "canonical_slug": "openai/o1-2024-12-17"
       },
       "canonical_model": "o1",
-      "quality": null,
+      "quality": {
+        "label": "o1-2024-12-17 (high)",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 6.2
+        }
+      },
       "costs_by_task": {
         "coding": 0.8099999999999999,
         "agentic": 1.6199999999999999,
@@ -19526,7 +18201,12 @@
         "general": 0.147
       },
       "weighted_cost": 0.8832,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 14.9,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -19787,7 +18467,13 @@
         "canonical_slug": "openai/gpt-4o-2024-11-20"
       },
       "canonical_model": "gpt-4o-2024-11-20",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-2024-08-06",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 2.3
+        }
+      },
       "costs_by_task": {
         "coding": 0.135,
         "agentic": 0.27,
@@ -19795,7 +18481,12 @@
         "general": 0.0245
       },
       "weighted_cost": 0.1472,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 12.0,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -19878,7 +18569,13 @@
         "canonical_slug": "qwen/qwen-2.5-coder-32b-instruct"
       },
       "canonical_model": "qwen-2.5-coder-32b-instruct",
-      "quality": null,
+      "quality": {
+        "label": "Qwen2.5-Coder-32B-Instruct",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 1.6
+        }
+      },
       "costs_by_task": {
         "coding": 0.025800000000000003,
         "agentic": 0.05160000000000001,
@@ -19886,7 +18583,12 @@
         "general": 0.0045000000000000005
       },
       "weighted_cost": 0.027963000000000002,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 13.0,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -20505,7 +19207,13 @@
         "canonical_slug": "openai/gpt-4o-2024-08-06"
       },
       "canonical_model": "gpt-4o-2024-08-06",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-2024-08-06",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 2.3
+        }
+      },
       "costs_by_task": {
         "coding": 0.135,
         "agentic": 0.27,
@@ -20513,7 +19221,12 @@
         "general": 0.0245
       },
       "weighted_cost": 0.1472,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 12.0,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -20658,16 +19371,7 @@
         "canonical_slug": "mistralai/mistral-nemo"
       },
       "canonical_model": "mistral-nemo",
-      "quality": {
-        "label": "Mistral Nemo",
-        "confidence": "media",
-        "scores": {
-          "coding": 6.8,
-          "agentic": 6.5,
-          "reasoning": 6.6,
-          "general": 7.2
-        }
-      },
+      "quality": null,
       "costs_by_task": {
         "coding": 0.00075,
         "agentic": 0.0015,
@@ -20675,12 +19379,7 @@
         "general": 0.000131
       },
       "weighted_cost": 0.0008130500000000001,
-      "value_scores": {
-        "coding": 67.5,
-        "agentic": 64.0,
-        "reasoning": 65.8,
-        "general": 71.9
-      },
+      "value_scores": {},
       "change_pct": 0.0
     },
     {
@@ -20725,7 +19424,13 @@
         "canonical_slug": "openai/gpt-4o-mini"
       },
       "canonical_model": "gpt-4o-mini",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-mini-2024-07-18",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 0.4
+        }
+      },
       "costs_by_task": {
         "coding": 0.0081,
         "agentic": 0.0162,
@@ -20733,7 +19438,12 @@
         "general": 0.00147
       },
       "weighted_cost": 0.008832,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 3.7,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -20777,7 +19487,13 @@
         "canonical_slug": "openai/gpt-4o-mini-2024-07-18"
       },
       "canonical_model": "gpt-4o-mini-2024-07-18",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-mini-2024-07-18",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 0.4
+        }
+      },
       "costs_by_task": {
         "coding": 0.0081,
         "agentic": 0.0162,
@@ -20785,7 +19501,12 @@
         "general": 0.00147
       },
       "weighted_cost": 0.008832,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 3.7,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -20926,7 +19647,13 @@
         "canonical_slug": "openai/gpt-4o"
       },
       "canonical_model": "gpt-4o",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-2024-08-06",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 2.3
+        }
+      },
       "costs_by_task": {
         "coding": 0.135,
         "agentic": 0.27,
@@ -20934,7 +19661,12 @@
         "general": 0.0245
       },
       "weighted_cost": 0.1472,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 12.0,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
@@ -20979,7 +19711,13 @@
         "canonical_slug": "openai/gpt-4o-2024-05-13"
       },
       "canonical_model": "gpt-4o-2024-05-13",
-      "quality": null,
+      "quality": {
+        "label": "gpt-4o-2024-08-06",
+        "confidence": "auto:aider_polyglot",
+        "scores": {
+          "coding": 2.3
+        }
+      },
       "costs_by_task": {
         "coding": 0.24,
         "agentic": 0.48,
@@ -20987,7 +19725,12 @@
         "general": 0.043
       },
       "weighted_cost": 0.261175,
-      "value_scores": {},
+      "value_scores": {
+        "coding": 9.6,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
       "change_pct": 0.0
     },
     {
