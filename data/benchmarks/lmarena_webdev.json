@@ -1,0 +1,1009 @@
+[
+  {
+    "model": "qwen3.8-max-0902",
+    "score": 9.259189963062699,
+    "numeric": [
+      "3",
+      "8",
+      "0902"
+    ],
+    "text_key": "qwenmax"
+  },
+  {
+    "model": "claude-opus-5-max",
+    "score": 9.223551888653308,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "claudeopusmax"
+  },
+  {
+    "model": "kimi-k3-max",
+    "score": 9.0455722802753,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "kimikmax"
+  },
+  {
+    "model": "qwen3.8-max",
+    "score": 8.989112951445922,
+    "numeric": [
+      "3",
+      "8"
+    ],
+    "text_key": "qwenmax"
+  },
+  {
+    "model": "claude-opus-5-high",
+    "score": 8.888942556909626,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "claudeopushigh"
+  },
+  {
+    "model": "hy4-preview",
+    "score": 8.48979036939214,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "hy"
+  },
+  {
+    "model": "grok-4.6-high",
+    "score": 8.487747479136324,
+    "numeric": [
+      "4",
+      "6"
+    ],
+    "text_key": "grokhigh"
+  },
+  {
+    "model": "claude-fable-5",
+    "score": 8.472442752661264,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "claudefable"
+  },
+  {
+    "model": "qwen3.8-flash-next",
+    "score": 8.374490880336031,
+    "numeric": [
+      "3",
+      "8"
+    ],
+    "text_key": "qwenflashnext"
+  },
+  {
+    "model": "gpt-5.6-sol-xhigh (codex-harness)",
+    "score": 8.330744851906653,
+    "numeric": [
+      "5",
+      "6"
+    ],
+    "text_key": "gptsolxhigh"
+  },
+  {
+    "model": "glm-5.3-max",
+    "score": 8.22781284606921,
+    "numeric": [
+      "5",
+      "3"
+    ],
+    "text_key": "glmmax"
+  },
+  {
+    "model": "glm-5.3-flash",
+    "score": 8.177136797883351,
+    "numeric": [
+      "5",
+      "3"
+    ],
+    "text_key": "glmflash"
+  },
+  {
+    "model": "qwen3.8-27b",
+    "score": 8.114272447160243,
+    "numeric": [
+      "3",
+      "8",
+      "27"
+    ],
+    "text_key": "qwenb"
+  },
+  {
+    "model": "gemini-3.7-flash-high",
+    "score": 7.957372413914598,
+    "numeric": [
+      "3",
+      "7"
+    ],
+    "text_key": "geminiflashhigh"
+  },
+  {
+    "model": "glm-5.2-max",
+    "score": 7.937441112607388,
+    "numeric": [
+      "5",
+      "2"
+    ],
+    "text_key": "glmmax"
+  },
+  {
+    "model": "deepseek-v4-pro-high-20260813",
+    "score": 7.922604487961311,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "deepseekvprohigh"
+  },
+  {
+    "model": "deepseek-v4-flash-high",
+    "score": 7.882698773490714,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "deepseekvflashhigh"
+  },
+  {
+    "model": "claude-opus-4-8-high",
+    "score": 7.659924686060399,
+    "numeric": [
+      "4",
+      "8"
+    ],
+    "text_key": "claudeopushigh"
+  },
+  {
+    "model": "claude-opus-4-7",
+    "score": 7.586602532857575,
+    "numeric": [
+      "4",
+      "7"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "claude-opus-4-7-high",
+    "score": 7.580331691455728,
+    "numeric": [
+      "4",
+      "7"
+    ],
+    "text_key": "claudeopushigh"
+  },
+  {
+    "model": "grok-4.5",
+    "score": 7.568043798766135,
+    "numeric": [
+      "4",
+      "5"
+    ],
+    "text_key": "grok"
+  },
+  {
+    "model": "claude-opus-4-6-high",
+    "score": 7.45143588902898,
+    "numeric": [
+      "4",
+      "6"
+    ],
+    "text_key": "claudeopushigh"
+  },
+  {
+    "model": "claude-opus-4-8",
+    "score": 7.374341500346427,
+    "numeric": [
+      "4",
+      "8"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "muse-spark-1.1",
+    "score": 7.371107003885433,
+    "numeric": [
+      "1",
+      "1"
+    ],
+    "text_key": "musespark"
+  },
+  {
+    "model": "gemini-3.6-flash-high",
+    "score": 7.351703568626807,
+    "numeric": [
+      "3",
+      "6"
+    ],
+    "text_key": "geminiflashhigh"
+  },
+  {
+    "model": "claude-sonnet-5-high",
+    "score": 7.338173933294948,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "claudesonnethigh"
+  },
+  {
+    "model": "claude-opus-4-6",
+    "score": 7.331345724255575,
+    "numeric": [
+      "4",
+      "6"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "muse-spark-1.2 (xHigh)",
+    "score": 7.30249305537487,
+    "numeric": [
+      "1",
+      "2"
+    ],
+    "text_key": "musespark"
+  },
+  {
+    "model": "seed-2.1-pro-preview",
+    "score": 7.150131755441174,
+    "numeric": [
+      "2",
+      "1"
+    ],
+    "text_key": "seedpro"
+  },
+  {
+    "model": "claude-sonnet-4-6",
+    "score": 7.1453121234155725,
+    "numeric": [
+      "4",
+      "6"
+    ],
+    "text_key": "claudesonnet"
+  },
+  {
+    "model": "gpt-5.6-luna-xhigh (codex-harness)",
+    "score": 7.112664077374867,
+    "numeric": [
+      "5",
+      "6"
+    ],
+    "text_key": "gptlunaxhigh"
+  },
+  {
+    "model": "gpt-5.6-terra-xhigh (codex-harness)",
+    "score": 7.1016838549124115,
+    "numeric": [
+      "5",
+      "6"
+    ],
+    "text_key": "gptterraxhigh"
+  },
+  {
+    "model": "qwen3.7-max-20260517",
+    "score": 7.0846717018006755,
+    "numeric": [
+      "3",
+      "7"
+    ],
+    "text_key": "qwenmax"
+  },
+  {
+    "model": "hy3",
+    "score": 7.018156201620442,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "hy"
+  },
+  {
+    "model": "gpt-5.5-xhigh (codex-harness)",
+    "score": 6.994899086319429,
+    "numeric": [
+      "5",
+      "5"
+    ],
+    "text_key": "gptxhigh"
+  },
+  {
+    "model": "kimi-k2.6",
+    "score": 6.982942709759206,
+    "numeric": [
+      "2",
+      "6"
+    ],
+    "text_key": "kimik"
+  },
+  {
+    "model": "glm-5.1",
+    "score": 6.981490457167237,
+    "numeric": [
+      "5",
+      "1"
+    ],
+    "text_key": "glm"
+  },
+  {
+    "model": "gemini-3.5-flash-high",
+    "score": 6.8866513616288305,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "geminiflashhigh"
+  },
+  {
+    "model": "claude-opus-4-5-20251101-high-32k",
+    "score": 6.8091637588122955,
+    "numeric": [
+      "4",
+      "5",
+      "32"
+    ],
+    "text_key": "claudeopushighk"
+  },
+  {
+    "model": "gemini-3.5-flash-medium",
+    "score": 6.773683746453094,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "geminiflashmedium"
+  },
+  {
+    "model": "minimax-m3",
+    "score": 6.709627594544179,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "minimaxm"
+  },
+  {
+    "model": "gpt-5.5-high (codex-harness)",
+    "score": 6.702100699461263,
+    "numeric": [
+      "5",
+      "5"
+    ],
+    "text_key": "gpthigh"
+  },
+  {
+    "model": "qwen3.6-max-preview",
+    "score": 6.609263255622246,
+    "numeric": [
+      "3",
+      "6"
+    ],
+    "text_key": "qwenmax"
+  },
+  {
+    "model": "mimo-v2.5-pro",
+    "score": 6.573133851616291,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "mimovpro"
+  },
+  {
+    "model": "kimi-k2.7-code",
+    "score": 6.5332010582619295,
+    "numeric": [
+      "2",
+      "7"
+    ],
+    "text_key": "kimikcode"
+  },
+  {
+    "model": "claude-opus-4-5-20251101",
+    "score": 6.474578317167553,
+    "numeric": [
+      "4",
+      "5"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "gpt-5.4-high (codex-harness)",
+    "score": 6.411963108421955,
+    "numeric": [
+      "5",
+      "4"
+    ],
+    "text_key": "gpthigh"
+  },
+  {
+    "model": "qwen3.6-plus",
+    "score": 6.377347332741843,
+    "numeric": [
+      "3",
+      "6"
+    ],
+    "text_key": "qwenplus"
+  },
+  {
+    "model": "gpt-5.5 (codex-harness)",
+    "score": 6.342260276363245,
+    "numeric": [
+      "5",
+      "5"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "gemini-3.5-flash-lite",
+    "score": 6.238291447630897,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "geminiflashlite"
+  },
+  {
+    "model": "gemini-3.1-pro-preview",
+    "score": 6.196096941832288,
+    "numeric": [
+      "3",
+      "1"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "deepseek-v4-pro",
+    "score": 6.193718671553984,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "deepseekvpro"
+  },
+  {
+    "model": "gpt-5.4-medium (codex-harness)",
+    "score": 6.154881854992533,
+    "numeric": [
+      "5",
+      "4"
+    ],
+    "text_key": "gptmedium"
+  },
+  {
+    "model": "gemini-3-pro",
+    "score": 6.10410949718046,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "mimo-v2.5",
+    "score": 6.0978915414821095,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "mimov"
+  },
+  {
+    "model": "gemini-3-flash",
+    "score": 6.095096797661929,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "geminiflash"
+  },
+  {
+    "model": "kimi-k2.5-thinking",
+    "score": 6.080834051676365,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "kimik"
+  },
+  {
+    "model": "glm-5",
+    "score": 6.0712528261225716,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "glm"
+  },
+  {
+    "model": "glm-4.7",
+    "score": 6.058205644234866,
+    "numeric": [
+      "4",
+      "7"
+    ],
+    "text_key": "glm"
+  },
+  {
+    "model": "mimo-v2-pro",
+    "score": 6.045262842999612,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "mimovpro"
+  },
+  {
+    "model": "gpt-5-medium",
+    "score": 5.863072403105258,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "gptmedium"
+  },
+  {
+    "model": "gpt-5.2",
+    "score": 5.830488267945149,
+    "numeric": [
+      "5",
+      "2"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "gpt-5.3-codex (codex-harness)",
+    "score": 5.729240899628585,
+    "numeric": [
+      "5",
+      "3"
+    ],
+    "text_key": "gptcodex"
+  },
+  {
+    "model": "inkling",
+    "score": 5.7234071481102236,
+    "numeric": [],
+    "text_key": "inkling"
+  },
+  {
+    "model": "kimi-k2.5-instant",
+    "score": 5.6916948095884665,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "kimikinstant"
+  },
+  {
+    "model": "Inkling Small",
+    "score": 5.661289790140453,
+    "numeric": [],
+    "text_key": "inklingsmall"
+  },
+  {
+    "model": "glm-5v-turbo",
+    "score": 5.625652670066401,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "glmvturbo"
+  },
+  {
+    "model": "minimax-m2.7",
+    "score": 5.6086527137254905,
+    "numeric": [
+      "2",
+      "7"
+    ],
+    "text_key": "minimaxm"
+  },
+  {
+    "model": "qwen3.5-397b-a17b",
+    "score": 5.602409585230481,
+    "numeric": [
+      "3",
+      "5",
+      "397",
+      "17"
+    ],
+    "text_key": "qwenbab"
+  },
+  {
+    "model": "gpt-5.4-mini-high",
+    "score": 5.589943006476491,
+    "numeric": [
+      "5",
+      "4"
+    ],
+    "text_key": "gptminihigh"
+  },
+  {
+    "model": "claude-sonnet-4-5-20250929-high-32k",
+    "score": 5.532912724458489,
+    "numeric": [
+      "4",
+      "5",
+      "32"
+    ],
+    "text_key": "claudesonnethighk"
+  },
+  {
+    "model": "gpt-5.1-medium",
+    "score": 5.51626115247453,
+    "numeric": [
+      "5",
+      "1"
+    ],
+    "text_key": "gptmedium"
+  },
+  {
+    "model": "claude-opus-4-1-20250805",
+    "score": 5.488364678703153,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "gpt-5.4",
+    "score": 5.486550625908407,
+    "numeric": [
+      "5",
+      "4"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "minimax-m2.1-preview",
+    "score": 5.466334492898563,
+    "numeric": [
+      "2",
+      "1"
+    ],
+    "text_key": "minimaxm"
+  },
+  {
+    "model": "claude-sonnet-4-5-20250929",
+    "score": 5.445312170678034,
+    "numeric": [
+      "4",
+      "5"
+    ],
+    "text_key": "claudesonnet"
+  },
+  {
+    "model": "minimax-m2.5",
+    "score": 5.426571278184631,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "minimaxm"
+  },
+  {
+    "model": "grok-4.20-beta-0309-reasoning",
+    "score": 5.2933722993381735,
+    "numeric": [
+      "4",
+      "20",
+      "0309"
+    ],
+    "text_key": "grokbetareasoning"
+  },
+  {
+    "model": "solar-pro4",
+    "score": 5.255568612544071,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "solarpro"
+  },
+  {
+    "model": "gemma-4-31b",
+    "score": 5.164245985101468,
+    "numeric": [
+      "4",
+      "31"
+    ],
+    "text_key": "gemmab"
+  },
+  {
+    "model": "gemma-4-26b-a4b",
+    "score": 5.146199791546266,
+    "numeric": [
+      "4",
+      "26",
+      "4"
+    ],
+    "text_key": "gemmabab"
+  },
+  {
+    "model": "deepseek-v3.2-thinking",
+    "score": 5.131263448391001,
+    "numeric": [
+      "3",
+      "2"
+    ],
+    "text_key": "deepseekv"
+  },
+  {
+    "model": "muse-glimmer",
+    "score": 5.117733229431053,
+    "numeric": [],
+    "text_key": "museglimmer"
+  },
+  {
+    "model": "qwen3.5-122b-a10b",
+    "score": 5.0991648247428,
+    "numeric": [
+      "3",
+      "5",
+      "122",
+      "10"
+    ],
+    "text_key": "qwenbab"
+  },
+  {
+    "model": "qwen3.5-27b",
+    "score": 5.0935718514331505,
+    "numeric": [
+      "3",
+      "5",
+      "27"
+    ],
+    "text_key": "qwenb"
+  },
+  {
+    "model": "hunyuan-hy3-preview",
+    "score": 5.078447797526414,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "hunyuanhy"
+  },
+  {
+    "model": "grok-4.3",
+    "score": 5.072996962567253,
+    "numeric": [
+      "4",
+      "3"
+    ],
+    "text_key": "grok"
+  },
+  {
+    "model": "laguna-m.1",
+    "score": 4.965790918074001,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "lagunam"
+  },
+  {
+    "model": "gpt-5.1",
+    "score": 4.882624437715043,
+    "numeric": [
+      "5",
+      "1"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "glm-4.6",
+    "score": 4.881555691392239,
+    "numeric": [
+      "4",
+      "6"
+    ],
+    "text_key": "glm"
+  },
+  {
+    "model": "gpt-5.2-codex",
+    "score": 4.856923603509219,
+    "numeric": [
+      "5",
+      "2"
+    ],
+    "text_key": "gptcodex"
+  },
+  {
+    "model": "gpt-5.1-codex",
+    "score": 4.821740521925529,
+    "numeric": [
+      "5",
+      "1"
+    ],
+    "text_key": "gptcodex"
+  },
+  {
+    "model": "mimo-v2-flash (non-thinking)",
+    "score": 4.761113812633866,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "mimovflash"
+  },
+  {
+    "model": "claude-haiku-4-5-20251001",
+    "score": 4.733038226268715,
+    "numeric": [
+      "4",
+      "5"
+    ],
+    "text_key": "claudehaiku"
+  },
+  {
+    "model": "kimi-k2-thinking-turbo",
+    "score": 4.658987682806403,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "kimikturbo"
+  },
+  {
+    "model": "laguna-xs.2",
+    "score": 4.404249186620578,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "lagunaxs"
+  },
+  {
+    "model": "minimax-m2",
+    "score": 4.343456700099873,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "minimaxm"
+  },
+  {
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "score": 4.044203943406569,
+    "numeric": [
+      "3",
+      "480",
+      "35"
+    ],
+    "text_key": "qwencoderbab"
+  },
+  {
+    "model": "mistral-medium-3.5",
+    "score": 3.938913029306411,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "mistralmedium"
+  },
+  {
+    "model": "KAT-Coder-Pro-V1",
+    "score": 3.8055810750160046,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "katcoderprov"
+  },
+  {
+    "model": "gemini-3.1-flash-lite-preview",
+    "score": 3.8010803803049527,
+    "numeric": [
+      "3",
+      "1"
+    ],
+    "text_key": "geminiflashlite"
+  },
+  {
+    "model": "qwen3.5-35b-a3b",
+    "score": 3.7502706601210125,
+    "numeric": [
+      "3",
+      "5",
+      "35",
+      "3"
+    ],
+    "text_key": "qwenbab"
+  },
+  {
+    "model": "gpt-5.1-codex-mini",
+    "score": 3.6679995802767253,
+    "numeric": [
+      "5",
+      "1"
+    ],
+    "text_key": "gptcodexmini"
+  },
+  {
+    "model": "grok-4-1-fast-reasoning",
+    "score": 3.6323412312742502,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "grokfastreasoning"
+  },
+  {
+    "model": "qwen3.5-flash",
+    "score": 3.601170068945532,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "qwenflash"
+  },
+  {
+    "model": "trinity-large-thinking",
+    "score": 3.600627135595633,
+    "numeric": [],
+    "text_key": "trinitylarge"
+  },
+  {
+    "model": "mistral-large-3",
+    "score": 3.490973584892299,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "mistrallarge"
+  },
+  {
+    "model": "gemini-2.5-pro",
+    "score": 3.4426166336492656,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "grok-4.1-thinking",
+    "score": 3.2618624263458713,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "grok"
+  },
+  {
+    "model": "devstral-2",
+    "score": 3.0534514319161787,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "devstral"
+  },
+  {
+    "model": "granite-4.1-8b",
+    "score": 3.020505590221518,
+    "numeric": [
+      "4",
+      "1",
+      "8"
+    ],
+    "text_key": "graniteb"
+  },
+  {
+    "model": "mercury-2",
+    "score": 2.7034582789122226,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "mercury"
+  },
+  {
+    "model": "grok-code-fast-1",
+    "score": 2.6853876254659355,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "grokcodefast"
+  },
+  {
+    "model": "grok-4-fast-reasoning",
+    "score": 2.6519753868185036,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "grokfastreasoning"
+  },
+  {
+    "model": "devstral-medium-2507",
+    "score": 1.628723906948383,
+    "numeric": [
+      "2507"
+    ],
+    "text_key": "devstralmedium"
+  }
+]

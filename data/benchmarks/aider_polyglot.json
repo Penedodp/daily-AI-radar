@@ -1,7 +1,7 @@
 [
   {
     "model": "Gemini 2.0 Pro exp-02-05",
-    "pass_rate_2": 35.6,
+    "score": 3.56,
     "numeric": [
       "2",
       "0",
@@ -12,7 +12,7 @@
   },
   {
     "model": "gpt-4o-mini-2024-07-18",
-    "pass_rate_2": 3.6,
+    "score": 0.36,
     "numeric": [
       "4"
     ],
@@ -20,7 +20,7 @@
   },
   {
     "model": "claude-3-5-sonnet-20241022",
-    "pass_rate_2": 51.6,
+    "score": 5.16,
     "numeric": [
       "3",
       "5"
@@ -29,7 +29,7 @@
   },
   {
     "model": "gpt-4o-2024-08-06",
-    "pass_rate_2": 23.1,
+    "score": 2.31,
     "numeric": [
       "4"
     ],
@@ -37,7 +37,7 @@
   },
   {
     "model": "o1-2024-12-17 (high)",
-    "pass_rate_2": 61.7,
+    "score": 6.17,
     "numeric": [
       "1"
     ],
@@ -45,7 +45,7 @@
   },
   {
     "model": "DeepSeek Chat V2.5",
-    "pass_rate_2": 17.8,
+    "score": 1.78,
     "numeric": [
       "2",
       "5"
@@ -54,7 +54,7 @@
   },
   {
     "model": "claude-3-5-haiku-20241022",
-    "pass_rate_2": 28.0,
+    "score": 2.8,
     "numeric": [
       "3",
       "5"
@@ -63,7 +63,7 @@
   },
   {
     "model": "Qwen2.5-Coder-32B-Instruct",
-    "pass_rate_2": 16.4,
+    "score": 1.64,
     "numeric": [
       "2",
       "5",
@@ -73,7 +73,7 @@
   },
   {
     "model": "o1-mini-2024-09-12",
-    "pass_rate_2": 32.9,
+    "score": 3.29,
     "numeric": [
       "1"
     ],
@@ -81,7 +81,7 @@
   },
   {
     "model": "gemini-exp-1206",
-    "pass_rate_2": 38.2,
+    "score": 3.8200000000000003,
     "numeric": [
       "1206"
     ],
@@ -89,7 +89,7 @@
   },
   {
     "model": "gemini-2.0-flash-exp",
-    "pass_rate_2": 22.2,
+    "score": 2.2199999999999998,
     "numeric": [
       "2",
       "0"
@@ -98,13 +98,13 @@
   },
   {
     "model": "yi-lightning",
-    "pass_rate_2": 12.9,
+    "score": 1.29,
     "numeric": [],
     "text_key": "yilightning"
   },
   {
     "model": "DeepSeek V3 (0324)",
-    "pass_rate_2": 55.1,
+    "score": 5.51,
     "numeric": [
       "3"
     ],
@@ -112,7 +112,7 @@
   },
   {
     "model": "Codestral 25.01",
-    "pass_rate_2": 11.1,
+    "score": 1.1099999999999999,
     "numeric": [
       "25",
       "01"
@@ -121,7 +121,7 @@
   },
   {
     "model": "DeepSeek R1 (0528)",
-    "pass_rate_2": 71.4,
+    "score": 7.140000000000001,
     "numeric": [
       "1"
     ],
@@ -129,7 +129,7 @@
   },
   {
     "model": "DeepSeek R1 + claude-3-5-sonnet-20241022",
-    "pass_rate_2": 64.0,
+    "score": 6.4,
     "numeric": [
       "1",
       "3",
@@ -139,13 +139,13 @@
   },
   {
     "model": "qwen-max-2025-01-25",
-    "pass_rate_2": 21.8,
+    "score": 2.18,
     "numeric": [],
     "text_key": "qwenmax"
   },
   {
     "model": "o3-mini (high)",
-    "pass_rate_2": 60.4,
+    "score": 6.04,
     "numeric": [
       "3"
     ],
@@ -153,7 +153,7 @@
   },
   {
     "model": "gemini-2.0-flash-thinking-exp-01-21",
-    "pass_rate_2": 18.2,
+    "score": 1.8199999999999998,
     "numeric": [
       "2",
       "0",
@@ -164,7 +164,7 @@
   },
   {
     "model": "chatgpt-4o-latest (2025-03-29)",
-    "pass_rate_2": 45.3,
+    "score": 4.529999999999999,
     "numeric": [
       "4"
     ],
@@ -172,7 +172,7 @@
   },
   {
     "model": "claude-3-7-sonnet-20250219 (32k thinking tokens)",
-    "pass_rate_2": 64.9,
+    "score": 6.49,
     "numeric": [
       "3",
       "7"
@@ -181,7 +181,7 @@
   },
   {
     "model": "gpt-4.5-preview",
-    "pass_rate_2": 44.9,
+    "score": 4.49,
     "numeric": [
       "4",
       "5"
@@ -190,7 +190,7 @@
   },
   {
     "model": "QwQ-32B",
-    "pass_rate_2": 20.9,
+    "score": 2.09,
     "numeric": [
       "32"
     ],
@@ -198,7 +198,7 @@
   },
   {
     "model": "QwQ-32B + Qwen 2.5 Coder Instruct",
-    "pass_rate_2": 26.2,
+    "score": 2.62,
     "numeric": [
       "32",
       "2",
@@ -208,7 +208,7 @@
   },
   {
     "model": "command-a-03-2025-quality",
-    "pass_rate_2": 12.0,
+    "score": 1.2,
     "numeric": [
       "03",
       "2025"
@@ -217,7 +217,7 @@
   },
   {
     "model": "gemma-3-27b-it",
-    "pass_rate_2": 4.9,
+    "score": 0.49000000000000005,
     "numeric": [
       "3",
       "27"
@@ -226,7 +226,7 @@
   },
   {
     "model": "Gemini 2.5 Pro Preview 03-25",
-    "pass_rate_2": 72.9,
+    "score": 7.290000000000001,
     "numeric": [
       "2",
       "5",
@@ -237,13 +237,13 @@
   },
   {
     "model": "Quasar Alpha",
-    "pass_rate_2": 54.7,
+    "score": 5.470000000000001,
     "numeric": [],
     "text_key": "quasaralpha"
   },
   {
     "model": "Llama 4 Maverick",
-    "pass_rate_2": 15.6,
+    "score": 1.56,
     "numeric": [
       "4"
     ],
@@ -251,7 +251,7 @@
   },
   {
     "model": "Grok 3 Beta",
-    "pass_rate_2": 53.3,
+    "score": 5.33,
     "numeric": [
       "3"
     ],
@@ -259,7 +259,7 @@
   },
   {
     "model": "Grok 3 Mini Beta (high)",
-    "pass_rate_2": 49.3,
+    "score": 4.93,
     "numeric": [
       "3"
     ],
@@ -267,13 +267,13 @@
   },
   {
     "model": "Optimus Alpha",
-    "pass_rate_2": 52.9,
+    "score": 5.29,
     "numeric": [],
     "text_key": "optimusalpha"
   },
   {
     "model": "gpt-4.1",
-    "pass_rate_2": 52.4,
+    "score": 5.24,
     "numeric": [
       "4",
       "1"
@@ -282,7 +282,7 @@
   },
   {
     "model": "gpt-4.1-mini",
-    "pass_rate_2": 32.4,
+    "score": 3.2399999999999998,
     "numeric": [
       "4",
       "1"
@@ -291,7 +291,7 @@
   },
   {
     "model": "gpt-4.1-nano",
-    "pass_rate_2": 8.9,
+    "score": 0.89,
     "numeric": [
       "4",
       "1"
@@ -300,7 +300,7 @@
   },
   {
     "model": "o4-mini (high)",
-    "pass_rate_2": 72.0,
+    "score": 7.2,
     "numeric": [
       "4"
     ],
@@ -308,7 +308,7 @@
   },
   {
     "model": "openhands-lm-32b-v0.1",
-    "pass_rate_2": 10.2,
+    "score": 1.02,
     "numeric": [
       "32",
       "0",
@@ -318,7 +318,7 @@
   },
   {
     "model": "gemini-2.5-flash-preview-04-17 (default)",
-    "pass_rate_2": 47.1,
+    "score": 4.71,
     "numeric": [
       "2",
       "5",
@@ -329,7 +329,7 @@
   },
   {
     "model": "Gemini 2.5 Pro Preview 05-06",
-    "pass_rate_2": 76.9,
+    "score": 7.69,
     "numeric": [
       "2",
       "5",
@@ -340,7 +340,7 @@
   },
   {
     "model": "Qwen3 32B",
-    "pass_rate_2": 40.0,
+    "score": 4.0,
     "numeric": [
       "3",
       "32"
@@ -349,7 +349,7 @@
   },
   {
     "model": "Qwen3 235B A22B diff, no think, Alibaba API",
-    "pass_rate_2": 59.6,
+    "score": 5.96,
     "numeric": [
       "3",
       "235",
@@ -359,7 +359,7 @@
   },
   {
     "model": "claude-sonnet-4-20250514 (32k thinking)",
-    "pass_rate_2": 61.3,
+    "score": 6.13,
     "numeric": [
       "4"
     ],
@@ -367,7 +367,7 @@
   },
   {
     "model": "claude-opus-4-20250514 (32k thinking)",
-    "pass_rate_2": 72.0,
+    "score": 7.2,
     "numeric": [
       "4"
     ],
@@ -375,7 +375,7 @@
   },
   {
     "model": "gemini-2.5-flash-preview-05-20 (24k think)",
-    "pass_rate_2": 55.1,
+    "score": 5.51,
     "numeric": [
       "2",
       "5",
@@ -386,7 +386,7 @@
   },
   {
     "model": "gemini-2.5-pro-preview-06-05 (32k think)",
-    "pass_rate_2": 83.1,
+    "score": 8.309999999999999,
     "numeric": [
       "2",
       "5",
@@ -397,7 +397,7 @@
   },
   {
     "model": "o3 (high)",
-    "pass_rate_2": 81.3,
+    "score": 8.129999999999999,
     "numeric": [
       "3"
     ],
@@ -405,7 +405,7 @@
   },
   {
     "model": "o3 (high) + gpt-4.1",
-    "pass_rate_2": 78.2,
+    "score": 7.82,
     "numeric": [
       "3",
       "4",
@@ -415,7 +415,7 @@
   },
   {
     "model": "o3-pro (high)",
-    "pass_rate_2": 84.9,
+    "score": 8.49,
     "numeric": [
       "3"
     ],
@@ -423,7 +423,7 @@
   },
   {
     "model": "grok-4 (high)",
-    "pass_rate_2": 79.6,
+    "score": 7.959999999999999,
     "numeric": [
       "4"
     ],
@@ -431,7 +431,7 @@
   },
   {
     "model": "Kimi K2",
-    "pass_rate_2": 59.1,
+    "score": 5.91,
     "numeric": [
       "2"
     ],
@@ -439,7 +439,7 @@
   },
   {
     "model": "gpt-oss-120b (high)",
-    "pass_rate_2": 41.8,
+    "score": 4.18,
     "numeric": [
       "120"
     ],
@@ -447,7 +447,7 @@
   },
   {
     "model": "gpt-5 (high)",
-    "pass_rate_2": 88.0,
+    "score": 8.8,
     "numeric": [
       "5"
     ],
@@ -455,7 +455,7 @@
   },
   {
     "model": "DeepSeek-V3.2-Exp (Reasoner)",
-    "pass_rate_2": 74.2,
+    "score": 7.42,
     "numeric": [
       "3",
       "2"
