@@ -11,7 +11,7 @@
 | together | `ok` | 187 |
 | novita | `ok` | 156 |
 | aider_polyglot | `ok` | 53 |
-| lmarena_webdev | `cached_stale` | 115 |
+| lmarena_webdev | `ok` | 115 |
 | openrouter_routes | `ok` | 247 |
 
 ## 🆓 Mejor opción gratuita
@@ -27,7 +27,7 @@
 
 | Uso | Modelo | Proveedor/ruta | Coste/tarea | $/M input | $/M output | Calidad* | Value |
 |---|---|---|---:|---:|---:|---:|---:|
-| 💻 Coding | **glm-5.3-flash** | **CheaperInference** | $0.00352 | $0.0705 | $0.2350 | 8.2/10 | 79.3 |
+| 💻 Coding | **glm-5.3-flash** | **CheaperInference** | $0.00334 | $0.0668 | $0.2227 | 8.2/10 | 79.4 |
 | 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | | | |
 | 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | | | |
 | ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | | | |
@@ -66,7 +66,7 @@
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
 ### 💻 Coding
-1. **glm-5.3-flash** vía **CheaperInference** — calidad 8.2/10 · coste/tarea $0.00352 (\$0.0705 in / \$0.2350 out) · value 79.3
+1. **glm-5.3-flash** vía **CheaperInference** — calidad 8.2/10 · coste/tarea $0.00334 (\$0.0668 in / \$0.2227 out) · value 79.4
 2. **qwen3.8-27b** vía **OpenRouter → AkashML** — calidad 8.1/10 · coste/tarea $0.02070 (\$0.2500 in / \$2.2000 out) · value 68.1
 3. **deepseek-v3.2** vía **OpenRouter** — calidad 7.4/10 · coste/tarea $0.01047 (\$0.2690 in / \$0.4000 out) · value 67.3
 4. **hy3** vía **OpenRouter** — calidad 7.0/10 · coste/tarea $0.00445 (\$0.0825 in / \$0.3300 out) · value 67.1
