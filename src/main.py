@@ -11,6 +11,7 @@ from normalize import canonicalize
 from quality_bench import fetch_leaderboard, match_models as match_bench_models
 from scoring import costs_by_task, weighted_daily_cost, price_change, value_score, is_free
 from report_ai import generate_summary
+from report_html import build_html
 
 ROOT = Path(__file__).resolve().parents[1]
 LABELS = {
@@ -58,6 +59,20 @@ def compact(row, category=None):
         result["change_pct"] = round(row["change_pct"], 1)
     return result
 
+def dedup_by_model(rows, limit):
+    """Keep the first (best-ranked) route per canonical model, so a model with
+    many provider routes doesn't flood a top-N list on its own."""
+    seen = set()
+    out = []
+    for r in rows:
+        if r["canonical_model"] in seen:
+            continue
+        seen.add(r["canonical_model"])
+        out.append(r)
+        if len(out) >= limit:
+            break
+    return out
+
 def recommendations(models, config):
     recs = {}
     for category in LABELS:
@@ -98,8 +113,8 @@ def recommendations(models, config):
             "best_free": compact(free[0], category) if free else None,
             "best_paid_value": compact(paid_good[0], category) if paid_good else None,
             "best_paid_quality": compact(paid_quality[0], category) if paid_quality else None,
-            "top_paid_value": [compact(r, category) for r in paid_good[:5]],
-            "top_free": [compact(r, category) for r in free[:5]],
+            "top_paid_value": [compact(r, category) for r in dedup_by_model(paid_good, 5)],
+            "top_free": [compact(r, category) for r in dedup_by_model(free, 5)],
         }
     return recs
 
@@ -161,8 +176,10 @@ def main():
 
     data_dir = ROOT / "data"
     reports_dir = ROOT / "reports"
+    docs_dir = ROOT / "docs"
     data_dir.mkdir(exist_ok=True)
     reports_dir.mkdir(exist_ok=True)
+    docs_dir.mkdir(exist_ok=True)
 
     previous = previous_snapshot(data_dir, day)
     prev_map = previous_map(previous)
@@ -312,61 +329,63 @@ def main():
         "",
         "## 🆓 Mejor opción gratuita",
         "",
-        "| Uso | Modelo | Calidad* | Proveedor/ruta |",
-        "|---|---|---:|---|",
-    ]
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            lines.append(f"| {label} | {NO_BENCH_NOTE} | | |")
-            continue
-        r = recs[cat]["best_free"]
-        if r:
-            lines.append(
-                f"| {label} | **{r['model']}** | {r.get('quality_score','—')}/10 | {r['provider']} |"
-            )
-        else:
-            lines.append(f"| {label} | — | — | — |")
-
-    lines += [
-        "",
-        "## 💰 Mejor relación calidad/precio DE PAGO",
-        "",
-        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* | Value |",
-        "|---|---|---|---:|---:|---:|",
+        "| Uso | Modelo | Calidad* | Proveedor/ruta | $/M input | $/M output |",
+        "|---|---|---:|---|---:|---:|",
     ]
     for cat, label in LABELS.items():
         if cat not in scored_categories:
             lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | |")
             continue
-        r = recs[cat]["best_paid_value"]
+        r = recs[cat]["best_free"]
         if r:
             lines.append(
-                f"| {label} | **{r['model']}** | **{r['provider']}** | "
-                f"${r['task_cost']:.5f} | {r.get('quality_score','—')}/10 | "
-                f"{r.get('value_score','—')} |"
+                f"| {label} | **{r['model']}** | {r.get('quality_score','—')}/10 | {r['provider']} | "
+                f"${r['input']:.4f} | ${r['output']:.4f} |"
             )
         else:
             lines.append(f"| {label} | — | — | — | — | — |")
 
     lines += [
         "",
-        "## 🧠 Opción premium por calidad",
+        "## 💰 Mejor relación calidad/precio DE PAGO",
         "",
-        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* |",
-        "|---|---|---|---:|---:|",
+        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | $/M input | $/M output | Calidad* | Value |",
+        "|---|---|---|---:|---:|---:|---:|---:|",
     ]
     for cat, label in LABELS.items():
         if cat not in scored_categories:
-            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | |")
+            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | | | |")
+            continue
+        r = recs[cat]["best_paid_value"]
+        if r:
+            lines.append(
+                f"| {label} | **{r['model']}** | **{r['provider']}** | "
+                f"${r['task_cost']:.5f} | ${r['input']:.4f} | ${r['output']:.4f} | "
+                f"{r.get('quality_score','—')}/10 | {r.get('value_score','—')} |"
+            )
+        else:
+            lines.append(f"| {label} | — | — | — | — | — | — | — |")
+
+    lines += [
+        "",
+        "## 🧠 Opción premium por calidad",
+        "",
+        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | $/M input | $/M output | Calidad* |",
+        "|---|---|---|---:|---:|---:|---:|",
+    ]
+    for cat, label in LABELS.items():
+        if cat not in scored_categories:
+            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | | |")
             continue
         r = recs[cat]["best_paid_quality"]
         if r:
             lines.append(
                 f"| {label} | **{r['model']}** | {r['provider']} | "
-                f"${r['task_cost']:.5f} | {r.get('quality_score','—')}/10 |"
+                f"${r['task_cost']:.5f} | ${r['input']:.4f} | ${r['output']:.4f} | "
+                f"{r.get('quality_score','—')}/10 |"
             )
         else:
-            lines.append(f"| {label} | — | — | — | — |")
+            lines.append(f"| {label} | — | — | — | — | — | — |")
 
     lines += [
         "",
@@ -379,13 +398,14 @@ def main():
     ]
     if opportunities:
         lines += [
-            "| Modelo | Más barato | Coste perfil | Siguiente | Ahorro vs siguiente |",
-            "|---|---|---:|---|---:|",
+            "| Modelo | Más barato | Coste perfil | $/M input | $/M output | Siguiente | Ahorro vs siguiente |",
+            "|---|---|---:|---:|---:|---|---:|",
         ]
         for o in opportunities[:15]:
             a, b = o["cheapest"], o["next"]
             lines.append(
                 f"| **{o['model']}** | **{a['provider']}** | ${a['weighted_cost']:.5f} | "
+                f"${a['input']:.4f} | ${a['output']:.4f} | "
                 f"{b['provider']} (${b['weighted_cost']:.5f}) | **{o['saving_vs_next_pct']:.1f}%** |"
             )
     else:
@@ -408,7 +428,9 @@ def main():
             lines.append(
                 f"{i}. **{r['model']}** vía **{r['provider']}** — "
                 f"calidad {r.get('quality_score','—')}/10 · "
-                f"coste/tarea ${r['task_cost']:.5f} · value {r.get('value_score','—')}"
+                f"coste/tarea ${r['task_cost']:.5f} "
+                f"(\\${r['input']:.4f} in / \\${r['output']:.4f} out) · "
+                f"value {r.get('value_score','—')}"
             )
         lines.append("")
 
@@ -418,7 +440,8 @@ def main():
     elif drops:
         for r in drops[:12]:
             lines.append(
-                f"- **{r['model']}** vía **{r['provider']}** — **{r['change_pct']:.1f}%**"
+                f"- **{r['model']}** vía **{r['provider']}** — **{r['change_pct']:.1f}%** "
+                f"(ahora \\${r['input']:.4f} in / \\${r['output']:.4f} out)"
             )
     else:
         lines.append("- No se detectaron bajadas ≥ al umbral en la misma ruta/proveedor.")
@@ -427,7 +450,8 @@ def main():
         lines += ["", "### Subidas", ""]
         for r in increases[:8]:
             lines.append(
-                f"- **{r['model']}** vía **{r['provider']}** — +{r['change_pct']:.1f}%"
+                f"- **{r['model']}** vía **{r['provider']}** — +{r['change_pct']:.1f}% "
+                f"(ahora \\${r['input']:.4f} in / \\${r['output']:.4f} out)"
             )
 
     lines += [
@@ -452,6 +476,10 @@ def main():
     report = "\n".join(lines) + "\n"
     (reports_dir / f"{day}.md").write_text(report, encoding="utf-8")
     (reports_dir / "latest.md").write_text(report, encoding="utf-8")
+
+    dashboard = build_html(snapshot, day, has_previous=bool(previous), ai_summary=ai)
+    (docs_dir / "index.html").write_text(dashboard, encoding="utf-8")
+
     print(report)
 
 if __name__ == "__main__":
