@@ -1,0 +1,465 @@
+[
+  {
+    "model": "Gemini 2.0 Pro exp-02-05",
+    "pass_rate_2": 35.6,
+    "numeric": [
+      "2",
+      "0",
+      "02",
+      "05"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "gpt-4o-mini-2024-07-18",
+    "pass_rate_2": 3.6,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "gptomini"
+  },
+  {
+    "model": "claude-3-5-sonnet-20241022",
+    "pass_rate_2": 51.6,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "claudesonnet"
+  },
+  {
+    "model": "gpt-4o-2024-08-06",
+    "pass_rate_2": 23.1,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "gpto"
+  },
+  {
+    "model": "o1-2024-12-17 (high)",
+    "pass_rate_2": 61.7,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "o"
+  },
+  {
+    "model": "DeepSeek Chat V2.5",
+    "pass_rate_2": 17.8,
+    "numeric": [
+      "2",
+      "5"
+    ],
+    "text_key": "deepseekv"
+  },
+  {
+    "model": "claude-3-5-haiku-20241022",
+    "pass_rate_2": 28.0,
+    "numeric": [
+      "3",
+      "5"
+    ],
+    "text_key": "claudehaiku"
+  },
+  {
+    "model": "Qwen2.5-Coder-32B-Instruct",
+    "pass_rate_2": 16.4,
+    "numeric": [
+      "2",
+      "5",
+      "32"
+    ],
+    "text_key": "qwencoderb"
+  },
+  {
+    "model": "o1-mini-2024-09-12",
+    "pass_rate_2": 32.9,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "omini"
+  },
+  {
+    "model": "gemini-exp-1206",
+    "pass_rate_2": 38.2,
+    "numeric": [
+      "1206"
+    ],
+    "text_key": "gemini"
+  },
+  {
+    "model": "gemini-2.0-flash-exp",
+    "pass_rate_2": 22.2,
+    "numeric": [
+      "2",
+      "0"
+    ],
+    "text_key": "geminiflash"
+  },
+  {
+    "model": "yi-lightning",
+    "pass_rate_2": 12.9,
+    "numeric": [],
+    "text_key": "yilightning"
+  },
+  {
+    "model": "DeepSeek V3 (0324)",
+    "pass_rate_2": 55.1,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "deepseekv"
+  },
+  {
+    "model": "Codestral 25.01",
+    "pass_rate_2": 11.1,
+    "numeric": [
+      "25",
+      "01"
+    ],
+    "text_key": "codestral"
+  },
+  {
+    "model": "DeepSeek R1 (0528)",
+    "pass_rate_2": 71.4,
+    "numeric": [
+      "1"
+    ],
+    "text_key": "deepseekr"
+  },
+  {
+    "model": "DeepSeek R1 + claude-3-5-sonnet-20241022",
+    "pass_rate_2": 64.0,
+    "numeric": [
+      "1",
+      "3",
+      "5"
+    ],
+    "text_key": "deepseekrclaudesonnet"
+  },
+  {
+    "model": "qwen-max-2025-01-25",
+    "pass_rate_2": 21.8,
+    "numeric": [],
+    "text_key": "qwenmax"
+  },
+  {
+    "model": "o3-mini (high)",
+    "pass_rate_2": 60.4,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "omini"
+  },
+  {
+    "model": "gemini-2.0-flash-thinking-exp-01-21",
+    "pass_rate_2": 18.2,
+    "numeric": [
+      "2",
+      "0",
+      "01",
+      "21"
+    ],
+    "text_key": "geminiflash"
+  },
+  {
+    "model": "chatgpt-4o-latest (2025-03-29)",
+    "pass_rate_2": 45.3,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "chatgpto"
+  },
+  {
+    "model": "claude-3-7-sonnet-20250219 (32k thinking tokens)",
+    "pass_rate_2": 64.9,
+    "numeric": [
+      "3",
+      "7"
+    ],
+    "text_key": "claudesonnet"
+  },
+  {
+    "model": "gpt-4.5-preview",
+    "pass_rate_2": 44.9,
+    "numeric": [
+      "4",
+      "5"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "QwQ-32B",
+    "pass_rate_2": 20.9,
+    "numeric": [
+      "32"
+    ],
+    "text_key": "qwqb"
+  },
+  {
+    "model": "QwQ-32B + Qwen 2.5 Coder Instruct",
+    "pass_rate_2": 26.2,
+    "numeric": [
+      "32",
+      "2",
+      "5"
+    ],
+    "text_key": "qwqbqwencoder"
+  },
+  {
+    "model": "command-a-03-2025-quality",
+    "pass_rate_2": 12.0,
+    "numeric": [
+      "03",
+      "2025"
+    ],
+    "text_key": "commandaquality"
+  },
+  {
+    "model": "gemma-3-27b-it",
+    "pass_rate_2": 4.9,
+    "numeric": [
+      "3",
+      "27"
+    ],
+    "text_key": "gemmab"
+  },
+  {
+    "model": "Gemini 2.5 Pro Preview 03-25",
+    "pass_rate_2": 72.9,
+    "numeric": [
+      "2",
+      "5",
+      "03",
+      "25"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "Quasar Alpha",
+    "pass_rate_2": 54.7,
+    "numeric": [],
+    "text_key": "quasaralpha"
+  },
+  {
+    "model": "Llama 4 Maverick",
+    "pass_rate_2": 15.6,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "llamamaverick"
+  },
+  {
+    "model": "Grok 3 Beta",
+    "pass_rate_2": 53.3,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "grokbeta"
+  },
+  {
+    "model": "Grok 3 Mini Beta (high)",
+    "pass_rate_2": 49.3,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "grokminibeta"
+  },
+  {
+    "model": "Optimus Alpha",
+    "pass_rate_2": 52.9,
+    "numeric": [],
+    "text_key": "optimusalpha"
+  },
+  {
+    "model": "gpt-4.1",
+    "pass_rate_2": 52.4,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "gpt-4.1-mini",
+    "pass_rate_2": 32.4,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "gptmini"
+  },
+  {
+    "model": "gpt-4.1-nano",
+    "pass_rate_2": 8.9,
+    "numeric": [
+      "4",
+      "1"
+    ],
+    "text_key": "gptnano"
+  },
+  {
+    "model": "o4-mini (high)",
+    "pass_rate_2": 72.0,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "omini"
+  },
+  {
+    "model": "openhands-lm-32b-v0.1",
+    "pass_rate_2": 10.2,
+    "numeric": [
+      "32",
+      "0",
+      "1"
+    ],
+    "text_key": "openhandslmbv"
+  },
+  {
+    "model": "gemini-2.5-flash-preview-04-17 (default)",
+    "pass_rate_2": 47.1,
+    "numeric": [
+      "2",
+      "5",
+      "04",
+      "17"
+    ],
+    "text_key": "geminiflash"
+  },
+  {
+    "model": "Gemini 2.5 Pro Preview 05-06",
+    "pass_rate_2": 76.9,
+    "numeric": [
+      "2",
+      "5",
+      "05",
+      "06"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "Qwen3 32B",
+    "pass_rate_2": 40.0,
+    "numeric": [
+      "3",
+      "32"
+    ],
+    "text_key": "qwenb"
+  },
+  {
+    "model": "Qwen3 235B A22B diff, no think, Alibaba API",
+    "pass_rate_2": 59.6,
+    "numeric": [
+      "3",
+      "235",
+      "22"
+    ],
+    "text_key": "qwenbabdiffnothinkalibabaapi"
+  },
+  {
+    "model": "claude-sonnet-4-20250514 (32k thinking)",
+    "pass_rate_2": 61.3,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "claudesonnet"
+  },
+  {
+    "model": "claude-opus-4-20250514 (32k thinking)",
+    "pass_rate_2": 72.0,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "claudeopus"
+  },
+  {
+    "model": "gemini-2.5-flash-preview-05-20 (24k think)",
+    "pass_rate_2": 55.1,
+    "numeric": [
+      "2",
+      "5",
+      "05",
+      "20"
+    ],
+    "text_key": "geminiflash"
+  },
+  {
+    "model": "gemini-2.5-pro-preview-06-05 (32k think)",
+    "pass_rate_2": 83.1,
+    "numeric": [
+      "2",
+      "5",
+      "06",
+      "05"
+    ],
+    "text_key": "geminipro"
+  },
+  {
+    "model": "o3 (high)",
+    "pass_rate_2": 81.3,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "o"
+  },
+  {
+    "model": "o3 (high) + gpt-4.1",
+    "pass_rate_2": 78.2,
+    "numeric": [
+      "3",
+      "4",
+      "1"
+    ],
+    "text_key": "ogpt"
+  },
+  {
+    "model": "o3-pro (high)",
+    "pass_rate_2": 84.9,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "opro"
+  },
+  {
+    "model": "grok-4 (high)",
+    "pass_rate_2": 79.6,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "grok"
+  },
+  {
+    "model": "Kimi K2",
+    "pass_rate_2": 59.1,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "kimik"
+  },
+  {
+    "model": "gpt-oss-120b (high)",
+    "pass_rate_2": 41.8,
+    "numeric": [
+      "120"
+    ],
+    "text_key": "gptossb"
+  },
+  {
+    "model": "gpt-5 (high)",
+    "pass_rate_2": 88.0,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "gpt"
+  },
+  {
+    "model": "DeepSeek-V3.2-Exp (Reasoner)",
+    "pass_rate_2": 74.2,
+    "numeric": [
+      "3",
+      "2"
+    ],
+    "text_key": "deepseekv"
+  }
+]
