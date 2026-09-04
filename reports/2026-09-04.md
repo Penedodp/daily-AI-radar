@@ -1,23 +1,23 @@
 # AI Price Radar — 2026-09-04
 
-> **417 rutas/modelos** útiles · **2 fuentes con datos** · **28 rutas puntuadas**.
+> **908 rutas/modelos** útiles · **6 fuentes con datos** · **139 rutas puntuadas**.
 
 ## 📡 Fuentes
 
 | Fuente | Estado | Registros |
 |---|---|---:|
 | openrouter | `ok` | 422 |
-| cheaperinference | `not_configured_or_empty` | 0 |
-| together | `not_configured_or_empty` | 0 |
-| novita | `not_configured_or_empty` | 0 |
+| cheaperinference | `ok` | 57 |
+| together | `ok` | 187 |
+| novita | `ok` | 156 |
 | aider_polyglot | `ok` | 53 |
-| openrouter_routes | `no_key` | 0 |
+| openrouter_routes | `ok` | 96 |
 
 ## 🆓 Mejor opción gratuita
 
 | Uso | Modelo | Calidad* | Proveedor/ruta |
 |---|---|---:|---|
-| 💻 Coding | — | — | — |
+| 💻 Coding | **qwen3-32b** | 4.0/10 | Together AI |
 | 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
 | 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
 | ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | |
@@ -26,7 +26,7 @@
 
 | Uso | Modelo | Proveedor/ruta | Coste/tarea | Calidad* | Value |
 |---|---|---|---:|---:|---:|
-| 💻 Coding | **deepseek-v3.2** | **OpenRouter** | $0.01047 | 7.4/10 | 67.3 |
+| 💻 Coding | **deepseek-v3.2** | **OpenRouter → GMICloud** | $0.00812 | 7.4/10 | 68.6 |
 | 🤖 Agentic coding | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
 | 🧠 Razonamiento | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
 | ⚡ General | _Sin benchmark automatizado disponible todavía para esta categoría._ | | | | |
@@ -44,16 +44,32 @@
 
 ## 🔀 Mismo modelo, proveedor/ruta más barata
 
-Aún no hay suficientes fuentes configuradas con el mismo modelo, o no hay diferencias ≥ al umbral.
+| Modelo | Más barato | Coste perfil | Siguiente | Ahorro vs siguiente |
+|---|---|---:|---|---:|
+| **qwen3-vl-32b-instruct** | **OpenRouter** | $0.00612 | Together AI ($0.02612) | **76.6%** |
+| **glm-5.3** | **CheaperInference** | $0.02048 | OpenRouter ($0.07446) | **72.5%** |
+| **mistral-nemo** | **OpenRouter** | $0.00081 | Novita AI ($0.00242) | **66.4%** |
+| **ling-3.0-flash** | **OpenRouter** | $0.00110 | Novita AI ($0.00313) | **65.0%** |
+| **llama-3.2-1b-instruct** | **Novita AI** | $0.00078 | OpenRouter ($0.00221) | **64.7%** |
+| **deepseek-r1** | **Novita AI** | $0.00254 | Together AI ($0.00701) | **63.8%** |
+| **gpt-5.6-luna** | **CheaperInference** | $0.00577 | OpenRouter ($0.01443) | **60.0%** |
+| **gpt-5.6-terra** | **CheaperInference** | $0.05774 | OpenRouter ($0.14434) | **60.0%** |
+| **qwen3-max** | **OpenRouter** | $0.05111 | Novita AI ($0.12430) | **58.9%** |
+| **mistral-small-24b-instruct-2501** | **OpenRouter** | $0.00215 | Together AI ($0.00522) | **58.9%** |
+| **llama-3.1-8b-instruct** | **Novita AI** | $0.00098 | OpenRouter ($0.00215) | **54.4%** |
+| **gemini-2.5-pro-preview-05-06** | **OpenRouter → Google AI Studio** | $0.05341 | OpenRouter ($0.10683) | **50.0%** |
+| **gpt-5.6-sol** | **CheaperInference** | $0.06552 | OpenRouter ($0.13105) | **50.0%** |
+| **deepseek-v3.1** | **Novita AI** | $0.01537 | Together AI ($0.03068) | **49.9%** |
+| **deepseek-v4-pro** | **CheaperInference** | $0.02413 | OpenRouter ($0.04752) | **49.2%** |
 
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
 ### 💻 Coding
-1. **deepseek-v3.2** vía **OpenRouter** — calidad 7.4/10 · coste/tarea $0.01047 · value 67.3
-2. **deepseek-v3.2** vía **OpenRouter** — calidad 7.4/10 · coste/tarea $0.01056 · value 67.2
-3. **deepseek-r1** vía **OpenRouter** — calidad 7.1/10 · coste/tarea $0.03600 · value 54.1
-4. **gpt-5** vía **OpenRouter** — calidad 8.8/10 · coste/tarea $0.09750 · value 51.2
-5. **o4-mini** vía **OpenRouter** — calidad 7.2/10 · coste/tarea $0.05940 · value 48.7
+1. **deepseek-v3.2** vía **OpenRouter → GMICloud** — calidad 7.4/10 · coste/tarea $0.00812 · value 68.6
+2. **deepseek-v3.2** vía **OpenRouter → StreamLake** — calidad 7.4/10 · coste/tarea $0.00836 · value 68.5
+3. **deepseek-v3.2** vía **OpenRouter → DeepInfra** — calidad 7.4/10 · coste/tarea $0.01008 · value 67.5
+4. **deepseek-v3.2** vía **OpenRouter → AtlasCloud** — calidad 7.4/10 · coste/tarea $0.01008 · value 67.5
+5. **deepseek-v3.2** vía **OpenRouter → SiliconFlow** — calidad 7.4/10 · coste/tarea $0.01029 · value 67.4
 
 ### 🤖 Agentic coding
 - _Sin benchmark automatizado disponible todavía para esta categoría._
