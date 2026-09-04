@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T18:11:47.867250+01:00",
+  "generated_at": "2026-09-04T18:14:18.133564+01:00",
   "provider_status": {
     "openrouter": {
       "status": "ok",
@@ -1337,6 +1337,35 @@
       }
     },
     {
+      "model": "claude-haiku-4.5",
+      "cheapest": {
+        "model": "claude-haiku-4.5",
+        "raw_model": "claude-haiku-4.5",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.7,
+        "output": 3.5,
+        "weighted_cost": 0.045867
+      },
+      "next": {
+        "model": "claude-haiku-4.5",
+        "raw_model": "anthropic/claude-haiku-4.5",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 1.0,
+        "output": 5.0,
+        "weighted_cost": 0.065525,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 30.0,
+      "routes_count": 2,
+      "quality": {
+        "coding": 4.7
+      }
+    },
+    {
       "model": "claude-fable-5.1",
       "cheapest": {
         "model": "claude-fable-5.1",
@@ -1573,6 +1602,33 @@
         "input": 0.05,
         "output": 0.4,
         "weighted_cost": 0.004273,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 30.0,
+      "routes_count": 2,
+      "quality": null
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "cheapest": {
+        "model": "gemini-2.5-flash",
+        "raw_model": "gemini-2.5-flash",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.21,
+        "output": 1.75,
+        "weighted_cost": 0.018412
+      },
+      "next": {
+        "model": "gemini-2.5-flash",
+        "raw_model": "google/gemini-2.5-flash",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.3,
+        "output": 2.5,
+        "weighted_cost": 0.026302,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 30.0,
@@ -1934,33 +1990,6 @@
         "weighted_cost": 0.031156
       },
       "saving_vs_next_pct": 18.8,
-      "routes_count": 2,
-      "quality": null
-    },
-    {
-      "model": "gemini-2.5-flash",
-      "cheapest": {
-        "model": "gemini-2.5-flash",
-        "raw_model": "gemini-2.5-flash",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.244187,
-        "output": 2.034884,
-        "weighted_cost": 0.021409
-      },
-      "next": {
-        "model": "gemini-2.5-flash",
-        "raw_model": "google/gemini-2.5-flash",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.3,
-        "output": 2.5,
-        "weighted_cost": 0.026302,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 18.6,
       "routes_count": 2,
       "quality": null
     },
@@ -23947,7 +23976,7 @@
       "cache_read_usd_per_million": 0.175,
       "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -23983,7 +24012,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24019,7 +24048,7 @@
       "cache_read_usd_per_million": 0.0385,
       "cache_write_usd_per_million": 0.385,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24055,7 +24084,7 @@
       "cache_read_usd_per_million": 0.013365,
       "cache_write_usd_per_million": 0.066824,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24104,7 +24133,7 @@
       "cache_read_usd_per_million": 0.088,
       "cache_write_usd_per_million": 0.44,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24140,7 +24169,7 @@
       "cache_read_usd_per_million": 0.1,
       "cache_write_usd_per_million": 1.25,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24176,7 +24205,7 @@
       "cache_read_usd_per_million": 0.7,
       "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24225,7 +24254,7 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.1,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24261,7 +24290,7 @@
       "cache_read_usd_per_million": 0.151163,
       "cache_write_usd_per_million": 1.889535,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24297,7 +24326,7 @@
       "cache_read_usd_per_million": 0.008,
       "cache_write_usd_per_million": 0.1,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24333,7 +24362,7 @@
       "cache_read_usd_per_million": 0.84,
       "cache_write_usd_per_million": 10.5,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24369,7 +24398,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24418,7 +24447,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24467,7 +24496,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24516,7 +24545,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 3.5,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24565,7 +24594,7 @@
       "cache_read_usd_per_million": 0.175,
       "cache_write_usd_per_million": 1.75,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24614,7 +24643,7 @@
       "cache_read_usd_per_million": 0.14,
       "cache_write_usd_per_million": 0.2625,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24663,7 +24692,7 @@
       "cache_read_usd_per_million": 0.14,
       "cache_write_usd_per_million": 1.75,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24699,7 +24728,7 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.625,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24748,7 +24777,7 @@
       "cache_read_usd_per_million": 0.015582,
       "cache_write_usd_per_million": 0.078,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24784,7 +24813,7 @@
       "cache_read_usd_per_million": 0.042,
       "cache_write_usd_per_million": 0.21,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24833,7 +24862,7 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 1.4,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24882,7 +24911,7 @@
       "cache_read_usd_per_million": 0.038518,
       "cache_write_usd_per_million": 0.462,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24931,7 +24960,7 @@
       "cache_read_usd_per_million": 0.105,
       "cache_write_usd_per_million": 0.05831,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -24967,7 +24996,7 @@
       "cache_read_usd_per_million": 0.0525,
       "cache_write_usd_per_million": 0.525,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25003,7 +25032,7 @@
       "cache_read_usd_per_million": 0.175,
       "cache_write_usd_per_million": 0.7,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25034,12 +25063,12 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.980393,
-      "output_usd_per_million": 4.901961,
-      "cache_read_usd_per_million": 0.098039,
-      "cache_write_usd_per_million": 1.225491,
+      "input_usd_per_million": 0.7,
+      "output_usd_per_million": 3.5,
+      "cache_read_usd_per_million": 0.07,
+      "cache_write_usd_per_million": 0.875,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25056,14 +25085,14 @@
         "match_ratio": 1.0
       },
       "costs_by_task": {
-        "coding": 0.058823556,
-        "agentic": 0.117647112,
-        "reasoning": 0.028921579500000003,
-        "general": 0.0107843182
+        "coding": 0.041999999999999996,
+        "agentic": 0.08399999999999999,
+        "reasoning": 0.02065,
+        "general": 0.007699999999999999
       },
-      "weighted_cost": 0.064240224745,
+      "weighted_cost": 0.0458675,
       "value_scores": {
-        "coding": 31.9,
+        "coding": 34.6,
         "agentic": null,
         "reasoning": null,
         "general": null
@@ -25088,7 +25117,7 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25137,7 +25166,7 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.625,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25181,12 +25210,12 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.244187,
-      "output_usd_per_million": 2.034884,
-      "cache_read_usd_per_million": 0.024419,
-      "cache_write_usd_per_million": 0.067803,
+      "input_usd_per_million": 0.21,
+      "output_usd_per_million": 1.75,
+      "cache_read_usd_per_million": 0.021,
+      "cache_write_usd_per_million": 0.05831,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25195,12 +25224,12 @@
       "canonical_model": "gemini-2.5-flash",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.019534914,
-        "agentic": 0.039069828,
-        "reasoning": 0.010052338,
-        "general": 0.0036627957999999993
+        "coding": 0.0168,
+        "agentic": 0.0336,
+        "reasoning": 0.008645,
+        "general": 0.00315
       },
-      "weighted_cost": 0.02140904428,
+      "weighted_cost": 0.018411749999999998,
       "value_scores": {},
       "change_pct": null
     },
@@ -25222,7 +25251,7 @@
       "cache_read_usd_per_million": 0.174706,
       "cache_write_usd_per_million": 0.327574,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25271,7 +25300,7 @@
       "cache_read_usd_per_million": 0.035,
       "cache_write_usd_per_million": 0.05831,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25320,7 +25349,7 @@
       "cache_read_usd_per_million": 0.0605,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25356,7 +25385,7 @@
       "cache_read_usd_per_million": 0.0165,
       "cache_write_usd_per_million": 0.11,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25392,7 +25421,7 @@
       "cache_read_usd_per_million": 0.061396,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25441,7 +25470,7 @@
       "cache_read_usd_per_million": 0.066,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25490,7 +25519,7 @@
       "cache_read_usd_per_million": 0.106919,
       "cache_write_usd_per_million": 0.534597,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25539,7 +25568,7 @@
       "cache_read_usd_per_million": 0.143,
       "cache_write_usd_per_million": 0.77,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25588,7 +25617,7 @@
       "cache_read_usd_per_million": 0.020349,
       "cache_write_usd_per_million": 0.067803,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25637,7 +25666,7 @@
       "cache_read_usd_per_million": 0.021,
       "cache_write_usd_per_million": 0.078333,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25686,7 +25715,7 @@
       "cache_read_usd_per_million": 0.7,
       "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25722,7 +25751,7 @@
       "cache_read_usd_per_million": 0.011225,
       "cache_write_usd_per_million": 0.0456,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25758,7 +25787,7 @@
       "cache_read_usd_per_million": 0.0035,
       "cache_write_usd_per_million": 0.035,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25794,7 +25823,7 @@
       "cache_read_usd_per_million": 0.008499,
       "cache_write_usd_per_million": 0.085,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25843,7 +25872,7 @@
       "cache_read_usd_per_million": 0.014,
       "cache_write_usd_per_million": 0.14,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25879,7 +25908,7 @@
       "cache_read_usd_per_million": 0.10941,
       "cache_write_usd_per_million": 0.21875,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25928,7 +25957,7 @@
       "cache_read_usd_per_million": 0.040136,
       "cache_write_usd_per_million": 0.267298,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -25964,7 +25993,7 @@
       "cache_read_usd_per_million": 0.0147,
       "cache_write_usd_per_million": 0.098,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26000,7 +26029,7 @@
       "cache_read_usd_per_million": 0.06375,
       "cache_write_usd_per_million": 0.035416,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26036,7 +26065,7 @@
       "cache_read_usd_per_million": 0.21875,
       "cache_write_usd_per_million": 2.1875,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26085,7 +26114,7 @@
       "cache_read_usd_per_million": 0.1225,
       "cache_write_usd_per_million": 1.225,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26134,7 +26163,7 @@
       "cache_read_usd_per_million": 3.15,
       "cache_write_usd_per_million": 21.0,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26170,7 +26199,7 @@
       "cache_read_usd_per_million": 0.012057,
       "cache_write_usd_per_million": 0.04,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26219,7 +26248,7 @@
       "cache_read_usd_per_million": 0.1275,
       "cache_write_usd_per_million": 1.0625,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26268,7 +26297,7 @@
       "cache_read_usd_per_million": 0.0175,
       "cache_write_usd_per_million": 0.175,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26304,7 +26333,7 @@
       "cache_read_usd_per_million": 0.015408,
       "cache_write_usd_per_million": 0.462,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -26340,7 +26369,7 @@
       "cache_read_usd_per_million": 0.07353,
       "cache_write_usd_per_million": 0.040882,
       "metadata": {
-        "pricing_version": "sha256:e0f8953d0ef7481619c40ec749e2b07ac1151516d964a31aa0a25f3dc7bb4563",
+        "pricing_version": "sha256:637f7e750e33e3b8b4471fdbef6d64eece0fd9a5f74b936c70b3a666177e02e4",
         "pricing_checked_at": "2026-09-04T17:00:30.647Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
@@ -38413,9 +38442,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/fp8",
-        "uptime_last_1d": 91.46770257482942,
-        "uptime_last_30m": 98.73765820687828,
-        "latency_p50": 5708.5,
+        "uptime_last_1d": 91.47083826618429,
+        "uptime_last_30m": 98.73772791023842,
+        "latency_p50": 5695.5,
         "throughput_p50": 23,
         "quantization": "fp8"
       },
@@ -38463,10 +38492,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 98.80392098499485,
-        "uptime_last_30m": 99.16409694436658,
-        "latency_p50": 1766,
-        "throughput_p50": 31,
+        "uptime_last_1d": 98.80348159917568,
+        "uptime_last_30m": 99.18362548655921,
+        "latency_p50": 1796,
+        "throughput_p50": 30,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38513,10 +38542,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 99.5985629274112,
-        "uptime_last_30m": 99.10970706490522,
-        "latency_p50": 1118.5,
-        "throughput_p50": 40,
+        "uptime_last_1d": 99.59988074440014,
+        "uptime_last_30m": 99.53890489913545,
+        "latency_p50": 1093,
+        "throughput_p50": 42,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38563,9 +38592,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "z-ai/fp8",
-        "uptime_last_1d": 98.82270276994544,
-        "uptime_last_30m": 98.56942321489846,
-        "latency_p50": 4122,
+        "uptime_last_1d": 98.82298483574944,
+        "uptime_last_30m": 98.56786876380743,
+        "latency_p50": 4128,
         "throughput_p50": 30,
         "quantization": "fp8"
       },
@@ -38613,10 +38642,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "wafer",
-        "uptime_last_1d": 95.00939544103072,
-        "uptime_last_30m": 95.98384123622387,
-        "latency_p50": 2297,
-        "throughput_p50": 22,
+        "uptime_last_1d": 95.0019283966906,
+        "uptime_last_30m": 96.14546020869024,
+        "latency_p50": 2223.5,
+        "throughput_p50": 23,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38663,10 +38692,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "morph/fp8",
-        "uptime_last_1d": 98.54558561805852,
-        "uptime_last_30m": 99.90539262062441,
-        "latency_p50": 2742,
-        "throughput_p50": 47,
+        "uptime_last_1d": 98.53499137696288,
+        "uptime_last_30m": 100,
+        "latency_p50": 2514,
+        "throughput_p50": 48,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38713,9 +38742,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "makora",
-        "uptime_last_1d": 97.48484539758545,
-        "uptime_last_30m": 97.81931464174455,
-        "latency_p50": 780,
+        "uptime_last_1d": 97.4615207902596,
+        "uptime_last_30m": 96.70418006430869,
+        "latency_p50": 826,
         "throughput_p50": 83,
         "quantization": "unknown"
       },
@@ -38763,10 +38792,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "modal/fp8",
-        "uptime_last_1d": 99.88671629178542,
-        "uptime_last_30m": 99.8935066353558,
-        "latency_p50": 499,
-        "throughput_p50": 64,
+        "uptime_last_1d": 99.88648725346451,
+        "uptime_last_30m": 99.90051356510983,
+        "latency_p50": 487,
+        "throughput_p50": 65,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38813,9 +38842,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "sail-research/fp8",
-        "uptime_last_1d": 99.51156928391164,
-        "uptime_last_30m": 99.44043137653881,
-        "latency_p50": 4386,
+        "uptime_last_1d": 99.5150444626895,
+        "uptime_last_30m": 99.60758207490979,
+        "latency_p50": 4419.5,
         "throughput_p50": 14,
         "quantization": "fp8"
       },
@@ -38863,10 +38892,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "streamlake",
-        "uptime_last_1d": 98.42507663497895,
-        "uptime_last_30m": 98.96265560165975,
-        "latency_p50": 5132,
-        "throughput_p50": 26,
+        "uptime_last_1d": 98.42000622799243,
+        "uptime_last_30m": 99.12434325744309,
+        "latency_p50": 4898,
+        "throughput_p50": 28,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -38913,9 +38942,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "nextbit/fp8",
-        "uptime_last_1d": 98.03067793523785,
-        "uptime_last_30m": 99.39625039720369,
-        "latency_p50": 3362.5,
+        "uptime_last_1d": 98.02904367266324,
+        "uptime_last_30m": 99.28057553956835,
+        "latency_p50": 3505,
         "throughput_p50": 27,
         "quantization": "fp8"
       },
@@ -38963,10 +38992,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "fireworks",
-        "uptime_last_1d": 98.93616226637774,
-        "uptime_last_30m": 99.85313690394236,
-        "latency_p50": 1796,
-        "throughput_p50": 54,
+        "uptime_last_1d": 98.93767981442365,
+        "uptime_last_30m": 99.86614853195164,
+        "latency_p50": 1787,
+        "throughput_p50": 55,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39013,10 +39042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala/fp8",
-        "uptime_last_1d": 98.44115466185693,
-        "uptime_last_30m": 99.52373865158506,
-        "latency_p50": 1533,
-        "throughput_p50": 41,
+        "uptime_last_1d": 98.43980396334968,
+        "uptime_last_30m": 99.51587640609426,
+        "latency_p50": 1506,
+        "throughput_p50": 42,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39063,10 +39092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "friendli",
-        "uptime_last_1d": 99.34815760541902,
-        "uptime_last_30m": 98.43102427471877,
-        "latency_p50": 1301,
-        "throughput_p50": 84,
+        "uptime_last_1d": 99.33662891172625,
+        "uptime_last_30m": 97.14693295292439,
+        "latency_p50": 1318.5,
+        "throughput_p50": 91,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39113,9 +39142,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 99.38561203845869,
-        "uptime_last_30m": 99.53091684434968,
-        "latency_p50": 3784,
+        "uptime_last_1d": 99.38621694186192,
+        "uptime_last_30m": 99.59349593495935,
+        "latency_p50": 3644,
         "throughput_p50": 30,
         "quantization": "fp8"
       },
@@ -39163,10 +39192,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 98.61143307524688,
-        "uptime_last_30m": 95.35452322738386,
-        "latency_p50": 1163,
-        "throughput_p50": 29,
+        "uptime_last_1d": 98.59514094955489,
+        "uptime_last_30m": 95.00531349628055,
+        "latency_p50": 1193.5,
+        "throughput_p50": 27,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39213,10 +39242,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "together",
-        "uptime_last_1d": 91.266528060987,
-        "uptime_last_30m": 97.59240156484167,
-        "latency_p50": 651,
-        "throughput_p50": 89,
+        "uptime_last_1d": 91.21892309213946,
+        "uptime_last_30m": 95.65843374526507,
+        "latency_p50": 641,
+        "throughput_p50": 87,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39263,10 +39292,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "reka/fp8",
-        "uptime_last_1d": 98.96648675880616,
-        "uptime_last_30m": 95.34965034965035,
-        "latency_p50": 5516.5,
-        "throughput_p50": 14,
+        "uptime_last_1d": 98.96444380131865,
+        "uptime_last_30m": 95.16520440545081,
+        "latency_p50": 6393,
+        "throughput_p50": 13,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39313,10 +39342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 96.62679719074603,
-        "uptime_last_30m": 98.95193571057537,
-        "latency_p50": 1441.5,
-        "throughput_p50": 53,
+        "uptime_last_1d": 96.66912747403035,
+        "uptime_last_30m": 98.93062320469589,
+        "latency_p50": 1459.5,
+        "throughput_p50": 54,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39363,10 +39392,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp8",
-        "uptime_last_1d": 99.77909036416415,
-        "uptime_last_30m": 99.63235294117648,
-        "latency_p50": 792,
-        "throughput_p50": 112,
+        "uptime_last_1d": 99.77881163356685,
+        "uptime_last_30m": 99.63273871983212,
+        "latency_p50": 803,
+        "throughput_p50": 114,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39413,10 +39442,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice",
-        "uptime_last_1d": 98.60275501702674,
-        "uptime_last_30m": 98.33407047029338,
-        "latency_p50": 1848,
-        "throughput_p50": 91,
+        "uptime_last_1d": 98.59816110864615,
+        "uptime_last_30m": 98.08398531055404,
+        "latency_p50": 1882,
+        "throughput_p50": 95,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39463,10 +39492,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "io-net/fp8",
-        "uptime_last_1d": 93.46254900150257,
-        "uptime_last_30m": 82.5834542815675,
-        "latency_p50": 1518,
-        "throughput_p50": 14,
+        "uptime_last_1d": 93.49256846605734,
+        "uptime_last_30m": 72.63843648208469,
+        "latency_p50": 1266,
+        "throughput_p50": 20,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.3-flash",
@@ -39513,9 +39542,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "cloudflare",
-        "uptime_last_1d": 99.60333006856024,
-        "uptime_last_30m": 99.62671090833679,
-        "latency_p50": 1296.5,
+        "uptime_last_1d": 99.60481868242044,
+        "uptime_last_30m": 99.74750830564784,
+        "latency_p50": 1272,
         "throughput_p50": 35,
         "quantization": "unknown"
       },
@@ -39563,10 +39592,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "darkbloom/fp4",
-        "uptime_last_1d": 99.79597041571027,
-        "uptime_last_30m": 99.835255354201,
-        "latency_p50": 4743.5,
-        "throughput_p50": 11,
+        "uptime_last_1d": 99.80376124284545,
+        "uptime_last_30m": 99.93324432576769,
+        "latency_p50": 4851,
+        "throughput_p50": 12,
         "quantization": "fp4"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39613,10 +39642,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "reka/fp8",
-        "uptime_last_1d": 99.74581682951363,
-        "uptime_last_30m": 99.68804159445406,
-        "latency_p50": 816,
-        "throughput_p50": 36,
+        "uptime_last_1d": 99.74612835316923,
+        "uptime_last_30m": 99.80073065426768,
+        "latency_p50": 785,
+        "throughput_p50": 37,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39663,10 +39692,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "akashml/fp8",
-        "uptime_last_1d": 99.09889036079645,
-        "uptime_last_30m": 99.58231813435432,
-        "latency_p50": 913,
-        "throughput_p50": 56.5,
+        "uptime_last_1d": 99.09558897749066,
+        "uptime_last_30m": 99.6232339089482,
+        "latency_p50": 990,
+        "throughput_p50": 57,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39713,10 +39742,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 99.74038850403768,
-        "uptime_last_30m": 99.97250481165796,
-        "latency_p50": 1049,
-        "throughput_p50": 49,
+        "uptime_last_1d": 99.74058759521218,
+        "uptime_last_30m": 99.9689633767846,
+        "latency_p50": 1059,
+        "throughput_p50": 51,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39763,10 +39792,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "chutes/fp8",
-        "uptime_last_1d": 99.11802939411012,
-        "uptime_last_30m": 99.51456310679612,
-        "latency_p50": 1862,
-        "throughput_p50": 28.5,
+        "uptime_last_1d": 99.11347975803386,
+        "uptime_last_30m": 99.3137524018666,
+        "latency_p50": 1909,
+        "throughput_p50": 28,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39813,9 +39842,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "ionstream/fp8",
-        "uptime_last_1d": 97.73490822930296,
-        "uptime_last_30m": 98.22419533851277,
-        "latency_p50": 971,
+        "uptime_last_1d": 97.7324624289735,
+        "uptime_last_30m": 98.58695652173914,
+        "latency_p50": 991,
         "throughput_p50": 55,
         "quantization": "fp8"
       },
@@ -39863,10 +39892,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala",
-        "uptime_last_1d": 98.62779382697279,
-        "uptime_last_30m": 99.82886480319453,
-        "latency_p50": 795,
-        "throughput_p50": 55,
+        "uptime_last_1d": 98.61216803601141,
+        "uptime_last_30m": 99.82588508415554,
+        "latency_p50": 783.5,
+        "throughput_p50": 54,
         "quantization": "unknown"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39913,10 +39942,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "coreweave/fp8",
-        "uptime_last_1d": 97.78140159508865,
-        "uptime_last_30m": 99.86550100874243,
-        "latency_p50": 561,
-        "throughput_p50": 60,
+        "uptime_last_1d": 97.78294785821815,
+        "uptime_last_30m": 99.93342210386152,
+        "latency_p50": 548,
+        "throughput_p50": 61,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -39963,9 +39992,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita",
-        "uptime_last_1d": 99.8089831476721,
-        "uptime_last_30m": 99.67602591792657,
-        "latency_p50": 7333.5,
+        "uptime_last_1d": 99.8077490543936,
+        "uptime_last_30m": 99.76703552708211,
+        "latency_p50": 8463,
         "throughput_p50": 27,
         "quantization": "unknown"
       },
@@ -40013,10 +40042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "alibaba",
-        "uptime_last_1d": 99.93329075296289,
-        "uptime_last_30m": 99.76525821596243,
-        "latency_p50": 1926,
-        "throughput_p50": 44,
+        "uptime_last_1d": 99.93319023724573,
+        "uptime_last_30m": 99.75728155339806,
+        "latency_p50": 1702,
+        "throughput_p50": 46,
         "quantization": "unknown"
       },
       "canonical_model": "qwen3.8-27b",
@@ -40063,10 +40092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "io-net/fp8",
-        "uptime_last_1d": 98.80978914991307,
-        "uptime_last_30m": 100,
-        "latency_p50": 1028,
-        "throughput_p50": 58,
+        "uptime_last_1d": 98.80478087649402,
+        "uptime_last_30m": 99.73118279569893,
+        "latency_p50": 1069,
+        "throughput_p50": 55,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -40113,10 +40142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "cloudflare",
-        "uptime_last_1d": 85.49553979068624,
-        "uptime_last_30m": 83.24607329842932,
-        "latency_p50": 903,
-        "throughput_p50": 27.5,
+        "uptime_last_1d": 85.49655850540806,
+        "uptime_last_30m": 82.10526315789474,
+        "latency_p50": 1072,
+        "throughput_p50": 24,
         "quantization": "unknown"
       },
       "canonical_model": "qwen3.8-27b",
@@ -40163,10 +40192,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice/fp8",
-        "uptime_last_1d": 99.46937783538561,
-        "uptime_last_30m": 99.22779922779922,
-        "latency_p50": 843,
-        "throughput_p50": 51,
+        "uptime_last_1d": 99.48291594849438,
+        "uptime_last_30m": 99.74457215836526,
+        "latency_p50": 812,
+        "throughput_p50": 50,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3.8-27b",
@@ -40365,8 +40394,8 @@
         "route_tag": "alibaba",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 1507,
-        "throughput_p50": 37,
+        "latency_p50": 1476,
+        "throughput_p50": 38,
         "quantization": "unknown"
       },
       "canonical_model": "qwen3.8-max",
@@ -40413,10 +40442,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 91.14388223500237,
-        "uptime_last_30m": 28.03347280334728,
-        "latency_p50": 566,
-        "throughput_p50": 184,
+        "uptime_last_1d": 91.14014251781472,
+        "uptime_last_30m": 40.15151515151515,
+        "latency_p50": 554,
+        "throughput_p50": 204,
         "quantization": "fp8"
       },
       "canonical_model": "inkling-small",
@@ -40463,10 +40492,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp8",
-        "uptime_last_1d": 98.27904118008604,
-        "uptime_last_30m": 99.10437478470547,
-        "latency_p50": 1499.5,
-        "throughput_p50": 67,
+        "uptime_last_1d": 98.29569534419083,
+        "uptime_last_30m": 98.88513513513514,
+        "latency_p50": 1428.5,
+        "throughput_p50": 68,
         "quantization": "fp8"
       },
       "canonical_model": "inkling-small",
@@ -40513,10 +40542,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "together",
-        "uptime_last_1d": 99.8604014117895,
-        "uptime_last_30m": 99.84779299847793,
-        "latency_p50": 641,
-        "throughput_p50": 116,
+        "uptime_last_1d": 99.86243413709866,
+        "uptime_last_30m": 99.85141158989599,
+        "latency_p50": 646,
+        "throughput_p50": 115,
         "quantization": "unknown"
       },
       "canonical_model": "inkling-small",
@@ -40963,10 +40992,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 91.04737314773239,
-        "uptime_last_30m": 12.18274111675127,
-        "latency_p50": 346.5,
-        "throughput_p50": 136.5,
+        "uptime_last_1d": 91.04159060911567,
+        "uptime_last_30m": 14.893617021276595,
+        "latency_p50": 346,
+        "throughput_p50": 131,
         "quantization": "fp8"
       },
       "canonical_model": "inkling",
@@ -41013,10 +41042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp8",
-        "uptime_last_1d": 86.09240259331528,
-        "uptime_last_30m": 87.84194528875379,
-        "latency_p50": 1051,
-        "throughput_p50": 63,
+        "uptime_last_1d": 86.18924234383292,
+        "uptime_last_30m": 91.73457508731082,
+        "latency_p50": 823,
+        "throughput_p50": 79,
         "quantization": "fp8"
       },
       "canonical_model": "inkling",
@@ -41063,10 +41092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "together",
-        "uptime_last_1d": 98.83440966674917,
-        "uptime_last_30m": 98.42105263157895,
-        "latency_p50": 886,
-        "throughput_p50": 71,
+        "uptime_last_1d": 98.83070494675832,
+        "uptime_last_30m": 97.85604900459418,
+        "latency_p50": 818.5,
+        "throughput_p50": 72,
         "quantization": "unknown"
       },
       "canonical_model": "inkling",
@@ -41113,10 +41142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp8",
-        "uptime_last_1d": 69.9072823836529,
-        "uptime_last_30m": 83.5990888382688,
-        "latency_p50": 1298,
-        "throughput_p50": 67,
+        "uptime_last_1d": 70.09303989980319,
+        "uptime_last_30m": 87.36141906873614,
+        "latency_p50": 1242.5,
+        "throughput_p50": 73.5,
         "quantization": "fp8"
       },
       "canonical_model": "inkling",
@@ -41213,9 +41242,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "xai/zdr",
-        "uptime_last_1d": 99.39146269976263,
-        "uptime_last_30m": 99.79574468085106,
-        "latency_p50": 728,
+        "uptime_last_1d": 99.38705715180271,
+        "uptime_last_30m": 99.56100237790379,
+        "latency_p50": 766,
         "throughput_p50": 50,
         "quantization": "unknown"
       },
@@ -41263,9 +41292,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "xai",
-        "uptime_last_1d": 97.9873583182624,
-        "uptime_last_30m": 98.598922247883,
-        "latency_p50": 939.5,
+        "uptime_last_1d": 97.9762952345529,
+        "uptime_last_30m": 97.5706316357747,
+        "latency_p50": 1086,
         "throughput_p50": 47,
         "quantization": "unknown"
       },
@@ -41313,10 +41342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "xai/zdr/priority",
-        "uptime_last_1d": 99.8972250770812,
+        "uptime_last_1d": 99.8974358974359,
         "uptime_last_30m": null,
-        "latency_p50": 2993.5,
-        "throughput_p50": 42.5,
+        "latency_p50": 3193,
+        "throughput_p50": 43,
         "quantization": "unknown"
       },
       "canonical_model": "grok-4.5",
@@ -41413,10 +41442,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "tencent/fp8",
-        "uptime_last_1d": 99.95143634046737,
-        "uptime_last_30m": 99.99292085516069,
-        "latency_p50": 2260,
-        "throughput_p50": 64,
+        "uptime_last_1d": 99.95154658865869,
+        "uptime_last_30m": 99.98717044069537,
+        "latency_p50": 2204,
+        "throughput_p50": 63,
         "quantization": "fp8"
       },
       "canonical_model": "hy3",
@@ -41463,9 +41492,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/bf16",
-        "uptime_last_1d": 96.99686485891866,
-        "uptime_last_30m": 96.43652561247215,
-        "latency_p50": 2165,
+        "uptime_last_1d": 97.01782731330613,
+        "uptime_last_30m": 97.79286926994907,
+        "latency_p50": 2135.5,
         "throughput_p50": 5,
         "quantization": "bf16"
       },
@@ -41513,10 +41542,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita",
-        "uptime_last_1d": 99.90416866315284,
+        "uptime_last_1d": 99.90392533626132,
         "uptime_last_30m": 100,
-        "latency_p50": 2802,
-        "throughput_p50": 58,
+        "latency_p50": 2870,
+        "throughput_p50": 59,
         "quantization": "unknown"
       },
       "canonical_model": "hy3",
@@ -41563,10 +41592,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 99.87816810276804,
+        "uptime_last_1d": 99.87924843212625,
         "uptime_last_30m": 100,
         "latency_p50": 373.5,
-        "throughput_p50": 94.5,
+        "throughput_p50": 94,
         "quantization": "fp8"
       },
       "canonical_model": "hy3",
@@ -41613,10 +41642,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala",
-        "uptime_last_1d": 99.59217270924533,
+        "uptime_last_1d": 99.59605197972638,
         "uptime_last_30m": 100,
-        "latency_p50": 1339.5,
-        "throughput_p50": 70,
+        "latency_p50": 1342.5,
+        "throughput_p50": 61,
         "quantization": "unknown"
       },
       "canonical_model": "hy3",
@@ -41663,10 +41692,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 99.4711302546208,
+        "uptime_last_1d": 99.47061793077101,
         "uptime_last_30m": 100,
-        "latency_p50": 1239,
-        "throughput_p50": 109,
+        "latency_p50": 1240,
+        "throughput_p50": 105,
         "quantization": "fp8"
       },
       "canonical_model": "hy3",
@@ -42813,10 +42842,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "coreweave/fp4",
-        "uptime_last_1d": 99.97817942554819,
-        "uptime_last_30m": 99.88378849506101,
-        "latency_p50": 616,
-        "throughput_p50": 92,
+        "uptime_last_1d": 99.97643462628683,
+        "uptime_last_30m": 99.79545454545455,
+        "latency_p50": 594,
+        "throughput_p50": 93,
         "quantization": "fp4"
       },
       "canonical_model": "minimax-m3",
@@ -42863,10 +42892,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 98.57131913589704,
-        "uptime_last_30m": 99.66996699669967,
-        "latency_p50": 632,
-        "throughput_p50": 21,
+        "uptime_last_1d": 98.57571977700277,
+        "uptime_last_30m": 99.71817754814467,
+        "latency_p50": 630,
+        "throughput_p50": 20,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -42913,10 +42942,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "streamlake/fp8",
-        "uptime_last_1d": 97.66440140281436,
-        "uptime_last_30m": 98.29642248722317,
-        "latency_p50": 1662,
-        "throughput_p50": 74,
+        "uptime_last_1d": 97.66270078201225,
+        "uptime_last_30m": 98.91107078039929,
+        "latency_p50": 1659,
+        "throughput_p50": 74.5,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -42963,10 +42992,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice/fp8",
-        "uptime_last_1d": 99.94978349771469,
-        "uptime_last_30m": 99.65574680732927,
-        "latency_p50": 1007,
-        "throughput_p50": 90,
+        "uptime_last_1d": 99.9491437186474,
+        "uptime_last_30m": 99.63950185711164,
+        "latency_p50": 984,
+        "throughput_p50": 88,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43013,10 +43042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 99.35282303057353,
-        "uptime_last_30m": 99.33184855233853,
-        "latency_p50": 859,
-        "throughput_p50": 81,
+        "uptime_last_1d": 99.35557975446395,
+        "uptime_last_30m": 99.17602996254682,
+        "latency_p50": 867,
+        "throughput_p50": 82,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43063,10 +43092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 97.59051836415733,
-        "uptime_last_30m": 99.68553459119497,
-        "latency_p50": 1135,
-        "throughput_p50": 42,
+        "uptime_last_1d": 97.58244989300707,
+        "uptime_last_30m": 99.6779388083736,
+        "latency_p50": 1121,
+        "throughput_p50": 43,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43113,10 +43142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.44682805033793,
-        "uptime_last_30m": 99.93668882557772,
-        "latency_p50": 1782,
-        "throughput_p50": 56,
+        "uptime_last_1d": 99.44690662778252,
+        "uptime_last_30m": 99.93418887792038,
+        "latency_p50": 1681.5,
+        "throughput_p50": 57,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43163,10 +43192,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "minimax/fp8",
-        "uptime_last_1d": 99.37164575335663,
-        "uptime_last_30m": 99.70766809084776,
-        "latency_p50": 1062,
-        "throughput_p50": 72,
+        "uptime_last_1d": 99.37115333154937,
+        "uptime_last_30m": 99.76024411508283,
+        "latency_p50": 1059.5,
+        "throughput_p50": 73,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43213,10 +43242,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "sambanova",
-        "uptime_last_1d": 98.76882620129093,
-        "uptime_last_30m": 99.835255354201,
-        "latency_p50": 3189,
-        "throughput_p50": 101,
+        "uptime_last_1d": 98.77000238834488,
+        "uptime_last_30m": 99.82238010657194,
+        "latency_p50": 3126,
+        "throughput_p50": 89.5,
         "quantization": "unknown"
       },
       "canonical_model": "minimax-m3",
@@ -43263,10 +43292,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/fp8",
-        "uptime_last_1d": 97.91178112786153,
+        "uptime_last_1d": 97.91468664393135,
         "uptime_last_30m": 100,
-        "latency_p50": 1270,
-        "throughput_p50": 36,
+        "latency_p50": 1197,
+        "throughput_p50": 37,
         "quantization": "fp8"
       },
       "canonical_model": "minimax-m3",
@@ -43313,10 +43342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "modelrun/fp4",
-        "uptime_last_1d": 99.12538064713489,
-        "uptime_last_30m": 99.45054945054946,
-        "latency_p50": 1936,
-        "throughput_p50": 40,
+        "uptime_last_1d": 99.11812647153067,
+        "uptime_last_30m": 99.1906474820144,
+        "latency_p50": 1952,
+        "throughput_p50": 38,
         "quantization": "fp4"
       },
       "canonical_model": "minimax-m3",
@@ -44563,9 +44592,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "mistral/zdr",
-        "uptime_last_1d": 99.28093834502786,
-        "uptime_last_30m": 99.23394225103122,
-        "latency_p50": 411,
+        "uptime_last_1d": 99.2746816948445,
+        "uptime_last_30m": 99.34289127837515,
+        "latency_p50": 403,
         "throughput_p50": 46,
         "quantization": "unknown"
       },
@@ -44613,9 +44642,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "mistral",
-        "uptime_last_1d": 99.18541463466917,
+        "uptime_last_1d": 99.18456685478853,
         "uptime_last_30m": null,
-        "latency_p50": 611,
+        "latency_p50": 571,
         "throughput_p50": 57,
         "quantization": "unknown"
       },
@@ -44765,8 +44794,8 @@
         "route_tag": "openai/flex",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 515,
-        "throughput_p50": 8,
+        "latency_p50": null,
+        "throughput_p50": null,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -44813,10 +44842,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.78707730809208,
-        "uptime_last_30m": 99.74785678265255,
-        "latency_p50": 3751,
-        "throughput_p50": 58,
+        "uptime_last_1d": 99.78783521533218,
+        "uptime_last_30m": 99.89706639217705,
+        "latency_p50": 3981,
+        "throughput_p50": 61,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -44863,10 +44892,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.55725681884061,
-        "uptime_last_30m": 99.81549815498155,
-        "latency_p50": 2978.5,
-        "throughput_p50": 44,
+        "uptime_last_1d": 99.54900429131659,
+        "uptime_last_30m": 99.78335874187594,
+        "latency_p50": 3115.5,
+        "throughput_p50": 46,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -44913,10 +44942,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure/us",
-        "uptime_last_1d": 99.72816853550799,
-        "uptime_last_30m": 99.8069498069498,
-        "latency_p50": 4876,
-        "throughput_p50": 61,
+        "uptime_last_1d": 99.73604826546003,
+        "uptime_last_30m": 100,
+        "latency_p50": 5184,
+        "throughput_p50": 62,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -44965,8 +44994,8 @@
         "route_tag": "azure/eu",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 1847,
-        "throughput_p50": 11,
+        "latency_p50": null,
+        "throughput_p50": null,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -45013,10 +45042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "amazon-bedrock/us-east-1",
-        "uptime_last_1d": 96.41485275288092,
+        "uptime_last_1d": 96.3963963963964,
         "uptime_last_30m": null,
-        "latency_p50": 1533.5,
-        "throughput_p50": 177.5,
+        "latency_p50": 1427.5,
+        "throughput_p50": 181.5,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -45065,8 +45094,8 @@
         "route_tag": "openai/fast",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 1595.5,
-        "throughput_p50": 73,
+        "latency_p50": 1616.5,
+        "throughput_p50": 73.5,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5.5",
@@ -45113,10 +45142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 92.71192687156002,
+        "uptime_last_1d": 92.68761288289271,
         "uptime_last_30m": 0,
-        "latency_p50": 847,
-        "throughput_p50": 77,
+        "latency_p50": 860,
+        "throughput_p50": 78,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45146,6 +45175,56 @@
     },
     {
       "source": "openrouter-route",
+      "provider": "OpenRouter → StreamLake",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "name": "DeepSeek: DeepSeek V4 Pro 0423",
+      "description": "",
+      "context_length": 1024000,
+      "input_modalities": [
+        "text"
+      ],
+      "output_modalities": [
+        "text"
+      ],
+      "input_usd_per_million": 1.001892,
+      "output_usd_per_million": 2.003784,
+      "cache_read_usd_per_million": null,
+      "cache_write_usd_per_million": null,
+      "metadata": {
+        "route_tag": "streamlake/fp8",
+        "uptime_last_1d": 99.35894028919314,
+        "uptime_last_30m": 99.76707418626823,
+        "latency_p50": 2317.5,
+        "throughput_p50": 32,
+        "quantization": "fp8"
+      },
+      "canonical_model": "deepseek-v4-pro",
+      "quality": {
+        "label": "deepseek-v4-pro",
+        "confidence": "auto:lmarena_webdev",
+        "source_label": "LMArena WebDev Arena",
+        "scores": {
+          "coding": 6.2
+        },
+        "match_ratio": 1.0
+      },
+      "costs_by_task": {
+        "coding": 0.042079464,
+        "agentic": 0.084158928,
+        "reasoning": 0.019035948,
+        "general": 0.007414000800000001
+      },
+      "weighted_cost": 0.045676256279999994,
+      "value_scores": {
+        "coding": 45.7,
+        "agentic": null,
+        "reasoning": null,
+        "general": null
+      },
+      "change_pct": null
+    },
+    {
+      "source": "openrouter-route",
       "provider": "OpenRouter → Baidu",
       "model_id": "deepseek/deepseek-v4-pro",
       "name": "DeepSeek: DeepSeek V4 Pro 0423",
@@ -45163,10 +45242,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baidu/fp8",
-        "uptime_last_1d": 99.91453148128629,
-        "uptime_last_30m": 99.89832629438449,
-        "latency_p50": 994,
-        "throughput_p50": 55,
+        "uptime_last_1d": 99.91472083075172,
+        "uptime_last_30m": 99.96114241305615,
+        "latency_p50": 1099,
+        "throughput_p50": 54,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45196,56 +45275,6 @@
     },
     {
       "source": "openrouter-route",
-      "provider": "OpenRouter → StreamLake",
-      "model_id": "deepseek/deepseek-v4-pro",
-      "name": "DeepSeek: DeepSeek V4 Pro 0423",
-      "description": "",
-      "context_length": 1024000,
-      "input_modalities": [
-        "text"
-      ],
-      "output_modalities": [
-        "text"
-      ],
-      "input_usd_per_million": 1.011984,
-      "output_usd_per_million": 2.023968,
-      "cache_read_usd_per_million": null,
-      "cache_write_usd_per_million": null,
-      "metadata": {
-        "route_tag": "streamlake/fp8",
-        "uptime_last_1d": 99.35863917638953,
-        "uptime_last_30m": 99.7511081612819,
-        "latency_p50": 2363,
-        "throughput_p50": 32,
-        "quantization": "fp8"
-      },
-      "canonical_model": "deepseek-v4-pro",
-      "quality": {
-        "label": "deepseek-v4-pro",
-        "confidence": "auto:lmarena_webdev",
-        "source_label": "LMArena WebDev Arena",
-        "scores": {
-          "coding": 6.2
-        },
-        "match_ratio": 1.0
-      },
-      "costs_by_task": {
-        "coding": 0.042503328,
-        "agentic": 0.085006656,
-        "reasoning": 0.019227696000000002,
-        "general": 0.0074886816
-      },
-      "weighted_cost": 0.04613635056,
-      "value_scores": {
-        "coding": 45.6,
-        "agentic": null,
-        "reasoning": null,
-        "general": null
-      },
-      "change_pct": null
-    },
-    {
-      "source": "openrouter-route",
       "provider": "OpenRouter → GMICloud",
       "model_id": "deepseek/deepseek-v4-pro",
       "name": "DeepSeek: DeepSeek V4 Pro 0423",
@@ -45263,10 +45292,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/fp8",
-        "uptime_last_1d": 94.85861641280974,
-        "uptime_last_30m": 99.05749293119699,
-        "latency_p50": 2832.5,
-        "throughput_p50": 25,
+        "uptime_last_1d": 94.91458120474186,
+        "uptime_last_30m": 99.03567984570878,
+        "latency_p50": 2855.5,
+        "throughput_p50": 24,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45313,10 +45342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "ionstream/fp4",
-        "uptime_last_1d": 99.59926570086114,
-        "uptime_last_30m": 99.91818181818182,
-        "latency_p50": 861,
-        "throughput_p50": 22,
+        "uptime_last_1d": 99.600222496186,
+        "uptime_last_30m": 99.91667438200167,
+        "latency_p50": 874,
+        "throughput_p50": 23,
         "quantization": "fp4"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45413,9 +45442,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 98.81163015522682,
-        "uptime_last_30m": 99.47643979057592,
-        "latency_p50": 1020,
+        "uptime_last_1d": 98.81352850259114,
+        "uptime_last_30m": 99.54110898661568,
+        "latency_p50": 1033,
         "throughput_p50": 29,
         "quantization": "fp8"
       },
@@ -45463,9 +45492,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "alibaba/fp8",
-        "uptime_last_1d": 99.9909634994891,
+        "uptime_last_1d": 99.99096701571044,
         "uptime_last_30m": 100,
-        "latency_p50": 1256,
+        "latency_p50": 1262,
         "throughput_p50": 47,
         "quantization": "fp8"
       },
@@ -45513,9 +45542,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 99.56389143031413,
-        "uptime_last_30m": 99.84977466199298,
-        "latency_p50": 2202,
+        "uptime_last_1d": 99.56404527657648,
+        "uptime_last_30m": 99.82282966337635,
+        "latency_p50": 2156,
         "throughput_p50": 35,
         "quantization": "fp8"
       },
@@ -45563,10 +45592,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.95266272189349,
+        "uptime_last_1d": 99.95247572867572,
         "uptime_last_30m": 100,
-        "latency_p50": 1480,
-        "throughput_p50": 51,
+        "latency_p50": 1472,
+        "throughput_p50": 52,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45613,9 +45642,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice",
-        "uptime_last_1d": 95.84091998083373,
-        "uptime_last_30m": 99.45205479452055,
-        "latency_p50": 1439,
+        "uptime_last_1d": 95.84530269177573,
+        "uptime_last_30m": 99.52789699570815,
+        "latency_p50": 1371,
         "throughput_p50": 39,
         "quantization": "unknown"
       },
@@ -45663,10 +45692,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp4",
-        "uptime_last_1d": 99.47762114899842,
-        "uptime_last_30m": 99.65880893300249,
-        "latency_p50": 1316,
-        "throughput_p50": 35,
+        "uptime_last_1d": 99.47678451752478,
+        "uptime_last_30m": 99.71172325432414,
+        "latency_p50": 1320,
+        "throughput_p50": 34,
         "quantization": "fp4"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45713,9 +45742,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "nextbit/fp8",
-        "uptime_last_1d": 99.31994702745266,
-        "uptime_last_30m": 99.92158912702561,
-        "latency_p50": 2176,
+        "uptime_last_1d": 99.3197870370844,
+        "uptime_last_30m": 99.89575188949699,
+        "latency_p50": 2187,
         "throughput_p50": 44,
         "quantization": "fp8"
       },
@@ -45763,10 +45792,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp4",
-        "uptime_last_1d": 98.71043795098949,
-        "uptime_last_30m": 98.131910026687,
-        "latency_p50": 684,
-        "throughput_p50": 67,
+        "uptime_last_1d": 98.70854805433744,
+        "uptime_last_30m": 98.06477093206951,
+        "latency_p50": 687,
+        "throughput_p50": 65,
         "quantization": "fp4"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45813,9 +45842,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp4",
-        "uptime_last_1d": 98.1787942768846,
-        "uptime_last_30m": 97.82465392221489,
-        "latency_p50": 641,
+        "uptime_last_1d": 98.17370991717986,
+        "uptime_last_30m": 97.71573604060913,
+        "latency_p50": 644,
         "throughput_p50": 59,
         "quantization": "fp4"
       },
@@ -45863,10 +45892,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 99.35555605981529,
-        "uptime_last_30m": 99.7815401419989,
-        "latency_p50": 676,
-        "throughput_p50": 46,
+        "uptime_last_1d": 99.35691075341948,
+        "uptime_last_30m": 99.87116722494203,
+        "latency_p50": 688,
+        "throughput_p50": 45,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -45913,10 +45942,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure/us",
-        "uptime_last_1d": 98.30711374986396,
-        "uptime_last_30m": 98.37067209775967,
-        "latency_p50": 1247,
-        "throughput_p50": 49,
+        "uptime_last_1d": 98.30559831287043,
+        "uptime_last_30m": 98.81889763779527,
+        "latency_p50": 1244,
+        "throughput_p50": 49.5,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v4-pro",
@@ -46013,10 +46042,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/bf16",
-        "uptime_last_1d": 86.82901085645356,
-        "uptime_last_30m": 98.91696750902527,
-        "latency_p50": 2884.5,
-        "throughput_p50": 22,
+        "uptime_last_1d": 86.69290742563017,
+        "uptime_last_30m": 98.73817034700315,
+        "latency_p50": 2920,
+        "throughput_p50": 21,
         "quantization": "bf16"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -46063,10 +46092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 89.53210142159129,
-        "uptime_last_30m": 99.89572471324296,
-        "latency_p50": 951,
-        "throughput_p50": 35,
+        "uptime_last_1d": 89.50788668920006,
+        "uptime_last_30m": 99.87341772151899,
+        "latency_p50": 1031,
+        "throughput_p50": 36,
         "quantization": "fp8"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -46113,10 +46142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 98.35776400078399,
+        "uptime_last_1d": 98.36176912469901,
         "uptime_last_30m": 100,
-        "latency_p50": 1053,
-        "throughput_p50": 23,
+        "latency_p50": 1100,
+        "throughput_p50": 18,
         "quantization": "unknown"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -46163,9 +46192,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 89.38594640219456,
-        "uptime_last_30m": 97.85276073619632,
-        "latency_p50": 2352.5,
+        "uptime_last_1d": 89.37170010559662,
+        "uptime_last_30m": 97.7715877437326,
+        "latency_p50": 2454,
         "throughput_p50": 29,
         "quantization": "fp8"
       },
@@ -46213,10 +46242,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "xiaomi/fp8",
-        "uptime_last_1d": 96.2177591725085,
-        "uptime_last_30m": 98.38203500941488,
-        "latency_p50": 2044.5,
-        "throughput_p50": 30,
+        "uptime_last_1d": 96.2055680442677,
+        "uptime_last_30m": 97.87995989113307,
+        "latency_p50": 2019,
+        "throughput_p50": 28,
         "quantization": "fp8"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -46263,10 +46292,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita",
-        "uptime_last_1d": 80.21618171474559,
-        "uptime_last_30m": 90.625,
-        "latency_p50": 5281.5,
-        "throughput_p50": 10.5,
+        "uptime_last_1d": 80.20649745347562,
+        "uptime_last_30m": 83.55263157894737,
+        "latency_p50": 6167,
+        "throughput_p50": 10,
         "quantization": "unknown"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -46313,10 +46342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "streamlake",
-        "uptime_last_1d": 95.43226818270927,
-        "uptime_last_30m": 98.28146771946122,
-        "latency_p50": 1733,
-        "throughput_p50": 27,
+        "uptime_last_1d": 95.40042910630898,
+        "uptime_last_30m": 98.41913254965546,
+        "latency_p50": 1762,
+        "throughput_p50": 26,
         "quantization": "unknown"
       },
       "canonical_model": "mimo-v2.5-pro",
@@ -48063,10 +48092,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baidu/fp8",
-        "uptime_last_1d": 99.99128865658639,
+        "uptime_last_1d": 99.991301862644,
         "uptime_last_30m": 100,
-        "latency_p50": 899,
-        "throughput_p50": 72,
+        "latency_p50": 896,
+        "throughput_p50": 70,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48113,10 +48142,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/fp8",
-        "uptime_last_1d": 99.24074074074073,
-        "uptime_last_30m": 99.18032786885246,
-        "latency_p50": 1699,
-        "throughput_p50": 46,
+        "uptime_last_1d": 99.23854354146476,
+        "uptime_last_30m": 99.37106918238993,
+        "latency_p50": 1682,
+        "throughput_p50": 47,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48163,10 +48192,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "streamlake/fp8",
-        "uptime_last_1d": 99.88593878714912,
+        "uptime_last_1d": 99.8866545659187,
         "uptime_last_30m": 100,
-        "latency_p50": 1724,
-        "throughput_p50": 31,
+        "latency_p50": 1681.5,
+        "throughput_p50": 32,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48213,10 +48242,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "chutes/fp8",
-        "uptime_last_1d": 85.51926238296048,
-        "uptime_last_30m": null,
-        "latency_p50": 12202,
-        "throughput_p50": 14,
+        "uptime_last_1d": 85.52952602032356,
+        "uptime_last_30m": 85.82089552238806,
+        "latency_p50": 2710,
+        "throughput_p50": 32,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48263,10 +48292,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp4",
-        "uptime_last_1d": 99.8820677455284,
+        "uptime_last_1d": 99.88097993189407,
         "uptime_last_30m": null,
-        "latency_p50": 10039,
-        "throughput_p50": 8,
+        "latency_p50": 9830,
+        "throughput_p50": 7.5,
         "quantization": "fp4"
       },
       "canonical_model": "glm-5.1",
@@ -48313,10 +48342,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 99.98467104052978,
-        "uptime_last_30m": 99.98079508354138,
-        "latency_p50": 1460,
-        "throughput_p50": 19,
+        "uptime_last_1d": 99.98522218445669,
+        "uptime_last_30m": 100,
+        "latency_p50": 1621,
+        "throughput_p50": 18,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48363,10 +48392,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "crusoe/fp8",
-        "uptime_last_1d": 97.91188394470767,
+        "uptime_last_1d": 97.92477617750097,
         "uptime_last_30m": 100,
-        "latency_p50": 1056,
-        "throughput_p50": 20,
+        "latency_p50": 1356,
+        "throughput_p50": 17,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48413,10 +48442,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala",
-        "uptime_last_1d": 84.9778817679962,
+        "uptime_last_1d": 84.96174543324669,
         "uptime_last_30m": null,
-        "latency_p50": 4622.5,
-        "throughput_p50": 20,
+        "latency_p50": 2326,
+        "throughput_p50": 35.5,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.1",
@@ -48463,9 +48492,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 99.3784720312414,
-        "uptime_last_30m": 99.88726042841037,
-        "latency_p50": 1224,
+        "uptime_last_1d": 99.37882052860724,
+        "uptime_last_30m": 99.94369369369369,
+        "latency_p50": 1207.5,
         "throughput_p50": 57,
         "quantization": "fp8"
       },
@@ -48513,10 +48542,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 98.63432231465804,
-        "uptime_last_30m": 90.41095890410958,
-        "latency_p50": 2290,
-        "throughput_p50": 10,
+        "uptime_last_1d": 98.6204861495334,
+        "uptime_last_30m": 94.53924914675767,
+        "latency_p50": 2277,
+        "throughput_p50": 11,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.1",
@@ -48563,9 +48592,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "alibaba/fp8",
-        "uptime_last_1d": 99.98948613484032,
+        "uptime_last_1d": 99.98947866799936,
         "uptime_last_30m": 100,
-        "latency_p50": 1244.5,
+        "latency_p50": 1243,
         "throughput_p50": 54,
         "quantization": "fp8"
       },
@@ -48613,10 +48642,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.63043001659932,
-        "uptime_last_30m": 100,
-        "latency_p50": 2981,
-        "throughput_p50": 18.5,
+        "uptime_last_1d": 99.63365452698335,
+        "uptime_last_30m": 99.91007194244604,
+        "latency_p50": 2766,
+        "throughput_p50": 16,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48663,10 +48692,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "nebius/fp8",
-        "uptime_last_1d": 93.45826106628459,
-        "uptime_last_30m": 100,
-        "latency_p50": 903,
-        "throughput_p50": 23,
+        "uptime_last_1d": 93.26159750178714,
+        "uptime_last_30m": 91.28367670364501,
+        "latency_p50": 1025.5,
+        "throughput_p50": 20,
         "quantization": "fp8"
       },
       "canonical_model": "glm-5.1",
@@ -48713,10 +48742,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "friendli",
-        "uptime_last_1d": 99.86740657074105,
+        "uptime_last_1d": 99.86735119998035,
         "uptime_last_30m": 100,
-        "latency_p50": 528,
-        "throughput_p50": 78,
+        "latency_p50": 636.5,
+        "throughput_p50": 69,
         "quantization": "unknown"
       },
       "canonical_model": "glm-5.1",
@@ -48763,9 +48792,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "z-ai/fp8",
-        "uptime_last_1d": 99.33465386764183,
-        "uptime_last_30m": 99.88974641675854,
-        "latency_p50": 4833,
+        "uptime_last_1d": 99.3327751985184,
+        "uptime_last_30m": 99.67248908296943,
+        "latency_p50": 4805.5,
         "throughput_p50": 19,
         "quantization": "fp8"
       },
@@ -48813,9 +48842,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice/fp8",
-        "uptime_last_1d": 99.5649737116016,
-        "uptime_last_30m": 87.26851851851852,
-        "latency_p50": 9503,
+        "uptime_last_1d": 99.53802606280709,
+        "uptime_last_30m": 87.19101123595505,
+        "latency_p50": 9707,
         "throughput_p50": 11,
         "quantization": "fp8"
       },
@@ -50165,7 +50194,7 @@
         "route_tag": "arcee-ai",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 111,
+        "latency_p50": 109,
         "throughput_p50": 108,
         "quantization": "unknown"
       },
