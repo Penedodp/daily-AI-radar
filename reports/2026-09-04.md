@@ -55,13 +55,13 @@
 | **qwen3.5-35b-a3b** | **OpenRouter** | $0.00757 | $0.0800 | $0.7500 | Novita AI ($0.02136) | **64.6%** |
 | **deepseek-r1** | **Novita AI** | $0.00254 | $0.0600 | $0.0900 | Together AI ($0.00701) | **63.8%** |
 | **gpt-5.6-luna** | **CheaperInference** | $0.00577 | $0.0800 | $0.4800 | OpenRouter ($0.01443) | **60.0%** |
-| **gpt-5.6-terra** | **CheaperInference** | $0.05774 | $0.8000 | $4.8000 | OpenRouter ($0.14434) | **60.0%** |
 | **qwen3-max** | **OpenRouter** | $0.05111 | $0.7800 | $3.9000 | Novita AI ($0.12430) | **58.9%** |
 | **mistral-small-24b-instruct-2501** | **OpenRouter** | $0.00215 | $0.0500 | $0.0800 | Together AI ($0.00522) | **58.9%** |
 | **llama-3.1-8b-instruct** | **Novita AI** | $0.00098 | $0.0200 | $0.0500 | OpenRouter ($0.00215) | **54.4%** |
 | **glm-5.2** | **CheaperInference** | $0.02353 | $0.4400 | $1.4025 | OpenRouter ($0.05138) | **54.2%** |
 | **gpt-5.6-sol** | **CheaperInference** | $0.06552 | $1.0000 | $5.0000 | OpenRouter ($0.13105) | **50.0%** |
 | **deepseek-v3.1** | **Novita AI** | $0.01537 | $0.2700 | $1.0000 | Together AI ($0.03068) | **49.9%** |
+| **qwen3.6-35b-a3b** | **OpenRouter** | $0.00921 | $0.1000 | $0.9000 | Novita AI ($0.01788) | **48.5%** |
 
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
