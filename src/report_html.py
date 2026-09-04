@@ -387,7 +387,7 @@ section.block { margin: 64px 0; }
 .table-scroll::-webkit-scrollbar-track { background: transparent; }
 .table-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 .table-scroll::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-table.grid { width: 100%; min-width: max-content; border-collapse: collapse; font-size: 0.86rem; }
+table.grid { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
 table.grid th {
   text-align: left; padding: 9px 11px; color: var(--muted); font-weight: 600; font-size: 0.7rem;
   text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border);
