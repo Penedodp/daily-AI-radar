@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T14:07:08.748243+01:00",
+  "generated_at": "2026-09-04T15:50:13.877631+01:00",
   "provider_status": {
     "openrouter": {
       "status": "ok",
@@ -46,7 +46,9 @@
         "weighted_cost": 0.0,
         "task_cost": 0.0,
         "quality_score": 4.0,
-        "value_score": 40.0
+        "value_score": 40.0,
+        "quality_label": "Qwen3 32B",
+        "quality_match_ratio": 1.0
       },
       "best_paid_value": {
         "model": "deepseek-v3.2",
@@ -59,7 +61,9 @@
         "weighted_cost": 0.008802,
         "task_cost": 0.008122,
         "quality_score": 7.4,
-        "value_score": 68.6
+        "value_score": 68.6,
+        "quality_label": "DeepSeek-V3.2-Exp (Reasoner)",
+        "quality_match_ratio": 1.0
       },
       "best_paid_quality": {
         "model": "gpt-5",
@@ -73,6 +77,8 @@
         "task_cost": 0.0975,
         "quality_score": 8.8,
         "value_score": 51.2,
+        "quality_label": "gpt-5 (high)",
+        "quality_match_ratio": 1.0,
         "change_pct": 0.0
       },
       "top_paid_value": [
@@ -87,7 +93,9 @@
           "weighted_cost": 0.008802,
           "task_cost": 0.008122,
           "quality_score": 7.4,
-          "value_score": 68.6
+          "value_score": 68.6,
+          "quality_label": "DeepSeek-V3.2-Exp (Reasoner)",
+          "quality_match_ratio": 1.0
         },
         {
           "model": "gemini-2.5-pro-preview-05-06",
@@ -100,7 +108,9 @@
           "weighted_cost": 0.053413,
           "task_cost": 0.04875,
           "quality_score": 7.7,
-          "value_score": 54.8
+          "value_score": 54.8,
+          "quality_label": "Gemini 2.5 Pro Preview 05-06",
+          "quality_match_ratio": 1.0
         },
         {
           "model": "deepseek-r1",
@@ -114,6 +124,8 @@
           "task_cost": 0.036,
           "quality_score": 7.1,
           "value_score": 54.1,
+          "quality_label": "DeepSeek R1 (0528)",
+          "quality_match_ratio": 1.0,
           "change_pct": 0.0
         },
         {
@@ -128,6 +140,8 @@
           "task_cost": 0.0975,
           "quality_score": 8.8,
           "value_score": 51.2,
+          "quality_label": "gpt-5 (high)",
+          "quality_match_ratio": 1.0,
           "change_pct": 0.0
         },
         {
@@ -142,6 +156,8 @@
           "task_cost": 0.0594,
           "quality_score": 7.2,
           "value_score": 48.7,
+          "quality_label": "o4-mini (high)",
+          "quality_match_ratio": 1.0,
           "change_pct": 0.0
         }
       ],
@@ -157,7 +173,9 @@
           "weighted_cost": 0.0,
           "task_cost": 0.0,
           "quality_score": 4.0,
-          "value_score": 40.0
+          "value_score": 40.0,
+          "quality_label": "Qwen3 32B",
+          "quality_match_ratio": 1.0
         },
         {
           "model": "gemma-3-27b-it",
@@ -170,7 +188,9 @@
           "weighted_cost": 0.0,
           "task_cost": 0.0,
           "quality_score": 0.5,
-          "value_score": 5.0
+          "value_score": 5.0,
+          "quality_label": "gemma-3-27b-it",
+          "quality_match_ratio": 1.0
         }
       ]
     },
@@ -222,33 +242,6 @@
       },
       "saving_vs_next_pct": 76.6,
       "routes_count": 2,
-      "quality": null
-    },
-    {
-      "model": "glm-5.3",
-      "cheapest": {
-        "model": "glm-5.3",
-        "raw_model": "glm-5.3",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.385,
-        "output": 1.21,
-        "weighted_cost": 0.020476
-      },
-      "next": {
-        "model": "glm-5.3",
-        "raw_model": "z-ai/glm-5.3",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 1.4,
-        "output": 4.4,
-        "weighted_cost": 0.074458,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 72.5,
-      "routes_count": 4,
       "quality": null
     },
     {
@@ -356,6 +349,33 @@
       },
       "saving_vs_next_pct": 63.8,
       "routes_count": 4,
+      "quality": null
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "cheapest": {
+        "model": "gpt-5.6-luna",
+        "raw_model": "gpt-5.6-luna",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.08,
+        "output": 0.48,
+        "weighted_cost": 0.005774
+      },
+      "next": {
+        "model": "gpt-5.6-luna",
+        "raw_model": "openai/gpt-5.6-luna",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.2,
+        "output": 1.2,
+        "weighted_cost": 0.014434,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 60.0,
+      "routes_count": 2,
       "quality": null
     },
     {
@@ -566,12 +586,12 @@
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 1.04226,
-        "output": 2.08452,
-        "weighted_cost": 0.047517,
-        "change_pct": 0.0
+        "input": 1.032342,
+        "output": 2.064684,
+        "weighted_cost": 0.047064,
+        "change_pct": -1.0
       },
-      "saving_vs_next_pct": 49.2,
+      "saving_vs_next_pct": 48.7,
       "routes_count": 4,
       "quality": null
     },
@@ -764,6 +784,33 @@
       "quality": null
     },
     {
+      "model": "glm-5.2",
+      "cheapest": {
+        "model": "glm-5.2",
+        "raw_model": "glm-5.2",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.605632,
+        "output": 1.903416,
+        "weighted_cost": 0.03221
+      },
+      "next": {
+        "model": "glm-5.2",
+        "raw_model": "z-ai/glm-5.2",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.966,
+        "output": 3.036,
+        "weighted_cost": 0.051376,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 37.3,
+      "routes_count": 4,
+      "quality": null
+    },
+    {
       "model": "qwen3.6-plus",
       "cheapest": {
         "model": "qwen3.6-plus",
@@ -815,33 +862,6 @@
       },
       "saving_vs_next_pct": 35.0,
       "routes_count": 2,
-      "quality": null
-    },
-    {
-      "model": "glm-5.2",
-      "cheapest": {
-        "model": "glm-5.2",
-        "raw_model": "glm-5.2",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.631581,
-        "output": 2.021058,
-        "weighted_cost": 0.03383
-      },
-      "next": {
-        "model": "glm-5.2",
-        "raw_model": "z-ai/glm-5.2",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.966,
-        "output": 3.036,
-        "weighted_cost": 0.051376,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 34.2,
-      "routes_count": 4,
       "quality": null
     },
     {
@@ -926,6 +946,33 @@
       "quality": null
     },
     {
+      "model": "claude-fable-5.1",
+      "cheapest": {
+        "model": "claude-fable-5.1",
+        "raw_model": "claude-fable-5.1",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 7.0,
+        "output": 35.0,
+        "weighted_cost": 0.458675
+      },
+      "next": {
+        "model": "claude-fable-5.1",
+        "raw_model": "anthropic/claude-fable-5.1",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 10.0,
+        "output": 50.0,
+        "weighted_cost": 0.65525,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 30.0,
+      "routes_count": 2,
+      "quality": null
+    },
+    {
       "model": "gemini-3.7-flash",
       "cheapest": {
         "model": "gemini-3.7-flash",
@@ -953,26 +1000,26 @@
       "quality": null
     },
     {
-      "model": "gemini-3.5-flash-lite",
+      "model": "claude-opus-5",
       "cheapest": {
-        "model": "gemini-3.5-flash-lite",
-        "raw_model": "google/gemini-3.5-flash-lite",
+        "model": "claude-opus-5",
+        "raw_model": "claude-opus-5",
         "provider": "CheaperInference",
         "source": "cheaperinference",
         "free": false,
-        "input": 0.21,
-        "output": 1.75,
-        "weighted_cost": 0.018412
+        "input": 3.5,
+        "output": 17.5,
+        "weighted_cost": 0.229337
       },
       "next": {
-        "model": "gemini-3.5-flash-lite",
-        "raw_model": "google/gemini-3.5-flash-lite",
+        "model": "claude-opus-5",
+        "raw_model": "anthropic/claude-opus-5",
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 0.3,
-        "output": 2.5,
-        "weighted_cost": 0.026302,
+        "input": 5.0,
+        "output": 25.0,
+        "weighted_cost": 0.327625,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 30.0,
@@ -1004,60 +1051,6 @@
       },
       "saving_vs_next_pct": 30.0,
       "routes_count": 4,
-      "quality": null
-    },
-    {
-      "model": "grok-4.5",
-      "cheapest": {
-        "model": "grok-4.5",
-        "raw_model": "grok-4.5",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 1.4,
-        "output": 4.2,
-        "weighted_cost": 0.073129
-      },
-      "next": {
-        "model": "grok-4.5",
-        "raw_model": "x-ai/grok-4.5",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 2.0,
-        "output": 6.0,
-        "weighted_cost": 0.10447,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 30.0,
-      "routes_count": 2,
-      "quality": null
-    },
-    {
-      "model": "claude-sonnet-5",
-      "cheapest": {
-        "model": "claude-sonnet-5",
-        "raw_model": "claude-sonnet-5",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 1.4,
-        "output": 7.0,
-        "weighted_cost": 0.091735
-      },
-      "next": {
-        "model": "claude-sonnet-5",
-        "raw_model": "anthropic/claude-sonnet-5",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 2.0,
-        "output": 10.0,
-        "weighted_cost": 0.13105,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 30.0,
-      "routes_count": 2,
       "quality": null
     },
     {
@@ -1385,33 +1378,6 @@
       "quality": null
     },
     {
-      "model": "claude-opus-4.6",
-      "cheapest": {
-        "model": "claude-opus-4.6",
-        "raw_model": "claude-opus-4.6",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 3.5,
-        "output": 17.5,
-        "weighted_cost": 0.229337
-      },
-      "next": {
-        "model": "claude-opus-4.6",
-        "raw_model": "anthropic/claude-opus-4.6",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 5.0,
-        "output": 25.0,
-        "weighted_cost": 0.327625,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 30.0,
-      "routes_count": 2,
-      "quality": null
-    },
-    {
       "model": "gpt-5.2-codex",
       "cheapest": {
         "model": "gpt-5.2-codex",
@@ -1513,33 +1479,6 @@
         "input": 3.0,
         "output": 15.0,
         "weighted_cost": 0.196575,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 30.0,
-      "routes_count": 2,
-      "quality": null
-    },
-    {
-      "model": "gpt-5-mini",
-      "cheapest": {
-        "model": "gpt-5-mini",
-        "raw_model": "gpt-5-mini",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.175,
-        "output": 1.4,
-        "weighted_cost": 0.014955
-      },
-      "next": {
-        "model": "gpt-5-mini",
-        "raw_model": "openai/gpt-5-mini",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.25,
-        "output": 2.0,
-        "weighted_cost": 0.021365,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 30.0,
@@ -1679,6 +1618,33 @@
         "weighted_cost": 0.034184
       },
       "saving_vs_next_pct": 25.9,
+      "routes_count": 2,
+      "quality": null
+    },
+    {
+      "model": "claude-sonnet-5",
+      "cheapest": {
+        "model": "claude-sonnet-5",
+        "raw_model": "claude-sonnet-5",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 1.511628,
+        "output": 7.55814,
+        "weighted_cost": 0.099049
+      },
+      "next": {
+        "model": "claude-sonnet-5",
+        "raw_model": "anthropic/claude-sonnet-5",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 2.0,
+        "output": 10.0,
+        "weighted_cost": 0.13105,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 24.4,
       "routes_count": 2,
       "quality": null
     },
@@ -1842,33 +1808,6 @@
       },
       "saving_vs_next_pct": 23.1,
       "routes_count": 3,
-      "quality": null
-    },
-    {
-      "model": "deepseek-v4-flash",
-      "cheapest": {
-        "model": "deepseek-v4-flash",
-        "raw_model": "deepseek-v4-flash-0731",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.0456,
-        "output": 0.0918,
-        "weighted_cost": 0.002083
-      },
-      "next": {
-        "model": "deepseek-v4-flash",
-        "raw_model": "~deepseek/deepseek-v4-flash-latest",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.05,
-        "output": 0.16,
-        "weighted_cost": 0.002678,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 22.2,
-      "routes_count": 4,
       "quality": null
     },
     {
@@ -2277,6 +2216,33 @@
       "quality": null
     },
     {
+      "model": "glm-5.3",
+      "cheapest": {
+        "model": "glm-5.3",
+        "raw_model": "glm-5.3",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 1.176471,
+        "output": 3.921569,
+        "weighted_cost": 0.064059
+      },
+      "next": {
+        "model": "glm-5.3",
+        "raw_model": "z-ai/glm-5.3",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 1.4,
+        "output": 4.4,
+        "weighted_cost": 0.074458,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 14.0,
+      "routes_count": 4,
+      "quality": null
+    },
+    {
       "model": "qwen3-next-80b-a3b-thinking",
       "cheapest": {
         "model": "qwen3-next-80b-a3b-thinking",
@@ -2358,6 +2324,33 @@
       "quality": null
     },
     {
+      "model": "glm-5.3-flash",
+      "cheapest": {
+        "model": "glm-5.3-flash",
+        "raw_model": "glm-5.3-flash",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.066824,
+        "output": 0.222748,
+        "weighted_cost": 0.003639
+      },
+      "next": {
+        "model": "glm-5.3-flash",
+        "raw_model": "z-ai/glm-5.3-flash",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.075,
+        "output": 0.25,
+        "weighted_cost": 0.004084,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 10.9,
+      "routes_count": 4,
+      "quality": null
+    },
+    {
       "model": "glm-5",
       "cheapest": {
         "model": "glm-5",
@@ -2409,6 +2402,33 @@
       },
       "saving_vs_next_pct": 10.0,
       "routes_count": 2,
+      "quality": null
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "cheapest": {
+        "model": "deepseek-v4-flash",
+        "raw_model": "deepseek-v4-flash-0731",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.0456,
+        "output": 0.0918,
+        "weighted_cost": 0.002083
+      },
+      "next": {
+        "model": "deepseek-v4-flash",
+        "raw_model": "~deepseek/deepseek-v4-flash-latest",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.04998,
+        "output": 0.09996,
+        "weighted_cost": 0.002279,
+        "change_pct": -14.9
+      },
+      "saving_vs_next_pct": 8.6,
+      "routes_count": 4,
       "quality": null
     },
     {
@@ -2493,34 +2513,6 @@
       "quality": null
     },
     {
-      "model": "gpt-oss-120b",
-      "cheapest": {
-        "model": "gpt-oss-120b",
-        "raw_model": "gpt-oss-120b",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.0282,
-        "output": 0.1598,
-        "weighted_cost": 0.001973
-      },
-      "next": {
-        "model": "gpt-oss-120b",
-        "raw_model": "openai/gpt-oss-120b",
-        "provider": "OpenRouter → AkashML",
-        "source": "openrouter-route",
-        "free": false,
-        "input": 0.03,
-        "output": 0.17,
-        "weighted_cost": 0.002099
-      },
-      "saving_vs_next_pct": 6.0,
-      "routes_count": 22,
-      "quality": {
-        "coding": 4.2
-      }
-    },
-    {
       "model": "gpt-4.1-nano",
       "cheapest": {
         "model": "gpt-4.1-nano",
@@ -2528,8 +2520,8 @@
         "provider": "CheaperInference",
         "source": "cheaperinference",
         "free": false,
-        "input": 0.094,
-        "output": 0.375998,
+        "input": 0.093999,
+        "output": 0.375997,
         "weighted_cost": 0.005535
       },
       "next": {
@@ -2550,26 +2542,26 @@
       }
     },
     {
-      "model": "claude-fable-5.1",
+      "model": "grok-4.5",
       "cheapest": {
-        "model": "claude-fable-5.1",
-        "raw_model": "claude-fable-5.1",
+        "model": "grok-4.5",
+        "raw_model": "grok-4.5",
         "provider": "CheaperInference",
         "source": "cheaperinference",
         "free": false,
-        "input": 9.4,
-        "output": 47.0,
-        "weighted_cost": 0.615935
+        "input": 1.88,
+        "output": 5.64,
+        "weighted_cost": 0.098202
       },
       "next": {
-        "model": "claude-fable-5.1",
-        "raw_model": "anthropic/claude-fable-5.1",
+        "model": "grok-4.5",
+        "raw_model": "x-ai/grok-4.5",
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 10.0,
-        "output": 50.0,
-        "weighted_cost": 0.65525,
+        "input": 2.0,
+        "output": 6.0,
+        "weighted_cost": 0.10447,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 6.0,
@@ -2577,53 +2569,26 @@
       "quality": null
     },
     {
-      "model": "glm-5.3-flash",
+      "model": "claude-opus-4.6",
       "cheapest": {
-        "model": "glm-5.3-flash",
-        "raw_model": "glm-5.3-flash",
+        "model": "claude-opus-4.6",
+        "raw_model": "claude-opus-4.6",
         "provider": "CheaperInference",
         "source": "cheaperinference",
         "free": false,
-        "input": 0.0705,
-        "output": 0.235,
-        "weighted_cost": 0.003839
+        "input": 4.7,
+        "output": 23.5,
+        "weighted_cost": 0.307968
       },
       "next": {
-        "model": "glm-5.3-flash",
-        "raw_model": "z-ai/glm-5.3-flash",
+        "model": "claude-opus-4.6",
+        "raw_model": "anthropic/claude-opus-4.6",
         "provider": "OpenRouter",
         "source": "openrouter",
         "free": false,
-        "input": 0.075,
-        "output": 0.25,
-        "weighted_cost": 0.004084,
-        "change_pct": 0.0
-      },
-      "saving_vs_next_pct": 6.0,
-      "routes_count": 4,
-      "quality": null
-    },
-    {
-      "model": "gpt-5.6-luna",
-      "cheapest": {
-        "model": "gpt-5.6-luna",
-        "raw_model": "gpt-5.6-luna",
-        "provider": "CheaperInference",
-        "source": "cheaperinference",
-        "free": false,
-        "input": 0.188,
-        "output": 1.128,
-        "weighted_cost": 0.013568
-      },
-      "next": {
-        "model": "gpt-5.6-luna",
-        "raw_model": "openai/gpt-5.6-luna",
-        "provider": "OpenRouter",
-        "source": "openrouter",
-        "free": false,
-        "input": 0.2,
-        "output": 1.2,
-        "weighted_cost": 0.014434,
+        "input": 5.0,
+        "output": 25.0,
+        "weighted_cost": 0.327625,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 6.0,
@@ -2651,6 +2616,33 @@
         "input": 0.5,
         "output": 3.0,
         "weighted_cost": 0.036085,
+        "change_pct": 0.0
+      },
+      "saving_vs_next_pct": 6.0,
+      "routes_count": 2,
+      "quality": null
+    },
+    {
+      "model": "gpt-5-mini",
+      "cheapest": {
+        "model": "gpt-5-mini",
+        "raw_model": "gpt-5-mini",
+        "provider": "CheaperInference",
+        "source": "cheaperinference",
+        "free": false,
+        "input": 0.235,
+        "output": 1.88,
+        "weighted_cost": 0.020083
+      },
+      "next": {
+        "model": "gpt-5-mini",
+        "raw_model": "openai/gpt-5-mini",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.25,
+        "output": 2.0,
+        "weighted_cost": 0.021365,
         "change_pct": 0.0
       },
       "saving_vs_next_pct": 6.0,
@@ -2724,6 +2716,17 @@
         "output": 0.65,
         "weighted_cost": 0.015624,
         "change_pct": -17.1
+      },
+      {
+        "model": "deepseek-v4-flash",
+        "raw_model": "~deepseek/deepseek-v4-flash-latest",
+        "provider": "OpenRouter",
+        "source": "openrouter",
+        "free": false,
+        "input": 0.04998,
+        "output": 0.09996,
+        "weighted_cost": 0.002279,
+        "change_pct": -14.9
       }
     ],
     "increases": [
@@ -4261,9 +4264,9 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 1.1154,
-      "output_usd_per_million": 3.3461999999999996,
-      "cache_read_usd_per_million": 0.03718,
+      "input_usd_per_million": 1.12068,
+      "output_usd_per_million": 3.36204,
+      "cache_read_usd_per_million": 0.037356,
       "cache_write_usd_per_million": null,
       "metadata": {
         "supported_parameters": [
@@ -4293,14 +4296,14 @@
       "canonical_model": "deepseek-v4-pro",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.053539199999999995,
-        "agentic": 0.10707839999999999,
-        "reasoning": 0.025096499999999997,
-        "general": 0.009592439999999999
+        "coding": 0.053792639999999996,
+        "agentic": 0.10758527999999999,
+        "reasoning": 0.0252153,
+        "general": 0.009637848
       },
-      "weighted_cost": 0.058262918999999996,
+      "weighted_cost": 0.05853871979999999,
       "value_scores": {},
-      "change_pct": 0.0
+      "change_pct": 0.4733727810650827
     },
     {
       "source": "openrouter",
@@ -4864,9 +4867,9 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.049999999999999996,
-      "output_usd_per_million": 0.16,
-      "cache_read_usd_per_million": 0.013000000000000001,
+      "input_usd_per_million": 0.049980000000000004,
+      "output_usd_per_million": 0.09996000000000001,
+      "cache_read_usd_per_million": 0.009996000000000001,
       "cache_write_usd_per_million": null,
       "metadata": {
         "supported_parameters": [
@@ -4898,14 +4901,14 @@
       "canonical_model": "deepseek-v4-flash",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.00246,
-        "agentic": 0.00492,
-        "reasoning": 0.00116,
-        "general": 0.000442
+        "coding": 0.00209916,
+        "agentic": 0.00419832,
+        "reasoning": 0.0009496200000000001,
+        "general": 0.000369852
       },
-      "weighted_cost": 0.0026782,
+      "weighted_cost": 0.0022785882000000003,
       "value_scores": {},
-      "change_pct": 0.0
+      "change_pct": -14.92090956612649
     },
     {
       "source": "openrouter",
@@ -9545,9 +9548,9 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 1.04226,
-      "output_usd_per_million": 2.08452,
-      "cache_read_usd_per_million": 0.086855,
+      "input_usd_per_million": 1.0323419999999999,
+      "output_usd_per_million": 2.0646839999999997,
+      "cache_read_usd_per_million": 0.0860285,
       "cache_write_usd_per_million": null,
       "metadata": {
         "supported_parameters": [
@@ -9578,14 +9581,14 @@
       "canonical_model": "deepseek-v4-pro",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.043774919999999995,
-        "agentic": 0.08754983999999999,
-        "reasoning": 0.019802939999999998,
-        "general": 0.007712724
+        "coding": 0.043358363999999996,
+        "agentic": 0.08671672799999999,
+        "reasoning": 0.019614497999999998,
+        "general": 0.007639330799999998
       },
-      "weighted_cost": 0.047516633399999994,
+      "weighted_cost": 0.04706447178,
       "value_scores": {},
-      "change_pct": 0.0
+      "change_pct": -0.9515859766277032
     },
     {
       "source": "openrouter",
@@ -9600,9 +9603,9 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.088606,
-      "output_usd_per_million": 0.177212,
-      "cache_read_usd_per_million": 0.017721200000000003,
+      "input_usd_per_million": 0.08834,
+      "output_usd_per_million": 0.17668,
+      "cache_read_usd_per_million": 0.017668,
       "cache_write_usd_per_million": null,
       "metadata": {
         "supported_parameters": [
@@ -9634,14 +9637,14 @@
       "canonical_model": "deepseek-v4-flash",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.003721452,
-        "agentic": 0.007442904,
-        "reasoning": 0.001683514,
-        "general": 0.0006556844
+        "coding": 0.0037102800000000003,
+        "agentic": 0.0074205600000000005,
+        "reasoning": 0.00167846,
+        "general": 0.0006537159999999999
       },
-      "weighted_cost": 0.00403954754,
+      "weighted_cost": 0.0040274206000000005,
       "value_scores": {},
-      "change_pct": 0.0
+      "change_pct": -0.300205403697246
     },
     {
       "source": "openrouter",
@@ -14131,7 +14134,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010469999999999998,
@@ -14511,7 +14515,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.033,
@@ -15582,7 +15587,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01056,
@@ -16503,7 +16509,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.8
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -16796,7 +16803,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00213,
@@ -17630,7 +17638,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0309,
@@ -18189,7 +18198,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 1.08,
@@ -18345,7 +18355,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.8999999999999999,
@@ -18401,7 +18412,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -18508,7 +18520,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -18720,7 +18733,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00408,
@@ -18867,7 +18881,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.108,
@@ -18966,7 +18981,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.05940000000000001,
@@ -19066,7 +19082,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.108,
@@ -19166,7 +19183,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 3.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.021599999999999998,
@@ -19266,7 +19284,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.005399999999999999,
@@ -19373,7 +19392,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010176,
@@ -19816,7 +19836,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0050999999999999995,
@@ -20271,7 +20292,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.05940000000000001,
@@ -20508,7 +20530,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.036,
@@ -20743,7 +20766,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.8099999999999999,
@@ -21023,7 +21047,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -21125,7 +21150,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.025800000000000003,
@@ -21763,7 +21789,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -21980,7 +22007,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -22043,7 +22071,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -22203,7 +22232,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -22267,7 +22297,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.24,
@@ -23110,13 +23141,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 9.4,
-      "output_usd_per_million": 47.0,
-      "cache_read_usd_per_million": 0.235,
-      "cache_write_usd_per_million": 11.75,
+      "input_usd_per_million": 7.0,
+      "output_usd_per_million": 35.0,
+      "cache_read_usd_per_million": 0.175,
+      "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23124,12 +23155,12 @@
       "canonical_model": "claude-fable-5.1",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.5640000000000001,
-        "agentic": 1.1280000000000001,
-        "reasoning": 0.2773,
-        "general": 0.10339999999999999
+        "coding": 0.42,
+        "agentic": 0.84,
+        "reasoning": 0.20650000000000002,
+        "general": 0.077
       },
-      "weighted_cost": 0.615935,
+      "weighted_cost": 0.458675,
       "value_scores": {},
       "change_pct": null
     },
@@ -23146,13 +23177,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 4.901961,
-      "output_usd_per_million": 24.509804,
-      "cache_read_usd_per_million": 0.490196,
-      "cache_write_usd_per_million": 6.127451,
+      "input_usd_per_million": 3.5,
+      "output_usd_per_million": 17.5,
+      "cache_read_usd_per_million": 0.35,
+      "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23160,12 +23191,12 @@
       "canonical_model": "claude-opus-5",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.294117654,
-        "agentic": 0.588235308,
-        "reasoning": 0.144607846,
-        "general": 0.0539215698
+        "coding": 0.21,
+        "agentic": 0.42,
+        "reasoning": 0.10325000000000001,
+        "general": 0.0385
       },
-      "weighted_cost": 0.32120098788,
+      "weighted_cost": 0.2293375,
       "value_scores": {},
       "change_pct": null
     },
@@ -23182,13 +23213,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.385,
-      "output_usd_per_million": 1.21,
-      "cache_read_usd_per_million": 0.0385,
-      "cache_write_usd_per_million": 0.385,
+      "input_usd_per_million": 1.176471,
+      "output_usd_per_million": 3.921569,
+      "cache_read_usd_per_million": 0.117647,
+      "cache_write_usd_per_million": 1.176471,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23196,12 +23227,12 @@
       "canonical_model": "glm-5.3",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.01881,
-        "agentic": 0.03762,
-        "reasoning": 0.008855,
-        "general": 0.003377
+        "coding": 0.058823544,
+        "agentic": 0.117647088,
+        "reasoning": 0.0278431435,
+        "general": 0.0105882378
       },
-      "weighted_cost": 0.02047595,
+      "weighted_cost": 0.064058839305,
       "value_scores": {},
       "change_pct": null
     },
@@ -23218,13 +23249,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.0705,
-      "output_usd_per_million": 0.235,
-      "cache_read_usd_per_million": 0.0141,
-      "cache_write_usd_per_million": 0.0705,
+      "input_usd_per_million": 0.066824,
+      "output_usd_per_million": 0.222748,
+      "cache_read_usd_per_million": 0.013365,
+      "cache_write_usd_per_million": 0.066824,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23232,12 +23263,12 @@
       "canonical_model": "glm-5.3-flash",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.0035249999999999995,
-        "agentic": 0.007049999999999999,
-        "reasoning": 0.0016684999999999998,
-        "general": 0.0006344999999999999
+        "coding": 0.003341208,
+        "agentic": 0.006682416,
+        "reasoning": 0.0015815059999999999,
+        "general": 0.0006014175999999999
       },
-      "weighted_cost": 0.0038387249999999994,
+      "weighted_cost": 0.0036385756599999998,
       "value_scores": {},
       "change_pct": null
     },
@@ -23254,13 +23285,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.631581,
-      "output_usd_per_million": 2.021058,
-      "cache_read_usd_per_million": 0.126316,
-      "cache_write_usd_per_million": 0.631581,
+      "input_usd_per_million": 0.605632,
+      "output_usd_per_million": 1.903416,
+      "cache_read_usd_per_million": 0.121126,
+      "cache_write_usd_per_million": 0.605632,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23268,12 +23299,12 @@
       "canonical_model": "glm-5.2",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.031073777999999996,
-        "agentic": 0.06214755599999999,
-        "reasoning": 0.014652675,
-        "general": 0.005583174599999999
+        "coding": 0.029589456,
+        "agentic": 0.059178912,
+        "reasoning": 0.01392954,
+        "general": 0.0053122592
       },
-      "weighted_cost": 0.03382999671,
+      "weighted_cost": 0.03221011292,
       "value_scores": {},
       "change_pct": null
     },
@@ -23295,8 +23326,8 @@
       "cache_read_usd_per_million": 0.1,
       "cache_write_usd_per_million": 1.25,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23331,8 +23362,8 @@
       "cache_read_usd_per_million": 0.7,
       "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23367,8 +23398,8 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.1,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23403,8 +23434,8 @@
       "cache_read_usd_per_million": 0.08,
       "cache_write_usd_per_million": 1.0,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23434,13 +23465,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.188,
-      "output_usd_per_million": 1.128,
-      "cache_read_usd_per_million": 0.0188,
-      "cache_write_usd_per_million": 0.235,
+      "input_usd_per_million": 0.08,
+      "output_usd_per_million": 0.48,
+      "cache_read_usd_per_million": 0.008,
+      "cache_write_usd_per_million": 0.1,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23448,12 +23479,12 @@
       "canonical_model": "gpt-5.6-luna",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.012407999999999999,
-        "agentic": 0.024815999999999998,
-        "reasoning": 0.006204,
-        "general": 0.0022936
+        "coding": 0.00528,
+        "agentic": 0.01056,
+        "reasoning": 0.00264,
+        "general": 0.0009759999999999999
       },
-      "weighted_cost": 0.013567959999999999,
+      "weighted_cost": 0.0057736,
       "value_scores": {},
       "change_pct": null
     },
@@ -23475,8 +23506,8 @@
       "cache_read_usd_per_million": 0.84,
       "cache_write_usd_per_million": 10.5,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23511,8 +23542,8 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23547,8 +23578,8 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23578,13 +23609,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 3.5,
-      "output_usd_per_million": 17.5,
-      "cache_read_usd_per_million": 0.35,
-      "cache_write_usd_per_million": 4.375,
+      "input_usd_per_million": 4.7,
+      "output_usd_per_million": 23.5,
+      "cache_read_usd_per_million": 0.47,
+      "cache_write_usd_per_million": 5.875,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23592,12 +23623,12 @@
       "canonical_model": "claude-opus-4.6",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.21,
-        "agentic": 0.42,
-        "reasoning": 0.10325000000000001,
-        "general": 0.0385
+        "coding": 0.28200000000000003,
+        "agentic": 0.5640000000000001,
+        "reasoning": 0.13865,
+        "general": 0.051699999999999996
       },
-      "weighted_cost": 0.2293375,
+      "weighted_cost": 0.3079675,
       "value_scores": {},
       "change_pct": null
     },
@@ -23619,8 +23650,8 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 3.5,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23655,8 +23686,8 @@
       "cache_read_usd_per_million": 0.175,
       "cache_write_usd_per_million": 1.75,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23691,8 +23722,8 @@
       "cache_read_usd_per_million": 0.14,
       "cache_write_usd_per_million": 0.2625,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23722,13 +23753,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 1.4,
-      "output_usd_per_million": 7.0,
-      "cache_read_usd_per_million": 0.14,
-      "cache_write_usd_per_million": 1.75,
+      "input_usd_per_million": 1.511628,
+      "output_usd_per_million": 7.55814,
+      "cache_read_usd_per_million": 0.151163,
+      "cache_write_usd_per_million": 1.889535,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23736,12 +23767,12 @@
       "canonical_model": "claude-sonnet-5",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.08399999999999999,
-        "agentic": 0.16799999999999998,
-        "reasoning": 0.0413,
-        "general": 0.015399999999999999
+        "coding": 0.09069768,
+        "agentic": 0.18139536,
+        "reasoning": 0.044593026,
+        "general": 0.016627907999999997
       },
-      "weighted_cost": 0.091735,
+      "weighted_cost": 0.0990494247,
       "value_scores": {},
       "change_pct": null
     },
@@ -23763,8 +23794,8 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.625,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23794,13 +23825,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.078,
-      "output_usd_per_million": 0.156,
-      "cache_read_usd_per_million": 0.015582,
-      "cache_write_usd_per_million": 0.078,
+      "input_usd_per_million": 0.077587,
+      "output_usd_per_million": 0.155175,
+      "cache_read_usd_per_million": 0.0155,
+      "cache_write_usd_per_million": 0.077587,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23808,12 +23839,12 @@
       "canonical_model": "deepseek-v4-flash",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.0032760000000000003,
-        "agentic": 0.0065520000000000005,
-        "reasoning": 0.001482,
-        "general": 0.0005771999999999999
+        "coding": 0.00325866,
+        "agentic": 0.00651732,
+        "reasoning": 0.0014741565,
+        "general": 0.000574145
       },
-      "weighted_cost": 0.0035560200000000004,
+      "weighted_cost": 0.003537197975,
       "value_scores": {},
       "change_pct": null
     },
@@ -23835,8 +23866,8 @@
       "cache_read_usd_per_million": 0.042,
       "cache_write_usd_per_million": 0.21,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23866,13 +23897,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 1.4,
-      "output_usd_per_million": 4.2,
-      "cache_read_usd_per_million": 0.21,
-      "cache_write_usd_per_million": 1.4,
+      "input_usd_per_million": 1.88,
+      "output_usd_per_million": 5.64,
+      "cache_read_usd_per_million": 0.282,
+      "cache_write_usd_per_million": 1.88,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23880,12 +23911,12 @@
       "canonical_model": "grok-4.5",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.0672,
-        "agentic": 0.1344,
-        "reasoning": 0.0315,
-        "general": 0.012039999999999999
+        "coding": 0.09023999999999999,
+        "agentic": 0.18047999999999997,
+        "reasoning": 0.042300000000000004,
+        "general": 0.016168
       },
-      "weighted_cost": 0.073129,
+      "weighted_cost": 0.09820179999999999,
       "value_scores": {},
       "change_pct": null
     },
@@ -23907,8 +23938,8 @@
       "cache_read_usd_per_million": 0.038518,
       "cache_write_usd_per_million": 0.462,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23943,8 +23974,8 @@
       "cache_read_usd_per_million": 0.105,
       "cache_write_usd_per_million": 0.05831,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -23979,8 +24010,8 @@
       "cache_read_usd_per_million": 0.0525,
       "cache_write_usd_per_million": 0.525,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24015,8 +24046,8 @@
       "cache_read_usd_per_million": 0.175,
       "cache_write_usd_per_million": 0.7,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24051,8 +24082,8 @@
       "cache_read_usd_per_million": 0.07,
       "cache_write_usd_per_million": 0.875,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24087,8 +24118,8 @@
       "cache_read_usd_per_million": 0.35,
       "cache_write_usd_per_million": 4.375,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24123,8 +24154,8 @@
       "cache_read_usd_per_million": 0.21,
       "cache_write_usd_per_million": 2.625,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24159,8 +24190,8 @@
       "cache_read_usd_per_million": 0.024419,
       "cache_write_usd_per_million": 0.067803,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24195,8 +24226,8 @@
       "cache_read_usd_per_million": 0.176471,
       "cache_write_usd_per_million": 0.330882,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24231,8 +24262,8 @@
       "cache_read_usd_per_million": 0.047,
       "cache_write_usd_per_million": 0.078302,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24267,8 +24298,8 @@
       "cache_read_usd_per_million": 0.0605,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24303,8 +24334,8 @@
       "cache_read_usd_per_million": 0.0165,
       "cache_write_usd_per_million": 0.11,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24339,8 +24370,8 @@
       "cache_read_usd_per_million": 0.061396,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24375,8 +24406,8 @@
       "cache_read_usd_per_million": 0.066,
       "cache_write_usd_per_million": 0.33,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24411,8 +24442,8 @@
       "cache_read_usd_per_million": 0.106919,
       "cache_write_usd_per_million": 0.534597,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24447,8 +24478,8 @@
       "cache_read_usd_per_million": 0.143,
       "cache_write_usd_per_million": 0.77,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24483,8 +24514,8 @@
       "cache_read_usd_per_million": 0.020349,
       "cache_write_usd_per_million": 0.067803,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24514,13 +24545,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.21,
-      "output_usd_per_million": 1.75,
-      "cache_read_usd_per_million": 0.021,
-      "cache_write_usd_per_million": 0.078333,
+      "input_usd_per_million": 0.294118,
+      "output_usd_per_million": 2.450981,
+      "cache_read_usd_per_million": 0.029412,
+      "cache_write_usd_per_million": 0.10971,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24528,12 +24559,12 @@
       "canonical_model": "gemini-3.5-flash-lite",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.0168,
-        "agentic": 0.0336,
-        "reasoning": 0.008645,
-        "general": 0.00315
+        "coding": 0.023529426,
+        "agentic": 0.047058852,
+        "reasoning": 0.0121078495,
+        "general": 0.0044117672
       },
-      "weighted_cost": 0.018411749999999998,
+      "weighted_cost": 0.025786780145,
       "value_scores": {},
       "change_pct": null
     },
@@ -24555,8 +24586,8 @@
       "cache_read_usd_per_million": 0.7,
       "cache_write_usd_per_million": 8.75,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24591,8 +24622,8 @@
       "cache_read_usd_per_million": 0.011225,
       "cache_write_usd_per_million": 0.0456,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24627,8 +24658,8 @@
       "cache_read_usd_per_million": 0.0035,
       "cache_write_usd_per_million": 0.035,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24658,13 +24689,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.094,
-      "output_usd_per_million": 0.375998,
+      "input_usd_per_million": 0.093999,
+      "output_usd_per_million": 0.375997,
       "cache_read_usd_per_million": 0.009399,
-      "cache_write_usd_per_million": 0.094,
+      "cache_write_usd_per_million": 0.093999,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24675,15 +24706,16 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
-        "coding": 0.005075988,
-        "agentic": 0.010151976,
-        "reasoning": 0.002443993,
-        "general": 0.0009211975999999999
+        "coding": 0.005075952,
+        "agentic": 0.010151904,
+        "reasoning": 0.0024439775,
+        "general": 0.0009211913999999999
       },
-      "weighted_cost": 0.00553470671,
+      "weighted_cost": 0.005534667765,
       "value_scores": {
         "coding": 8.6,
         "agentic": null,
@@ -24710,8 +24742,8 @@
       "cache_read_usd_per_million": 0.014,
       "cache_write_usd_per_million": 0.14,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24746,8 +24778,8 @@
       "cache_read_usd_per_million": 0.10941,
       "cache_write_usd_per_million": 0.21875,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24782,8 +24814,8 @@
       "cache_read_usd_per_million": 0.063065,
       "cache_write_usd_per_million": 0.42,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24818,8 +24850,8 @@
       "cache_read_usd_per_million": 0.0147,
       "cache_write_usd_per_million": 0.098,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24854,8 +24886,8 @@
       "cache_read_usd_per_million": 0.06375,
       "cache_write_usd_per_million": 0.035416,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24885,13 +24917,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 1.75,
-      "output_usd_per_million": 5.25,
-      "cache_read_usd_per_million": 0.21875,
-      "cache_write_usd_per_million": 2.1875,
+      "input_usd_per_million": 1.918605,
+      "output_usd_per_million": 5.756977,
+      "cache_read_usd_per_million": 0.239826,
+      "cache_write_usd_per_million": 2.398256,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24899,12 +24931,12 @@
       "canonical_model": "qwen-3-8-max",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.08399999999999999,
-        "agentic": 0.16799999999999998,
-        "reasoning": 0.039375,
-        "general": 0.015050000000000001
+        "coding": 0.092100012,
+        "agentic": 0.184200024,
+        "reasoning": 0.043172679500000005,
+        "general": 0.0165013974
       },
-      "weighted_cost": 0.09141124999999999,
+      "weighted_cost": 0.100226053665,
       "value_scores": {},
       "change_pct": null
     },
@@ -24926,8 +24958,8 @@
       "cache_read_usd_per_million": 0.1225,
       "cache_write_usd_per_million": 1.225,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24962,8 +24994,8 @@
       "cache_read_usd_per_million": 3.15,
       "cache_write_usd_per_million": 21.0,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -24993,13 +25025,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.0282,
-      "output_usd_per_million": 0.1598,
-      "cache_read_usd_per_million": 0.0085,
-      "cache_write_usd_per_million": 0.0282,
+      "input_usd_per_million": 0.04,
+      "output_usd_per_million": 0.2,
+      "cache_read_usd_per_million": 0.012057,
+      "cache_write_usd_per_million": 0.04,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -25010,17 +25042,18 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
-        "coding": 0.0018048,
-        "agentic": 0.0036096,
-        "reasoning": 0.0008977,
-        "general": 0.00033276
+        "coding": 0.0024000000000000002,
+        "agentic": 0.0048000000000000004,
+        "reasoning": 0.00118,
+        "general": 0.00043999999999999996
       },
-      "weighted_cost": 0.001972731,
+      "weighted_cost": 0.002621,
       "value_scores": {
-        "coding": 41.3,
+        "coding": 41.0,
         "agentic": null,
         "reasoning": null,
         "general": null
@@ -25045,8 +25078,8 @@
       "cache_read_usd_per_million": 0.1275,
       "cache_write_usd_per_million": 1.0625,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -25076,13 +25109,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.175,
-      "output_usd_per_million": 1.4,
-      "cache_read_usd_per_million": 0.0175,
-      "cache_write_usd_per_million": 0.175,
+      "input_usd_per_million": 0.235,
+      "output_usd_per_million": 1.88,
+      "cache_read_usd_per_million": 0.0235,
+      "cache_write_usd_per_million": 0.235,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -25090,12 +25123,12 @@
       "canonical_model": "gpt-5-mini",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.013649999999999999,
-        "agentic": 0.027299999999999998,
-        "reasoning": 0.006999999999999999,
-        "general": 0.002555
+        "coding": 0.01833,
+        "agentic": 0.03666,
+        "reasoning": 0.0094,
+        "general": 0.003431
       },
-      "weighted_cost": 0.014955499999999998,
+      "weighted_cost": 0.0200831,
       "value_scores": {},
       "change_pct": null
     },
@@ -25112,13 +25145,13 @@
       "output_modalities": [
         "text"
       ],
-      "input_usd_per_million": 0.462,
-      "output_usd_per_million": 1.386,
-      "cache_read_usd_per_million": 0.015408,
-      "cache_write_usd_per_million": 0.462,
+      "input_usd_per_million": 0.498838,
+      "output_usd_per_million": 1.496512,
+      "cache_read_usd_per_million": 0.016637,
+      "cache_write_usd_per_million": 0.498838,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -25126,12 +25159,12 @@
       "canonical_model": "deepseek-v4-pro",
       "quality": null,
       "costs_by_task": {
-        "coding": 0.022176,
-        "agentic": 0.044352,
-        "reasoning": 0.010395,
-        "general": 0.0039732
+        "coding": 0.023944212,
+        "agentic": 0.047888424,
+        "reasoning": 0.011223848000000002,
+        "general": 0.0042900044
       },
-      "weighted_cost": 0.024132570000000002,
+      "weighted_cost": 0.02605678964,
       "value_scores": {},
       "change_pct": null
     },
@@ -25153,8 +25186,8 @@
       "cache_read_usd_per_million": 0.0525,
       "cache_write_usd_per_million": 0.02919,
       "metadata": {
-        "pricing_version": "sha256:b5197641d5a5fc1cb4b1d7942c6e55dcd96bd89b1376d986de407e36c6164400",
-        "pricing_checked_at": "2026-09-04T13:00:24.289Z",
+        "pricing_version": "sha256:7a031a0e27b53a154e9ecf8d947f1cc2c68756e1d35f0c8bbd799dd8b2b1fd57",
+        "pricing_checked_at": "2026-09-04T14:00:23.467Z",
         "pricing_updated_at": "2026-08-05T00:00:00.000Z",
         "reasoning": null,
         "streaming": null
@@ -25660,7 +25693,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -26529,7 +26563,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0288,
@@ -26936,7 +26971,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.043199999999999995,
@@ -27376,7 +27412,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0,
@@ -29037,7 +29074,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0,
@@ -31820,7 +31858,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01047,
@@ -33217,7 +33256,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.033,
@@ -33294,7 +33334,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01056,
@@ -33866,7 +33907,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.003,
@@ -33910,7 +33952,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.030900000000000004,
@@ -34053,7 +34096,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.03204,
@@ -34691,7 +34735,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.144,
@@ -35263,7 +35308,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00477,
@@ -36487,10 +36533,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "gmicloud/fp8",
-        "uptime_last_1d": 99.50690642110503,
-        "uptime_last_30m": 100,
-        "latency_p50": 1887,
-        "throughput_p50": 3,
+        "uptime_last_1d": 99.57774643616276,
+        "uptime_last_30m": 99.98242376307232,
+        "latency_p50": 1881,
+        "throughput_p50": 6,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36499,7 +36545,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081216,
@@ -36535,10 +36582,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "streamlake/fp8",
-        "uptime_last_1d": 97.53115851507147,
-        "uptime_last_30m": 98.14231819955769,
-        "latency_p50": 1364,
-        "throughput_p50": 20,
+        "uptime_last_1d": 97.42450573305355,
+        "uptime_last_30m": 95.02462532436583,
+        "latency_p50": 1349,
+        "throughput_p50": 19,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36547,7 +36594,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0083655,
@@ -36583,10 +36631,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 98.18125945154742,
-        "uptime_last_30m": 93.81725689688906,
-        "latency_p50": 1045,
-        "throughput_p50": 22,
+        "uptime_last_1d": 97.91716823644924,
+        "uptime_last_30m": 93.80952380952381,
+        "latency_p50": 1634,
+        "throughput_p50": 12,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36595,7 +36643,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.012299999999999998,
@@ -36631,10 +36680,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 96.75287793341258,
-        "uptime_last_30m": 99.62425277540564,
-        "latency_p50": 2142,
-        "throughput_p50": 18,
+        "uptime_last_1d": 96.9450796910368,
+        "uptime_last_30m": 99.21406687092048,
+        "latency_p50": 1842,
+        "throughput_p50": 16,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36643,7 +36692,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010289999999999999,
@@ -36679,9 +36729,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp4",
-        "uptime_last_1d": 98.93445197182467,
-        "uptime_last_30m": 99.34518241347054,
-        "latency_p50": 1585.5,
+        "uptime_last_1d": 98.89836693732323,
+        "uptime_last_30m": 99.48914431673053,
+        "latency_p50": 1442,
         "throughput_p50": 12,
         "quantization": "fp4"
       },
@@ -36691,7 +36741,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010079999999999999,
@@ -36727,10 +36778,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 99.50259494490528,
-        "uptime_last_30m": 99.96187571483036,
-        "latency_p50": 1128,
-        "throughput_p50": 22,
+        "uptime_last_1d": 99.55494152832087,
+        "uptime_last_30m": 99.849080698292,
+        "latency_p50": 1257,
+        "throughput_p50": 20,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36739,7 +36790,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010079999999999999,
@@ -36775,10 +36827,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.97673411989072,
-        "uptime_last_30m": 99.99774936982355,
-        "latency_p50": 1053,
-        "throughput_p50": 25,
+        "uptime_last_1d": 99.97284781198618,
+        "uptime_last_30m": 100,
+        "latency_p50": 1066,
+        "throughput_p50": 23,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36787,7 +36839,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010469999999999998,
@@ -36823,10 +36876,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baidu/fp8",
-        "uptime_last_1d": 99.99497822454263,
-        "uptime_last_30m": 99.97261524418074,
-        "latency_p50": 934,
-        "throughput_p50": 49,
+        "uptime_last_1d": 99.99508370000737,
+        "uptime_last_30m": 100,
+        "latency_p50": 1031,
+        "throughput_p50": 45,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36835,7 +36888,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010920000000000001,
@@ -36871,9 +36925,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "venice",
-        "uptime_last_1d": 98.52043010752688,
-        "uptime_last_30m": 98.4423676012461,
-        "latency_p50": 1637,
+        "uptime_last_1d": 98.50291583253546,
+        "uptime_last_30m": 100,
+        "latency_p50": 1427,
         "throughput_p50": 11,
         "quantization": "unknown"
       },
@@ -36883,7 +36937,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01278,
@@ -36919,10 +36974,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "alibaba/fp8",
-        "uptime_last_1d": 99.0753277420928,
-        "uptime_last_30m": 99.56753160345974,
-        "latency_p50": 816,
-        "throughput_p50": 34,
+        "uptime_last_1d": 99.07895666471839,
+        "uptime_last_30m": 99.43934760448522,
+        "latency_p50": 806,
+        "throughput_p50": 35,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36931,7 +36986,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.017784,
@@ -36967,10 +37023,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "friendli",
-        "uptime_last_1d": 99.96615368547683,
-        "uptime_last_30m": 99.96087636932708,
-        "latency_p50": 568.5,
-        "throughput_p50": 31,
+        "uptime_last_1d": 99.96706153610879,
+        "uptime_last_30m": 99.98937977909941,
+        "latency_p50": 781,
+        "throughput_p50": 33,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v3.2",
@@ -36979,7 +37035,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.024,
@@ -37015,10 +37072,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex",
-        "uptime_last_1d": 99.68734641807744,
+        "uptime_last_1d": 99.74933573971023,
         "uptime_last_30m": 100,
-        "latency_p50": 1085.5,
-        "throughput_p50": 33,
+        "latency_p50": 800.5,
+        "throughput_p50": 27,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37027,7 +37084,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.02688,
@@ -37063,9 +37121,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala",
-        "uptime_last_1d": 99.66977627342524,
-        "uptime_last_30m": 100,
-        "latency_p50": 2075,
+        "uptime_last_1d": 99.47229551451187,
+        "uptime_last_30m": 88.69047619047619,
+        "latency_p50": 2147.5,
         "throughput_p50": 10,
         "quantization": "unknown"
       },
@@ -37075,7 +37133,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.036,
@@ -37111,10 +37170,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "mara",
-        "uptime_last_1d": 86.26999895430303,
-        "uptime_last_30m": 78.57142857142857,
-        "latency_p50": 3033,
-        "throughput_p50": 48,
+        "uptime_last_1d": 87.49297041952536,
+        "uptime_last_30m": 67.22689075630252,
+        "latency_p50": 2628,
+        "throughput_p50": 76,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37123,7 +37182,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.11699999999999999,
@@ -37159,10 +37219,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "sambanova",
-        "uptime_last_1d": 92.83761618370694,
+        "uptime_last_1d": 92.40348692403487,
         "uptime_last_30m": null,
-        "latency_p50": 2601,
-        "throughput_p50": 66,
+        "latency_p50": 3616,
+        "throughput_p50": 16,
         "quantization": "unknown"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37171,7 +37231,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.11699999999999999,
@@ -37207,10 +37268,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex",
-        "uptime_last_1d": 99.9949205059176,
-        "uptime_last_30m": null,
-        "latency_p50": 444,
-        "throughput_p50": 36,
+        "uptime_last_1d": 99.99489483357158,
+        "uptime_last_30m": 100,
+        "latency_p50": 751.5,
+        "throughput_p50": 116,
         "quantization": "unknown"
       },
       "canonical_model": "kimi-k2-thinking",
@@ -37219,7 +37280,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.033,
@@ -37255,10 +37317,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/bf16",
-        "uptime_last_1d": 99.61670565981383,
-        "uptime_last_30m": null,
-        "latency_p50": 1462,
-        "throughput_p50": 39,
+        "uptime_last_1d": 99.6705929327211,
+        "uptime_last_30m": 99.64912280701755,
+        "latency_p50": 980,
+        "throughput_p50": 38,
         "quantization": "bf16"
       },
       "canonical_model": "kimi-k2-thinking",
@@ -37267,7 +37329,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.033,
@@ -37303,10 +37366,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 95.94705222987695,
-        "uptime_last_30m": 99.55156950672645,
-        "latency_p50": 1748,
-        "throughput_p50": 10,
+        "uptime_last_1d": 96.30820207215449,
+        "uptime_last_30m": 99.24137931034483,
+        "latency_p50": 2035,
+        "throughput_p50": 17,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37315,7 +37378,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01056,
@@ -37351,10 +37415,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "atlas-cloud/fp8",
-        "uptime_last_1d": 98.17292071960048,
-        "uptime_last_30m": 99.8435054773083,
-        "latency_p50": 1568,
-        "throughput_p50": 5,
+        "uptime_last_1d": 99.03230546401059,
+        "uptime_last_30m": 99.84984984984985,
+        "latency_p50": 2010,
+        "throughput_p50": 23,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37363,7 +37427,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01056,
@@ -37399,10 +37464,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.81543939307326,
-        "uptime_last_30m": 98.90899414582225,
-        "latency_p50": 1739,
-        "throughput_p50": 15,
+        "uptime_last_1d": 99.80319175216982,
+        "uptime_last_30m": 99.95670995670996,
+        "latency_p50": 2262,
+        "throughput_p50": 21,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-v3.2",
@@ -37411,7 +37476,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.01056,
@@ -37447,10 +37513,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.97009271259097,
+        "uptime_last_1d": 99.97208263539922,
         "uptime_last_30m": 100,
-        "latency_p50": 7371.5,
-        "throughput_p50": 68,
+        "latency_p50": 1344.5,
+        "throughput_p50": 39,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5",
@@ -37459,7 +37525,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.8
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -37495,10 +37562,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai/default",
-        "uptime_last_1d": 99.97611589303594,
+        "uptime_last_1d": 99.98074279086224,
         "uptime_last_30m": 100,
-        "latency_p50": 3788,
-        "throughput_p50": 54,
+        "latency_p50": 1977,
+        "throughput_p50": 57,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5",
@@ -37507,7 +37574,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.8
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -37545,8 +37613,8 @@
         "route_tag": "azure/swedencentral",
         "uptime_last_1d": null,
         "uptime_last_30m": null,
-        "latency_p50": null,
-        "throughput_p50": null,
+        "latency_p50": 4970,
+        "throughput_p50": 45,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-5",
@@ -37555,7 +37623,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.8
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.10725,
@@ -37591,10 +37660,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "akashml/bf16",
-        "uptime_last_1d": 99.87554452266508,
-        "uptime_last_30m": 99.91648814494754,
-        "latency_p50": 1424,
-        "throughput_p50": 41,
+        "uptime_last_1d": 99.87993098785678,
+        "uptime_last_30m": 99.96096146338743,
+        "latency_p50": 1327,
+        "throughput_p50": 47,
         "quantization": "bf16"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37603,7 +37672,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0019199999999999998,
@@ -37639,10 +37709,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "coreweave/fp4",
-        "uptime_last_1d": 99.92801424250179,
-        "uptime_last_30m": 99.75662954884629,
-        "latency_p50": 504,
-        "throughput_p50": 30,
+        "uptime_last_1d": 99.92838588743096,
+        "uptime_last_30m": 99.95285646937813,
+        "latency_p50": 532,
+        "throughput_p50": 29,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37651,7 +37721,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0019199999999999998,
@@ -37687,10 +37758,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/bf16",
-        "uptime_last_1d": 99.87168604726914,
-        "uptime_last_30m": 99.80172378909884,
-        "latency_p50": 579,
-        "throughput_p50": 40,
+        "uptime_last_1d": 99.86910003795943,
+        "uptime_last_30m": 99.93109450932037,
+        "latency_p50": 736,
+        "throughput_p50": 38,
         "quantization": "bf16"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37699,7 +37770,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00213,
@@ -37735,10 +37807,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp4",
-        "uptime_last_1d": 95.86081223662694,
-        "uptime_last_30m": 81.80603283696067,
-        "latency_p50": 551,
-        "throughput_p50": 76,
+        "uptime_last_1d": 95.72335593103686,
+        "uptime_last_30m": 93.49091857130443,
+        "latency_p50": 598.5,
+        "throughput_p50": 57,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37747,7 +37819,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.003,
@@ -37783,10 +37856,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 75.54788130738638,
-        "uptime_last_30m": 85.9158385474175,
-        "latency_p50": 2300,
-        "throughput_p50": 10,
+        "uptime_last_1d": 81.33226308714447,
+        "uptime_last_30m": 71.39354311401716,
+        "latency_p50": 2473,
+        "throughput_p50": 9,
         "quantization": "fp8"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37795,7 +37868,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0042,
@@ -37831,10 +37905,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 99.9547693153734,
-        "uptime_last_30m": 99.98053969901402,
-        "latency_p50": 798.5,
-        "throughput_p50": 22,
+        "uptime_last_1d": 99.95629955606155,
+        "uptime_last_30m": 99.98423458931104,
+        "latency_p50": 869,
+        "throughput_p50": 24,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37843,7 +37917,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00396,
@@ -37879,10 +37954,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "mancer/fp8",
-        "uptime_last_1d": 96.89175361591676,
-        "uptime_last_30m": 98.6420635436294,
-        "latency_p50": 714,
-        "throughput_p50": 50,
+        "uptime_last_1d": 97.81485642148925,
+        "uptime_last_30m": 98.03146584804297,
+        "latency_p50": 846,
+        "throughput_p50": 35,
         "quantization": "fp8"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37891,7 +37966,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00465,
@@ -37927,10 +38003,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/global",
-        "uptime_last_1d": 89.12110030191212,
-        "uptime_last_30m": 90.11243976441192,
-        "latency_p50": 988,
-        "throughput_p50": 59,
+        "uptime_last_1d": 88.56202773170281,
+        "uptime_last_30m": 90.4828691644961,
+        "latency_p50": 2246.5,
+        "throughput_p50": 43,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37939,7 +38015,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00486,
@@ -37975,10 +38052,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp4",
-        "uptime_last_1d": 99.99859464701046,
+        "uptime_last_1d": 99.99850597423553,
         "uptime_last_30m": 100,
-        "latency_p50": 294,
-        "throughput_p50": 168,
+        "latency_p50": 312,
+        "throughput_p50": 144,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -37987,7 +38064,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.006,
@@ -38023,10 +38101,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "baseten/fp4",
-        "uptime_last_1d": 99.99731844534188,
+        "uptime_last_1d": 99.99713087238695,
         "uptime_last_30m": 100,
-        "latency_p50": 287.5,
-        "throughput_p50": 169,
+        "latency_p50": 328,
+        "throughput_p50": 148,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38035,7 +38113,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.006,
@@ -38071,10 +38150,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp4",
-        "uptime_last_1d": 99.98473405110076,
+        "uptime_last_1d": 99.98558322774896,
         "uptime_last_30m": 100,
-        "latency_p50": 391,
-        "throughput_p50": 88,
+        "latency_p50": 274,
+        "throughput_p50": 99,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38083,7 +38162,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0075,
@@ -38119,10 +38199,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "sambanova",
-        "uptime_last_1d": 99.44450936154531,
-        "uptime_last_30m": 99.96203492786636,
-        "latency_p50": 571,
-        "throughput_p50": 293,
+        "uptime_last_1d": 99.48620902664065,
+        "uptime_last_30m": 98.88463989802422,
+        "latency_p50": 815,
+        "throughput_p50": 309,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38131,7 +38211,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0099,
@@ -38169,8 +38250,8 @@
         "route_tag": "amazon-bedrock/eu-west-1",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 534,
-        "throughput_p50": 196,
+        "latency_p50": 484.5,
+        "throughput_p50": 236.5,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38179,7 +38260,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38215,10 +38297,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "nebius/fp4",
-        "uptime_last_1d": 97.62071122142851,
-        "uptime_last_30m": 99.98731930002536,
-        "latency_p50": 293,
-        "throughput_p50": 187,
+        "uptime_last_1d": 98.879675299367,
+        "uptime_last_30m": 99.78586723768737,
+        "latency_p50": 350,
+        "throughput_p50": 190,
         "quantization": "fp4"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38227,7 +38309,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38263,10 +38346,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "amazon-bedrock",
-        "uptime_last_1d": 84.59612675291007,
-        "uptime_last_30m": 99.96542982253975,
-        "latency_p50": 406,
-        "throughput_p50": 318,
+        "uptime_last_1d": 83.95007596062399,
+        "uptime_last_30m": 100,
+        "latency_p50": 405,
+        "throughput_p50": 287,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38275,7 +38358,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38311,10 +38395,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/turbo",
-        "uptime_last_1d": 99.98268698060942,
-        "uptime_last_30m": 99.91655076495132,
-        "latency_p50": 350,
-        "throughput_p50": 118,
+        "uptime_last_1d": 99.98559069824151,
+        "uptime_last_30m": 100,
+        "latency_p50": 328,
+        "throughput_p50": 120,
         "quantization": "bf16"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38323,7 +38407,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38359,10 +38444,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "phala",
-        "uptime_last_1d": 99.89096439126567,
-        "uptime_last_30m": 100,
-        "latency_p50": 845,
-        "throughput_p50": 69,
+        "uptime_last_1d": 99.42518825084785,
+        "uptime_last_30m": 92.27799227799228,
+        "latency_p50": 393,
+        "throughput_p50": 106,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38371,7 +38456,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38407,10 +38493,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "together",
-        "uptime_last_1d": 89.2828906913414,
-        "uptime_last_30m": 92.51493032514931,
-        "latency_p50": 316,
-        "throughput_p50": 46,
+        "uptime_last_1d": 92.99942590382379,
+        "uptime_last_30m": 95.41548377196347,
+        "latency_p50": 290,
+        "throughput_p50": 52,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38419,7 +38505,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38455,10 +38542,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "groq",
-        "uptime_last_1d": 99.99183516385676,
-        "uptime_last_30m": 99.99773673728046,
-        "latency_p50": 231,
-        "throughput_p50": 305,
+        "uptime_last_1d": 99.99188941421089,
+        "uptime_last_30m": 99.99783521669481,
+        "latency_p50": 234,
+        "throughput_p50": 273,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38467,7 +38554,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -38503,10 +38591,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "mara",
-        "uptime_last_1d": 88.25846852581417,
-        "uptime_last_30m": 92.79523293607801,
-        "latency_p50": 1497,
-        "throughput_p50": 159,
+        "uptime_last_1d": 89.19002314219594,
+        "uptime_last_30m": 88.02816901408451,
+        "latency_p50": 2538,
+        "throughput_p50": 127,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38515,7 +38603,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.009000000000000001,
@@ -38551,10 +38640,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "cerebras/fp16",
-        "uptime_last_1d": 99.9959013953797,
-        "uptime_last_30m": 99.99293436020632,
-        "latency_p50": 227,
-        "throughput_p50": 851,
+        "uptime_last_1d": 99.99686303726614,
+        "uptime_last_30m": 99.99535919806942,
+        "latency_p50": 280,
+        "throughput_p50": 734,
         "quantization": "fp16"
       },
       "canonical_model": "gpt-oss-120b",
@@ -38563,7 +38652,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.015,
@@ -38599,10 +38689,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.99851150605818,
+        "uptime_last_1d": 99.99848091266766,
         "uptime_last_30m": 100,
-        "latency_p50": 1110,
-        "throughput_p50": 29,
+        "latency_p50": 894,
+        "throughput_p50": 30,
         "quantization": "fp8"
       },
       "canonical_model": "kimi-k2",
@@ -38611,7 +38701,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0309,
@@ -38649,8 +38740,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": null,
-        "throughput_p50": null,
+        "latency_p50": 7638,
+        "throughput_p50": 3,
         "quantization": "unknown"
       },
       "canonical_model": "o3-pro",
@@ -38659,7 +38750,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 1.08,
@@ -38696,9 +38788,9 @@
       "metadata": {
         "route_tag": "google-vertex",
         "uptime_last_1d": 100,
-        "uptime_last_30m": null,
-        "latency_p50": 2763.5,
-        "throughput_p50": 19,
+        "uptime_last_30m": 100,
+        "latency_p50": 2309.5,
+        "throughput_p50": 23,
         "quantization": "unknown"
       },
       "canonical_model": "claude-opus-4",
@@ -38707,7 +38799,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.8999999999999999,
@@ -38743,10 +38836,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "amazon-bedrock/eu-west-1",
-        "uptime_last_1d": 99.48096885813149,
+        "uptime_last_1d": 99.31153184165233,
         "uptime_last_30m": null,
-        "latency_p50": 1787,
-        "throughput_p50": 3,
+        "latency_p50": 2025,
+        "throughput_p50": 2.5,
         "quantization": "unknown"
       },
       "canonical_model": "claude-sonnet-4",
@@ -38755,7 +38848,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -38791,9 +38885,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/global",
-        "uptime_last_1d": 99.97559666162331,
+        "uptime_last_1d": 99.97992874705204,
         "uptime_last_30m": 100,
-        "latency_p50": 759,
+        "latency_p50": 775,
         "throughput_p50": 41,
         "quantization": "unknown"
       },
@@ -38803,7 +38897,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -38841,8 +38936,8 @@
         "route_tag": "google-vertex/europe",
         "uptime_last_1d": null,
         "uptime_last_30m": null,
-        "latency_p50": null,
-        "throughput_p50": null,
+        "latency_p50": 710,
+        "throughput_p50": 42,
         "quantization": "unknown"
       },
       "canonical_model": "claude-sonnet-4",
@@ -38851,7 +38946,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -38887,9 +38983,9 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "amazon-bedrock",
-        "uptime_last_1d": 99.97550758724522,
-        "uptime_last_30m": 99.98009554140127,
-        "latency_p50": 930,
+        "uptime_last_1d": 99.97718129287284,
+        "uptime_last_30m": 99.97347761510716,
+        "latency_p50": 778,
         "throughput_p50": 45,
         "quantization": "unknown"
       },
@@ -38899,7 +38995,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -38947,7 +39044,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.18,
@@ -38983,10 +39081,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/global",
-        "uptime_last_1d": 98.57746882614305,
-        "uptime_last_30m": 99.79019931065488,
-        "latency_p50": 2557,
-        "throughput_p50": 75,
+        "uptime_last_1d": 98.80329933909682,
+        "uptime_last_30m": 98.92300488326978,
+        "latency_p50": 2695.5,
+        "throughput_p50": 72,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -38995,7 +39093,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -39031,10 +39130,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/global/priority",
-        "uptime_last_1d": 99.99014875381735,
-        "uptime_last_30m": 100,
-        "latency_p50": 2193.5,
-        "throughput_p50": 75,
+        "uptime_last_1d": 99.994979667654,
+        "uptime_last_30m": null,
+        "latency_p50": 2249,
+        "throughput_p50": 93,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39043,7 +39142,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.1755,
@@ -39081,8 +39181,8 @@
         "route_tag": "google-ai-studio/flex",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 2883,
-        "throughput_p50": 90,
+        "latency_p50": 4601.5,
+        "throughput_p50": 22.5,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39091,7 +39191,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.04875,
@@ -39127,10 +39228,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/eu",
-        "uptime_last_1d": 42.99568965517241,
-        "uptime_last_30m": null,
-        "latency_p50": 2296.5,
-        "throughput_p50": 62,
+        "uptime_last_1d": 38.959491660047654,
+        "uptime_last_30m": 89.43089430894308,
+        "latency_p50": 4987.5,
+        "throughput_p50": 65.5,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39139,7 +39240,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -39175,10 +39277,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-ai-studio",
-        "uptime_last_1d": 88.46642852818309,
-        "uptime_last_30m": 97.41035856573706,
-        "latency_p50": 3217,
-        "throughput_p50": 85,
+        "uptime_last_1d": 88.01628664495114,
+        "uptime_last_30m": 95.15418502202643,
+        "latency_p50": 3562,
+        "throughput_p50": 80,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39187,7 +39289,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -39223,10 +39326,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/us",
-        "uptime_last_1d": 96.94092827004219,
+        "uptime_last_1d": 98.69551384027999,
         "uptime_last_30m": null,
-        "latency_p50": 18921.5,
-        "throughput_p50": 93,
+        "latency_p50": 21585,
+        "throughput_p50": 97,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39235,7 +39338,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0975,
@@ -39273,8 +39377,8 @@
         "route_tag": "google-ai-studio/priority",
         "uptime_last_1d": null,
         "uptime_last_30m": null,
-        "latency_p50": null,
-        "throughput_p50": null,
+        "latency_p50": 2118,
+        "throughput_p50": 55,
         "quantization": "unknown"
       },
       "canonical_model": "gemini-2.5-pro-preview-05-06",
@@ -39283,7 +39387,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.7
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.1755,
@@ -39319,10 +39424,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 99.98927152244063,
-        "uptime_last_30m": 99.9912431769754,
-        "latency_p50": 283,
-        "throughput_p50": 28,
+        "uptime_last_1d": 99.99024450521756,
+        "uptime_last_30m": 99.98994004265423,
+        "latency_p50": 427,
+        "throughput_p50": 23,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3-32b",
@@ -39331,7 +39436,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00408,
@@ -39367,10 +39473,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "siliconflow/fp8",
-        "uptime_last_1d": 97.80076503030138,
-        "uptime_last_30m": 97.98142193640585,
-        "latency_p50": 1354,
-        "throughput_p50": 5,
+        "uptime_last_1d": 98.40522930983145,
+        "uptime_last_30m": 99.53286082474226,
+        "latency_p50": 1628,
+        "throughput_p50": 18,
         "quantization": "fp8"
       },
       "canonical_model": "qwen3-32b",
@@ -39379,7 +39485,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 4.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.007620000000000001,
@@ -39417,8 +39524,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 2728,
-        "throughput_p50": 67,
+        "latency_p50": 4741,
+        "throughput_p50": 64,
         "quantization": "unknown"
       },
       "canonical_model": "o3",
@@ -39427,7 +39534,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 8.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.108,
@@ -39465,8 +39573,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 4392.5,
-        "throughput_p50": 109,
+        "latency_p50": 4205.5,
+        "throughput_p50": 105,
         "quantization": "unknown"
       },
       "canonical_model": "o4-mini",
@@ -39475,7 +39583,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.05940000000000001,
@@ -39511,10 +39620,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.87266367109171,
-        "uptime_last_30m": 99.96014348345955,
-        "latency_p50": 887,
-        "throughput_p50": 108,
+        "uptime_last_1d": 99.87138555584136,
+        "uptime_last_30m": 100,
+        "latency_p50": 963,
+        "throughput_p50": 46,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1",
@@ -39523,7 +39632,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.108,
@@ -39559,10 +39669,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 98.81683140338097,
-        "uptime_last_30m": 99.87492495497298,
-        "latency_p50": 695,
-        "throughput_p50": 50,
+        "uptime_last_1d": 98.85869578303341,
+        "uptime_last_30m": 99.4759483770043,
+        "latency_p50": 697,
+        "throughput_p50": 48,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1",
@@ -39571,7 +39681,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.108,
@@ -39608,9 +39719,9 @@
       "metadata": {
         "route_tag": "azure/swedencentral",
         "uptime_last_1d": 100,
-        "uptime_last_30m": 100,
-        "latency_p50": 849.5,
-        "throughput_p50": 16,
+        "uptime_last_30m": null,
+        "latency_p50": 656,
+        "throughput_p50": 59,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1",
@@ -39619,7 +39730,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 5.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.11880000000000002,
@@ -39655,10 +39767,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.93909328923797,
-        "uptime_last_30m": 99.76498237367802,
-        "latency_p50": 854,
-        "throughput_p50": 31,
+        "uptime_last_1d": 99.94021659774587,
+        "uptime_last_30m": 99.93561886367294,
+        "latency_p50": 731,
+        "throughput_p50": 39,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-mini",
@@ -39667,7 +39779,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 3.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.021599999999999998,
@@ -39703,10 +39816,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.69682566340866,
-        "uptime_last_30m": 99.88428349441806,
-        "latency_p50": 641.5,
-        "throughput_p50": 37,
+        "uptime_last_1d": 99.70837626216358,
+        "uptime_last_30m": 99.64201095329959,
+        "latency_p50": 668,
+        "throughput_p50": 36,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-mini",
@@ -39715,7 +39828,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 3.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.021599999999999998,
@@ -39751,10 +39865,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure/swedencentral",
-        "uptime_last_1d": 99.98689641616983,
+        "uptime_last_1d": 99.98774059090351,
         "uptime_last_30m": 100,
-        "latency_p50": 776.5,
-        "throughput_p50": 70,
+        "latency_p50": 763.5,
+        "throughput_p50": 74,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-mini",
@@ -39763,7 +39877,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 3.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.02376,
@@ -39799,10 +39914,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.72756276213123,
-        "uptime_last_30m": 99.92649761117237,
-        "latency_p50": 967,
-        "throughput_p50": 20,
+        "uptime_last_1d": 99.76674244577059,
+        "uptime_last_30m": 99.8837479655894,
+        "latency_p50": 860,
+        "throughput_p50": 17,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-nano",
@@ -39811,7 +39926,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.005399999999999999,
@@ -39847,10 +39963,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.80860730342887,
-        "uptime_last_30m": 99.79379225017483,
-        "latency_p50": 593,
-        "throughput_p50": 55,
+        "uptime_last_1d": 99.81704302676472,
+        "uptime_last_30m": 99.79448205283069,
+        "latency_p50": 595,
+        "throughput_p50": 51,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-nano",
@@ -39859,7 +39975,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.005399999999999999,
@@ -39897,8 +40014,8 @@
         "route_tag": "azure/swedencentral",
         "uptime_last_1d": null,
         "uptime_last_30m": null,
-        "latency_p50": null,
-        "throughput_p50": null,
+        "latency_p50": 499,
+        "throughput_p50": 137,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4.1-nano",
@@ -39907,7 +40024,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.9
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00594,
@@ -39943,10 +40061,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "digitalocean",
-        "uptime_last_1d": 99.77735696804955,
-        "uptime_last_30m": 99.44804415646749,
-        "latency_p50": 651,
-        "throughput_p50": 11,
+        "uptime_last_1d": 99.78454718673282,
+        "uptime_last_30m": 99.55485729248494,
+        "latency_p50": 629,
+        "throughput_p50": 10,
         "quantization": "unknown"
       },
       "canonical_model": "llama-4-maverick",
@@ -39955,7 +40073,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010176,
@@ -39991,10 +40110,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/base",
-        "uptime_last_1d": 99.80520835748904,
-        "uptime_last_30m": 100,
-        "latency_p50": 819,
-        "throughput_p50": 30,
+        "uptime_last_1d": 99.80575406752588,
+        "uptime_last_30m": 99.98040368410739,
+        "latency_p50": 859,
+        "throughput_p50": 34,
         "quantization": "fp8"
       },
       "canonical_model": "llama-4-maverick",
@@ -40003,7 +40122,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.010799999999999999,
@@ -40039,10 +40159,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/fp8",
-        "uptime_last_1d": 99.75851943435592,
+        "uptime_last_1d": 99.74436006045792,
         "uptime_last_30m": 100,
-        "latency_p50": 581,
-        "throughput_p50": 38,
+        "latency_p50": 515,
+        "throughput_p50": 34,
         "quantization": "fp8"
       },
       "canonical_model": "llama-4-maverick",
@@ -40051,7 +40171,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0132,
@@ -40087,10 +40208,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 99.94877743796798,
-        "uptime_last_30m": 99.9166435120867,
-        "latency_p50": 540,
-        "throughput_p50": 30,
+        "uptime_last_1d": 99.95291854908993,
+        "uptime_last_30m": 100,
+        "latency_p50": 478,
+        "throughput_p50": 34,
         "quantization": "fp8"
       },
       "canonical_model": "llama-4-maverick",
@@ -40099,7 +40220,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0165,
@@ -40135,10 +40257,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "google-vertex/us-east5",
-        "uptime_last_1d": 99.83224320643438,
-        "uptime_last_30m": 95.68081991215227,
-        "latency_p50": 424,
-        "throughput_p50": 53,
+        "uptime_last_1d": 99.46030136192408,
+        "uptime_last_30m": 97.89444132509826,
+        "latency_p50": 613,
+        "throughput_p50": 50,
         "quantization": "unknown"
       },
       "canonical_model": "llama-4-maverick",
@@ -40147,7 +40269,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0174,
@@ -40183,10 +40306,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "deepinfra/fp8",
-        "uptime_last_1d": 99.79893554109994,
-        "uptime_last_30m": 99.87612263858779,
-        "latency_p50": 1129,
-        "throughput_p50": 19,
+        "uptime_last_1d": 99.71666603098149,
+        "uptime_last_30m": 99.3256911665543,
+        "latency_p50": 677,
+        "throughput_p50": 29,
         "quantization": "fp8"
       },
       "canonical_model": "gemma-3-27b-it",
@@ -40195,7 +40318,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0033599999999999997,
@@ -40231,10 +40355,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "parasail/fp8",
-        "uptime_last_1d": 99.87032972183381,
-        "uptime_last_30m": 99.84732824427482,
-        "latency_p50": 543,
-        "throughput_p50": 46,
+        "uptime_last_1d": 99.8998158946849,
+        "uptime_last_30m": 99.5745010057249,
+        "latency_p50": 760,
+        "throughput_p50": 21,
         "quantization": "fp8"
       },
       "canonical_model": "gemma-3-27b-it",
@@ -40243,7 +40367,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0050999999999999995,
@@ -40279,10 +40404,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "nebius/fp8",
-        "uptime_last_1d": 77.49644628153311,
-        "uptime_last_30m": 89.1685871299415,
-        "latency_p50": 963,
-        "throughput_p50": 15,
+        "uptime_last_1d": 77.47851200002621,
+        "uptime_last_30m": 100,
+        "latency_p50": 765,
+        "throughput_p50": 11,
         "quantization": "fp8"
       },
       "canonical_model": "gemma-3-27b-it",
@@ -40291,7 +40416,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0048,
@@ -40327,10 +40453,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "novita/bf16",
-        "uptime_last_1d": 85.93771558095989,
-        "uptime_last_30m": 99.38310997660072,
-        "latency_p50": 680,
-        "throughput_p50": 25,
+        "uptime_last_1d": 85.54203110370185,
+        "uptime_last_30m": 98.4910102739726,
+        "latency_p50": 727,
+        "throughput_p50": 21,
         "quantization": "bf16"
       },
       "canonical_model": "gemma-3-27b-it",
@@ -40339,7 +40465,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.5
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.00477,
@@ -40377,8 +40504,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 2984.5,
-        "throughput_p50": 130,
+        "latency_p50": 2343,
+        "throughput_p50": 159,
         "quantization": "unknown"
       },
       "canonical_model": "o3-mini",
@@ -40387,7 +40514,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.0
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.05940000000000001,
@@ -40425,8 +40553,8 @@
         "route_tag": "novita/fp8",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 1233,
-        "throughput_p50": 21,
+        "latency_p50": 1279,
+        "throughput_p50": 19,
         "quantization": "fp8"
       },
       "canonical_model": "deepseek-r1",
@@ -40435,7 +40563,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 7.1
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.036,
@@ -40473,8 +40602,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 5461.5,
-        "throughput_p50": 99,
+        "latency_p50": 1035.5,
+        "throughput_p50": 13.5,
         "quantization": "unknown"
       },
       "canonical_model": "o1",
@@ -40483,7 +40612,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 6.2
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.8099999999999999,
@@ -40521,8 +40651,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 605,
-        "throughput_p50": 36,
+        "latency_p50": 685,
+        "throughput_p50": 26,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-2024-11-20",
@@ -40531,7 +40661,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -40568,9 +40699,9 @@
       "metadata": {
         "route_tag": "cloudflare",
         "uptime_last_1d": 100,
-        "uptime_last_30m": null,
-        "latency_p50": 496,
-        "throughput_p50": 23,
+        "uptime_last_30m": 100,
+        "latency_p50": 527,
+        "throughput_p50": 24.5,
         "quantization": "unknown"
       },
       "canonical_model": "qwen-2.5-coder-32b-instruct",
@@ -40579,7 +40710,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 1.6
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.025800000000000003,
@@ -40615,10 +40747,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.9842862594563,
-        "uptime_last_30m": 99.84591679506933,
-        "latency_p50": 1036,
-        "throughput_p50": 13,
+        "uptime_last_1d": 99.98395452253244,
+        "uptime_last_30m": 100,
+        "latency_p50": 1049,
+        "throughput_p50": 36,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-2024-08-06",
@@ -40627,7 +40759,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -40663,10 +40796,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.75028775434558,
+        "uptime_last_1d": 99.76135911664994,
         "uptime_last_30m": 100,
-        "latency_p50": 1764,
-        "throughput_p50": 16,
+        "latency_p50": 2246,
+        "throughput_p50": 15,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-2024-08-06",
@@ -40675,7 +40808,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -40711,10 +40845,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.76589762559627,
-        "uptime_last_30m": 99.65499540391801,
-        "latency_p50": 1525,
-        "throughput_p50": 19,
+        "uptime_last_1d": 99.77890515581419,
+        "uptime_last_30m": 99.78558996833652,
+        "latency_p50": 1407,
+        "throughput_p50": 17,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-mini",
@@ -40723,7 +40857,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -40759,10 +40894,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.96817644848932,
-        "uptime_last_30m": 99.96747343219276,
-        "latency_p50": 545,
-        "throughput_p50": 43,
+        "uptime_last_1d": 99.9719973763767,
+        "uptime_last_30m": 99.97135768602377,
+        "latency_p50": 569,
+        "throughput_p50": 32,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-mini",
@@ -40771,7 +40906,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -40809,8 +40945,8 @@
         "route_tag": "azure/swedencentral",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 1083.5,
-        "throughput_p50": 76,
+        "latency_p50": 1079,
+        "throughput_p50": 74,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-mini",
@@ -40819,7 +40955,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.008910000000000001,
@@ -40857,8 +40994,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": 100,
-        "latency_p50": 546,
-        "throughput_p50": 20,
+        "latency_p50": 562,
+        "throughput_p50": 18,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-mini-2024-07-18",
@@ -40867,7 +41004,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 0.4
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.0081,
@@ -40903,10 +41041,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.93270021685485,
-        "uptime_last_30m": 99.89785495403473,
-        "latency_p50": 977,
-        "throughput_p50": 39,
+        "uptime_last_1d": 99.9318354612904,
+        "uptime_last_30m": 99.93725162099979,
+        "latency_p50": 972,
+        "throughput_p50": 52,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o",
@@ -40915,7 +41053,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -40951,10 +41090,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "openai",
-        "uptime_last_1d": 99.61438494885616,
-        "uptime_last_30m": 99.74664836904887,
-        "latency_p50": 693,
-        "throughput_p50": 39,
+        "uptime_last_1d": 99.63911612554296,
+        "uptime_last_30m": 99.87571022727273,
+        "latency_p50": 723,
+        "throughput_p50": 38,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o",
@@ -40963,7 +41102,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.135,
@@ -40999,10 +41139,10 @@
       "cache_write_usd_per_million": null,
       "metadata": {
         "route_tag": "azure",
-        "uptime_last_1d": 99.87424020121568,
+        "uptime_last_1d": 99.84575835475579,
         "uptime_last_30m": null,
-        "latency_p50": 1283,
-        "throughput_p50": 2,
+        "latency_p50": 1139,
+        "throughput_p50": 24,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-2024-05-13",
@@ -41011,7 +41151,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.24,
@@ -41049,8 +41190,8 @@
         "route_tag": "openai",
         "uptime_last_1d": 100,
         "uptime_last_30m": null,
-        "latency_p50": 746,
-        "throughput_p50": 37,
+        "latency_p50": 533,
+        "throughput_p50": 40,
         "quantization": "unknown"
       },
       "canonical_model": "gpt-4o-2024-05-13",
@@ -41059,7 +41200,8 @@
         "confidence": "auto:aider_polyglot",
         "scores": {
           "coding": 2.3
-        }
+        },
+        "match_ratio": 1.0
       },
       "costs_by_task": {
         "coding": 0.24,
