@@ -453,9 +453,6 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 .note { color: var(--muted); font-size: 0.85rem; }
 .ai-summary { white-space: pre-wrap; line-height: 1.65; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); }
 
-footer { color: var(--muted); font-size: 0.82rem; margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border); }
-footer code { font-family: var(--font-mono); background: var(--accent-soft); padding: 2px 6px; border-radius: 4px; }
-
 /* reveal-on-scroll: hidden state only applied once GSAP is confirmed running */
 .gsap-ready .reveal { opacity: 0; }
 """
@@ -587,7 +584,6 @@ SECTION_TEMPLATE = """
 
 PAGE_TAIL = """
 </main>
-<footer><div style="max-width:1120px;margin:0 auto;padding:0 20px;">Generado automáticamente cada mañana. Histórico completo en <code>data/</code> y <code>reports/</code> del repositorio. Calidad de coding = Aider Polyglot Leaderboard (prioritario) o LMArena WebDev Arena (respaldo), emparejados automáticamente por nombre de modelo — sin match fiable, sin puntuar.</div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
