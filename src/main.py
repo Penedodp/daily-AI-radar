@@ -30,6 +30,26 @@ def previous_snapshot(data_dir, today):
     candidates = [p for p in sorted(data_dir.glob("*.json"), reverse=True) if p.stem != today]
     return load_json(candidates[0], {}) if candidates else None
 
+def price_trend(data_dir, today, canonical_model, limit=14):
+    """Cheapest weighted_cost for `canonical_model` on each of the last
+    `limit` days (oldest first), read straight from the committed snapshots."""
+    files = [p for p in sorted(data_dir.glob("*.json")) if p.stem != today][-limit:]
+    points = []
+    for p in files:
+        snap = load_json(p, None)
+        if not snap:
+            continue
+        best = None
+        for r in snap.get("models", []):
+            if r.get("canonical_model") != canonical_model:
+                continue
+            cost = r.get("weighted_cost")
+            if cost is not None and (best is None or cost < best):
+                best = cost
+        if best is not None:
+            points.append({"date": p.stem, "cost": best})
+    return points
+
 def route_key(row):
     return f"{row.get('provider','')}::{row.get('model_id','')}"
 
@@ -55,6 +75,8 @@ def compact(row, category=None):
         if row.get("quality"):
             result["quality_score"] = row["quality"]["scores"].get(category)
             result["value_score"] = row["value_scores"].get(category)
+            result["quality_label"] = row["quality"].get("label")
+            result["quality_match_ratio"] = row["quality"].get("match_ratio")
     if row.get("change_pct") is not None:
         result["change_pct"] = round(row["change_pct"], 1)
     return result
@@ -243,6 +265,7 @@ def main():
                 "label": bench_q["label"],
                 "confidence": f"auto:{bench_q['source']}",
                 "scores": dict(bench_q["scores"]),
+                "match_ratio": bench_q.get("match_ratio"),
             }
 
         row["costs_by_task"] = costs_by_task(row, task_profiles)
@@ -288,6 +311,17 @@ def main():
         if any(r.get("quality") and r["quality"]["scores"].get(cat) is not None for r in models)
     }
     NO_BENCH_NOTE = "_Sin benchmark automatizado disponible todavía para esta categoría._"
+
+    # Price history of today's featured "best value" pick per category, for the dashboard sparkline.
+    price_trends = {}
+    for cat in scored_categories:
+        pick = recs[cat]["best_paid_value"]
+        if not pick:
+            continue
+        points = price_trend(data_dir, day, pick["model"])
+        points.append({"date": day, "cost": pick["weighted_cost"]})
+        if len(points) >= 2:
+            price_trends[cat] = {"model": pick["model"], "points": points}
 
     snapshot = {
         "generated_at": now.isoformat(),
@@ -477,7 +511,7 @@ def main():
     (reports_dir / f"{day}.md").write_text(report, encoding="utf-8")
     (reports_dir / "latest.md").write_text(report, encoding="utf-8")
 
-    dashboard = build_html(snapshot, day, has_previous=bool(previous), ai_summary=ai)
+    dashboard = build_html(snapshot, day, has_previous=bool(previous), ai_summary=ai, price_trends=price_trends)
     (docs_dir / "index.html").write_text(dashboard, encoding="utf-8")
 
     print(report)

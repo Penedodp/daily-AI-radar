@@ -57,14 +57,19 @@ def _provider_badge(name):
     )
 
 
-def _quality_cell(score, sortable=False):
+def _quality_cell(score, label=None, ratio=None, sortable=False):
     key = " data-key='quality'" if sortable else ""
     if score is None:
         return f"<td{key} data-value='-1' class='muted'>—</td>"
     pct = max(0.0, min(100.0, score * 10))
     tier = "tier-good" if score >= 6.5 else ("tier-mid" if score >= 3.5 else "tier-low")
+    tooltip = f"Aider Polyglot: {score * 10:.0f}% pass-rate"
+    if label:
+        tooltip += f" · match ‘{label}’"
+    if ratio is not None:
+        tooltip += f" ({ratio * 100:.0f}% similitud de nombre)"
     return (
-        f"<td{key} data-value='{score}'><span class='qcell'>"
+        f"<td{key} data-value='{score}'><span class='qcell' title='{_esc(tooltip)}'>"
         f"<span class='qbar'><span class='qbar-fill {tier}' style='width:{pct:.0f}%'></span></span>"
         f"<span class='qval'>{score:.1f}</span></span></td>"
     )
@@ -88,7 +93,7 @@ def _section_free(recs, scored_categories):
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
-            f"{_quality_cell(r.get('quality_score'))}"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}"
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}</tr>"
         )
@@ -110,7 +115,7 @@ def _section_paid_value(recs, scored_categories):
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'))}"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}"
             f"{_num_td(r.get('value_score'), r.get('value_score', '—'))}</tr>"
         )
     return "".join(rows)
@@ -131,7 +136,7 @@ def _section_paid_quality(recs, scored_categories):
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'))}</tr>"
+            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'))}</tr>"
         )
     return "".join(rows)
 
@@ -210,6 +215,41 @@ def _section_changes(has_previous, drops, increases):
     return "".join(parts)
 
 
+def _sparkline(trend, width=560, height=64):
+    if not trend:
+        return ""
+    points = trend["points"]
+    if len(points) < 2:
+        return ""
+    costs = [p["cost"] for p in points]
+    lo, hi = min(costs), max(costs)
+    span = (hi - lo) or (lo or 1)
+    pad = 6
+    n = len(points)
+    xs = [pad + i / (n - 1) * (width - 2 * pad) for i in range(n)]
+    ys = [pad + (1 - (c - lo) / span) * (height - 2 * pad) for c in costs]
+    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in zip(xs, ys))
+    area = f"{xs[0]:.1f},{height} " + line + f" {xs[-1]:.1f},{height}"
+    first, last = points[0], points[-1]
+    delta = ((last["cost"] - first["cost"]) / first["cost"] * 100) if first["cost"] else 0
+    delta_cls = "pos" if delta <= 0 else "neg"
+    delta_sign = "" if delta <= 0 else "+"
+    model_esc = _esc(trend["model"])
+    return (
+        "<div class='spark'>"
+        f"<div class='spark-head'>Evolución de <strong>{model_esc}</strong> "
+        f"<span class='pill {delta_cls}'>{delta_sign}{delta:.1f}% en {n} días</span></div>"
+        f"<svg viewBox='0 0 {width} {height}' preserveAspectRatio='none' class='spark-svg' role='img' "
+        f"aria-label='Evolución de coste de {model_esc} en los últimos {n} días'>"
+        f"<polygon points='{area}' class='spark-area'></polygon>"
+        f"<polyline points='{line}' class='spark-line'></polyline>"
+        f"<circle cx='{xs[-1]:.1f}' cy='{ys[-1]:.1f}' r='3.2' class='spark-dot'></circle>"
+        "</svg>"
+        f"<div class='spark-foot'><span>{first['date']}</span><span>{last['date']} · {_cost(last['cost'])}/tarea</span></div>"
+        "</div>"
+    )
+
+
 def _status_chips(provider_status):
     dot = {"ok": "chip-ok", "cached_stale": "chip-warn"}
     chips = []
@@ -265,6 +305,21 @@ p { text-wrap: pretty; }
 .topbar .brand { display: flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; }
 .topbar .brand-mark { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
+/* ---------- section nav (sticky) ---------- */
+.toc-wrap { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border); }
+.toc {
+  max-width: 1120px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.toc::-webkit-scrollbar { display: none; }
+.toc a {
+  flex: none; display: flex; align-items: center; gap: 6px; padding: 12px 12px; text-decoration: none;
+  font-size: 0.78rem; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.toc a span.n { font-family: var(--font-mono); color: var(--accent); }
+.toc a:hover { color: var(--text); }
+.toc a.active { color: var(--text); border-bottom-color: var(--accent); }
+
 /* ---------- hero ---------- */
 .hero {
   position: relative; max-width: 1120px; margin: 0 auto; padding: 8px 20px 40px;
@@ -297,7 +352,8 @@ p { text-wrap: pretty; }
   animation: spin 7s linear infinite;
   opacity: 0.55;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* rotate counter-clockwise so the bright edge leads the sweep and the fade trails behind it */
+@keyframes spin { to { transform: rotate(-360deg); } }
 @media (max-width: 760px) { .radar-wrap { display: none; } }
 
 /* ---------- status chips ---------- */
@@ -382,6 +438,17 @@ ul.changes li { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; 
 ul.changes li:last-child { border-bottom: none; }
 ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 
+/* ---------- sparkline ---------- */
+.spark {
+  margin-top: 20px; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+}
+.spark-head { font-size: 0.85rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.spark-svg { width: 100%; height: 64px; display: block; overflow: visible; }
+.spark-area { fill: color-mix(in srgb, var(--accent) 14%, transparent); stroke: none; }
+.spark-line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.spark-dot { fill: var(--accent); }
+.spark-foot { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); margin-top: 6px; }
+
 .muted { color: var(--muted); }
 .note { color: var(--muted); font-size: 0.85rem; }
 .ai-summary { white-space: pre-wrap; line-height: 1.65; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); }
@@ -395,6 +462,24 @@ footer code { font-family: var(--font-mono); background: var(--accent-soft); pad
 
 SCRIPT = """
 (function () {
+  // --- section nav: active-link tracking ---
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var sections = tocLinks.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var idx = sections.indexOf(entry.target);
+        if (idx === -1) { return; }
+        if (entry.isIntersecting) {
+          tocLinks.forEach(function (a) { a.classList.remove('active'); });
+          tocLinks[idx].classList.add('active');
+          tocLinks[idx].scrollIntoView({ block: 'nearest', inline: 'center' });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(function (s) { if (s) { observer.observe(s); } });
+  }
+
   // --- sortable tables ---
   document.querySelectorAll('table[data-sortable]').forEach(function (table) {
     table.querySelectorAll('th[data-key]').forEach(function (th) {
@@ -467,6 +552,8 @@ PAGE_HEAD = """<!doctype html>
   <span>Actualizado {day}</span>
 </div>
 
+<div class="toc-wrap"><nav class="toc" aria-label="Secciones">{toc}</nav></div>
+
 <header class="hero">
   <div class="radar-wrap" aria-hidden="true">
     <div class="radar-ring"></div>
@@ -491,7 +578,7 @@ PAGE_HEAD = """<!doctype html>
 """
 
 SECTION_TEMPLATE = """
-<section class="block reveal">
+<section class="block reveal" id="s{idx}">
   <div class="block-head"><span class="idx">{idx}</span><h2>{title}</h2></div>
   {note}
   {body}
@@ -510,13 +597,21 @@ PAGE_TAIL = """
 """
 
 
-def _section(idx, title, body, note=""):
+def _section_html(idx, title, body, note=""):
     note_html = f"<p class='block-note'>{note}</p>" if note else ""
     return SECTION_TEMPLATE.format(idx=idx, title=title, body=body, note=note_html)
 
 
-def build_html(snapshot, day, has_previous, ai_summary=None):
+def _toc_html(entries):
+    return "".join(
+        f"<a href='#s{idx}'><span class='n'>{idx}</span>{title}</a>"
+        for idx, title in entries
+    )
+
+
+def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None):
     recs = snapshot["recommendations"]
+    price_trends = price_trends or {}
     scored_categories = {
         cat for cat in LABELS
         if any(
@@ -535,6 +630,7 @@ def build_html(snapshot, day, has_previous, ai_summary=None):
         "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste/tarea</th><th>$/M input</th><th>$/M output</th>"
         "<th>Calidad</th><th>Value</th></tr></thead>"
         f"<tbody>{_section_paid_value(recs, scored_categories)}</tbody></table></div>"
+        + _sparkline(price_trends.get("coding"))
     )
     paid_quality_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
@@ -543,24 +639,29 @@ def build_html(snapshot, day, has_previous, ai_summary=None):
         f"<tbody>{_section_paid_quality(recs, scored_categories)}</tbody></table></div>"
     )
 
-    sections = "".join([
-        _section("01", "Mejor opción gratuita", free_table),
-        _section(
+    blocks = [
+        ("01", "Mejor opción gratuita", free_table, ""),
+        (
             "02", "Mejor relación calidad/precio de pago", paid_value_table,
-            note="Solo entra un modelo cuando el benchmark de coding lo respalda — un modelo barato "
-                 "sin score todavía no aparece aquí, aunque merezca la pena; lo verás en las tablas de precio de arriba.",
+            "Solo entra un modelo cuando el benchmark de coding lo respalda — un modelo barato "
+            "sin score todavía no aparece aquí, aunque merezca la pena; lo verás en las tablas de precio de arriba.",
         ),
-        _section("03", "Opción premium por calidad", paid_quality_table),
-        _section(
+        ("03", "Opción premium por calidad", paid_quality_table, ""),
+        (
             "04", "Mismo modelo, ruta más barata", _section_opportunities(snapshot["cross_provider_opportunities"]),
-            note="Compara el mismo modelo entre proveedores — no es una bajada de precio, es elegir mejor ruta hoy.",
+            "Compara el mismo modelo entre proveedores — no es una bajada de precio, es elegir mejor ruta hoy.",
         ),
-        _section("05", "Top 5 de pago por calidad/precio", _section_top5(recs, scored_categories)),
-        _section("06", "Movimientos de precio", _section_changes(has_previous, snapshot["changes"]["drops"], snapshot["changes"]["increases"])),
-    ])
-
+        ("05", "Top 5 de pago por calidad/precio", _section_top5(recs, scored_categories), ""),
+        (
+            "06", "Movimientos de precio",
+            _section_changes(has_previous, snapshot["changes"]["drops"], snapshot["changes"]["increases"]), "",
+        ),
+    ]
     if ai_summary:
-        sections += _section("07", "Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>")
+        blocks.append(("07", "Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>", ""))
+
+    toc = _toc_html([(idx, title) for idx, title, _body, _note in blocks])
+    sections = "".join(_section_html(idx, title, body, note) for idx, title, body, note in blocks)
 
     head = PAGE_HEAD.format(
         day=day,
@@ -569,6 +670,7 @@ def build_html(snapshot, day, has_previous, ai_summary=None):
         sources_with_data=snapshot["stats"]["providers_with_data"],
         scored_routes=snapshot["stats"]["scored_routes"],
         chips=_status_chips(snapshot["provider_status"]),
+        toc=toc,
     )
     tail = PAGE_TAIL.format(script=SCRIPT)
     return head + sections + tail
