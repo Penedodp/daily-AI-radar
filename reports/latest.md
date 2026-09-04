@@ -47,6 +47,7 @@
 | Modelo | Más barato | Coste perfil | $/M input | $/M output | Siguiente | Ahorro vs siguiente |
 |---|---|---:|---:|---:|---|---:|
 | **qwen3-vl-32b-instruct** | **OpenRouter** | $0.00612 | $0.1040 | $0.4160 | Together AI ($0.02612) | **76.6%** |
+| **glm-5.3** | **CheaperInference** | $0.02048 | $0.3850 | $1.2100 | OpenRouter ($0.07446) | **72.5%** |
 | **mistral-nemo** | **OpenRouter** | $0.00081 | $0.0190 | $0.0300 | Novita AI ($0.00242) | **66.4%** |
 | **ling-3.0-flash** | **OpenRouter** | $0.00110 | $0.0210 | $0.0630 | Novita AI ($0.00313) | **65.0%** |
 | **llama-3.2-1b-instruct** | **Novita AI** | $0.00078 | $0.0200 | $0.0200 | OpenRouter ($0.00221) | **64.7%** |
@@ -56,11 +57,10 @@
 | **qwen3-max** | **OpenRouter** | $0.05111 | $0.7800 | $3.9000 | Novita AI ($0.12430) | **58.9%** |
 | **mistral-small-24b-instruct-2501** | **OpenRouter** | $0.00215 | $0.0500 | $0.0800 | Together AI ($0.00522) | **58.9%** |
 | **llama-3.1-8b-instruct** | **Novita AI** | $0.00098 | $0.0200 | $0.0500 | OpenRouter ($0.00215) | **54.4%** |
+| **glm-5.2** | **CheaperInference** | $0.02353 | $0.4400 | $1.4025 | OpenRouter ($0.05138) | **54.2%** |
 | **gemini-2.5-pro-preview-05-06** | **OpenRouter → Google AI Studio** | $0.05341 | $0.6250 | $5.0000 | OpenRouter ($0.10683) | **50.0%** |
 | **gpt-5.6-sol** | **CheaperInference** | $0.06552 | $1.0000 | $5.0000 | OpenRouter ($0.13105) | **50.0%** |
 | **deepseek-v3.1** | **Novita AI** | $0.01537 | $0.2700 | $1.0000 | Together AI ($0.03068) | **49.9%** |
-| **deepseek-v4-pro** | **CheaperInference** | $0.02413 | $0.4620 | $1.3860 | OpenRouter ($0.04752) | **49.2%** |
-| **qwen3.6-35b-a3b** | **OpenRouter** | $0.00921 | $0.1000 | $0.9000 | Novita AI ($0.01788) | **48.5%** |
 
 ## 🏆 Top 5 DE PAGO por calidad/precio
 
