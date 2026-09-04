@@ -39,6 +39,6 @@ jobs:
         run: |
           git config user.name "ai-price-radar[bot]"
           git config user.email "actions@users.noreply.github.com"
-          git add data reports
+          git add data reports docs
           git diff --cached --quiet || git commit -m "chore: daily AI price report"
           git push
