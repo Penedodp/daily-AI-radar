@@ -48,7 +48,7 @@
     "numeric": [
       "4"
     ],
-    "text_key": "hy"
+    "text_key": "hypreview"
   },
   {
     "model": "grok-4.6-high",
@@ -83,7 +83,7 @@
       "5",
       "6"
     ],
-    "text_key": "gptsolxhigh"
+    "text_key": "gptsolxhighcodexharness"
   },
   {
     "model": "glm-5.3-max",
@@ -135,7 +135,10 @@
     "model": "deepseek-v4-pro-high-20260813",
     "score": 7.922604487961311,
     "numeric": [
-      "4"
+      "4",
+      "2026",
+      "08",
+      "13"
     ],
     "text_key": "deepseekvprohigh"
   },
@@ -243,7 +246,7 @@
       "1",
       "2"
     ],
-    "text_key": "musespark"
+    "text_key": "musesparkxhigh"
   },
   {
     "model": "seed-2.1-pro-preview",
@@ -252,7 +255,7 @@
       "2",
       "1"
     ],
-    "text_key": "seedpro"
+    "text_key": "seedpropreview"
   },
   {
     "model": "claude-sonnet-4-6",
@@ -270,7 +273,7 @@
       "5",
       "6"
     ],
-    "text_key": "gptlunaxhigh"
+    "text_key": "gptlunaxhighcodexharness"
   },
   {
     "model": "gpt-5.6-terra-xhigh (codex-harness)",
@@ -279,14 +282,17 @@
       "5",
       "6"
     ],
-    "text_key": "gptterraxhigh"
+    "text_key": "gptterraxhighcodexharness"
   },
   {
     "model": "qwen3.7-max-20260517",
     "score": 7.0846717018006755,
     "numeric": [
       "3",
-      "7"
+      "7",
+      "2026",
+      "05",
+      "17"
     ],
     "text_key": "qwenmax"
   },
@@ -305,7 +311,7 @@
       "5",
       "5"
     ],
-    "text_key": "gptxhigh"
+    "text_key": "gptxhighcodexharness"
   },
   {
     "model": "kimi-k2.6",
@@ -340,6 +346,9 @@
     "numeric": [
       "4",
       "5",
+      "2025",
+      "11",
+      "01",
       "32"
     ],
     "text_key": "claudeopushighk"
@@ -368,7 +377,7 @@
       "5",
       "5"
     ],
-    "text_key": "gpthigh"
+    "text_key": "gpthighcodexharness"
   },
   {
     "model": "qwen3.6-max-preview",
@@ -377,7 +386,7 @@
       "3",
       "6"
     ],
-    "text_key": "qwenmax"
+    "text_key": "qwenmaxpreview"
   },
   {
     "model": "mimo-v2.5-pro",
@@ -402,9 +411,20 @@
     "score": 6.474578317167553,
     "numeric": [
       "4",
-      "5"
+      "5",
+      "2025",
+      "11",
+      "01"
     ],
     "text_key": "claudeopus"
+  },
+  {
+    "model": "deepseek-v4-pro-high-preview",
+    "score": 6.420768833609225,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "deepseekvprohighpreview"
   },
   {
     "model": "gpt-5.4-high (codex-harness)",
@@ -413,7 +433,7 @@
       "5",
       "4"
     ],
-    "text_key": "gpthigh"
+    "text_key": "gpthighcodexharness"
   },
   {
     "model": "qwen3.6-plus",
@@ -431,7 +451,7 @@
       "5",
       "5"
     ],
-    "text_key": "gpt"
+    "text_key": "gptcodexharness"
   },
   {
     "model": "gemini-3.5-flash-lite",
@@ -449,7 +469,7 @@
       "3",
       "1"
     ],
-    "text_key": "geminipro"
+    "text_key": "geminipropreview"
   },
   {
     "model": "deepseek-v4-pro",
@@ -466,7 +486,7 @@
       "5",
       "4"
     ],
-    "text_key": "gptmedium"
+    "text_key": "gptmediumcodexharness"
   },
   {
     "model": "gemini-3-pro",
@@ -500,7 +520,7 @@
       "2",
       "5"
     ],
-    "text_key": "kimik"
+    "text_key": "kimikthinking"
   },
   {
     "model": "glm-5",
@@ -528,6 +548,14 @@
     "text_key": "mimovpro"
   },
   {
+    "model": "deepseek-v4-flash-high-preview",
+    "score": 6.014047857492034,
+    "numeric": [
+      "4"
+    ],
+    "text_key": "deepseekvflashhighpreview"
+  },
+  {
     "model": "gpt-5-medium",
     "score": 5.863072403105258,
     "numeric": [
@@ -551,7 +579,7 @@
       "5",
       "3"
     ],
-    "text_key": "gptcodex"
+    "text_key": "gptcodexcodexharness"
   },
   {
     "model": "inkling",
@@ -617,6 +645,9 @@
     "numeric": [
       "4",
       "5",
+      "2025",
+      "09",
+      "29",
       "32"
     ],
     "text_key": "claudesonnethighk"
@@ -635,7 +666,10 @@
     "score": 5.488364678703153,
     "numeric": [
       "4",
-      "1"
+      "1",
+      "2025",
+      "08",
+      "05"
     ],
     "text_key": "claudeopus"
   },
@@ -655,14 +689,17 @@
       "2",
       "1"
     ],
-    "text_key": "minimaxm"
+    "text_key": "minimaxmpreview"
   },
   {
     "model": "claude-sonnet-4-5-20250929",
     "score": 5.445312170678034,
     "numeric": [
       "4",
-      "5"
+      "5",
+      "2025",
+      "09",
+      "29"
     ],
     "text_key": "claudesonnet"
   },
@@ -674,6 +711,14 @@
       "5"
     ],
     "text_key": "minimaxm"
+  },
+  {
+    "model": "gemini-3-flash (thinking-minimal)",
+    "score": 5.412973228379866,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "geminiflashthinkingminimal"
   },
   {
     "model": "grok-4.20-beta-0309-reasoning",
@@ -719,7 +764,7 @@
       "3",
       "2"
     ],
-    "text_key": "deepseekv"
+    "text_key": "deepseekvthinking"
   },
   {
     "model": "muse-glimmer",
@@ -754,7 +799,7 @@
     "numeric": [
       "3"
     ],
-    "text_key": "hunyuanhy"
+    "text_key": "hunyuanhypreview"
   },
   {
     "model": "grok-4.3",
@@ -815,16 +860,28 @@
     "numeric": [
       "2"
     ],
-    "text_key": "mimovflash"
+    "text_key": "mimovflashnonthinking"
   },
   {
     "model": "claude-haiku-4-5-20251001",
     "score": 4.733038226268715,
     "numeric": [
       "4",
-      "5"
+      "5",
+      "2025",
+      "10",
+      "01"
     ],
     "text_key": "claudehaiku"
+  },
+  {
+    "model": "deepseek-v3.2",
+    "score": 4.685224077141953,
+    "numeric": [
+      "3",
+      "2"
+    ],
+    "text_key": "deepseekv"
   },
   {
     "model": "kimi-k2-thinking-turbo",
@@ -832,7 +889,7 @@
     "numeric": [
       "2"
     ],
-    "text_key": "kimikturbo"
+    "text_key": "kimikthinkingturbo"
   },
   {
     "model": "laguna-xs.2",
@@ -851,6 +908,14 @@
     "text_key": "minimaxm"
   },
   {
+    "model": "mimo-v2-flash (thinking)",
+    "score": 4.280364571453973,
+    "numeric": [
+      "2"
+    ],
+    "text_key": "mimovflashthinking"
+  },
+  {
     "model": "qwen3-coder-480b-a35b-instruct",
     "score": 4.044203943406569,
     "numeric": [
@@ -858,7 +923,16 @@
       "480",
       "35"
     ],
-    "text_key": "qwencoderbab"
+    "text_key": "qwencoderbabinstruct"
+  },
+  {
+    "model": "deepseek-v3.2-exp",
+    "score": 4.018776423554858,
+    "numeric": [
+      "3",
+      "2"
+    ],
+    "text_key": "deepseekvexp"
   },
   {
     "model": "mistral-medium-3.5",
@@ -884,7 +958,7 @@
       "3",
       "1"
     ],
-    "text_key": "geminiflashlite"
+    "text_key": "geminiflashlitepreview"
   },
   {
     "model": "qwen3.5-35b-a3b",
@@ -928,7 +1002,7 @@
     "model": "trinity-large-thinking",
     "score": 3.600627135595633,
     "numeric": [],
-    "text_key": "trinitylarge"
+    "text_key": "trinitylargethinking"
   },
   {
     "model": "mistral-large-3",
@@ -954,7 +1028,7 @@
       "4",
       "1"
     ],
-    "text_key": "grok"
+    "text_key": "grokthinking"
   },
   {
     "model": "devstral-2",

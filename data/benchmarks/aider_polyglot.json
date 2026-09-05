@@ -8,13 +8,16 @@
       "02",
       "05"
     ],
-    "text_key": "geminipro"
+    "text_key": "geminiproexp"
   },
   {
     "model": "gpt-4o-mini-2024-07-18",
     "score": 0.36,
     "numeric": [
-      "4"
+      "4",
+      "2024",
+      "07",
+      "18"
     ],
     "text_key": "gptomini"
   },
@@ -23,15 +26,32 @@
     "score": 5.16,
     "numeric": [
       "3",
-      "5"
+      "5",
+      "2024",
+      "10",
+      "22"
     ],
     "text_key": "claudesonnet"
+  },
+  {
+    "model": "gpt-4o-2024-11-20",
+    "score": 1.8199999999999998,
+    "numeric": [
+      "4",
+      "2024",
+      "11",
+      "20"
+    ],
+    "text_key": "gpto"
   },
   {
     "model": "gpt-4o-2024-08-06",
     "score": 2.31,
     "numeric": [
-      "4"
+      "4",
+      "2024",
+      "08",
+      "06"
     ],
     "text_key": "gpto"
   },
@@ -39,9 +59,12 @@
     "model": "o1-2024-12-17 (high)",
     "score": 6.17,
     "numeric": [
-      "1"
+      "1",
+      "2024",
+      "12",
+      "17"
     ],
-    "text_key": "o"
+    "text_key": "ohigh"
   },
   {
     "model": "DeepSeek Chat V2.5",
@@ -50,14 +73,17 @@
       "2",
       "5"
     ],
-    "text_key": "deepseekv"
+    "text_key": "deepseekchatv"
   },
   {
     "model": "claude-3-5-haiku-20241022",
     "score": 2.8,
     "numeric": [
       "3",
-      "5"
+      "5",
+      "2024",
+      "10",
+      "22"
     ],
     "text_key": "claudehaiku"
   },
@@ -69,13 +95,16 @@
       "5",
       "32"
     ],
-    "text_key": "qwencoderb"
+    "text_key": "qwencoderbinstruct"
   },
   {
     "model": "o1-mini-2024-09-12",
     "score": 3.29,
     "numeric": [
-      "1"
+      "1",
+      "2024",
+      "09",
+      "12"
     ],
     "text_key": "omini"
   },
@@ -85,7 +114,7 @@
     "numeric": [
       "1206"
     ],
-    "text_key": "gemini"
+    "text_key": "geminiexp"
   },
   {
     "model": "gemini-2.0-flash-exp",
@@ -94,7 +123,7 @@
       "2",
       "0"
     ],
-    "text_key": "geminiflash"
+    "text_key": "geminiflashexp"
   },
   {
     "model": "yi-lightning",
@@ -103,12 +132,12 @@
     "text_key": "yilightning"
   },
   {
-    "model": "DeepSeek V3 (0324)",
-    "score": 5.51,
+    "model": "DeepSeek Chat V3 (prev)",
+    "score": 4.84,
     "numeric": [
       "3"
     ],
-    "text_key": "deepseekv"
+    "text_key": "deepseekchatvprev"
   },
   {
     "model": "Codestral 25.01",
@@ -120,8 +149,8 @@
     "text_key": "codestral"
   },
   {
-    "model": "DeepSeek R1 (0528)",
-    "score": 7.140000000000001,
+    "model": "DeepSeek R1",
+    "score": 5.6899999999999995,
     "numeric": [
       "1"
     ],
@@ -133,15 +162,30 @@
     "numeric": [
       "1",
       "3",
-      "5"
+      "5",
+      "2024",
+      "10",
+      "22"
     ],
     "text_key": "deepseekrclaudesonnet"
   },
   {
     "model": "qwen-max-2025-01-25",
     "score": 2.18,
-    "numeric": [],
+    "numeric": [
+      "2025",
+      "01",
+      "25"
+    ],
     "text_key": "qwenmax"
+  },
+  {
+    "model": "o3-mini (medium)",
+    "score": 5.38,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "ominimedium"
   },
   {
     "model": "o3-mini (high)",
@@ -149,7 +193,7 @@
     "numeric": [
       "3"
     ],
-    "text_key": "omini"
+    "text_key": "ominihigh"
   },
   {
     "model": "gemini-2.0-flash-thinking-exp-01-21",
@@ -160,24 +204,43 @@
       "01",
       "21"
     ],
-    "text_key": "geminiflash"
+    "text_key": "geminiflashthinkingexp"
   },
   {
-    "model": "chatgpt-4o-latest (2025-03-29)",
-    "score": 4.529999999999999,
+    "model": "chatgpt-4o-latest (2025-02-15)",
+    "score": 2.71,
     "numeric": [
-      "4"
+      "4",
+      "2025",
+      "02",
+      "15"
     ],
-    "text_key": "chatgpto"
+    "text_key": "chatgptolatest"
+  },
+  {
+    "model": "claude-3-7-sonnet-20250219 (no thinking)",
+    "score": 6.04,
+    "numeric": [
+      "3",
+      "7",
+      "2025",
+      "02",
+      "19"
+    ],
+    "text_key": "claudesonnetnothinking"
   },
   {
     "model": "claude-3-7-sonnet-20250219 (32k thinking tokens)",
     "score": 6.49,
     "numeric": [
       "3",
-      "7"
+      "7",
+      "2025",
+      "02",
+      "19",
+      "32"
     ],
-    "text_key": "claudesonnet"
+    "text_key": "claudesonnetkthinkingtokens"
   },
   {
     "model": "gpt-4.5-preview",
@@ -186,7 +249,7 @@
       "4",
       "5"
     ],
-    "text_key": "gpt"
+    "text_key": "gptpreview"
   },
   {
     "model": "QwQ-32B",
@@ -204,7 +267,7 @@
       "2",
       "5"
     ],
-    "text_key": "qwqbqwencoder"
+    "text_key": "qwqbqwencoderinstruct"
   },
   {
     "model": "command-a-03-2025-quality",
@@ -222,7 +285,16 @@
       "3",
       "27"
     ],
-    "text_key": "gemmab"
+    "text_key": "gemmabit"
+  },
+  {
+    "model": "DeepSeek V3 (0324)",
+    "score": 5.51,
+    "numeric": [
+      "3",
+      "0324"
+    ],
+    "text_key": "deepseekv"
   },
   {
     "model": "Gemini 2.5 Pro Preview 03-25",
@@ -233,7 +305,18 @@
       "03",
       "25"
     ],
-    "text_key": "geminipro"
+    "text_key": "geminipropreview"
+  },
+  {
+    "model": "chatgpt-4o-latest (2025-03-29)",
+    "score": 4.529999999999999,
+    "numeric": [
+      "4",
+      "2025",
+      "03",
+      "29"
+    ],
+    "text_key": "chatgptolatest"
   },
   {
     "model": "Quasar Alpha",
@@ -258,12 +341,20 @@
     "text_key": "grokbeta"
   },
   {
+    "model": "Grok 3 Mini Beta (low)",
+    "score": 3.47,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "grokminibetalow"
+  },
+  {
     "model": "Grok 3 Mini Beta (high)",
     "score": 4.93,
     "numeric": [
       "3"
     ],
-    "text_key": "grokminibeta"
+    "text_key": "grokminibetahigh"
   },
   {
     "model": "Optimus Alpha",
@@ -304,7 +395,7 @@
     "numeric": [
       "4"
     ],
-    "text_key": "omini"
+    "text_key": "ominihigh"
   },
   {
     "model": "openhands-lm-32b-v0.1",
@@ -325,7 +416,7 @@
       "04",
       "17"
     ],
-    "text_key": "geminiflash"
+    "text_key": "geminiflashpreviewdefault"
   },
   {
     "model": "Gemini 2.5 Pro Preview 05-06",
@@ -336,7 +427,7 @@
       "05",
       "06"
     ],
-    "text_key": "geminipro"
+    "text_key": "geminipropreview"
   },
   {
     "model": "Qwen3 32B",
@@ -358,20 +449,61 @@
     "text_key": "qwenbabdiffnothinkalibabaapi"
   },
   {
+    "model": "claude-sonnet-4-20250514 (no thinking)",
+    "score": 5.64,
+    "numeric": [
+      "4",
+      "2025",
+      "05",
+      "14"
+    ],
+    "text_key": "claudesonnetnothinking"
+  },
+  {
     "model": "claude-sonnet-4-20250514 (32k thinking)",
     "score": 6.13,
     "numeric": [
-      "4"
+      "4",
+      "2025",
+      "05",
+      "14",
+      "32"
     ],
-    "text_key": "claudesonnet"
+    "text_key": "claudesonnetkthinking"
+  },
+  {
+    "model": "claude-opus-4-20250514 (no think)",
+    "score": 7.07,
+    "numeric": [
+      "4",
+      "2025",
+      "05",
+      "14"
+    ],
+    "text_key": "claudeopusnothink"
   },
   {
     "model": "claude-opus-4-20250514 (32k thinking)",
     "score": 7.2,
     "numeric": [
-      "4"
+      "4",
+      "2025",
+      "05",
+      "14",
+      "32"
     ],
-    "text_key": "claudeopus"
+    "text_key": "claudeopuskthinking"
+  },
+  {
+    "model": "gemini-2.5-flash-preview-05-20 (no think)",
+    "score": 4.4,
+    "numeric": [
+      "2",
+      "5",
+      "05",
+      "20"
+    ],
+    "text_key": "geminiflashpreviewnothink"
   },
   {
     "model": "gemini-2.5-flash-preview-05-20 (24k think)",
@@ -380,9 +512,21 @@
       "2",
       "5",
       "05",
-      "20"
+      "20",
+      "24"
     ],
-    "text_key": "geminiflash"
+    "text_key": "geminiflashpreviewkthink"
+  },
+  {
+    "model": "gemini-2.5-pro-preview-06-05 (default think)",
+    "score": 7.909999999999999,
+    "numeric": [
+      "2",
+      "5",
+      "06",
+      "05"
+    ],
+    "text_key": "geminipropreviewdefaultthink"
   },
   {
     "model": "gemini-2.5-pro-preview-06-05 (32k think)",
@@ -391,13 +535,31 @@
       "2",
       "5",
       "06",
-      "05"
+      "05",
+      "32"
     ],
-    "text_key": "geminipro"
+    "text_key": "geminipropreviewkthink"
+  },
+  {
+    "model": "DeepSeek R1 (0528)",
+    "score": 7.140000000000001,
+    "numeric": [
+      "1",
+      "0528"
+    ],
+    "text_key": "deepseekr"
   },
   {
     "model": "o3 (high)",
     "score": 8.129999999999999,
+    "numeric": [
+      "3"
+    ],
+    "text_key": "ohigh"
+  },
+  {
+    "model": "o3",
+    "score": 7.69,
     "numeric": [
       "3"
     ],
@@ -411,7 +573,7 @@
       "4",
       "1"
     ],
-    "text_key": "ogpt"
+    "text_key": "ohighgpt"
   },
   {
     "model": "o3-pro (high)",
@@ -419,7 +581,7 @@
     "numeric": [
       "3"
     ],
-    "text_key": "opro"
+    "text_key": "oprohigh"
   },
   {
     "model": "grok-4 (high)",
@@ -427,7 +589,7 @@
     "numeric": [
       "4"
     ],
-    "text_key": "grok"
+    "text_key": "grokhigh"
   },
   {
     "model": "Kimi K2",
@@ -443,7 +605,7 @@
     "numeric": [
       "120"
     ],
-    "text_key": "gptossb"
+    "text_key": "gptossbhigh"
   },
   {
     "model": "gpt-5 (high)",
@@ -451,7 +613,23 @@
     "numeric": [
       "5"
     ],
-    "text_key": "gpt"
+    "text_key": "gpthigh"
+  },
+  {
+    "model": "gpt-5 (medium)",
+    "score": 8.67,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "gptmedium"
+  },
+  {
+    "model": "gpt-5 (low)",
+    "score": 8.129999999999999,
+    "numeric": [
+      "5"
+    ],
+    "text_key": "gptlow"
   },
   {
     "model": "DeepSeek-V3.2-Exp (Reasoner)",
@@ -460,6 +638,15 @@
       "3",
       "2"
     ],
-    "text_key": "deepseekv"
+    "text_key": "deepseekvexpreasoner"
+  },
+  {
+    "model": "DeepSeek-V3.2-Exp (Chat)",
+    "score": 7.0200000000000005,
+    "numeric": [
+      "3",
+      "2"
+    ],
+    "text_key": "deepseekvexpchat"
   }
 ]
