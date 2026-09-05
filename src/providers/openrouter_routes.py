@@ -6,6 +6,16 @@ from .common import to_float, base_row
 
 BASE = "https://openrouter.ai/api/v1/models"
 
+def route_label(provider_name, tag):
+    """Two endpoints can share the same provider_name (e.g. "OpenAI") while
+    being different routes (standard/flex/zdr/priority) distinguished only by
+    `tag` — keep that visible instead of collapsing them into one label."""
+    provider_name = provider_name or tag or "Unknown"
+    label = f"OpenRouter → {provider_name}"
+    if tag and str(tag).strip().lower() != str(provider_name).strip().lower():
+        label += f" ({tag})"
+    return label
+
 def fetch_routes(model_ids, max_models=35):
     # The endpoint may require a management-capable key depending on account/key type.
     key = (
@@ -38,17 +48,9 @@ def fetch_routes(model_ids, max_models=35):
             out = to_float(p.get("completion"))
             if inp is None or out is None:
                 continue
-            tag = ep.get("tag")
-            provider_name = ep.get("provider_name") or tag or "Unknown"
-            route_label = f"OpenRouter → {provider_name}"
-            # Two endpoints can share the same provider_name (e.g. "OpenAI") while
-            # being different routes (standard/flex/zdr/priority) distinguished only
-            # by `tag` — keep that visible instead of collapsing them into one label.
-            if tag and str(tag).strip().lower() != str(provider_name).strip().lower():
-                route_label += f" ({tag})"
             rows.append(base_row(
                 source="openrouter-route",
-                provider=route_label,
+                provider=route_label(ep.get("provider_name"), ep.get("tag")),
                 model_id=model_id,
                 name=ep.get("model_name") or model_id,
                 context_length=ep.get("context_length"),
