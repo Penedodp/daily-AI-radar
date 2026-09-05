@@ -16,9 +16,10 @@ def pick_free_model(snapshot, config):
         return configured
 
     for rec in (snapshot.get("recommendations") or {}).values():
-        best_free = rec.get("best_free")
-        if best_free and best_free.get("raw_model", "").endswith(":free"):
-            return best_free["raw_model"]
+        for source_data in (rec.get("sources") or {}).values():
+            best_free = source_data.get("best_free")
+            if best_free and best_free.get("raw_model", "").endswith(":free"):
+                return best_free["raw_model"]
 
     return FALLBACK_FREE_MODEL
 
@@ -47,7 +48,9 @@ Distingue SIEMPRE:
 No llames "descuento" a una diferencia entre proveedores. Reserva "bajada/descuento" para un cambio de precio
 del mismo proveedor/ruta frente al histórico.
 No inventes benchmarks, latencia, disponibilidad ni promociones.
-Los quality_score son heurísticas internas, no benchmarks oficiales.
+Las puntuaciones de calidad vienen de dos benchmarks reales e independientes, Aider Polyglot y LMArena WebDev
+Arena — trátalos siempre por separado (nunca digas que un modelo con score de un benchmark es "mejor" que otro
+con score del otro benchmark, son escalas distintas) y menciona la fuente exacta si citas un score.
 Si algunos proveedores opcionales no están configurados, dilo brevemente.
 Da al final una estrategia concreta para hoy: tareas normales, coding y problemas difíciles.
 
@@ -60,7 +63,7 @@ DATOS:
             headers={
                 "Authorization": f"Bearer {key}",
                 "Content-Type": "application/json",
-                "X-Title": "AI Price Radar",
+                "X-Title": "Daily AI Radar",
             },
             json={
                 "model": pick_free_model(snapshot, config),

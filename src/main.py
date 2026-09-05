@@ -9,7 +9,10 @@ from providers.registry import collect_all
 from providers.openrouter_routes import fetch_routes
 from filters import is_relevant_text_model
 from normalize import canonicalize_with_confidence
-from quality_bench import fetch_aider_leaderboard, fetch_lmarena_webdev, match_models as match_bench_models
+from quality_bench import (
+    fetch_aider_leaderboard, fetch_lmarena_webdev,
+    match_models as match_bench_models, SOURCE_LABELS,
+)
 from scoring import (
     costs_by_task, weighted_daily_cost, price_change, value_score,
     is_free, compute_pricing_status, has_known_price,
@@ -24,6 +27,13 @@ LABELS = {
     "reasoning": "🧠 Razonamiento",
     "general": "⚡ General",
 }
+# Which bench sources can score which category. Every source in the plan
+# today only measures coding; declared as a map (not a constant) so a future
+# benchmark for another category is a one-line addition, not a rewrite.
+CATEGORY_SOURCES = {
+    "coding": ["aider_polyglot", "lmarena_webdev"],
+}
+NO_BENCH_NOTE = "_Sin benchmark automatizado disponible todavía para esta categoría._"
 
 def load_json(path, default=None):
     if not path.exists():
@@ -32,7 +42,9 @@ def load_json(path, default=None):
 
 def previous_snapshot(data_dir, today):
     candidates = [p for p in sorted(data_dir.glob("*.json"), reverse=True) if p.stem != today]
-    return load_json(candidates[0], {}) if candidates else None
+    if not candidates:
+        return None, None
+    return load_json(candidates[0], {}), candidates[0].stem
 
 def price_trend(data_dir, today, canonical_model, limit=14):
     """Cheapest weighted_cost for `canonical_model` on each of the last
@@ -63,7 +75,24 @@ def previous_map(snapshot):
         out[route_key(r)] = r
     return out
 
-def compact(row, category=None):
+def dedup_exact_routes(raw_rows):
+    """Exact-duplicate rows (same provider + model id + route/quantization)
+    must never reach the snapshot — two identical rows would silently double
+    a model's presence in every table. Keeps the first occurrence."""
+    seen = set()
+    deduped = []
+    duplicates = 0
+    for r in raw_rows:
+        meta = r.get("metadata") or {}
+        key = (r.get("provider"), r.get("model_id"), meta.get("route_tag"), meta.get("quantization"))
+        if key in seen:
+            duplicates += 1
+            continue
+        seen.add(key)
+        deduped.append(r)
+    return deduped, duplicates
+
+def compact(row, category=None, source=None):
     result = {
         "model": row["canonical_model"],
         "raw_model": row["model_id"],
@@ -75,16 +104,23 @@ def compact(row, category=None):
         "input": round(row["input_usd_per_million"], 6),
         "output": round(row["output_usd_per_million"], 6),
         "weighted_cost": round(row["weighted_cost"], 6),
+        "context_length": row.get("context_length"),
     }
-    if category:
+    if category and source:
+        q = (row.get("quality_by_source") or {}).get(source)
         result["task_cost"] = round(row["costs_by_task"][category], 6)
-        if row.get("quality"):
-            result["quality_score"] = row["quality"]["scores"].get(category)
-            result["value_score"] = row["value_scores"].get(category)
-            result["quality_label"] = row["quality"].get("label")
-            result["quality_match_ratio"] = row["quality"].get("match_ratio")
-            result["quality_source_label"] = row["quality"].get("source_label")
-            result["quality_match_type"] = row["quality"].get("match_type")
+        if q:
+            result["quality_score"] = q["scores"].get(category)
+            result["quality_raw"] = q.get("raw_score")
+            result["quality_raw_unit"] = q.get("raw_unit")
+            result["quality_label"] = q.get("label")
+            result["quality_match_ratio"] = q.get("match_ratio")
+            result["quality_match_type"] = q.get("match_type")
+            result["quality_source"] = source
+            result["quality_source_label"] = q.get("source_label")
+            result["quality_source_url"] = q.get("source_url")
+            result["quality_captured_at"] = q.get("captured_at")
+            result["value_score"] = (row.get("value_scores") or {}).get(source, {}).get(category)
     if row.get("change_pct") is not None:
         result["change_pct"] = round(row["change_pct"], 1)
     return result
@@ -104,49 +140,59 @@ def dedup_by_model(rows, limit):
     return out
 
 def recommendations(models, config):
+    """One independent ranking per (category, benchmark source). Aider and
+    WebDev Arena never rank against each other — see
+    DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md #2."""
     recs = {}
     for category in LABELS:
-        scored = [
-            r for r in models
-            if r.get("quality") and r["quality"]["scores"].get(category) is not None
-            and has_known_price(r)
-        ]
-        free = [r for r in scored if is_free(r)]
-        paid = [r for r in scored if not is_free(r)]
+        cat_out = {"sources": {}}
+        for source in CATEGORY_SOURCES.get(category, []):
+            scored = [
+                r for r in models
+                if has_known_price(r)
+                and (r.get("quality_by_source") or {}).get(source)
+                and r["quality_by_source"][source]["scores"].get(category) is not None
+            ]
+            if not scored:
+                continue
+            free = [r for r in scored if is_free(r)]
+            paid = [r for r in scored if not is_free(r)]
 
-        min_q = config.get("paid_min_quality", {}).get(category, 0)
-        paid_good = [
-            r for r in paid
-            if r["quality"]["scores"].get(category, 0) >= min_q
-        ]
+            min_q = config.get("paid_min_quality", {}).get(category, 0)
+            paid_good = [
+                r for r in paid
+                if r["quality_by_source"][source]["scores"].get(category, 0) >= min_q
+            ]
 
-        free.sort(
-            key=lambda r: (
-                r["quality"]["scores"].get(category, 0),
-                r.get("context_length") or 0,
-            ),
-            reverse=True,
-        )
-        paid_good.sort(
-            key=lambda r: (
-                r["value_scores"].get(category) or -1,
-                r["quality"]["scores"].get(category, 0),
-            ),
-            reverse=True,
-        )
-        paid_quality = sorted(
-            paid,
-            key=lambda r: r["quality"]["scores"].get(category, 0),
-            reverse=True,
-        )
+            free.sort(
+                key=lambda r: (
+                    r["quality_by_source"][source]["scores"].get(category, 0),
+                    r.get("context_length") or 0,
+                ),
+                reverse=True,
+            )
+            paid_good.sort(
+                key=lambda r: (
+                    (r.get("value_scores") or {}).get(source, {}).get(category) or -1,
+                    r["quality_by_source"][source]["scores"].get(category, 0),
+                ),
+                reverse=True,
+            )
+            paid_quality = sorted(
+                paid,
+                key=lambda r: r["quality_by_source"][source]["scores"].get(category, 0),
+                reverse=True,
+            )
 
-        recs[category] = {
-            "best_free": compact(free[0], category) if free else None,
-            "best_paid_value": compact(paid_good[0], category) if paid_good else None,
-            "best_paid_quality": compact(paid_quality[0], category) if paid_quality else None,
-            "top_paid_value": [compact(r, category) for r in dedup_by_model(paid_good, 5)],
-            "top_free": [compact(r, category) for r in dedup_by_model(free, 5)],
-        }
+            cat_out["sources"][source] = {
+                "source_label": SOURCE_LABELS.get(source, source),
+                "best_free": compact(free[0], category, source) if free else None,
+                "best_paid_value": compact(paid_good[0], category, source) if paid_good else None,
+                "best_paid_quality": compact(paid_quality[0], category, source) if paid_quality else None,
+                "top_paid_value": [compact(r, category, source) for r in dedup_by_model(paid_good, 5)],
+                "top_free": [compact(r, category, source) for r in dedup_by_model(free, 5)],
+            }
+        recs[category] = cat_out
     return recs
 
 def cross_provider_opportunities(models, config):
@@ -179,23 +225,25 @@ def cross_provider_opportunities(models, config):
         if saving < config.get("cross_provider_min_saving_pct", 5):
             continue
 
-        q = cheapest.get("quality")
+        # Quality is informational here, per-source, never a ranking key —
+        # combining Aider/WebDev into one number would repeat the mistake
+        # this phase fixes elsewhere.
+        quality_by_source = {
+            source: q["scores"].get("coding")
+            for source, q in (cheapest.get("quality_by_source") or {}).items()
+            if q.get("scores", {}).get("coding") is not None
+        }
         opportunities.append({
             "model": canonical,
             "cheapest": compact(cheapest),
             "next": compact(second),
             "saving_vs_next_pct": round(saving, 1),
             "routes_count": len(routes),
-            "quality": q["scores"] if q else None,
+            "quality_by_source": quality_by_source or None,
         })
 
-    opportunities.sort(
-        key=lambda x: (
-            x.get("saving_vs_next_pct", 0),
-            max((x.get("quality") or {}).values() or [0]),
-        ),
-        reverse=True,
-    )
+    # Ranked purely by saving — never by a cross-benchmark quality tiebreak.
+    opportunities.sort(key=lambda x: x.get("saving_vs_next_pct", 0), reverse=True)
     return opportunities
 
 def build_explorer(models):
@@ -211,7 +259,20 @@ def build_explorer(models):
         priced = [r for r in rows if has_known_price(r)]
         rows_sorted = sorted(priced, key=lambda r: r["weighted_cost"]) or rows
         best = rows_sorted[0]
-        q = best.get("quality") or {}
+        quality_by_source = {
+            source: {
+                "score": q["scores"].get("coding"),
+                "source_label": q.get("source_label"),
+                "raw_score": q.get("raw_score"),
+                "raw_unit": q.get("raw_unit"),
+                "match_type": q.get("match_type"),
+            }
+            for source, q in (best.get("quality_by_source") or {}).items()
+            if q.get("scores", {}).get("coding") is not None
+        }
+        search_bits = {best["provider"]} | {r["provider"] for r in rows} | {
+            (r.get("metadata") or {}).get("quantization") for r in rows
+        }
         out.append({
             "model": canonical,
             "routes": [
@@ -223,6 +284,10 @@ def build_explorer(models):
                     "output": round(r["output_usd_per_million"], 6),
                     "weighted_cost": round(r["weighted_cost"], 6),
                     "context_length": r.get("context_length"),
+                    "quantization": (r.get("metadata") or {}).get("quantization"),
+                    "latency_p50": (r.get("metadata") or {}).get("latency_p50"),
+                    "throughput_p50": (r.get("metadata") or {}).get("throughput_p50"),
+                    "uptime_last_1d": (r.get("metadata") or {}).get("uptime_last_1d"),
                 }
                 for r in sorted(rows, key=lambda r: r["weighted_cost"])
             ],
@@ -234,49 +299,48 @@ def build_explorer(models):
             "context_length": best.get("context_length"),
             "free": is_free(best),
             "pricing_status": best.get("pricing_status"),
-            "quality_coding": q.get("scores", {}).get("coding"),
-            "quality_source_label": q.get("source_label"),
-            "quality_match_type": q.get("match_type"),
+            "quality_by_source": quality_by_source,
+            "search_text": " ".join(str(s) for s in search_bits if s).lower(),
         })
 
-    out.sort(
-        key=lambda m: (
-            m["quality_coding"] if m["quality_coding"] is not None else -1,
-            -m["weighted_cost"],
-        ),
-        reverse=True,
-    )
+    def best_score(m):
+        scores = [q["score"] for q in m["quality_by_source"].values() if q["score"] is not None]
+        return max(scores) if scores else -1
+
+    out.sort(key=lambda m: (best_score(m), -m["weighted_cost"]), reverse=True)
     return out
 
 def validate_snapshot(models):
-    """Cheap, non-fatal invariant checks (Fase 3/P3): a violation here means a
-    bug slipped past the conservative rules elsewhere, and should be visible
-    rather than silently shipped. Never blocks publishing — see the plan's
-    'dato desconocido antes que conclusión falsa' principle: for the same
-    reason, an unnoticed bug shouldn't block the whole daily run either."""
-    warnings = []
+    """Two-tier invariant checks (Fase 6 §6): ERRORs mean a bug slipped past
+    the conservative rules elsewhere and must block publishing (the daily
+    workflow exits non-zero and the commit/push step never runs). WARNINGs
+    are expected, routine conditions (an unscored model, an unknown price)
+    that are worth surfacing but must never stop the run — see the plan's
+    'mostrar el dato en vez de ocultarlo' principle."""
+    errors, warnings = [], []
 
     seen_routes = set()
     for r in models:
-        key = (r["provider"], r["model_id"])
+        meta = r.get("metadata") or {}
+        key = (r["provider"], r["model_id"], meta.get("route_tag"), meta.get("quantization"))
         if key in seen_routes:
-            warnings.append(f"ruta duplicada: {key[0]} / {key[1]}")
+            errors.append(f"ruta exacta duplicada tras deduplicar: {key}")
         seen_routes.add(key)
 
     for r in models:
         for field in ("input_usd_per_million", "output_usd_per_million"):
             v = r.get(field)
             if v is None or v < 0 or v != v or v in (float("inf"), float("-inf")):
-                warnings.append(f"precio inválido ({field}={v}) en {r['provider']} / {r['model_id']}")
+                errors.append(f"precio inválido ({field}={v}) en {r['provider']} / {r['model_id']}")
 
     for r in models:
         if is_free(r) and r.get("pricing_status") not in {"free", "promotional_free"}:
-            warnings.append(f"free=true sin pricing_status verificado: {r['provider']} / {r['model_id']}")
+            errors.append(f"free=true sin pricing_status verificado: {r['provider']} / {r['model_id']}")
 
     for r in models:
-        q = r.get("quality")
-        if q and not (q.get("source_label") and q.get("label")):
-            warnings.append(f"quality sin fuente/label trazable: {r['provider']} / {r['model_id']}")
+        for source, q in (r.get("quality_by_source") or {}).items():
+            if not (q.get("source_label") and q.get("label")):
+                errors.append(f"quality sin fuente/label trazable: {r['provider']} / {r['model_id']} ({source})")
 
     size_re = re.compile(r"\b(\d+(?:\.\d+)?)b\b")
     size_groups = defaultdict(set)
@@ -286,9 +350,17 @@ def validate_snapshot(models):
             size_groups[r["canonical_model"]].add(m.group(1))
     for canonical, sizes in size_groups.items():
         if len(sizes) > 1:
-            warnings.append(f"tamaños de modelo distintos bajo el mismo canonical '{canonical}': {sorted(sizes)}")
+            errors.append(f"tamaños de modelo distintos bajo el mismo canonical '{canonical}': {sorted(sizes)}")
 
-    return warnings
+    unknown_count = sum(1 for r in models if r.get("pricing_status") == "unknown")
+    if unknown_count:
+        warnings.append(f"{unknown_count} ruta(s) con precio 'unknown' (no entran en ningún ranking por coste)")
+
+    unscored_count = sum(1 for r in models if not r.get("quality_by_source"))
+    if unscored_count:
+        warnings.append(f"{unscored_count} ruta(s) sin ningún benchmark de coding todavía")
+
+    return errors, warnings
 
 def main():
     config = load_json(ROOT / "config.json", {})
@@ -304,29 +376,37 @@ def main():
     reports_dir.mkdir(exist_ok=True)
     docs_dir.mkdir(exist_ok=True)
 
-    previous = previous_snapshot(data_dir, day)
+    previous, previous_day = previous_snapshot(data_dir, day)
     prev_map = previous_map(previous)
 
     raw_rows, provider_status = collect_all(config)
 
     aider_cache = data_dir / "benchmarks" / "aider_polyglot.json"
-    aider_entries, aider_status = fetch_aider_leaderboard(aider_cache)
+    aider_entries, aider_status, aider_captured_at = fetch_aider_leaderboard(aider_cache)
     provider_status["aider_polyglot"] = {"status": aider_status, "count": len(aider_entries)}
 
     arena_cache = data_dir / "benchmarks" / "lmarena_webdev.json"
-    arena_entries, arena_status = fetch_lmarena_webdev(arena_cache)
+    arena_entries, arena_status, arena_captured_at = fetch_lmarena_webdev(arena_cache)
     provider_status["lmarena_webdev"] = {"status": arena_status, "count": len(arena_entries)}
 
-    def bench_match_union(rows):
-        """Aider first (objective pass/fail correctness test); LMArena WebDev
-        Arena (crowd Elo, broader/faster coverage) fills in whatever Aider misses."""
+    captured_at_by_source = {"aider_polyglot": aider_captured_at, "lmarena_webdev": arena_captured_at}
+
+    def bench_match_by_source(rows):
+        """Aider and WebDev Arena matched independently and kept separate —
+        never merged into one field. A route can have a score from one, the
+        other, both, or neither."""
         arena_matches = match_bench_models(arena_entries, rows, "lmarena_webdev")
         aider_matches = match_bench_models(aider_entries, rows, "aider_polyglot")
-        return {**arena_matches, **aider_matches}
+        out = defaultdict(dict)
+        for k, v in arena_matches.items():
+            out[k]["lmarena_webdev"] = v
+        for k, v in aider_matches.items():
+            out[k]["aider_polyglot"] = v
+        return out
 
     # OpenRouter underlying routes: track only useful/scored model IDs, not all 400+.
     openrouter_only = [r for r in raw_rows if r["source"] == "openrouter"]
-    bench_candidates = bench_match_union(openrouter_only)
+    bench_candidates = bench_match_by_source(openrouter_only)
     openrouter_candidates = []
     seen = set()
     for r in openrouter_only:
@@ -353,9 +433,11 @@ def main():
                 "error": f"{type(exc).__name__}: {str(exc)[:180]}",
             }
 
+    raw_rows, duplicate_routes_removed = dedup_exact_routes(raw_rows)
+
     # Final bench match over the full row set (openrouter + routes + other providers),
     # now that all sources/routes have been collected.
-    bench_matches = bench_match_union(raw_rows)
+    bench_matches = bench_match_by_source(raw_rows)
 
     models = []
     filtered = 0
@@ -371,28 +453,33 @@ def main():
         row["canonical_model"], row["identity_confidence"] = canonicalize_with_confidence(row["model_id"], aliases)
         row["pricing_status"] = compute_pricing_status(row)
 
-        bench_q = bench_matches.get(route_key(row))
-        row["quality"] = None
-        if bench_q:
-            row["quality"] = {
-                "label": bench_q["label"],
-                "confidence": f"auto:{bench_q['source']}",
-                "source_label": bench_q.get("source_label", bench_q["source"]),
-                "scores": dict(bench_q["scores"]),
-                "match_ratio": bench_q.get("match_ratio"),
-                "match_type": bench_q.get("match_type"),
+        matches = bench_matches.get(route_key(row)) or {}
+        row["quality_by_source"] = {}
+        for source, bq in matches.items():
+            row["quality_by_source"][source] = {
+                "label": bq["label"],
+                "source_label": bq.get("source_label", source),
+                "source_url": bq.get("source_url"),
+                "captured_at": captured_at_by_source.get(source),
+                "scores": dict(bq["scores"]),
+                "raw_score": bq.get("raw_score"),
+                "raw_unit": bq.get("raw_unit"),
+                "n_cases": bq.get("n_cases"),
+                "match_ratio": bq.get("match_ratio"),
+                "match_type": bq.get("match_type"),
             }
 
         row["costs_by_task"] = costs_by_task(row, task_profiles)
         row["weighted_cost"] = weighted_daily_cost(row, task_profiles)
         row["value_scores"] = {}
-        if row["quality"]:
+        for source, q in row["quality_by_source"].items():
+            row["value_scores"][source] = {}
             for category in LABELS:
-                row["value_scores"][category] = value_score(
-                    row["quality"]["scores"].get(category),
-                    row["costs_by_task"][category],
-                    anchor,
-                )
+                sc = q["scores"].get(category)
+                if sc is not None:
+                    row["value_scores"][source][category] = value_score(
+                        sc, row["costs_by_task"][category], anchor,
+                    )
 
         old = prev_map.get(route_key(row))
         row["change_pct"] = price_change(
@@ -420,40 +507,43 @@ def main():
     recs = recommendations(models, config)
     opportunities = cross_provider_opportunities(models, config)
 
-    # Categories with at least one automated/manual quality score. Categories
-    # without a benchmark source yet (agentic/reasoning/general, for now) get
-    # an explanatory note in the report instead of empty rows.
-    scored_categories = {
-        cat for cat in LABELS
-        if any(r.get("quality") and r["quality"]["scores"].get(cat) is not None for r in models)
-    }
-    NO_BENCH_NOTE = "_Sin benchmark automatizado disponible todavía para esta categoría._"
+    # Price history of today's featured "best value" pick per (category, source).
+    price_trends = defaultdict(dict)
+    for category, cat_data in recs.items():
+        for source, sdata in cat_data["sources"].items():
+            pick = sdata["best_paid_value"]
+            if not pick:
+                continue
+            points = price_trend(data_dir, day, pick["model"])
+            points.append({"date": day, "cost": pick["weighted_cost"]})
+            if len(points) >= 2:
+                price_trends[category][source] = {
+                    "model": pick["model"], "points": points,
+                    "source_label": sdata["source_label"],
+                }
 
-    # Price history of today's featured "best value" pick per category, for the dashboard sparkline.
-    price_trends = {}
-    for cat in scored_categories:
-        pick = recs[cat]["best_paid_value"]
-        if not pick:
-            continue
-        points = price_trend(data_dir, day, pick["model"])
-        points.append({"date": day, "cost": pick["weighted_cost"]})
-        if len(points) >= 2:
-            price_trends[cat] = {"model": pick["model"], "points": points}
-
-    PRICE_SOURCES = {"openrouter", "cheaperinference", "together", "novita", "openrouter_routes"}
+    # openrouter_routes is telemetry about existing OpenRouter models, not an
+    # independent price catalog — don't count it as a "pricing provider".
+    PRICE_SOURCES = {"openrouter", "cheaperinference", "together", "novita"}
     BENCH_SOURCES = {"aider_polyglot", "lmarena_webdev"}
     explorer = build_explorer(models)
-    validation_warnings = validate_snapshot(models)
-    if validation_warnings:
-        print(f"[WARN] validate_snapshot: {len(validation_warnings)} aviso(s):")
-        for w in validation_warnings:
-            print(f"  - {w}")
+
+    errors, validation_warnings = validate_snapshot(models)
+    for w in validation_warnings:
+        print(f"[WARN] {w}")
+    if errors:
+        print(f"[ERROR] validate_snapshot: {len(errors)} error(es) crítico(s) — no se publica hoy:")
+        for e in errors:
+            print(f"  - {e}")
+        raise SystemExit(1)
 
     snapshot = {
         "generated_at": now.isoformat(),
+        "previous_snapshot_date": previous_day,
         "provider_status": provider_status,
         "stats": {
-            "raw_rows": len(raw_rows),
+            "raw_rows": len(raw_rows) + duplicate_routes_removed,
+            "duplicate_routes_removed": duplicate_routes_removed,
             "models_kept": len(models),
             "models_filtered": filtered,
             "unique_models": len({r["canonical_model"] for r in models}),
@@ -463,7 +553,9 @@ def main():
             "benchmarks_active": sum(
                 1 for k, s in provider_status.items() if k in BENCH_SOURCES and s.get("count", 0) > 0
             ),
-            "scored_routes": sum(1 for r in models if r.get("quality")),
+            "openrouter_routes_analyzed": provider_status.get("openrouter_routes", {}).get("count", 0),
+            "scored_routes": sum(1 for r in models if r.get("quality_by_source")),
+            "unknown_price_routes": sum(1 for r in models if r.get("pricing_status") == "unknown"),
         },
         "recommendations": recs,
         "cross_provider_opportunities": opportunities,
@@ -477,19 +569,36 @@ def main():
         json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
+    stats = snapshot["stats"]
     lines = [
-        f"# AI Price Radar — {day}",
+        f"# Daily AI Radar — {day}",
         "",
         f"> Generado {now.strftime('%d/%m/%Y %H:%M %Z')} · "
-        f"**{snapshot['stats']['unique_models']} modelos únicos** · "
+        f"**{stats['unique_models']} modelos únicos** · "
         f"**{len(models)} rutas/precios** · "
-        f"**{snapshot['stats']['providers_with_data']} proveedores de precios** · "
-        f"**{snapshot['stats']['benchmarks_active']} benchmarks activos** · "
-        f"**{snapshot['stats']['scored_routes']} rutas puntuadas**.",
+        f"**{stats['providers_with_data']} proveedores de precios** · "
+        f"**{stats['benchmarks_active']} benchmarks activos** · "
+        f"**{stats['openrouter_routes_analyzed']} rutas OpenRouter analizadas** · "
+        f"**{stats['scored_routes']} rutas puntuadas**.",
         "",
         "_Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: "
         "30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._",
         "",
+    ]
+    if stats["duplicate_routes_removed"]:
+        lines.append(
+            f"_{stats['duplicate_routes_removed']} ruta(s) duplicada(s) exacta(s) detectada(s) y "
+            "eliminada(s) antes de publicar._"
+        )
+        lines.append("")
+    if stats["unknown_price_routes"]:
+        lines.append(
+            f"_{stats['unknown_price_routes']} ruta(s) con precio `unknown` (0/0 sin señal explícita de "
+            "gratis) — no entran en ningún ranking por coste._"
+        )
+        lines.append("")
+
+    lines += [
         "## 📡 Fuentes",
         "",
         "| Fuente | Estado | Registros |",
@@ -499,76 +608,86 @@ def main():
         state = status.get("status", "unknown")
         lines.append(f"| {name} | `{state}` | {status.get('count', 0)} |")
 
-    lines += [
-        "",
-        "## 🆓 Mejor opción gratuita",
-        "",
-        "| Uso | Modelo | Calidad* | Proveedor/ruta | $/M input | $/M output |",
-        "|---|---|---:|---|---:|---:|",
-    ]
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | |")
-            continue
-        r = recs[cat]["best_free"]
-        if r:
-            lines.append(
-                f"| {label} | **{r['model']}** | {r.get('quality_score','—')}/10 | {r['provider']} | "
-                f"${r['input']:.4f} | ${r['output']:.4f} |"
-            )
-        else:
-            lines.append(f"| {label} | — | — | — | — | — |")
+    def cat_sources(category):
+        return list(recs[category]["sources"].items())
+
+    empty_categories = [LABELS[c] for c in LABELS if not cat_sources(c)]
 
     lines += [
         "",
-        "## 💰 Mejor relación calidad/precio DE PAGO",
+        "## 🆓 Mejor opción gratuita puntuada",
         "",
-        "| Uso | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad* | Radar Value** |",
-        "|---|---|---|---:|---:|---:|---:|---:|",
+        "| Uso | Fuente | Modelo | Calidad | Proveedor/ruta | $/M input | $/M output |",
+        "|---|---|---|---:|---|---:|---:|",
     ]
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | | | |")
-            continue
-        r = recs[cat]["best_paid_value"]
-        if r:
+    any_free_row = False
+    for cat in LABELS:
+        for source, sdata in cat_sources(cat):
+            r = sdata["best_free"]
+            if not r:
+                continue
+            any_free_row = True
             lines.append(
-                f"| {label} | **{r['model']}** | **{r['provider']}** | "
+                f"| {LABELS[cat]} | {sdata['source_label']} | **{r['model']}** | {r.get('quality_score','—')}/10 | "
+                f"{r['provider']} | ${r['input']:.4f} | ${r['output']:.4f} |"
+            )
+    if not any_free_row:
+        lines.append("| — | — | Ningún modelo gratuito puntuado todavía | — | — | — | — |")
+
+    lines += [
+        "",
+        "## 💰 Mejor relación calidad/precio (por fuente de benchmark)",
+        "",
+        "| Uso | Fuente | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad | Radar Value** |",
+        "|---|---|---|---|---:|---:|---:|---:|---:|",
+    ]
+    any_value_row = False
+    for cat in LABELS:
+        for source, sdata in cat_sources(cat):
+            r = sdata["best_paid_value"]
+            if not r:
+                continue
+            any_value_row = True
+            lines.append(
+                f"| {LABELS[cat]} | {sdata['source_label']} | **{r['model']}** | **{r['provider']}** | "
                 f"${r['task_cost']:.5f} | ${r['input']:.4f} | ${r['output']:.4f} | "
                 f"{r.get('quality_score','—')}/10 | {r.get('value_score','—')} |"
             )
-        else:
-            lines.append(f"| {label} | — | — | — | — | — | — | — |")
+    if not any_value_row:
+        lines.append("| — | — | Ningún modelo de pago supera el mínimo de calidad configurado | — | — | — | — | — |")
 
     lines += [
         "",
-        "## 🧠 Mayor puntuación entre modelos de pago con benchmark disponible",
+        "## 🧠 Mayor puntuación entre modelos de pago (por fuente de benchmark)",
         "",
-        "| Uso | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad* |",
-        "|---|---|---|---:|---:|---:|---:|",
+        "| Uso | Fuente | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad |",
+        "|---|---|---|---|---:|---:|---:|---:|",
     ]
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            lines.append(f"| {label} | {NO_BENCH_NOTE} | | | | | |")
-            continue
-        r = recs[cat]["best_paid_quality"]
-        if r:
+    any_quality_row = False
+    for cat in LABELS:
+        for source, sdata in cat_sources(cat):
+            r = sdata["best_paid_quality"]
+            if not r:
+                continue
+            any_quality_row = True
             lines.append(
-                f"| {label} | **{r['model']}** | {r['provider']} | "
+                f"| {LABELS[cat]} | {sdata['source_label']} | **{r['model']}** | {r['provider']} | "
                 f"${r['task_cost']:.5f} | ${r['input']:.4f} | ${r['output']:.4f} | "
                 f"{r.get('quality_score','—')}/10 |"
             )
-        else:
-            lines.append(f"| {label} | — | — | — | — | — | — |")
+    if not any_quality_row:
+        lines.append("| — | — | Sin candidatos de pago puntuados | — | — | — | — |")
+
+    if empty_categories:
+        lines += ["", f"_Próximamente: {' · '.join(empty_categories)} (sin benchmark automatizado todavía)._"]
 
     lines += [
         "",
-        "\\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard (prioritario) o, si no está, "
-        "rating Elo de LMArena WebDev Arena (respaldo con más cobertura), escalados a 0–10 y emparejados "
-        "automáticamente por nombre de modelo (sin intervención manual). "
-        "Aider y LMArena miden cosas distintas (corrección de código vs. preferencia humana en apps web) "
-        "y sus puntuaciones **no son directamente comparables entre sí** — la fuente exacta va siempre junto al dato. "
-        "Cuando no hay match fiable en ninguna de las dos, el modelo queda sin puntuar en vez de estimarse.*",
+        "\\* *Aider Polyglot Leaderboard (pass-rate de un test de corrección fijo) y LMArena WebDev Arena "
+        "(rating Elo por voto humano) son benchmarks distintos, escalados a 0–10 cada uno por separado. "
+        "**Nunca se ordenan entre sí como si fueran la misma escala** — cada tabla indica la fuente exacta "
+        "junto al dato, no solo al pasar el ratón por encima. Emparejados automáticamente por nombre de "
+        "modelo; sin match fiable, el modelo queda sin puntuar en vez de estimarse.*",
         "",
         f"\\*\\* *Radar Value es un índice propio (no un benchmark) que combina calidad medida y coste estimado: "
         f"`calidad × 10 / sqrt(1 + coste_tarea / {config.get('value_cost_anchor_usd', 0.05)})`. "
@@ -596,27 +715,36 @@ def main():
             "o no hay diferencias ≥ al umbral."
         )
 
-    lines += ["", "## 🏆 Top 5 DE PAGO por calidad/precio", ""]
-    for cat, label in LABELS.items():
-        lines.append(f"### {label}")
-        if cat not in scored_categories:
-            lines.append(f"- {NO_BENCH_NOTE}")
+    lines += ["", "## 🏆 Top 5 de pago por calidad/precio (por fuente)", ""]
+    any_top5 = False
+    for cat in LABELS:
+        for source, sdata in cat_sources(cat):
+            top = sdata["top_paid_value"]
+            if not top:
+                continue
+            any_top5 = True
+            lines.append(f"### {LABELS[cat]} · {sdata['source_label']}")
+            for i, r in enumerate(top, 1):
+                lines.append(
+                    f"{i}. **{r['model']}** vía **{r['provider']}** — "
+                    f"calidad {r.get('quality_score','—')}/10 · "
+                    f"coste/tarea ${r['task_cost']:.5f} "
+                    f"(\\${r['input']:.4f} in / \\${r['output']:.4f} out) · "
+                    f"Radar Value {r.get('value_score','—')}"
+                )
             lines.append("")
-            continue
-        top = recs[cat]["top_paid_value"]
-        if not top:
-            lines.append("- Sin candidatos de pago que superen el mínimo de calidad configurado.")
-        for i, r in enumerate(top, 1):
-            lines.append(
-                f"{i}. **{r['model']}** vía **{r['provider']}** — "
-                f"calidad {r.get('quality_score','—')}/10 · "
-                f"coste/tarea ${r['task_cost']:.5f} "
-                f"(\\${r['input']:.4f} in / \\${r['output']:.4f} out) · "
-                f"Radar Value {r.get('value_score','—')}"
-            )
+    if not any_top5:
+        lines.append("Sin candidatos de pago que superen el mínimo de calidad configurado.")
         lines.append("")
 
-    lines += ["## 🔥 Bajadas reales de precio", ""]
+    if previous:
+        if _is_yesterday(previous_day, day):
+            changes_heading = "## 🔥 Bajadas reales de precio (vs ayer)"
+        else:
+            changes_heading = f"## 🔥 Bajadas reales de precio (vs último snapshot disponible · {previous_day})"
+    else:
+        changes_heading = "## 🔥 Bajadas reales de precio"
+    lines += [changes_heading, ""]
     if not previous:
         lines.append("Todavía no hay snapshot de un día anterior para comparar.")
     elif drops:
@@ -642,15 +770,18 @@ def main():
         "",
         "- **Gratis** y **pago** se rankean por separado; los modelos `$0` ya no dominan el ranking de compra.",
         "- Una diferencia entre proveedores se llama **ahorro entre rutas**, no descuento.",
-        "- **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico.",
+        "- **Bajada/descuento** solo se marca cuando el mismo proveedor/ruta baja frente al histórico — "
+        "un cambio en el perfil de tokens nunca se cuenta como cambio de tarifa.",
         "- Los proveedores opcionales sin API key simplemente se omiten; el workflow sigue funcionando.",
         "- El resumen IA redacta la conclusión, pero no calcula precios ni rankings.",
-        "- La calidad de **coding** se obtiene automáticamente de dos fuentes públicas sin API key: "
-        "**Aider Polyglot Leaderboard** (test de corrección fijo, prioritario cuando existe) y "
-        "**LMArena WebDev Arena** (ranking Elo por voto humano, respaldo con cobertura mucho más amplia "
-        "y rápida para modelos recién publicados). No requiere mantenimiento manual. "
+        "- La calidad de **coding** se obtiene automáticamente de dos fuentes públicas sin API key, "
+        "**rankeadas siempre por separado**: **Aider Polyglot Leaderboard** (test de corrección fijo) y "
+        "**LMArena WebDev Arena** (ranking Elo por voto humano, cobertura mucho más amplia y rápida para "
+        "modelos recién publicados). No requiere mantenimiento manual. "
         "**Agentic/razonamiento/general** aún no tienen una fuente de benchmark automatizada "
         "igual de fiable — se añadirán cuando se identifique una.",
+        "- Un precio en `$0.0000` en las tablas siempre corresponde a `pricing_status = free`; un precio "
+        "desconocido nunca se muestra como `$0.0000`, se excluye del ranking y aparece como `—` en el explorador.",
     ]
 
     ai = generate_summary(snapshot, config)
@@ -673,6 +804,16 @@ def main():
         # Some local consoles (Windows cp1252) can't render emoji; the report
         # files are already written above, so this is display-only.
         print(report.encode("ascii", "replace").decode("ascii"))
+
+def _is_yesterday(previous_day, today):
+    if not previous_day:
+        return False
+    try:
+        d_prev = datetime.fromisoformat(previous_day).date()
+        d_today = datetime.fromisoformat(today).date()
+    except ValueError:
+        return False
+    return (d_today - d_prev).days == 1
 
 if __name__ == "__main__":
     main()

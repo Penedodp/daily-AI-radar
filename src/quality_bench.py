@@ -27,6 +27,7 @@ never silently inherit the score of `hy3`.
 import difflib
 import json
 import re
+from datetime import datetime, timezone
 
 import requests
 import yaml
@@ -54,6 +55,10 @@ SOURCE_LABELS = {
     "aider_polyglot": "Aider Polyglot Leaderboard",
     "lmarena_webdev": "LMArena WebDev Arena",
 }
+SOURCE_URLS = {
+    "aider_polyglot": "https://aider.chat/docs/leaderboards/",
+    "lmarena_webdev": "https://lmarena.ai/leaderboard/webdev",
+}
 
 # Only glue-vs-hyphenated date formatting is normalized (20240806 <-> 2024-08-06)
 # so the same checkpoint isn't missed purely over punctuation. The date itself
@@ -77,7 +82,7 @@ def _fingerprint(raw):
 
 
 def _best_entry_per_model(scored_entries):
-    """scored_entries: iterable of {"model": str, "score": 0-10 float}.
+    """scored_entries: iterable of {"model", "score", "raw", "raw_unit", ...}.
     Keeps, per (numeric, text) fingerprint, the entry with the highest score."""
     best = {}
     for e in scored_entries:
@@ -90,30 +95,42 @@ def _best_entry_per_model(scored_entries):
         key = (numeric, text_key)
         current = best.get(key)
         if current is None or score > current["score"]:
-            best[key] = {"model": name, "score": float(score), "numeric": numeric, "text_key": text_key}
+            best[key] = {
+                "model": name, "score": float(score), "numeric": numeric, "text_key": text_key,
+                "raw": e.get("raw"), "raw_unit": e.get("raw_unit"), "n_cases": e.get("n_cases"),
+            }
     return list(best.values())
 
 
 def _fetch_with_cache(cache_path, fetch_fn):
-    """fetch_fn() -> list of {"model","score"} dicts, or raises."""
+    """fetch_fn() -> list of {"model","score",...} dicts, or raises. Cache
+    file keeps a `captured_at` timestamp alongside the entries so the UI can
+    show exactly when a benchmark snapshot was taken, not just "today"."""
     try:
         scored = fetch_fn()
         entries = _best_entry_per_model(scored)
         if not entries:
             raise ValueError("empty leaderboard after parsing")
+        captured_at = datetime.now(timezone.utc).isoformat()
         cache_path.parent.mkdir(parents=True, exist_ok=True)
-        cache_path.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
-        return entries, "ok"
+        cache_path.write_text(
+            json.dumps({"captured_at": captured_at, "entries": entries}, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        return entries, "ok", captured_at
     except Exception:
         if cache_path.exists():
             try:
-                cached = json.loads(cache_path.read_text(encoding="utf-8"))
-                for e in cached:
+                loaded = json.loads(cache_path.read_text(encoding="utf-8"))
+                # Back-compat with the old cache format (a bare list, no timestamp).
+                entries = loaded if isinstance(loaded, list) else loaded.get("entries", [])
+                captured_at = None if isinstance(loaded, list) else loaded.get("captured_at")
+                for e in entries:
                     e["numeric"] = tuple(e.get("numeric") or ())
-                return cached, "cached_stale"
+                return entries, "cached_stale", captured_at
             except Exception:
                 pass
-        return [], "error"
+        return [], "error", None
 
 
 def fetch_aider_leaderboard(cache_path, timeout=30):
@@ -125,7 +142,10 @@ def fetch_aider_leaderboard(cache_path, timeout=30):
         for e in raw_entries:
             rate, cases = e.get("pass_rate_2"), e.get("test_cases")
             if e.get("model") and rate is not None and cases and cases >= AIDER_MIN_TEST_CASES:
-                out.append({"model": e["model"], "score": max(0.0, min(10.0, rate / 10.0))})
+                out.append({
+                    "model": e["model"], "score": max(0.0, min(10.0, rate / 10.0)),
+                    "raw": rate, "raw_unit": "% pass rate", "n_cases": cases,
+                })
         return out
     return _fetch_with_cache(cache_path, _fetch)
 
@@ -155,7 +175,10 @@ def fetch_lmarena_webdev(cache_path, timeout=30):
                 name, rating = row.get("model_name"), row.get("rating")
                 if name and rating is not None:
                     score = (rating - ARENA_ELO_FLOOR) / (ARENA_ELO_CEILING - ARENA_ELO_FLOOR) * 10.0
-                    out.append({"model": name, "score": max(0.0, min(10.0, score))})
+                    out.append({
+                        "model": name, "score": max(0.0, min(10.0, score)),
+                        "raw": rating, "raw_unit": "Elo",
+                    })
             offset += ARENA_PAGE_SIZE
             if offset >= payload.get("num_rows_total", 0):
                 break
@@ -203,8 +226,12 @@ def match_models(bench_entries, rows, source):
             "label": entry["model"],
             "source": source,
             "source_label": SOURCE_LABELS.get(source, source),
+            "source_url": SOURCE_URLS.get(source),
             "match_ratio": round(ratio, 3),
             "match_type": "exact" if ratio >= 0.999 else "fuzzy",
             "scores": {"coding": round(entry["score"], 1)},
+            "raw_score": entry.get("raw"),
+            "raw_unit": entry.get("raw_unit"),
+            "n_cases": entry.get("n_cases"),
         }
     return results

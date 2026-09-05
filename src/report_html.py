@@ -48,6 +48,17 @@ def _cost(v):
     return f"${v:.5f}" if v is not None else "—"
 
 
+_KNOWN_PRICE_STATUSES = {"paid", "free", "promotional_free"}
+
+
+def _price_text(value, pricing_status, fmt=_money):
+    """Never render a formatted price for a status we don't actually trust —
+    an `unknown` 0/0 must read as '—', not '$0.0000' (audit #2 §9)."""
+    if pricing_status not in _KNOWN_PRICE_STATUSES:
+        return "—"
+    return fmt(value)
+
+
 def _provider_badge(name):
     label = (name or "?").split("→")[-1].strip()
     words = [w for w in label.replace("/", " ").split() if w]
@@ -65,25 +76,40 @@ _SOURCE_SHORT = {
 }
 
 
-def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=False):
-    key = " data-key='quality'" if sortable else ""
+def _quality_span(score, label=None, ratio=None, source_label=None,
+                   raw_score=None, raw_unit=None, match_type=None):
+    """The inner <span> only — callers that need to pack several source
+    scores into one table cell (Model Explorer) use this directly instead of
+    `_quality_cell`, which wraps a single one in its own <td>."""
     if score is None:
-        return f"<td{key} data-value='-1' class='muted'>—</td>"
+        return "—"
     pct = max(0.0, min(100.0, score * 10))
     tier = "tier-good" if score >= 6.5 else ("tier-mid" if score >= 3.5 else "tier-low")
-    tooltip = f"{source_label or 'Match automático'}: {score:.1f}/10"
+    tooltip = f"{source_label or 'Match automático'}"
+    if raw_score is not None:
+        tooltip += f" — {raw_score:g}{(' ' + raw_unit) if raw_unit else ''}"
+    tooltip += f" · normalizado {score:.1f}/10"
     if label:
         tooltip += f" · match ‘{label}’"
     if ratio is not None:
-        tooltip += f" ({ratio * 100:.0f}% similitud de nombre)"
+        tooltip += f" ({ratio * 100:.0f}% similitud de nombre{', fuzzy' if match_type == 'fuzzy' else ''})"
     tooltip += ". Puntuaciones de benchmarks distintos no son directamente comparables entre sí."
     short_source = _SOURCE_SHORT.get(source_label, source_label or "auto")
     return (
-        f"<td{key} data-value='{score}'><span class='qcell' title='{_esc(tooltip)}'>"
+        f"<span class='qcell' title='{_esc(tooltip)}'>"
         f"<span class='qbar'><span class='qbar-fill {tier}' style='width:{pct:.0f}%'></span></span>"
         f"<span class='qval'>{score:.1f}</span>"
-        f"<span class='qsrc'>{_esc(short_source)}</span></span></td>"
+        f"<span class='qsrc'>{_esc(short_source)}</span></span>"
     )
+
+
+def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=False,
+                   raw_score=None, raw_unit=None, match_type=None):
+    key = " data-key='quality'" if sortable else ""
+    value = "-1" if score is None else str(score)
+    span = _quality_span(score, label, ratio, source_label, raw_score, raw_unit, match_type)
+    cls = " class='muted'" if score is None else ""
+    return f"<td{key} data-value='{value}'{cls}>{span}</td>"
 
 
 def _num_td(value, text, key=None):
@@ -92,86 +118,107 @@ def _num_td(value, text, key=None):
     return f"<td{attr} data-value='{v}' class='num'>{text}</td>"
 
 
-def _section_free(recs, scored_categories):
-    rows = []
+def _quality_cell_from(r):
+    return _quality_cell(
+        r.get("quality_score"), r.get("quality_label"), r.get("quality_match_ratio"),
+        r.get("quality_source_label"), raw_score=r.get("quality_raw"),
+        raw_unit=r.get("quality_raw_unit"), match_type=r.get("quality_match_type"),
+    )
+
+
+def _empty_categories_note(recs):
+    empty = [LABELS[c] for c in LABELS if not recs.get(c, {}).get("sources")]
+    if not empty:
+        return ""
+    return f"<p class='muted note'>Próximamente: {' · '.join(empty)} (sin benchmark automatizado todavía).</p>"
+
+
+def _iter_cat_sources(recs):
+    """Yields (category_label, source_key, source_data) for every (category,
+    source) pair that actually has data — never a merged/combined ranking."""
     for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='4' class='muted'>{NO_BENCH_NOTE}</td></tr>")
-            continue
-        r = recs[cat]["best_free"]
+        for source, sdata in recs.get(cat, {}).get("sources", {}).items():
+            yield label, source, sdata
+
+
+def _section_free(recs):
+    rows = []
+    for label, source, sdata in _iter_cat_sources(recs):
+        r = sdata["best_free"]
         if not r:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='4' class='muted'>Sin candidato gratis puntuado</td></tr>")
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}"
+            f"{_quality_cell_from(r)}"
             f"<td>{_provider_badge(r['provider'])}</td>"
-            f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}</tr>"
+            f"{_num_td(r['input'], _price_text(r['input'], r['pricing_status']))}"
+            f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}</tr>"
         )
+    if not rows:
+        rows.append("<tr><td class='usage'>—</td><td colspan='4' class='muted'>Ningún modelo gratuito puntuado todavía</td></tr>")
     return "".join(rows)
 
 
-def _section_paid_value(recs, scored_categories):
+def _section_paid_value(recs):
     rows = []
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='6' class='muted'>{NO_BENCH_NOTE}</td></tr>")
-            continue
-        r = recs[cat]["best_paid_value"]
+    for label, source, sdata in _iter_cat_sources(recs):
+        r = sdata["best_paid_value"]
         if not r:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='6' class='muted'>Ningún modelo supera el mínimo de calidad</td></tr>")
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
-            f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}"
+            f"{_num_td(r['input'], _price_text(r['input'], r['pricing_status']))}"
+            f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}"
+            f"{_quality_cell_from(r)}"
             f"{_num_td(r.get('value_score'), r.get('value_score', '—'))}</tr>"
         )
+    if not rows:
+        rows.append("<tr><td class='usage'>—</td><td colspan='6' class='muted'>Ningún modelo de pago supera el mínimo de calidad</td></tr>")
     return "".join(rows)
 
 
-def _section_paid_quality(recs, scored_categories):
+def _section_paid_quality(recs):
     rows = []
-    for cat, label in LABELS.items():
-        if cat not in scored_categories:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='5' class='muted'>{NO_BENCH_NOTE}</td></tr>")
-            continue
-        r = recs[cat]["best_paid_quality"]
+    for label, source, sdata in _iter_cat_sources(recs):
+        r = sdata["best_paid_quality"]
         if not r:
-            rows.append(f"<tr><td class='usage'>{label}</td><td colspan='5' class='muted'>—</td></tr>")
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
             f"<td>{_provider_badge(r['provider'])}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
-            f"{_num_td(r['input'], _money(r['input']))}{_num_td(r['output'], _money(r['output']))}"
-            f"{_quality_cell(r.get('quality_score'), r.get('quality_label'), r.get('quality_match_ratio'), r.get('quality_source_label'))}</tr>"
+            f"{_num_td(r['input'], _price_text(r['input'], r['pricing_status']))}"
+            f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}"
+            f"{_quality_cell_from(r)}</tr>"
         )
+    if not rows:
+        rows.append("<tr><td class='usage'>—</td><td colspan='5' class='muted'>Sin candidatos de pago puntuados</td></tr>")
     return "".join(rows)
 
 
-def _section_top5(recs, scored_categories):
+def _section_top5(recs):
     blocks = []
-    for cat, label in LABELS.items():
-        blocks.append(f"<h3>{label}</h3>")
-        if cat not in scored_categories:
-            blocks.append(f"<p class='muted'>{NO_BENCH_NOTE}</p>")
-            continue
-        top = recs[cat]["top_paid_value"]
+    any_block = False
+    for label, source, sdata in _iter_cat_sources(recs):
+        top = sdata["top_paid_value"]
         if not top:
-            blocks.append("<p class='muted'>Sin candidatos de pago que superen el mínimo de calidad configurado.</p>")
             continue
+        any_block = True
+        blocks.append(f"<h3>{label} · {_esc(sdata['source_label'])}</h3>")
         items = "".join(
             f"<li><span class='rank'>{i}</span><div><strong>{_esc(r['model'])}</strong> vía "
             f"{_provider_badge(r['provider'])}<div class='meta'>"
             f"calidad {r.get('quality_score','—')}/10 · coste estimado {_cost(r['task_cost'])} "
-            f"({_money(r['input'])} in / {_money(r['output'])} out) · Radar Value {r.get('value_score','—')}"
+            f"({_price_text(r['input'], r['pricing_status'])} in / {_price_text(r['output'], r['pricing_status'])} out) "
+            f"· Radar Value {r.get('value_score','—')}"
             f"</div></div></li>"
             for i, r in enumerate(top, 1)
         )
         blocks.append(f"<ol class='top5'>{items}</ol>")
+    if not any_block:
+        blocks.append("<p class='muted'>Sin candidatos de pago que superen el mínimo de calidad configurado.</p>")
     return "".join(blocks)
 
 
@@ -201,6 +248,18 @@ def _section_opportunities(opportunities):
     )
 
 
+def _changes_period_label(snapshot, day):
+    previous_day = snapshot.get("previous_snapshot_date")
+    if not previous_day:
+        return "sin histórico"
+    try:
+        d_prev = datetime.fromisoformat(previous_day).date()
+        d_today = datetime.fromisoformat(day).date()
+    except ValueError:
+        return f"vs {previous_day}"
+    return "vs ayer" if (d_today - d_prev).days == 1 else f"vs último snapshot · {previous_day}"
+
+
 def _section_changes(has_previous, drops, increases):
     if not has_previous:
         return "<p class='muted'>Todavía no hay snapshot de un día anterior para comparar.</p>"
@@ -227,29 +286,50 @@ def _section_changes(has_previous, drops, increases):
 
 
 def _explorer_row(m):
-    quality_html = _quality_cell(m.get("quality_coding"), None, None, m.get("quality_source_label"))
+    # A model can be scored by several sources at once — show each independently,
+    # never averaged/merged (audit #2 §2).
+    qbs = m.get("quality_by_source") or {}
+    if qbs:
+        best_score = max((q["score"] for q in qbs.values() if q["score"] is not None), default=-1)
+        spans = "".join(
+            _quality_span(q["score"], None, None, q.get("source_label"),
+                          raw_score=q.get("raw_score"), raw_unit=q.get("raw_unit"),
+                          match_type=q.get("match_type"))
+            for q in qbs.values()
+        )
+        quality_html = f"<td data-key='equality' data-value='{best_score}' class='quality-multi'>{spans}</td>"
+    else:
+        quality_html = "<td data-key='equality' data-value='-1' class='muted'>—</td>"
     if m["free"]:
         status_badge, status_cls = "Gratis", "pos"
     elif m.get("pricing_status") == "paid":
         status_badge, status_cls = "Pago", "neutral"
     else:
         status_badge, status_cls = "Desconocido", "neg"
-    search_text = _esc(f"{m['model']} {m['best_provider']}".lower())
+    search_bits = f"{m['model']} {m.get('search_text', m['best_provider'])}".lower()
+    search_text = _esc(search_bits)
     routes_json = _esc(json.dumps(m["routes"], ensure_ascii=False))
     n_routes = m["routes_count"]
     route_word = "ruta" if n_routes == 1 else "rutas"
     model_esc = _esc(m["model"])
+    known = m["pricing_status"] in _KNOWN_PRICE_STATUSES
+    price_in = _price_text(m["input"], m["pricing_status"])
+    price_out = _price_text(m["output"], m["pricing_status"])
+    cost_text = _cost(m["weighted_cost"]) if known else "—"
+    # Sentinel (None -> "-999999" in _num_td) so an unknown price never sorts
+    # as if it were the cheapest option in the table.
+    in_value, out_value, cost_value = (m["input"], m["output"], m["weighted_cost"]) if known else (None, None, None)
     return (
-        f"<tr class='exp-row' data-search='{search_text}'>"
+        f"<tr class='exp-row' data-search='{search_text}' data-pricing-status='{_esc(m['pricing_status'])}'>"
         f"<td><input type='checkbox' class='cmp-check' data-model='{model_esc}' aria-label='Seleccionar {model_esc} para comparar'></td>"
         f"<td class='usage'>"
         f"<button type='button' class='exp-toggle' aria-expanded='false' data-routes='{routes_json}'>"
         f"{model_esc}<span class='exp-count'>{n_routes} {route_word}</span></button></td>"
         f"<td>{_provider_badge(m['best_provider'])}</td>"
-        f"{_num_td(m['weighted_cost'], _cost(m['weighted_cost']), 'ecost')}"
-        f"{_num_td(m['input'], _money(m['input']), 'einput')}"
-        f"{_num_td(m['output'], _money(m['output']), 'eoutput')}"
-        f"<td data-key='ecustom' data-value='{m['weighted_cost']}' class='num'>—</td>"
+        f"{_num_td(cost_value, cost_text, 'ecost')}"
+        f"{_num_td(in_value, price_in, 'einput')}"
+        f"{_num_td(out_value, price_out, 'eoutput')}"
+        f"<td data-key='ecustom' data-value='-999999' class='num'>—</td>"
         f"{quality_html}"
         f"<td><span class='pill {status_cls}'>{status_badge}</span></td>"
         f"</tr>"
@@ -281,7 +361,7 @@ def _section_explorer(explorer, task_profiles=None):
         "<th></th><th>Modelo</th><th>Proveedor más barato</th>"
         "<th data-key='ecost'>Coste estimado</th><th data-key='einput'>$/M input</th>"
         "<th data-key='eoutput'>$/M output</th><th data-key='ecustom'>Coste personalizado</th>"
-        "<th>Calidad</th><th>Estado</th>"
+        "<th data-key='equality'>Calidad</th><th>Estado</th>"
         "</tr></thead>"
         f"<tbody>{rows}</tbody></table></div>"
         f"<p class='muted note' id='explorer-count'>{len(explorer)} modelos únicos. "
@@ -341,7 +421,7 @@ def _section_methodology(config):
 """
 
 
-def _sparkline(trend, width=560, height=64):
+def _sparkline(trend, width=560, height=64, title=None):
     if not trend:
         return ""
     points = trend["points"]
@@ -361,9 +441,10 @@ def _sparkline(trend, width=560, height=64):
     delta_cls = "pos" if delta <= 0 else "neg"
     delta_sign = "" if delta <= 0 else "+"
     model_esc = _esc(trend["model"])
+    source_suffix = f" · {_esc(title)}" if title else ""
     return (
         "<div class='spark'>"
-        f"<div class='spark-head'>Evolución de <strong>{model_esc}</strong> "
+        f"<div class='spark-head'>Evolución de <strong>{model_esc}</strong>{source_suffix} "
         f"<span class='pill {delta_cls}'>{delta_sign}{delta:.1f}% en {n} días</span></div>"
         f"<svg viewBox='0 0 {width} {height}' preserveAspectRatio='none' class='spark-svg' role='img' "
         f"aria-label='Evolución de coste de {model_esc} en los últimos {n} días'>"
@@ -481,6 +562,11 @@ p { text-wrap: pretty; }
 /* rotate counter-clockwise so the bright edge leads the sweep and the fade trails behind it */
 @keyframes spin { to { transform: rotate(-360deg); } }
 @media (max-width: 760px) { .radar-wrap { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .radar-sweep { animation: none; opacity: 0.3; }
+  .gsap-ready .reveal { opacity: 1 !important; transform: none !important; }
+}
 
 /* ---------- status chips ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 4px; }
@@ -545,6 +631,9 @@ table.grid td.muted { color: var(--muted); white-space: normal; }
   font-size: 0.66rem; letter-spacing: .01em; color: var(--muted); background: var(--panel-2, var(--panel));
   border: 1px solid var(--border); border-radius: 999px; padding: 1px 6px; white-space: nowrap;
 }
+td.quality-multi { display: table-cell; }
+td.quality-multi .qcell { display: flex; margin-bottom: 4px; }
+td.quality-multi .qcell:last-child { margin-bottom: 0; }
 
 /* ---------- freshness ---------- */
 .freshness { display: inline-flex; align-items: center; gap: 6px; }
@@ -705,6 +794,11 @@ SCRIPT = """
     });
   });
 
+  // --- model explorer: shared element refs (declared once, before any block that uses them) ---
+  var explorerTable = document.getElementById('explorer-table');
+  var explorerCount = document.getElementById('explorer-count');
+  var searchInput = document.getElementById('model-search');
+
   // --- model explorer: custom token profile recalculates "coste personalizado" live ---
   var tokInput = document.getElementById('tok-input');
   var tokOutput = document.getElementById('tok-output');
@@ -712,11 +806,20 @@ SCRIPT = """
     function recalcCustomCost() {
       var inTok = Math.max(0, parseFloat(tokInput.value) || 0);
       var outTok = Math.max(0, parseFloat(tokOutput.value) || 0);
+      var knownStatus = { free: 1, paid: 1, promotional_free: 1 };
       explorerTable.querySelectorAll('tbody tr.exp-row').forEach(function (row) {
+        var customCell = row.querySelector('[data-key="ecustom"]');
+        if (!customCell) { return; }
+        var status = row.getAttribute('data-pricing-status');
+        if (!knownStatus[status]) {
+          // Never compute a fake cost for a price we don't actually trust.
+          customCell.setAttribute('data-value', '-999999');
+          customCell.textContent = '—';
+          return;
+        }
         var inCell = row.querySelector('[data-key="einput"]');
         var outCell = row.querySelector('[data-key="eoutput"]');
-        var customCell = row.querySelector('[data-key="ecustom"]');
-        if (!inCell || !outCell || !customCell) { return; }
+        if (!inCell || !outCell) { return; }
         var pIn = parseFloat(inCell.getAttribute('data-value'));
         var pOut = parseFloat(outCell.getAttribute('data-value'));
         var cost = (inTok / 1000000) * pIn + (outTok / 1000000) * pOut;
@@ -730,9 +833,6 @@ SCRIPT = """
   }
 
   // --- model explorer: search filter ---
-  var searchInput = document.getElementById('model-search');
-  var explorerTable = document.getElementById('explorer-table');
-  var explorerCount = document.getElementById('explorer-count');
   if (searchInput && explorerTable) {
     searchInput.addEventListener('input', function () {
       var needle = searchInput.value.trim().toLowerCase();
@@ -773,12 +873,24 @@ SCRIPT = """
         var routes;
         try { routes = JSON.parse(btn.getAttribute('data-routes')); } catch (e) { routes = []; }
         var cols = row.children.length;
+        var known = { free: 1, paid: 1, promotional_free: 1 };
         var html = "<div class='exp-routes'>" + routes.map(function (r) {
           var status = r.pricing_status === 'free' ? 'Gratis' : (r.pricing_status === 'paid' ? 'Pago' : 'Desconocido');
+          var isKnown = !!known[r.pricing_status];
+          var priceText = isKnown ? ("$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out") : "— precio no disponible";
+          var costText = isKnown ? ("coste estimado $" + r.weighted_cost.toFixed(5)) : "";
+          var extras = [];
+          if (r.context_length) { extras.push(Math.round(r.context_length / 1000) + "K contexto"); }
+          if (r.quantization) { extras.push(escapeHtml(r.quantization)); }
+          if (r.latency_p50 != null) { extras.push("latencia p50 " + r.latency_p50 + " ms"); }
+          if (r.throughput_p50 != null) { extras.push(r.throughput_p50 + " tok/s"); }
+          if (r.uptime_last_1d != null) { extras.push((r.uptime_last_1d * 100).toFixed(2) + "% uptime"); }
+          var extrasHtml = extras.length ? "<span class='meta'>" + extras.join(' · ') + "</span>" : "";
           return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
             "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" +
-            "<span class='meta'>$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out</span>" +
-            "<span class='meta'>coste estimado $" + r.weighted_cost.toFixed(5) + "</span>" +
+            "<span class='meta'>" + priceText + "</span>" +
+            (costText ? "<span class='meta'>" + costText + "</span>" : "") +
+            extrasHtml +
             "<span class='pill neutral'>" + status + "</span></div>";
         }).join('') + "</div>";
         var tr = document.createElement('tr');
@@ -851,6 +963,17 @@ SCRIPT = """
 
   // --- scroll reveal + hero counters ---
   if (!window.gsap) { return; }
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reduced motion: keep every number/reveal fully functional, just skip the animation itself.
+  if (reduceMotion) {
+    document.querySelectorAll('.stat-num').forEach(function (el) {
+      var target = parseFloat(el.getAttribute('data-value'));
+      if (!isNaN(target)) { el.textContent = Math.round(target); }
+    });
+    return;
+  }
+
   var hasScrollTrigger = !!window.ScrollTrigger;
   if (hasScrollTrigger) { gsap.registerPlugin(ScrollTrigger); }
   document.documentElement.classList.add('gsap-ready');
@@ -886,7 +1009,7 @@ PAGE_HEAD = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Price Radar — {day}</title>
+<title>Daily AI Radar — {day}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -894,7 +1017,7 @@ PAGE_HEAD = """<!doctype html>
 </head>
 <body>
 <div class="topbar">
-  <span class="brand"><span class="brand-mark"></span>AI Price Radar</span>
+  <span class="brand"><span class="brand-mark"></span>Daily AI Radar</span>
   <span class="freshness" id="freshness" data-generated-at="{generated_at}">
     <span class="dot"></span><span class="freshness-text">Actualizado {generated_label}</span>
   </span>
@@ -917,6 +1040,7 @@ PAGE_HEAD = """<!doctype html>
       <div class="stat-tile"><span class="stat-num" data-value="{unique_models}">{unique_models}</span><div class="stat-label">modelos únicos</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{models_kept}">{models_kept}</span><div class="stat-label">rutas / precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{sources_with_data}">{sources_with_data}</span><div class="stat-label">proveedores de precios</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{openrouter_routes}">{openrouter_routes}</span><div class="stat-label">rutas OpenRouter analizadas</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{scored_routes}">{scored_routes}</span><div class="stat-label">rutas puntuadas</div></div>
     </div>
     <div class="chips">{chips}</div>
@@ -960,31 +1084,30 @@ def _toc_html(entries):
 def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, config=None):
     recs = snapshot["recommendations"]
     price_trends = price_trends or {}
-    scored_categories = {
-        cat for cat in LABELS
-        if any(
-            r.get("quality") and r["quality"]["scores"].get(cat) is not None
-            for r in snapshot["models"]
-        )
-    }
+    empty_note = _empty_categories_note(recs)
+
+    # Coding is the only category with any benchmark today; render whichever
+    # source(s) have a trend without assuming which one exists.
+    coding_trends = (price_trends or {}).get("coding", {})
+    sparkline_html = "".join(_sparkline(t, title=t.get("source_label")) for t in coding_trends.values() if t)
 
     free_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
         "<th>Uso</th><th>Modelo</th><th>Calidad</th><th>Proveedor</th><th>$/M input</th><th>$/M output</th>"
-        f"</tr></thead><tbody>{_section_free(recs, scored_categories)}</tbody></table></div>"
+        f"</tr></thead><tbody>{_section_free(recs)}</tbody></table></div>{empty_note}"
     )
     paid_value_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
         "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th>"
         "<th>Calidad</th><th>Radar Value</th></tr></thead>"
-        f"<tbody>{_section_paid_value(recs, scored_categories)}</tbody></table></div>"
-        + _sparkline(price_trends.get("coding"))
+        f"<tbody>{_section_paid_value(recs)}</tbody></table></div>{empty_note}"
+        + sparkline_html
     )
     paid_quality_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
         "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th>"
         "<th>Calidad</th></tr></thead>"
-        f"<tbody>{_section_paid_quality(recs, scored_categories)}</tbody></table></div>"
+        f"<tbody>{_section_paid_quality(recs)}</tbody></table></div>{empty_note}"
     )
 
     raw_blocks = [
@@ -1008,11 +1131,12 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
             "Solo se compara cuando la identidad del modelo está confirmada (mismo id normalizado o alias verificado) "
             "y el precio de ambos lados es conocido (no `unknown`/dedicado).",
         ),
-        ("Top 5 de pago por calidad/precio", _section_top5(recs, scored_categories), ""),
+        ("Top 5 de pago por calidad/precio", _section_top5(recs), ""),
         (
-            "Movimientos de precio",
+            f"Movimientos de precio ({_changes_period_label(snapshot, day)})",
             _section_changes(has_previous, snapshot["changes"]["drops"], snapshot["changes"]["increases"]),
-            "Solo se compara la misma ruta/proveedor frente al día anterior — nunca dos proveedores distintos.",
+            "Solo se compara la misma ruta/proveedor frente al snapshot anterior — nunca dos proveedores distintos, "
+            "y un cambio en el perfil de tokens nunca se cuenta como cambio de tarifa.",
         ),
         (
             "Explorador de modelos",
@@ -1043,6 +1167,7 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
         unique_models=snapshot["stats"].get("unique_models", 0),
         models_kept=snapshot["stats"]["models_kept"],
         sources_with_data=snapshot["stats"]["providers_with_data"],
+        openrouter_routes=snapshot["stats"].get("openrouter_routes_analyzed", 0),
         scored_routes=snapshot["stats"]["scored_routes"],
         chips=_status_chips(snapshot["provider_status"]),
         toc=toc,
