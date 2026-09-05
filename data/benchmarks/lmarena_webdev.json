@@ -1,1083 +1,1449 @@
-[
-  {
-    "model": "qwen3.8-max-0902",
-    "score": 9.259189963062699,
-    "numeric": [
-      "3",
-      "8",
-      "0902"
-    ],
-    "text_key": "qwenmax"
-  },
-  {
-    "model": "claude-opus-5-max",
-    "score": 9.223551888653308,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "claudeopusmax"
-  },
-  {
-    "model": "kimi-k3-max",
-    "score": 9.0455722802753,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "kimikmax"
-  },
-  {
-    "model": "qwen3.8-max",
-    "score": 8.989112951445922,
-    "numeric": [
-      "3",
-      "8"
-    ],
-    "text_key": "qwenmax"
-  },
-  {
-    "model": "claude-opus-5-high",
-    "score": 8.888942556909626,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "claudeopushigh"
-  },
-  {
-    "model": "hy4-preview",
-    "score": 8.48979036939214,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "hypreview"
-  },
-  {
-    "model": "grok-4.6-high",
-    "score": 8.487747479136324,
-    "numeric": [
-      "4",
-      "6"
-    ],
-    "text_key": "grokhigh"
-  },
-  {
-    "model": "claude-fable-5",
-    "score": 8.472442752661264,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "claudefable"
-  },
-  {
-    "model": "qwen3.8-flash-next",
-    "score": 8.374490880336031,
-    "numeric": [
-      "3",
-      "8"
-    ],
-    "text_key": "qwenflashnext"
-  },
-  {
-    "model": "gpt-5.6-sol-xhigh (codex-harness)",
-    "score": 8.330744851906653,
-    "numeric": [
-      "5",
-      "6"
-    ],
-    "text_key": "gptsolxhighcodexharness"
-  },
-  {
-    "model": "glm-5.3-max",
-    "score": 8.22781284606921,
-    "numeric": [
-      "5",
-      "3"
-    ],
-    "text_key": "glmmax"
-  },
-  {
-    "model": "glm-5.3-flash",
-    "score": 8.177136797883351,
-    "numeric": [
-      "5",
-      "3"
-    ],
-    "text_key": "glmflash"
-  },
-  {
-    "model": "qwen3.8-27b",
-    "score": 8.114272447160243,
-    "numeric": [
-      "3",
-      "8",
-      "27"
-    ],
-    "text_key": "qwenb"
-  },
-  {
-    "model": "gemini-3.7-flash-high",
-    "score": 7.957372413914598,
-    "numeric": [
-      "3",
-      "7"
-    ],
-    "text_key": "geminiflashhigh"
-  },
-  {
-    "model": "glm-5.2-max",
-    "score": 7.937441112607388,
-    "numeric": [
-      "5",
-      "2"
-    ],
-    "text_key": "glmmax"
-  },
-  {
-    "model": "deepseek-v4-pro-high-20260813",
-    "score": 7.922604487961311,
-    "numeric": [
-      "4",
-      "2026",
-      "08",
-      "13"
-    ],
-    "text_key": "deepseekvprohigh"
-  },
-  {
-    "model": "deepseek-v4-flash-high",
-    "score": 7.882698773490714,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "deepseekvflashhigh"
-  },
-  {
-    "model": "claude-opus-4-8-high",
-    "score": 7.659924686060399,
-    "numeric": [
-      "4",
-      "8"
-    ],
-    "text_key": "claudeopushigh"
-  },
-  {
-    "model": "claude-opus-4-7",
-    "score": 7.586602532857575,
-    "numeric": [
-      "4",
-      "7"
-    ],
-    "text_key": "claudeopus"
-  },
-  {
-    "model": "claude-opus-4-7-high",
-    "score": 7.580331691455728,
-    "numeric": [
-      "4",
-      "7"
-    ],
-    "text_key": "claudeopushigh"
-  },
-  {
-    "model": "grok-4.5",
-    "score": 7.568043798766135,
-    "numeric": [
-      "4",
-      "5"
-    ],
-    "text_key": "grok"
-  },
-  {
-    "model": "claude-opus-4-6-high",
-    "score": 7.45143588902898,
-    "numeric": [
-      "4",
-      "6"
-    ],
-    "text_key": "claudeopushigh"
-  },
-  {
-    "model": "claude-opus-4-8",
-    "score": 7.374341500346427,
-    "numeric": [
-      "4",
-      "8"
-    ],
-    "text_key": "claudeopus"
-  },
-  {
-    "model": "muse-spark-1.1",
-    "score": 7.371107003885433,
-    "numeric": [
-      "1",
-      "1"
-    ],
-    "text_key": "musespark"
-  },
-  {
-    "model": "gemini-3.6-flash-high",
-    "score": 7.351703568626807,
-    "numeric": [
-      "3",
-      "6"
-    ],
-    "text_key": "geminiflashhigh"
-  },
-  {
-    "model": "claude-sonnet-5-high",
-    "score": 7.338173933294948,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "claudesonnethigh"
-  },
-  {
-    "model": "claude-opus-4-6",
-    "score": 7.331345724255575,
-    "numeric": [
-      "4",
-      "6"
-    ],
-    "text_key": "claudeopus"
-  },
-  {
-    "model": "muse-spark-1.2 (xHigh)",
-    "score": 7.30249305537487,
-    "numeric": [
-      "1",
-      "2"
-    ],
-    "text_key": "musesparkxhigh"
-  },
-  {
-    "model": "seed-2.1-pro-preview",
-    "score": 7.150131755441174,
-    "numeric": [
-      "2",
-      "1"
-    ],
-    "text_key": "seedpropreview"
-  },
-  {
-    "model": "claude-sonnet-4-6",
-    "score": 7.1453121234155725,
-    "numeric": [
-      "4",
-      "6"
-    ],
-    "text_key": "claudesonnet"
-  },
-  {
-    "model": "gpt-5.6-luna-xhigh (codex-harness)",
-    "score": 7.112664077374867,
-    "numeric": [
-      "5",
-      "6"
-    ],
-    "text_key": "gptlunaxhighcodexharness"
-  },
-  {
-    "model": "gpt-5.6-terra-xhigh (codex-harness)",
-    "score": 7.1016838549124115,
-    "numeric": [
-      "5",
-      "6"
-    ],
-    "text_key": "gptterraxhighcodexharness"
-  },
-  {
-    "model": "qwen3.7-max-20260517",
-    "score": 7.0846717018006755,
-    "numeric": [
-      "3",
-      "7",
-      "2026",
-      "05",
-      "17"
-    ],
-    "text_key": "qwenmax"
-  },
-  {
-    "model": "hy3",
-    "score": 7.018156201620442,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "hy"
-  },
-  {
-    "model": "gpt-5.5-xhigh (codex-harness)",
-    "score": 6.994899086319429,
-    "numeric": [
-      "5",
-      "5"
-    ],
-    "text_key": "gptxhighcodexharness"
-  },
-  {
-    "model": "kimi-k2.6",
-    "score": 6.982942709759206,
-    "numeric": [
-      "2",
-      "6"
-    ],
-    "text_key": "kimik"
-  },
-  {
-    "model": "glm-5.1",
-    "score": 6.981490457167237,
-    "numeric": [
-      "5",
-      "1"
-    ],
-    "text_key": "glm"
-  },
-  {
-    "model": "gemini-3.5-flash-high",
-    "score": 6.8866513616288305,
-    "numeric": [
-      "3",
-      "5"
-    ],
-    "text_key": "geminiflashhigh"
-  },
-  {
-    "model": "claude-opus-4-5-20251101-high-32k",
-    "score": 6.8091637588122955,
-    "numeric": [
-      "4",
-      "5",
-      "2025",
-      "11",
-      "01",
-      "32"
-    ],
-    "text_key": "claudeopushighk"
-  },
-  {
-    "model": "gemini-3.5-flash-medium",
-    "score": 6.773683746453094,
-    "numeric": [
-      "3",
-      "5"
-    ],
-    "text_key": "geminiflashmedium"
-  },
-  {
-    "model": "minimax-m3",
-    "score": 6.709627594544179,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "minimaxm"
-  },
-  {
-    "model": "gpt-5.5-high (codex-harness)",
-    "score": 6.702100699461263,
-    "numeric": [
-      "5",
-      "5"
-    ],
-    "text_key": "gpthighcodexharness"
-  },
-  {
-    "model": "qwen3.6-max-preview",
-    "score": 6.609263255622246,
-    "numeric": [
-      "3",
-      "6"
-    ],
-    "text_key": "qwenmaxpreview"
-  },
-  {
-    "model": "mimo-v2.5-pro",
-    "score": 6.573133851616291,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "mimovpro"
-  },
-  {
-    "model": "kimi-k2.7-code",
-    "score": 6.5332010582619295,
-    "numeric": [
-      "2",
-      "7"
-    ],
-    "text_key": "kimikcode"
-  },
-  {
-    "model": "claude-opus-4-5-20251101",
-    "score": 6.474578317167553,
-    "numeric": [
-      "4",
-      "5",
-      "2025",
-      "11",
-      "01"
-    ],
-    "text_key": "claudeopus"
-  },
-  {
-    "model": "deepseek-v4-pro-high-preview",
-    "score": 6.420768833609225,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "deepseekvprohighpreview"
-  },
-  {
-    "model": "gpt-5.4-high (codex-harness)",
-    "score": 6.411963108421955,
-    "numeric": [
-      "5",
-      "4"
-    ],
-    "text_key": "gpthighcodexharness"
-  },
-  {
-    "model": "qwen3.6-plus",
-    "score": 6.377347332741843,
-    "numeric": [
-      "3",
-      "6"
-    ],
-    "text_key": "qwenplus"
-  },
-  {
-    "model": "gpt-5.5 (codex-harness)",
-    "score": 6.342260276363245,
-    "numeric": [
-      "5",
-      "5"
-    ],
-    "text_key": "gptcodexharness"
-  },
-  {
-    "model": "gemini-3.5-flash-lite",
-    "score": 6.238291447630897,
-    "numeric": [
-      "3",
-      "5"
-    ],
-    "text_key": "geminiflashlite"
-  },
-  {
-    "model": "gemini-3.1-pro-preview",
-    "score": 6.196096941832288,
-    "numeric": [
-      "3",
-      "1"
-    ],
-    "text_key": "geminipropreview"
-  },
-  {
-    "model": "deepseek-v4-pro",
-    "score": 6.193718671553984,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "deepseekvpro"
-  },
-  {
-    "model": "gpt-5.4-medium (codex-harness)",
-    "score": 6.154881854992533,
-    "numeric": [
-      "5",
-      "4"
-    ],
-    "text_key": "gptmediumcodexharness"
-  },
-  {
-    "model": "gemini-3-pro",
-    "score": 6.10410949718046,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "geminipro"
-  },
-  {
-    "model": "mimo-v2.5",
-    "score": 6.0978915414821095,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "mimov"
-  },
-  {
-    "model": "gemini-3-flash",
-    "score": 6.095096797661929,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "geminiflash"
-  },
-  {
-    "model": "kimi-k2.5-thinking",
-    "score": 6.080834051676365,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "kimikthinking"
-  },
-  {
-    "model": "glm-5",
-    "score": 6.0712528261225716,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "glm"
-  },
-  {
-    "model": "glm-4.7",
-    "score": 6.058205644234866,
-    "numeric": [
-      "4",
-      "7"
-    ],
-    "text_key": "glm"
-  },
-  {
-    "model": "mimo-v2-pro",
-    "score": 6.045262842999612,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "mimovpro"
-  },
-  {
-    "model": "deepseek-v4-flash-high-preview",
-    "score": 6.014047857492034,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "deepseekvflashhighpreview"
-  },
-  {
-    "model": "gpt-5-medium",
-    "score": 5.863072403105258,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "gptmedium"
-  },
-  {
-    "model": "gpt-5.2",
-    "score": 5.830488267945149,
-    "numeric": [
-      "5",
-      "2"
-    ],
-    "text_key": "gpt"
-  },
-  {
-    "model": "gpt-5.3-codex (codex-harness)",
-    "score": 5.729240899628585,
-    "numeric": [
-      "5",
-      "3"
-    ],
-    "text_key": "gptcodexcodexharness"
-  },
-  {
-    "model": "inkling",
-    "score": 5.7234071481102236,
-    "numeric": [],
-    "text_key": "inkling"
-  },
-  {
-    "model": "kimi-k2.5-instant",
-    "score": 5.6916948095884665,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "kimikinstant"
-  },
-  {
-    "model": "Inkling Small",
-    "score": 5.661289790140453,
-    "numeric": [],
-    "text_key": "inklingsmall"
-  },
-  {
-    "model": "glm-5v-turbo",
-    "score": 5.625652670066401,
-    "numeric": [
-      "5"
-    ],
-    "text_key": "glmvturbo"
-  },
-  {
-    "model": "minimax-m2.7",
-    "score": 5.6086527137254905,
-    "numeric": [
-      "2",
-      "7"
-    ],
-    "text_key": "minimaxm"
-  },
-  {
-    "model": "qwen3.5-397b-a17b",
-    "score": 5.602409585230481,
-    "numeric": [
-      "3",
-      "5",
-      "397",
-      "17"
-    ],
-    "text_key": "qwenbab"
-  },
-  {
-    "model": "gpt-5.4-mini-high",
-    "score": 5.589943006476491,
-    "numeric": [
-      "5",
-      "4"
-    ],
-    "text_key": "gptminihigh"
-  },
-  {
-    "model": "claude-sonnet-4-5-20250929-high-32k",
-    "score": 5.532912724458489,
-    "numeric": [
-      "4",
-      "5",
-      "2025",
-      "09",
-      "29",
-      "32"
-    ],
-    "text_key": "claudesonnethighk"
-  },
-  {
-    "model": "gpt-5.1-medium",
-    "score": 5.51626115247453,
-    "numeric": [
-      "5",
-      "1"
-    ],
-    "text_key": "gptmedium"
-  },
-  {
-    "model": "claude-opus-4-1-20250805",
-    "score": 5.488364678703153,
-    "numeric": [
-      "4",
-      "1",
-      "2025",
-      "08",
-      "05"
-    ],
-    "text_key": "claudeopus"
-  },
-  {
-    "model": "gpt-5.4",
-    "score": 5.486550625908407,
-    "numeric": [
-      "5",
-      "4"
-    ],
-    "text_key": "gpt"
-  },
-  {
-    "model": "minimax-m2.1-preview",
-    "score": 5.466334492898563,
-    "numeric": [
-      "2",
-      "1"
-    ],
-    "text_key": "minimaxmpreview"
-  },
-  {
-    "model": "claude-sonnet-4-5-20250929",
-    "score": 5.445312170678034,
-    "numeric": [
-      "4",
-      "5",
-      "2025",
-      "09",
-      "29"
-    ],
-    "text_key": "claudesonnet"
-  },
-  {
-    "model": "minimax-m2.5",
-    "score": 5.426571278184631,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "minimaxm"
-  },
-  {
-    "model": "gemini-3-flash (thinking-minimal)",
-    "score": 5.412973228379866,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "geminiflashthinkingminimal"
-  },
-  {
-    "model": "grok-4.20-beta-0309-reasoning",
-    "score": 5.2933722993381735,
-    "numeric": [
-      "4",
-      "20",
-      "0309"
-    ],
-    "text_key": "grokbetareasoning"
-  },
-  {
-    "model": "solar-pro4",
-    "score": 5.255568612544071,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "solarpro"
-  },
-  {
-    "model": "gemma-4-31b",
-    "score": 5.164245985101468,
-    "numeric": [
-      "4",
-      "31"
-    ],
-    "text_key": "gemmab"
-  },
-  {
-    "model": "gemma-4-26b-a4b",
-    "score": 5.146199791546266,
-    "numeric": [
-      "4",
-      "26",
-      "4"
-    ],
-    "text_key": "gemmabab"
-  },
-  {
-    "model": "deepseek-v3.2-thinking",
-    "score": 5.131263448391001,
-    "numeric": [
-      "3",
-      "2"
-    ],
-    "text_key": "deepseekvthinking"
-  },
-  {
-    "model": "muse-glimmer",
-    "score": 5.117733229431053,
-    "numeric": [],
-    "text_key": "museglimmer"
-  },
-  {
-    "model": "qwen3.5-122b-a10b",
-    "score": 5.0991648247428,
-    "numeric": [
-      "3",
-      "5",
-      "122",
-      "10"
-    ],
-    "text_key": "qwenbab"
-  },
-  {
-    "model": "qwen3.5-27b",
-    "score": 5.0935718514331505,
-    "numeric": [
-      "3",
-      "5",
-      "27"
-    ],
-    "text_key": "qwenb"
-  },
-  {
-    "model": "hunyuan-hy3-preview",
-    "score": 5.078447797526414,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "hunyuanhypreview"
-  },
-  {
-    "model": "grok-4.3",
-    "score": 5.072996962567253,
-    "numeric": [
-      "4",
-      "3"
-    ],
-    "text_key": "grok"
-  },
-  {
-    "model": "laguna-m.1",
-    "score": 4.965790918074001,
-    "numeric": [
-      "1"
-    ],
-    "text_key": "lagunam"
-  },
-  {
-    "model": "gpt-5.1",
-    "score": 4.882624437715043,
-    "numeric": [
-      "5",
-      "1"
-    ],
-    "text_key": "gpt"
-  },
-  {
-    "model": "glm-4.6",
-    "score": 4.881555691392239,
-    "numeric": [
-      "4",
-      "6"
-    ],
-    "text_key": "glm"
-  },
-  {
-    "model": "gpt-5.2-codex",
-    "score": 4.856923603509219,
-    "numeric": [
-      "5",
-      "2"
-    ],
-    "text_key": "gptcodex"
-  },
-  {
-    "model": "gpt-5.1-codex",
-    "score": 4.821740521925529,
-    "numeric": [
-      "5",
-      "1"
-    ],
-    "text_key": "gptcodex"
-  },
-  {
-    "model": "mimo-v2-flash (non-thinking)",
-    "score": 4.761113812633866,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "mimovflashnonthinking"
-  },
-  {
-    "model": "claude-haiku-4-5-20251001",
-    "score": 4.733038226268715,
-    "numeric": [
-      "4",
-      "5",
-      "2025",
-      "10",
-      "01"
-    ],
-    "text_key": "claudehaiku"
-  },
-  {
-    "model": "deepseek-v3.2",
-    "score": 4.685224077141953,
-    "numeric": [
-      "3",
-      "2"
-    ],
-    "text_key": "deepseekv"
-  },
-  {
-    "model": "kimi-k2-thinking-turbo",
-    "score": 4.658987682806403,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "kimikthinkingturbo"
-  },
-  {
-    "model": "laguna-xs.2",
-    "score": 4.404249186620578,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "lagunaxs"
-  },
-  {
-    "model": "minimax-m2",
-    "score": 4.343456700099873,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "minimaxm"
-  },
-  {
-    "model": "mimo-v2-flash (thinking)",
-    "score": 4.280364571453973,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "mimovflashthinking"
-  },
-  {
-    "model": "qwen3-coder-480b-a35b-instruct",
-    "score": 4.044203943406569,
-    "numeric": [
-      "3",
-      "480",
-      "35"
-    ],
-    "text_key": "qwencoderbabinstruct"
-  },
-  {
-    "model": "deepseek-v3.2-exp",
-    "score": 4.018776423554858,
-    "numeric": [
-      "3",
-      "2"
-    ],
-    "text_key": "deepseekvexp"
-  },
-  {
-    "model": "mistral-medium-3.5",
-    "score": 3.938913029306411,
-    "numeric": [
-      "3",
-      "5"
-    ],
-    "text_key": "mistralmedium"
-  },
-  {
-    "model": "KAT-Coder-Pro-V1",
-    "score": 3.8055810750160046,
-    "numeric": [
-      "1"
-    ],
-    "text_key": "katcoderprov"
-  },
-  {
-    "model": "gemini-3.1-flash-lite-preview",
-    "score": 3.8010803803049527,
-    "numeric": [
-      "3",
-      "1"
-    ],
-    "text_key": "geminiflashlitepreview"
-  },
-  {
-    "model": "qwen3.5-35b-a3b",
-    "score": 3.7502706601210125,
-    "numeric": [
-      "3",
-      "5",
-      "35",
-      "3"
-    ],
-    "text_key": "qwenbab"
-  },
-  {
-    "model": "gpt-5.1-codex-mini",
-    "score": 3.6679995802767253,
-    "numeric": [
-      "5",
-      "1"
-    ],
-    "text_key": "gptcodexmini"
-  },
-  {
-    "model": "grok-4-1-fast-reasoning",
-    "score": 3.6323412312742502,
-    "numeric": [
-      "4",
-      "1"
-    ],
-    "text_key": "grokfastreasoning"
-  },
-  {
-    "model": "qwen3.5-flash",
-    "score": 3.601170068945532,
-    "numeric": [
-      "3",
-      "5"
-    ],
-    "text_key": "qwenflash"
-  },
-  {
-    "model": "trinity-large-thinking",
-    "score": 3.600627135595633,
-    "numeric": [],
-    "text_key": "trinitylargethinking"
-  },
-  {
-    "model": "mistral-large-3",
-    "score": 3.490973584892299,
-    "numeric": [
-      "3"
-    ],
-    "text_key": "mistrallarge"
-  },
-  {
-    "model": "gemini-2.5-pro",
-    "score": 3.4426166336492656,
-    "numeric": [
-      "2",
-      "5"
-    ],
-    "text_key": "geminipro"
-  },
-  {
-    "model": "grok-4.1-thinking",
-    "score": 3.2618624263458713,
-    "numeric": [
-      "4",
-      "1"
-    ],
-    "text_key": "grokthinking"
-  },
-  {
-    "model": "devstral-2",
-    "score": 3.0534514319161787,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "devstral"
-  },
-  {
-    "model": "granite-4.1-8b",
-    "score": 3.020505590221518,
-    "numeric": [
-      "4",
-      "1",
-      "8"
-    ],
-    "text_key": "graniteb"
-  },
-  {
-    "model": "mercury-2",
-    "score": 2.7034582789122226,
-    "numeric": [
-      "2"
-    ],
-    "text_key": "mercury"
-  },
-  {
-    "model": "grok-code-fast-1",
-    "score": 2.6853876254659355,
-    "numeric": [
-      "1"
-    ],
-    "text_key": "grokcodefast"
-  },
-  {
-    "model": "grok-4-fast-reasoning",
-    "score": 2.6519753868185036,
-    "numeric": [
-      "4"
-    ],
-    "text_key": "grokfastreasoning"
-  },
-  {
-    "model": "devstral-medium-2507",
-    "score": 1.628723906948383,
-    "numeric": [
-      "2507"
-    ],
-    "text_key": "devstralmedium"
-  }
-]
+{
+  "captured_at": "2026-09-05T10:41:30.168032+00:00",
+  "entries": [
+    {
+      "model": "qwen3.8-max-0902",
+      "score": 9.259189963062699,
+      "numeric": [
+        "3",
+        "8",
+        "0902"
+      ],
+      "text_key": "qwenmax",
+      "raw": 1690.7351970450159,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-5-max",
+      "score": 9.223551888653308,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "claudeopusmax",
+      "raw": 1687.8841510922646,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k3-max",
+      "score": 9.0455722802753,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "kimikmax",
+      "raw": 1673.645782422024,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.8-max",
+      "score": 8.989112951445922,
+      "numeric": [
+        "3",
+        "8"
+      ],
+      "text_key": "qwenmax",
+      "raw": 1669.1290361156737,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-5-high",
+      "score": 8.888942556909626,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "claudeopushigh",
+      "raw": 1661.11540455277,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "hy4-preview",
+      "score": 8.48979036939214,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "hypreview",
+      "raw": 1629.1832295513711,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4.6-high",
+      "score": 8.487747479136324,
+      "numeric": [
+        "4",
+        "6"
+      ],
+      "text_key": "grokhigh",
+      "raw": 1629.019798330906,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-fable-5",
+      "score": 8.472442752661264,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "claudefable",
+      "raw": 1627.795420212901,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.8-flash-next",
+      "score": 8.374490880336031,
+      "numeric": [
+        "3",
+        "8"
+      ],
+      "text_key": "qwenflashnext",
+      "raw": 1619.9592704268825,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.6-sol-xhigh (codex-harness)",
+      "score": 8.330744851906653,
+      "numeric": [
+        "5",
+        "6"
+      ],
+      "text_key": "gptsolxhighcodexharness",
+      "raw": 1616.4595881525322,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5.3-max",
+      "score": 8.22781284606921,
+      "numeric": [
+        "5",
+        "3"
+      ],
+      "text_key": "glmmax",
+      "raw": 1608.2250276855368,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5.3-flash",
+      "score": 8.177136797883351,
+      "numeric": [
+        "5",
+        "3"
+      ],
+      "text_key": "glmflash",
+      "raw": 1604.1709438306682,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.8-27b",
+      "score": 8.114272447160243,
+      "numeric": [
+        "3",
+        "8",
+        "27"
+      ],
+      "text_key": "qwenb",
+      "raw": 1599.1417957728195,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.7-flash-high",
+      "score": 7.957372413914598,
+      "numeric": [
+        "3",
+        "7"
+      ],
+      "text_key": "geminiflashhigh",
+      "raw": 1586.5897931131678,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5.2-max",
+      "score": 7.937441112607388,
+      "numeric": [
+        "5",
+        "2"
+      ],
+      "text_key": "glmmax",
+      "raw": 1584.995289008591,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v4-pro-high-20260813",
+      "score": 7.922604487961311,
+      "numeric": [
+        "4",
+        "2026",
+        "08",
+        "13"
+      ],
+      "text_key": "deepseekvprohigh",
+      "raw": 1583.808359036905,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v4-flash-high",
+      "score": 7.882698773490714,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "deepseekvflashhigh",
+      "raw": 1580.615901879257,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-8-high",
+      "score": 7.659924686060399,
+      "numeric": [
+        "4",
+        "8"
+      ],
+      "text_key": "claudeopushigh",
+      "raw": 1562.7939748848319,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-7",
+      "score": 7.586602532857575,
+      "numeric": [
+        "4",
+        "7"
+      ],
+      "text_key": "claudeopus",
+      "raw": 1556.928202628606,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-7-high",
+      "score": 7.580331691455728,
+      "numeric": [
+        "4",
+        "7"
+      ],
+      "text_key": "claudeopushigh",
+      "raw": 1556.4265353164583,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4.5",
+      "score": 7.568043798766135,
+      "numeric": [
+        "4",
+        "5"
+      ],
+      "text_key": "grok",
+      "raw": 1555.4435039012908,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-6-high",
+      "score": 7.45143588902898,
+      "numeric": [
+        "4",
+        "6"
+      ],
+      "text_key": "claudeopushigh",
+      "raw": 1546.1148711223184,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-8",
+      "score": 7.374341500346427,
+      "numeric": [
+        "4",
+        "8"
+      ],
+      "text_key": "claudeopus",
+      "raw": 1539.947320027714,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "muse-spark-1.1",
+      "score": 7.371107003885433,
+      "numeric": [
+        "1",
+        "1"
+      ],
+      "text_key": "musespark",
+      "raw": 1539.6885603108346,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.6-flash-high",
+      "score": 7.351703568626807,
+      "numeric": [
+        "3",
+        "6"
+      ],
+      "text_key": "geminiflashhigh",
+      "raw": 1538.1362854901445,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-sonnet-5-high",
+      "score": 7.338173933294948,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "claudesonnethigh",
+      "raw": 1537.0539146635958,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-6",
+      "score": 7.331345724255575,
+      "numeric": [
+        "4",
+        "6"
+      ],
+      "text_key": "claudeopus",
+      "raw": 1536.507657940446,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "muse-spark-1.2 (xHigh)",
+      "score": 7.30249305537487,
+      "numeric": [
+        "1",
+        "2"
+      ],
+      "text_key": "musesparkxhigh",
+      "raw": 1534.1994444299896,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "seed-2.1-pro-preview",
+      "score": 7.150131755441174,
+      "numeric": [
+        "2",
+        "1"
+      ],
+      "text_key": "seedpropreview",
+      "raw": 1522.010540435294,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-sonnet-4-6",
+      "score": 7.1453121234155725,
+      "numeric": [
+        "4",
+        "6"
+      ],
+      "text_key": "claudesonnet",
+      "raw": 1521.6249698732458,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.6-luna-xhigh (codex-harness)",
+      "score": 7.112664077374867,
+      "numeric": [
+        "5",
+        "6"
+      ],
+      "text_key": "gptlunaxhighcodexharness",
+      "raw": 1519.0131261899894,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.6-terra-xhigh (codex-harness)",
+      "score": 7.1016838549124115,
+      "numeric": [
+        "5",
+        "6"
+      ],
+      "text_key": "gptterraxhighcodexharness",
+      "raw": 1518.134708392993,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.7-max-20260517",
+      "score": 7.0846717018006755,
+      "numeric": [
+        "3",
+        "7",
+        "2026",
+        "05",
+        "17"
+      ],
+      "text_key": "qwenmax",
+      "raw": 1516.773736144054,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "hy3",
+      "score": 7.018156201620442,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "hy",
+      "raw": 1511.4524961296354,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.5-xhigh (codex-harness)",
+      "score": 6.994899086319429,
+      "numeric": [
+        "5",
+        "5"
+      ],
+      "text_key": "gptxhighcodexharness",
+      "raw": 1509.5919269055544,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k2.6",
+      "score": 6.982942709759206,
+      "numeric": [
+        "2",
+        "6"
+      ],
+      "text_key": "kimik",
+      "raw": 1508.6354167807365,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5.1",
+      "score": 6.981490457167237,
+      "numeric": [
+        "5",
+        "1"
+      ],
+      "text_key": "glm",
+      "raw": 1508.519236573379,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.5-flash-high",
+      "score": 6.8866513616288305,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "geminiflashhigh",
+      "raw": 1500.9321089303064,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-5-20251101-high-32k",
+      "score": 6.8091637588122955,
+      "numeric": [
+        "4",
+        "5",
+        "2025",
+        "11",
+        "01",
+        "32"
+      ],
+      "text_key": "claudeopushighk",
+      "raw": 1494.7331007049836,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.5-flash-medium",
+      "score": 6.773683746453094,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "geminiflashmedium",
+      "raw": 1491.8946997162475,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "minimax-m3",
+      "score": 6.709627594544179,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "minimaxm",
+      "raw": 1486.7702075635343,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.5-high (codex-harness)",
+      "score": 6.702100699461263,
+      "numeric": [
+        "5",
+        "5"
+      ],
+      "text_key": "gpthighcodexharness",
+      "raw": 1486.168055956901,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.6-max-preview",
+      "score": 6.609263255622246,
+      "numeric": [
+        "3",
+        "6"
+      ],
+      "text_key": "qwenmaxpreview",
+      "raw": 1478.7410604497798,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mimo-v2.5-pro",
+      "score": 6.573133851616291,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "mimovpro",
+      "raw": 1475.8507081293033,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k2.7-code",
+      "score": 6.5332010582619295,
+      "numeric": [
+        "2",
+        "7"
+      ],
+      "text_key": "kimikcode",
+      "raw": 1472.6560846609543,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-5-20251101",
+      "score": 6.474578317167553,
+      "numeric": [
+        "4",
+        "5",
+        "2025",
+        "11",
+        "01"
+      ],
+      "text_key": "claudeopus",
+      "raw": 1467.9662653734042,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v4-pro-high-preview",
+      "score": 6.420768833609225,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "deepseekvprohighpreview",
+      "raw": 1463.661506688738,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.4-high (codex-harness)",
+      "score": 6.411963108421955,
+      "numeric": [
+        "5",
+        "4"
+      ],
+      "text_key": "gpthighcodexharness",
+      "raw": 1462.9570486737564,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.6-plus",
+      "score": 6.377347332741843,
+      "numeric": [
+        "3",
+        "6"
+      ],
+      "text_key": "qwenplus",
+      "raw": 1460.1877866193474,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.5 (codex-harness)",
+      "score": 6.342260276363245,
+      "numeric": [
+        "5",
+        "5"
+      ],
+      "text_key": "gptcodexharness",
+      "raw": 1457.3808221090596,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "score": 6.238291447630897,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "geminiflashlite",
+      "raw": 1449.0633158104717,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "score": 6.196096941832288,
+      "numeric": [
+        "3",
+        "1"
+      ],
+      "text_key": "geminipropreview",
+      "raw": 1445.6877553465831,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "score": 6.193718671553984,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "deepseekvpro",
+      "raw": 1445.4974937243187,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.4-medium (codex-harness)",
+      "score": 6.154881854992533,
+      "numeric": [
+        "5",
+        "4"
+      ],
+      "text_key": "gptmediumcodexharness",
+      "raw": 1442.3905483994026,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3-pro",
+      "score": 6.10410949718046,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "geminipro",
+      "raw": 1438.3287597744368,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mimo-v2.5",
+      "score": 6.0978915414821095,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "mimov",
+      "raw": 1437.8313233185688,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3-flash",
+      "score": 6.095096797661929,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "geminiflash",
+      "raw": 1437.6077438129544,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k2.5-thinking",
+      "score": 6.080834051676365,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "kimikthinking",
+      "raw": 1436.4667241341092,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5",
+      "score": 6.0712528261225716,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "glm",
+      "raw": 1435.7002260898057,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-4.7",
+      "score": 6.058205644234866,
+      "numeric": [
+        "4",
+        "7"
+      ],
+      "text_key": "glm",
+      "raw": 1434.6564515387893,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mimo-v2-pro",
+      "score": 6.045262842999612,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "mimovpro",
+      "raw": 1433.6210274399689,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v4-flash-high-preview",
+      "score": 6.014047857492034,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "deepseekvflashhighpreview",
+      "raw": 1431.1238285993627,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5-medium",
+      "score": 5.863072403105258,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "gptmedium",
+      "raw": 1419.0457922484206,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.2",
+      "score": 5.830488267945149,
+      "numeric": [
+        "5",
+        "2"
+      ],
+      "text_key": "gpt",
+      "raw": 1416.4390614356118,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.3-codex (codex-harness)",
+      "score": 5.729240899628585,
+      "numeric": [
+        "5",
+        "3"
+      ],
+      "text_key": "gptcodexcodexharness",
+      "raw": 1408.3392719702867,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "inkling",
+      "score": 5.7234071481102236,
+      "numeric": [],
+      "text_key": "inkling",
+      "raw": 1407.8725718488179,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k2.5-instant",
+      "score": 5.6916948095884665,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "kimikinstant",
+      "raw": 1405.3355847670773,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "Inkling Small",
+      "score": 5.661289790140453,
+      "numeric": [],
+      "text_key": "inklingsmall",
+      "raw": 1402.9031832112362,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-5v-turbo",
+      "score": 5.625652670066401,
+      "numeric": [
+        "5"
+      ],
+      "text_key": "glmvturbo",
+      "raw": 1400.052213605312,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "minimax-m2.7",
+      "score": 5.6086527137254905,
+      "numeric": [
+        "2",
+        "7"
+      ],
+      "text_key": "minimaxm",
+      "raw": 1398.6922170980392,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.5-397b-a17b",
+      "score": 5.602409585230481,
+      "numeric": [
+        "3",
+        "5",
+        "397",
+        "17"
+      ],
+      "text_key": "qwenbab",
+      "raw": 1398.1927668184385,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.4-mini-high",
+      "score": 5.589943006476491,
+      "numeric": [
+        "5",
+        "4"
+      ],
+      "text_key": "gptminihigh",
+      "raw": 1397.1954405181193,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-sonnet-4-5-20250929-high-32k",
+      "score": 5.532912724458489,
+      "numeric": [
+        "4",
+        "5",
+        "2025",
+        "09",
+        "29",
+        "32"
+      ],
+      "text_key": "claudesonnethighk",
+      "raw": 1392.6330179566792,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.1-medium",
+      "score": 5.51626115247453,
+      "numeric": [
+        "5",
+        "1"
+      ],
+      "text_key": "gptmedium",
+      "raw": 1391.3008921979624,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-opus-4-1-20250805",
+      "score": 5.488364678703153,
+      "numeric": [
+        "4",
+        "1",
+        "2025",
+        "08",
+        "05"
+      ],
+      "text_key": "claudeopus",
+      "raw": 1389.0691742962522,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.4",
+      "score": 5.486550625908407,
+      "numeric": [
+        "5",
+        "4"
+      ],
+      "text_key": "gpt",
+      "raw": 1388.9240500726726,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "minimax-m2.1-preview",
+      "score": 5.466334492898563,
+      "numeric": [
+        "2",
+        "1"
+      ],
+      "text_key": "minimaxmpreview",
+      "raw": 1387.306759431885,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-sonnet-4-5-20250929",
+      "score": 5.445312170678034,
+      "numeric": [
+        "4",
+        "5",
+        "2025",
+        "09",
+        "29"
+      ],
+      "text_key": "claudesonnet",
+      "raw": 1385.6249736542427,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "minimax-m2.5",
+      "score": 5.426571278184631,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "minimaxm",
+      "raw": 1384.1257022547704,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3-flash (thinking-minimal)",
+      "score": 5.412973228379866,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "geminiflashthinkingminimal",
+      "raw": 1383.0378582703893,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4.20-beta-0309-reasoning",
+      "score": 5.2933722993381735,
+      "numeric": [
+        "4",
+        "20",
+        "0309"
+      ],
+      "text_key": "grokbetareasoning",
+      "raw": 1373.4697839470539,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "solar-pro4",
+      "score": 5.255568612544071,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "solarpro",
+      "raw": 1370.4454890035256,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemma-4-31b",
+      "score": 5.164245985101468,
+      "numeric": [
+        "4",
+        "31"
+      ],
+      "text_key": "gemmab",
+      "raw": 1363.1396788081174,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemma-4-26b-a4b",
+      "score": 5.146199791546266,
+      "numeric": [
+        "4",
+        "26",
+        "4"
+      ],
+      "text_key": "gemmabab",
+      "raw": 1361.6959833237013,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v3.2-thinking",
+      "score": 5.131263448391001,
+      "numeric": [
+        "3",
+        "2"
+      ],
+      "text_key": "deepseekvthinking",
+      "raw": 1360.5010758712801,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "muse-glimmer",
+      "score": 5.117733229431053,
+      "numeric": [],
+      "text_key": "museglimmer",
+      "raw": 1359.4186583544843,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.5-122b-a10b",
+      "score": 5.0991648247428,
+      "numeric": [
+        "3",
+        "5",
+        "122",
+        "10"
+      ],
+      "text_key": "qwenbab",
+      "raw": 1357.933185979424,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.5-27b",
+      "score": 5.0935718514331505,
+      "numeric": [
+        "3",
+        "5",
+        "27"
+      ],
+      "text_key": "qwenb",
+      "raw": 1357.485748114652,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "hunyuan-hy3-preview",
+      "score": 5.078447797526414,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "hunyuanhypreview",
+      "raw": 1356.275823802113,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4.3",
+      "score": 5.072996962567253,
+      "numeric": [
+        "4",
+        "3"
+      ],
+      "text_key": "grok",
+      "raw": 1355.8397570053803,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "laguna-m.1",
+      "score": 4.965790918074001,
+      "numeric": [
+        "1"
+      ],
+      "text_key": "lagunam",
+      "raw": 1347.26327344592,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.1",
+      "score": 4.882624437715043,
+      "numeric": [
+        "5",
+        "1"
+      ],
+      "text_key": "gpt",
+      "raw": 1340.6099550172034,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "glm-4.6",
+      "score": 4.881555691392239,
+      "numeric": [
+        "4",
+        "6"
+      ],
+      "text_key": "glm",
+      "raw": 1340.5244553113791,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.2-codex",
+      "score": 4.856923603509219,
+      "numeric": [
+        "5",
+        "2"
+      ],
+      "text_key": "gptcodex",
+      "raw": 1338.5538882807375,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.1-codex",
+      "score": 4.821740521925529,
+      "numeric": [
+        "5",
+        "1"
+      ],
+      "text_key": "gptcodex",
+      "raw": 1335.7392417540423,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mimo-v2-flash (non-thinking)",
+      "score": 4.761113812633866,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "mimovflashnonthinking",
+      "raw": 1330.8891050107093,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "score": 4.733038226268715,
+      "numeric": [
+        "4",
+        "5",
+        "2025",
+        "10",
+        "01"
+      ],
+      "text_key": "claudehaiku",
+      "raw": 1328.6430581014972,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v3.2",
+      "score": 4.685224077141953,
+      "numeric": [
+        "3",
+        "2"
+      ],
+      "text_key": "deepseekv",
+      "raw": 1324.8179261713562,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "kimi-k2-thinking-turbo",
+      "score": 4.658987682806403,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "kimikthinkingturbo",
+      "raw": 1322.7190146245123,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "laguna-xs.2",
+      "score": 4.404249186620578,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "lagunaxs",
+      "raw": 1302.3399349296462,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "minimax-m2",
+      "score": 4.343456700099873,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "minimaxm",
+      "raw": 1297.4765360079898,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mimo-v2-flash (thinking)",
+      "score": 4.280364571453973,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "mimovflashthinking",
+      "raw": 1292.4291657163178,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3-coder-480b-a35b-instruct",
+      "score": 4.044203943406569,
+      "numeric": [
+        "3",
+        "480",
+        "35"
+      ],
+      "text_key": "qwencoderbabinstruct",
+      "raw": 1273.5363154725255,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "deepseek-v3.2-exp",
+      "score": 4.018776423554858,
+      "numeric": [
+        "3",
+        "2"
+      ],
+      "text_key": "deepseekvexp",
+      "raw": 1271.5021138843886,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mistral-medium-3.5",
+      "score": 3.938913029306411,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "mistralmedium",
+      "raw": 1265.113042344513,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "KAT-Coder-Pro-V1",
+      "score": 3.8055810750160046,
+      "numeric": [
+        "1"
+      ],
+      "text_key": "katcoderprov",
+      "raw": 1254.4464860012804,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "score": 3.8010803803049527,
+      "numeric": [
+        "3",
+        "1"
+      ],
+      "text_key": "geminiflashlitepreview",
+      "raw": 1254.0864304243962,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.5-35b-a3b",
+      "score": 3.7502706601210125,
+      "numeric": [
+        "3",
+        "5",
+        "35",
+        "3"
+      ],
+      "text_key": "qwenbab",
+      "raw": 1250.021652809681,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gpt-5.1-codex-mini",
+      "score": 3.6679995802767253,
+      "numeric": [
+        "5",
+        "1"
+      ],
+      "text_key": "gptcodexmini",
+      "raw": 1243.439966422138,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4-1-fast-reasoning",
+      "score": 3.6323412312742502,
+      "numeric": [
+        "4",
+        "1"
+      ],
+      "text_key": "grokfastreasoning",
+      "raw": 1240.58729850194,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "qwen3.5-flash",
+      "score": 3.601170068945532,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "qwenflash",
+      "raw": 1238.0936055156426,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "trinity-large-thinking",
+      "score": 3.600627135595633,
+      "numeric": [],
+      "text_key": "trinitylargethinking",
+      "raw": 1238.0501708476506,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mistral-large-3",
+      "score": 3.490973584892299,
+      "numeric": [
+        "3"
+      ],
+      "text_key": "mistrallarge",
+      "raw": 1229.277886791384,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "gemini-2.5-pro",
+      "score": 3.4426166336492656,
+      "numeric": [
+        "2",
+        "5"
+      ],
+      "text_key": "geminipro",
+      "raw": 1225.4093306919412,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4.1-thinking",
+      "score": 3.2618624263458713,
+      "numeric": [
+        "4",
+        "1"
+      ],
+      "text_key": "grokthinking",
+      "raw": 1210.9489941076697,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "devstral-2",
+      "score": 3.0534514319161787,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "devstral",
+      "raw": 1194.2761145532943,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "granite-4.1-8b",
+      "score": 3.020505590221518,
+      "numeric": [
+        "4",
+        "1",
+        "8"
+      ],
+      "text_key": "graniteb",
+      "raw": 1191.6404472177214,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "mercury-2",
+      "score": 2.7034582789122226,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "mercury",
+      "raw": 1166.2766623129778,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-code-fast-1",
+      "score": 2.6853876254659355,
+      "numeric": [
+        "1"
+      ],
+      "text_key": "grokcodefast",
+      "raw": 1164.8310100372748,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "grok-4-fast-reasoning",
+      "score": 2.6519753868185036,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "grokfastreasoning",
+      "raw": 1162.1580309454803,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "devstral-medium-2507",
+      "score": 1.628723906948383,
+      "numeric": [
+        "2507"
+      ],
+      "text_key": "devstralmedium",
+      "raw": 1080.2979125558707,
+      "raw_unit": "Elo",
+      "n_cases": null
+    }
+  ]
+}
