@@ -38,10 +38,17 @@ def fetch_routes(model_ids, max_models=35):
             out = to_float(p.get("completion"))
             if inp is None or out is None:
                 continue
-            provider_name = ep.get("provider_name") or ep.get("tag") or "Unknown"
+            tag = ep.get("tag")
+            provider_name = ep.get("provider_name") or tag or "Unknown"
+            route_label = f"OpenRouter → {provider_name}"
+            # Two endpoints can share the same provider_name (e.g. "OpenAI") while
+            # being different routes (standard/flex/zdr/priority) distinguished only
+            # by `tag` — keep that visible instead of collapsing them into one label.
+            if tag and str(tag).strip().lower() != str(provider_name).strip().lower():
+                route_label += f" ({tag})"
             rows.append(base_row(
                 source="openrouter-route",
-                provider=f"OpenRouter → {provider_name}",
+                provider=route_label,
                 model_id=model_id,
                 name=ep.get("model_name") or model_id,
                 context_length=ep.get("context_length"),
