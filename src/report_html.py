@@ -562,11 +562,6 @@ p { text-wrap: pretty; }
 /* rotate counter-clockwise so the bright edge leads the sweep and the fade trails behind it */
 @keyframes spin { to { transform: rotate(-360deg); } }
 @media (max-width: 760px) { .radar-wrap { display: none; } }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .radar-sweep { animation: none; opacity: 0.3; }
-  .gsap-ready .reveal { opacity: 1 !important; transform: none !important; }
-}
 
 /* ---------- status chips ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 4px; }
@@ -963,17 +958,6 @@ SCRIPT = """
 
   // --- scroll reveal + hero counters ---
   if (!window.gsap) { return; }
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Reduced motion: keep every number/reveal fully functional, just skip the animation itself.
-  if (reduceMotion) {
-    document.querySelectorAll('.stat-num').forEach(function (el) {
-      var target = parseFloat(el.getAttribute('data-value'));
-      if (!isNaN(target)) { el.textContent = Math.round(target); }
-    });
-    return;
-  }
-
   var hasScrollTrigger = !!window.ScrollTrigger;
   if (hasScrollTrigger) { gsap.registerPlugin(ScrollTrigger); }
   document.documentElement.classList.add('gsap-ready');
