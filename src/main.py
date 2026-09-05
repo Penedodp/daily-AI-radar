@@ -3,13 +3,17 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from collections import defaultdict
 import json
+import re
 
 from providers.registry import collect_all
 from providers.openrouter_routes import fetch_routes
 from filters import is_relevant_text_model
-from normalize import canonicalize
+from normalize import canonicalize_with_confidence
 from quality_bench import fetch_aider_leaderboard, fetch_lmarena_webdev, match_models as match_bench_models
-from scoring import costs_by_task, weighted_daily_cost, price_change, value_score, is_free
+from scoring import (
+    costs_by_task, weighted_daily_cost, price_change, value_score,
+    is_free, compute_pricing_status, has_known_price,
+)
 from report_ai import generate_summary
 from report_html import build_html
 
@@ -66,6 +70,8 @@ def compact(row, category=None):
         "provider": row["provider"],
         "source": row["source"],
         "free": is_free(row),
+        "pricing_status": row.get("pricing_status"),
+        "identity_confidence": row.get("identity_confidence"),
         "input": round(row["input_usd_per_million"], 6),
         "output": round(row["output_usd_per_million"], 6),
         "weighted_cost": round(row["weighted_cost"], 6),
@@ -78,6 +84,7 @@ def compact(row, category=None):
             result["quality_label"] = row["quality"].get("label")
             result["quality_match_ratio"] = row["quality"].get("match_ratio")
             result["quality_source_label"] = row["quality"].get("source_label")
+            result["quality_match_type"] = row["quality"].get("match_type")
     if row.get("change_pct") is not None:
         result["change_pct"] = round(row["change_pct"], 1)
     return result
@@ -102,6 +109,7 @@ def recommendations(models, config):
         scored = [
             r for r in models
             if r.get("quality") and r["quality"]["scores"].get(category) is not None
+            and has_known_price(r)
         ]
         free = [r for r in scored if is_free(r)]
         paid = [r for r in scored if not is_free(r)]
@@ -144,7 +152,7 @@ def recommendations(models, config):
 def cross_provider_opportunities(models, config):
     groups = defaultdict(list)
     for r in models:
-        if not is_free(r):
+        if has_known_price(r) and not is_free(r):
             groups[r["canonical_model"]].append(r)
 
     opportunities = []
@@ -189,6 +197,98 @@ def cross_provider_opportunities(models, config):
         reverse=True,
     )
     return opportunities
+
+def build_explorer(models):
+    """One entry per canonical model (not per route), for the Model Explorer /
+    search / compare UI. Cheapest known-price route is shown by default; every
+    route the model has is kept in `routes` for the expandable detail view."""
+    groups = defaultdict(list)
+    for r in models:
+        groups[r["canonical_model"]].append(r)
+
+    out = []
+    for canonical, rows in groups.items():
+        priced = [r for r in rows if has_known_price(r)]
+        rows_sorted = sorted(priced, key=lambda r: r["weighted_cost"]) or rows
+        best = rows_sorted[0]
+        q = best.get("quality") or {}
+        out.append({
+            "model": canonical,
+            "routes": [
+                {
+                    "provider": r["provider"],
+                    "raw_model": r["model_id"],
+                    "pricing_status": r.get("pricing_status"),
+                    "input": round(r["input_usd_per_million"], 6),
+                    "output": round(r["output_usd_per_million"], 6),
+                    "weighted_cost": round(r["weighted_cost"], 6),
+                    "context_length": r.get("context_length"),
+                }
+                for r in sorted(rows, key=lambda r: r["weighted_cost"])
+            ],
+            "routes_count": len(rows),
+            "best_provider": best["provider"],
+            "input": round(best["input_usd_per_million"], 6),
+            "output": round(best["output_usd_per_million"], 6),
+            "weighted_cost": round(best["weighted_cost"], 6),
+            "context_length": best.get("context_length"),
+            "free": is_free(best),
+            "pricing_status": best.get("pricing_status"),
+            "quality_coding": q.get("scores", {}).get("coding"),
+            "quality_source_label": q.get("source_label"),
+            "quality_match_type": q.get("match_type"),
+        })
+
+    out.sort(
+        key=lambda m: (
+            m["quality_coding"] if m["quality_coding"] is not None else -1,
+            -m["weighted_cost"],
+        ),
+        reverse=True,
+    )
+    return out
+
+def validate_snapshot(models):
+    """Cheap, non-fatal invariant checks (Fase 3/P3): a violation here means a
+    bug slipped past the conservative rules elsewhere, and should be visible
+    rather than silently shipped. Never blocks publishing — see the plan's
+    'dato desconocido antes que conclusión falsa' principle: for the same
+    reason, an unnoticed bug shouldn't block the whole daily run either."""
+    warnings = []
+
+    seen_routes = set()
+    for r in models:
+        key = (r["provider"], r["model_id"])
+        if key in seen_routes:
+            warnings.append(f"ruta duplicada: {key[0]} / {key[1]}")
+        seen_routes.add(key)
+
+    for r in models:
+        for field in ("input_usd_per_million", "output_usd_per_million"):
+            v = r.get(field)
+            if v is None or v < 0 or v != v or v in (float("inf"), float("-inf")):
+                warnings.append(f"precio inválido ({field}={v}) en {r['provider']} / {r['model_id']}")
+
+    for r in models:
+        if is_free(r) and r.get("pricing_status") not in {"free", "promotional_free"}:
+            warnings.append(f"free=true sin pricing_status verificado: {r['provider']} / {r['model_id']}")
+
+    for r in models:
+        q = r.get("quality")
+        if q and not (q.get("source_label") and q.get("label")):
+            warnings.append(f"quality sin fuente/label trazable: {r['provider']} / {r['model_id']}")
+
+    size_re = re.compile(r"\b(\d+(?:\.\d+)?)b\b")
+    size_groups = defaultdict(set)
+    for r in models:
+        m = size_re.search(r["model_id"].lower())
+        if m:
+            size_groups[r["canonical_model"]].add(m.group(1))
+    for canonical, sizes in size_groups.items():
+        if len(sizes) > 1:
+            warnings.append(f"tamaños de modelo distintos bajo el mismo canonical '{canonical}': {sorted(sizes)}")
+
+    return warnings
 
 def main():
     config = load_json(ROOT / "config.json", {})
@@ -268,7 +368,8 @@ def main():
             filtered += 1
             continue
 
-        row["canonical_model"] = canonicalize(row["model_id"], aliases)
+        row["canonical_model"], row["identity_confidence"] = canonicalize_with_confidence(row["model_id"], aliases)
+        row["pricing_status"] = compute_pricing_status(row)
 
         bench_q = bench_matches.get(route_key(row))
         row["quality"] = None
@@ -279,6 +380,7 @@ def main():
                 "source_label": bench_q.get("source_label", bench_q["source"]),
                 "scores": dict(bench_q["scores"]),
                 "match_ratio": bench_q.get("match_ratio"),
+                "match_type": bench_q.get("match_type"),
             }
 
         row["costs_by_task"] = costs_by_task(row, task_profiles)
@@ -305,6 +407,8 @@ def main():
         threshold_down = -abs(config.get("discount_threshold_pct", 10))
         threshold_up = abs(config.get("price_increase_threshold_pct", 10))
         for r in models:
+            if r.get("pricing_status") != "paid":
+                continue  # price moves are only meaningful for verifiably-paid routes
             ch = r.get("change_pct")
             if ch is not None and ch <= threshold_down:
                 drops.append(compact(r))
@@ -336,6 +440,15 @@ def main():
         if len(points) >= 2:
             price_trends[cat] = {"model": pick["model"], "points": points}
 
+    PRICE_SOURCES = {"openrouter", "cheaperinference", "together", "novita", "openrouter_routes"}
+    BENCH_SOURCES = {"aider_polyglot", "lmarena_webdev"}
+    explorer = build_explorer(models)
+    validation_warnings = validate_snapshot(models)
+    if validation_warnings:
+        print(f"[WARN] validate_snapshot: {len(validation_warnings)} aviso(s):")
+        for w in validation_warnings:
+            print(f"  - {w}")
+
     snapshot = {
         "generated_at": now.isoformat(),
         "provider_status": provider_status,
@@ -343,13 +456,21 @@ def main():
             "raw_rows": len(raw_rows),
             "models_kept": len(models),
             "models_filtered": filtered,
-            "providers_with_data": sum(1 for s in provider_status.values() if s.get("count", 0) > 0),
+            "unique_models": len({r["canonical_model"] for r in models}),
+            "providers_with_data": sum(
+                1 for k, s in provider_status.items() if k in PRICE_SOURCES and s.get("count", 0) > 0
+            ),
+            "benchmarks_active": sum(
+                1 for k, s in provider_status.items() if k in BENCH_SOURCES and s.get("count", 0) > 0
+            ),
             "scored_routes": sum(1 for r in models if r.get("quality")),
         },
         "recommendations": recs,
         "cross_provider_opportunities": opportunities,
         "changes": {"drops": drops, "increases": increases},
         "models": models,
+        "explorer": explorer,
+        "validation_warnings": validation_warnings,
     }
 
     (data_dir / f"{day}.json").write_text(
@@ -359,9 +480,15 @@ def main():
     lines = [
         f"# AI Price Radar — {day}",
         "",
-        f"> **{len(models)} rutas/modelos** útiles · "
-        f"**{snapshot['stats']['providers_with_data']} fuentes con datos** · "
+        f"> Generado {now.strftime('%d/%m/%Y %H:%M %Z')} · "
+        f"**{snapshot['stats']['unique_models']} modelos únicos** · "
+        f"**{len(models)} rutas/precios** · "
+        f"**{snapshot['stats']['providers_with_data']} proveedores de precios** · "
+        f"**{snapshot['stats']['benchmarks_active']} benchmarks activos** · "
         f"**{snapshot['stats']['scored_routes']} rutas puntuadas**.",
+        "",
+        "_Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: "
+        "30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._",
         "",
         "## 📡 Fuentes",
         "",
@@ -396,7 +523,7 @@ def main():
         "",
         "## 💰 Mejor relación calidad/precio DE PAGO",
         "",
-        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | $/M input | $/M output | Calidad* | Value |",
+        "| Uso | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad* | Radar Value** |",
         "|---|---|---|---:|---:|---:|---:|---:|",
     ]
     for cat, label in LABELS.items():
@@ -415,9 +542,9 @@ def main():
 
     lines += [
         "",
-        "## 🧠 Opción premium por calidad",
+        "## 🧠 Mayor puntuación entre modelos de pago con benchmark disponible",
         "",
-        "| Uso | Modelo | Proveedor/ruta | Coste/tarea | $/M input | $/M output | Calidad* |",
+        "| Uso | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad* |",
         "|---|---|---|---:|---:|---:|---:|",
     ]
     for cat, label in LABELS.items():
@@ -439,7 +566,14 @@ def main():
         "\\* *Calidad (coding) = pass-rate del Aider Polyglot Leaderboard (prioritario) o, si no está, "
         "rating Elo de LMArena WebDev Arena (respaldo con más cobertura), escalados a 0–10 y emparejados "
         "automáticamente por nombre de modelo (sin intervención manual). "
+        "Aider y LMArena miden cosas distintas (corrección de código vs. preferencia humana en apps web) "
+        "y sus puntuaciones **no son directamente comparables entre sí** — la fuente exacta va siempre junto al dato. "
         "Cuando no hay match fiable en ninguna de las dos, el modelo queda sin puntuar en vez de estimarse.*",
+        "",
+        f"\\*\\* *Radar Value es un índice propio (no un benchmark) que combina calidad medida y coste estimado: "
+        f"`calidad × 10 / sqrt(1 + coste_tarea / {config.get('value_cost_anchor_usd', 0.05)})`. "
+        f"El ancla de {config.get('value_cost_anchor_usd', 0.05)} USD/tarea es el punto en el que empieza a penalizar "
+        f"el coste; es configurable en `config.json`.*",
         "",
         "## 🔀 Mismo modelo, proveedor/ruta más barata",
         "",
@@ -478,7 +612,7 @@ def main():
                 f"calidad {r.get('quality_score','—')}/10 · "
                 f"coste/tarea ${r['task_cost']:.5f} "
                 f"(\\${r['input']:.4f} in / \\${r['output']:.4f} out) · "
-                f"value {r.get('value_score','—')}"
+                f"Radar Value {r.get('value_score','—')}"
             )
         lines.append("")
 
@@ -527,10 +661,18 @@ def main():
     (reports_dir / f"{day}.md").write_text(report, encoding="utf-8")
     (reports_dir / "latest.md").write_text(report, encoding="utf-8")
 
-    dashboard = build_html(snapshot, day, has_previous=bool(previous), ai_summary=ai, price_trends=price_trends)
+    dashboard = build_html(
+        snapshot, day, has_previous=bool(previous), ai_summary=ai,
+        price_trends=price_trends, config=config,
+    )
     (docs_dir / "index.html").write_text(dashboard, encoding="utf-8")
 
-    print(report)
+    try:
+        print(report)
+    except UnicodeEncodeError:
+        # Some local consoles (Windows cp1252) can't render emoji; the report
+        # files are already written above, so this is display-only.
+        print(report.encode("ascii", "replace").decode("ascii"))
 
 if __name__ == "__main__":
     main()

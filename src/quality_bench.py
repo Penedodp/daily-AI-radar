@@ -18,6 +18,11 @@ remaining text must be near-identical. A match that doesn't clear that bar
 is discarded rather than guessed — an unscored model is preferable to a
 wrongly-scored one (e.g. silently conflating claude-3-haiku with
 claude-3.5-haiku).
+
+Nothing that can identify a different checkpoint is stripped before
+matching: `base`/`instruct`/`thinking`/`preview`/`chat`/`exp` and dates are
+all kept as part of the identity fingerprint, so e.g. `hy3-preview` can
+never silently inherit the score of `hy3`.
 """
 import difflib
 import json
@@ -42,7 +47,7 @@ ARENA_MAX_ROWS = 1000
 ARENA_ELO_FLOOR = 950.0
 ARENA_ELO_CEILING = 1750.0
 
-TEXT_MATCH_THRESHOLD = 0.90
+TEXT_MATCH_THRESHOLD = 0.93
 AIDER_MIN_TEST_CASES = 100
 
 SOURCE_LABELS = {
@@ -50,20 +55,21 @@ SOURCE_LABELS = {
     "lmarena_webdev": "LMArena WebDev Arena",
 }
 
-_STRIP_WORDS = re.compile(r"\b(preview|latest|exp|experimental|instruct|chat|it|base|thinking)\b")
-_DATE_ISO = re.compile(r"\d{4}-\d{2}-\d{2}")
-_DATE_GLUED = re.compile(r"(?<![a-z0-9])\d{8}(?![a-z0-9])")
+# Only glue-vs-hyphenated date formatting is normalized (20240806 <-> 2024-08-06)
+# so the same checkpoint isn't missed purely over punctuation. The date itself
+# is never removed: it's part of the model's identity, not decoration.
+_GLUED_DATE = re.compile(r"\b(20\d{2})(\d{2})(\d{2})\b")
 _TOKEN = re.compile(r"[a-z]+|\d+")
 
 
 def _fingerprint(raw):
-    """(numeric_tokens, text_key) — version numbers kept separate from text
-    so "claude-3-haiku" and "claude-3.5-haiku" can never fuzzy-match."""
+    """(numeric_tokens, text_key) — version numbers, dates and variant words
+    (base/instruct/thinking/preview/chat/exp/...) are all kept as part of the
+    identity, never stripped, so two different checkpoints can never
+    fuzzy-match into the same fingerprint."""
     s = (raw or "").lower()
-    s = re.sub(r"\(.*?\)", " ", s)
-    s = _DATE_ISO.sub(" ", s)
-    s = _DATE_GLUED.sub(" ", s)
-    s = _STRIP_WORDS.sub(" ", s)
+    s = re.sub(r"[()]", " ", s)
+    s = _GLUED_DATE.sub(r"\1-\2-\3", s)
     tokens = _TOKEN.findall(s)
     numeric = tuple(t for t in tokens if t.isdigit())
     text_key = "".join(t for t in tokens if not t.isdigit())
@@ -198,6 +204,7 @@ def match_models(bench_entries, rows, source):
             "source": source,
             "source_label": SOURCE_LABELS.get(source, source),
             "match_ratio": round(ratio, 3),
+            "match_type": "exact" if ratio >= 0.999 else "fuzzy",
             "scores": {"coding": round(entry["score"], 1)},
         }
     return results

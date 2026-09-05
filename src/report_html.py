@@ -18,6 +18,8 @@ Pure stdlib string templating — no build step. Reuses the exact same
 `snapshot`/`recs` structures as the Markdown report, so the two can't drift.
 """
 import html as html_lib
+import json
+from datetime import datetime
 
 LABELS = {
     "coding": "Coding",
@@ -57,6 +59,12 @@ def _provider_badge(name):
     )
 
 
+_SOURCE_SHORT = {
+    "Aider Polyglot Leaderboard": "Aider",
+    "LMArena WebDev Arena": "WebDev Arena",
+}
+
+
 def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=False):
     key = " data-key='quality'" if sortable else ""
     if score is None:
@@ -68,10 +76,13 @@ def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=Fal
         tooltip += f" · match ‘{label}’"
     if ratio is not None:
         tooltip += f" ({ratio * 100:.0f}% similitud de nombre)"
+    tooltip += ". Puntuaciones de benchmarks distintos no son directamente comparables entre sí."
+    short_source = _SOURCE_SHORT.get(source_label, source_label or "auto")
     return (
         f"<td{key} data-value='{score}'><span class='qcell' title='{_esc(tooltip)}'>"
         f"<span class='qbar'><span class='qbar-fill {tier}' style='width:{pct:.0f}%'></span></span>"
-        f"<span class='qval'>{score:.1f}</span></span></td>"
+        f"<span class='qval'>{score:.1f}</span>"
+        f"<span class='qsrc'>{_esc(short_source)}</span></span></td>"
     )
 
 
@@ -155,8 +166,8 @@ def _section_top5(recs, scored_categories):
         items = "".join(
             f"<li><span class='rank'>{i}</span><div><strong>{_esc(r['model'])}</strong> vía "
             f"{_provider_badge(r['provider'])}<div class='meta'>"
-            f"calidad {r.get('quality_score','—')}/10 · coste/tarea {_cost(r['task_cost'])} "
-            f"({_money(r['input'])} in / {_money(r['output'])} out) · value {r.get('value_score','—')}"
+            f"calidad {r.get('quality_score','—')}/10 · coste estimado {_cost(r['task_cost'])} "
+            f"({_money(r['input'])} in / {_money(r['output'])} out) · Radar Value {r.get('value_score','—')}"
             f"</div></div></li>"
             for i, r in enumerate(top, 1)
         )
@@ -213,6 +224,121 @@ def _section_changes(has_previous, drops, increases):
         )
         parts.append(f"<h3>Subidas</h3><ul class='changes'>{items}</ul>")
     return "".join(parts)
+
+
+def _explorer_row(m):
+    quality_html = _quality_cell(m.get("quality_coding"), None, None, m.get("quality_source_label"))
+    if m["free"]:
+        status_badge, status_cls = "Gratis", "pos"
+    elif m.get("pricing_status") == "paid":
+        status_badge, status_cls = "Pago", "neutral"
+    else:
+        status_badge, status_cls = "Desconocido", "neg"
+    search_text = _esc(f"{m['model']} {m['best_provider']}".lower())
+    routes_json = _esc(json.dumps(m["routes"], ensure_ascii=False))
+    n_routes = m["routes_count"]
+    route_word = "ruta" if n_routes == 1 else "rutas"
+    model_esc = _esc(m["model"])
+    return (
+        f"<tr class='exp-row' data-search='{search_text}'>"
+        f"<td><input type='checkbox' class='cmp-check' data-model='{model_esc}' aria-label='Seleccionar {model_esc} para comparar'></td>"
+        f"<td class='usage'>"
+        f"<button type='button' class='exp-toggle' aria-expanded='false' data-routes='{routes_json}'>"
+        f"{model_esc}<span class='exp-count'>{n_routes} {route_word}</span></button></td>"
+        f"<td>{_provider_badge(m['best_provider'])}</td>"
+        f"{_num_td(m['weighted_cost'], _cost(m['weighted_cost']), 'ecost')}"
+        f"{_num_td(m['input'], _money(m['input']), 'einput')}"
+        f"{_num_td(m['output'], _money(m['output']), 'eoutput')}"
+        f"<td data-key='ecustom' data-value='{m['weighted_cost']}' class='num'>—</td>"
+        f"{quality_html}"
+        f"<td><span class='pill {status_cls}'>{status_badge}</span></td>"
+        f"</tr>"
+    )
+
+
+def _section_explorer(explorer, task_profiles=None):
+    if not explorer:
+        return "<p class='muted'>Sin datos de catálogo todavía.</p>"
+    rows = "".join(_explorer_row(m) for m in explorer)
+    coding = (task_profiles or {}).get("coding", {})
+    default_in = coding.get("input_tokens", 30000)
+    default_out = coding.get("output_tokens", 6000)
+    return (
+        "<div class='explorer-controls'>"
+        "<input type='search' id='model-search' class='search-input' "
+        "placeholder='Buscar modelo, proveedor…' aria-label='Buscar modelo o proveedor'>"
+        "<button type='button' id='cmp-btn' class='cmp-btn' disabled>Comparar seleccionados (0)</button>"
+        "</div>"
+        "<div class='profile-inputs' id='profile-inputs'>"
+        "<span class='profile-label'>Perfil personalizado:</span>"
+        f"<label>Input tokens <input type='number' id='tok-input' min='0' step='1000' value='{default_in}'></label>"
+        f"<label>Output tokens <input type='number' id='tok-output' min='0' step='500' value='{default_out}'></label>"
+        "<span class='muted note'>recalcula la columna «Coste personalizado» al vuelo, sin recargar</span>"
+        "</div>"
+        "<div id='cmp-panel' class='cmp-panel' hidden></div>"
+        "<div class='table-scroll'><table class='grid' data-sortable id='explorer-table'>"
+        "<thead><tr>"
+        "<th></th><th>Modelo</th><th>Proveedor más barato</th>"
+        "<th data-key='ecost'>Coste estimado</th><th data-key='einput'>$/M input</th>"
+        "<th data-key='eoutput'>$/M output</th><th data-key='ecustom'>Coste personalizado</th>"
+        "<th>Calidad</th><th>Estado</th>"
+        "</tr></thead>"
+        f"<tbody>{rows}</tbody></table></div>"
+        f"<p class='muted note' id='explorer-count'>{len(explorer)} modelos únicos. "
+        "Haz clic en un modelo para ver todas sus rutas. Selecciona hasta 4 para compararlos.</p>"
+    )
+
+
+def _section_methodology(config):
+    config = config or {}
+    anchor = config.get("value_cost_anchor_usd", 0.05)
+    profiles = config.get("task_profiles", {})
+    profile_rows = []
+    for k, p in profiles.items():
+        in_tok, out_tok, weight = p.get("input_tokens", 0), p.get("output_tokens", 0), p.get("weight", 0)
+        in_text, out_text = f"{in_tok:,}", f"{out_tok:,}"
+        profile_rows.append(
+            f"<tr><td class='usage'>{LABELS.get(k, k)}</td>"
+            f"{_num_td(in_tok, in_text)}{_num_td(out_tok, out_text)}{_num_td(weight, weight)}</tr>"
+        )
+    rows = "".join(profile_rows)
+    return f"""
+<div class="methodology">
+  <h3>Precios</h3>
+  <p>Se descargan directamente de la API pública de cada proveedor configurado, una vez al día. Un
+  precio en $0/$0 no se asume gratis: solo cuenta como gratis cuando el proveedor lo declara
+  explícitamente (hoy, el sufijo <code>:free</code> de OpenRouter); en cualquier otro caso queda como
+  <em>desconocido</em> y no entra en ningún ranking por coste.</p>
+  <h3>Identidad de modelo</h3>
+  <p>Dos rutas se tratan como el mismo modelo solo cuando su id normalizado coincide exactamente o
+  existe una regla de alias que no pierde información de tamaño, fecha o variante del checkpoint
+  original. Nunca por similitud de nombre sin más — evita, por ejemplo, fusionar
+  <code>DeepSeek-R1</code> con <code>DeepSeek-R1-Distill-Qwen-32B</code>.</p>
+  <h3>Benchmarks</h3>
+  <p><strong>Aider Polyglot Leaderboard</strong> mide corrección de código con un test fijo
+  (pass/fail). <strong>LMArena WebDev Arena</strong> mide preferencia humana generando aplicaciones
+  web (rating Elo). Son escalas distintas: nunca se combinan en un único ranking, y la fuente exacta
+  se muestra siempre junto al dato, no solo al pasar el ratón por encima.</p>
+  <h3>Coste estimado</h3>
+  <p>Perfil de tokens fijo por tipo de tarea (editable en <code>config.json</code>):</p>
+  <div class="table-scroll"><table class='grid'><thead><tr>
+  <th>Uso</th><th>Input tokens</th><th>Output tokens</th><th>Peso</th>
+  </tr></thead><tbody>{rows}</tbody></table></div>
+  <h3>Radar Value</h3>
+  <p>Índice propio de este proyecto — <strong>no es un benchmark</strong>:
+  <code>calidad × 10 / sqrt(1 + coste_tarea / {anchor})</code>. Combina calidad medida y coste
+  estimado para ordenar por "valor"; el ancla de {anchor} USD/tarea es el punto en el que el coste
+  empieza a penalizar.</p>
+  <h3>Limitaciones</h3>
+  <ul>
+    <li>Los precios pueden cambiar durante el día — el snapshot es de un momento dado.</li>
+    <li>Un modelo sin benchmark no significa baja calidad: significa que no hay dato fiable todavía.</li>
+    <li>Benchmarks distintos no son directamente comparables entre sí.</li>
+    <li>Latencia/throughput (cuando existen) pueden variar por región o carga.</li>
+    <li>El coste estimado usa un perfil de tokens fijo; tu carga de trabajo real puede diferir.</li>
+  </ul>
+</div>
+"""
 
 
 def _sparkline(trend, width=560, height=64):
@@ -408,19 +534,85 @@ table.grid td.muted { color: var(--muted); white-space: normal; }
   font-size: 0.62rem; font-weight: 700; color: #0a0d12; flex: none;
 }
 
-.qcell { display: inline-flex; align-items: center; gap: 7px; }
+.qcell { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; }
 .qbar { width: 36px; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; flex: none; }
 .qbar-fill { display: block; height: 100%; border-radius: 3px; }
 .qbar-fill.tier-good { background: var(--pos); }
 .qbar-fill.tier-mid { background: var(--accent); }
 .qbar-fill.tier-low { background: var(--neg); }
 .qval { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); }
+.qsrc {
+  font-size: 0.66rem; letter-spacing: .01em; color: var(--muted); background: var(--panel-2, var(--panel));
+  border: 1px solid var(--border); border-radius: 999px; padding: 1px 6px; white-space: nowrap;
+}
+
+/* ---------- freshness ---------- */
+.freshness { display: inline-flex; align-items: center; gap: 6px; }
+.freshness .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex: none; }
+.freshness .dot.fresh { background: var(--pos); }
+.freshness .dot.stale { background: var(--accent); }
+.freshness .dot.old { background: var(--neg); }
 
 .pill {
   font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; padding: 3px 9px; border-radius: 100px;
 }
 .pill.pos { color: var(--pos); background: color-mix(in srgb, var(--pos) 16%, transparent); }
 .pill.neg { color: var(--neg); background: color-mix(in srgb, var(--neg) 16%, transparent); }
+.pill.neutral { color: var(--muted); background: var(--panel); border: 1px solid var(--border); }
+
+/* ---------- accessibility: focus & keyboard ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible,
+th[tabindex]:focus-visible, .exp-toggle:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px;
+}
+table.grid[data-sortable] th[data-key][aria-sort="ascending"]::after { content: " ▲"; color: var(--accent); }
+table.grid[data-sortable] th[data-key][aria-sort="descending"]::after { content: " ▼"; color: var(--accent); }
+
+/* ---------- explorer / search / compare ---------- */
+.explorer-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.search-input {
+  flex: 1 1 260px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 14px; color: var(--text); font-size: 0.9rem; font-family: var(--font-body);
+}
+.search-input::placeholder { color: var(--muted); }
+.cmp-btn {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.84rem; padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--text);
+  cursor: pointer; white-space: nowrap;
+}
+.cmp-btn:disabled { opacity: 0.4; cursor: not-allowed; border-color: var(--border); background: transparent; }
+.exp-toggle {
+  background: none; border: none; color: inherit; font: inherit; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; gap: 2px; padding: 0;
+}
+.exp-toggle:hover { color: var(--accent); }
+.exp-count { font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+tr.exp-detail td { background: color-mix(in srgb, var(--panel) 60%, transparent); white-space: normal; padding: 12px 16px; }
+.exp-routes { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; }
+.exp-routes .exp-route-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+tr.hidden-row { display: none; }
+.cmp-panel { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: var(--panel); }
+.cmp-panel h4 { margin: 0 0 12px; font-size: 0.95rem; }
+.profile-inputs {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding: 12px 16px;
+  border: 1px dashed var(--border); border-radius: 10px; font-size: 0.82rem;
+}
+.profile-label { color: var(--muted); font-weight: 600; }
+.profile-inputs label { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.profile-inputs input[type="number"] {
+  width: 90px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px;
+  color: var(--text); font-family: var(--font-mono); font-size: 0.82rem;
+}
+
+/* ---------- methodology ---------- */
+.methodology h3 { font-size: 0.92rem; margin: 22px 0 8px; }
+.methodology h3:first-child { margin-top: 0; }
+.methodology p { color: var(--muted); font-size: 0.88rem; max-width: 72ch; }
+.methodology code {
+  font-family: var(--font-mono); font-size: 0.82em; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 5px;
+}
+.methodology ul { color: var(--muted); font-size: 0.88rem; padding-left: 20px; max-width: 72ch; }
 
 /* ---------- top5 ---------- */
 h3 { font-size: 1rem; font-weight: 600; margin: 28px 0 12px; }
@@ -477,15 +669,24 @@ SCRIPT = """
     sections.forEach(function (s) { if (s) { observer.observe(s); } });
   }
 
-  // --- sortable tables ---
+  // --- sortable tables (mouse + keyboard, aria-sort kept in sync) ---
   document.querySelectorAll('table[data-sortable]').forEach(function (table) {
-    table.querySelectorAll('th[data-key]').forEach(function (th) {
-      th.addEventListener('click', function () {
+    var headers = table.querySelectorAll('th[data-key]');
+    headers.forEach(function (th) {
+      th.setAttribute('tabindex', '0');
+      th.setAttribute('role', 'button');
+      th.setAttribute('aria-sort', 'none');
+      function doSort() {
         var key = th.getAttribute('data-key');
         var dir = th.getAttribute('data-dir') === 'asc' ? 'desc' : 'asc';
-        table.querySelectorAll('th[data-key]').forEach(function (x) { x.removeAttribute('data-dir'); });
+        headers.forEach(function (x) { x.removeAttribute('data-dir'); x.setAttribute('aria-sort', 'none'); });
         th.setAttribute('data-dir', dir);
+        th.setAttribute('aria-sort', dir === 'asc' ? 'ascending' : 'descending');
         var tbody = table.querySelector('tbody');
+        // Collapse any expanded model-explorer detail rows before reordering —
+        // a detail row has no sort key and would otherwise land in the wrong place.
+        tbody.querySelectorAll('tr.exp-detail').forEach(function (d) { d.remove(); });
+        tbody.querySelectorAll('.exp-toggle[aria-expanded="true"]').forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
         var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
         rows.sort(function (ra, rb) {
           var ta = ra.querySelector('[data-key="' + key + '"]');
@@ -496,9 +697,157 @@ SCRIPT = """
           return dir === 'asc' ? cmp : -cmp;
         });
         rows.forEach(function (r) { tbody.appendChild(r); });
+      }
+      th.addEventListener('click', doSort);
+      th.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); doSort(); }
       });
     });
   });
+
+  // --- model explorer: custom token profile recalculates "coste personalizado" live ---
+  var tokInput = document.getElementById('tok-input');
+  var tokOutput = document.getElementById('tok-output');
+  if (tokInput && tokOutput && explorerTable) {
+    function recalcCustomCost() {
+      var inTok = Math.max(0, parseFloat(tokInput.value) || 0);
+      var outTok = Math.max(0, parseFloat(tokOutput.value) || 0);
+      explorerTable.querySelectorAll('tbody tr.exp-row').forEach(function (row) {
+        var inCell = row.querySelector('[data-key="einput"]');
+        var outCell = row.querySelector('[data-key="eoutput"]');
+        var customCell = row.querySelector('[data-key="ecustom"]');
+        if (!inCell || !outCell || !customCell) { return; }
+        var pIn = parseFloat(inCell.getAttribute('data-value'));
+        var pOut = parseFloat(outCell.getAttribute('data-value'));
+        var cost = (inTok / 1000000) * pIn + (outTok / 1000000) * pOut;
+        customCell.setAttribute('data-value', cost);
+        customCell.textContent = '$' + cost.toFixed(5);
+      });
+    }
+    tokInput.addEventListener('input', recalcCustomCost);
+    tokOutput.addEventListener('input', recalcCustomCost);
+    recalcCustomCost();
+  }
+
+  // --- model explorer: search filter ---
+  var searchInput = document.getElementById('model-search');
+  var explorerTable = document.getElementById('explorer-table');
+  var explorerCount = document.getElementById('explorer-count');
+  if (searchInput && explorerTable) {
+    searchInput.addEventListener('input', function () {
+      var needle = searchInput.value.trim().toLowerCase();
+      var visible = 0;
+      explorerTable.querySelectorAll('tbody tr.exp-row').forEach(function (row) {
+        var hay = row.getAttribute('data-search') || '';
+        var match = !needle || hay.indexOf(needle) !== -1;
+        row.classList.toggle('hidden-row', !match);
+        if (match) { visible++; }
+        var detail = row.nextElementSibling;
+        if (detail && detail.classList.contains('exp-detail')) {
+          detail.classList.toggle('hidden-row', !match);
+        }
+      });
+      if (explorerCount) {
+        explorerCount.textContent = needle
+          ? visible + ' de ' + explorerTable.querySelectorAll('tbody tr.exp-row').length + ' modelos coinciden con "' + searchInput.value.trim() + '".'
+          : explorerTable.querySelectorAll('tbody tr.exp-row').length + ' modelos únicos. Haz clic en un modelo para ver todas sus rutas. Selecciona hasta 4 para compararlos.';
+      }
+    });
+  }
+
+  // --- model explorer: expand routes ---
+  if (explorerTable) {
+    explorerTable.querySelectorAll('.exp-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var row = btn.closest('tr');
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        var existing = row.nextElementSibling;
+        if (existing && existing.classList.contains('exp-detail')) { existing.remove(); }
+        if (open) { btn.setAttribute('aria-expanded', 'false'); return; }
+        explorerTable.querySelectorAll('.exp-toggle[aria-expanded="true"]').forEach(function (t) {
+          t.setAttribute('aria-expanded', 'false');
+          var d = t.closest('tr').nextElementSibling;
+          if (d && d.classList.contains('exp-detail')) { d.remove(); }
+        });
+        btn.setAttribute('aria-expanded', 'true');
+        var routes;
+        try { routes = JSON.parse(btn.getAttribute('data-routes')); } catch (e) { routes = []; }
+        var cols = row.children.length;
+        var html = "<div class='exp-routes'>" + routes.map(function (r) {
+          var status = r.pricing_status === 'free' ? 'Gratis' : (r.pricing_status === 'paid' ? 'Pago' : 'Desconocido');
+          return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
+            "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" +
+            "<span class='meta'>$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out</span>" +
+            "<span class='meta'>coste estimado $" + r.weighted_cost.toFixed(5) + "</span>" +
+            "<span class='pill neutral'>" + status + "</span></div>";
+        }).join('') + "</div>";
+        var tr = document.createElement('tr');
+        tr.className = 'exp-detail';
+        tr.innerHTML = "<td colspan='" + cols + "'>" + html + "</td>";
+        row.parentNode.insertBefore(tr, row.nextSibling);
+      });
+    });
+  }
+  function escapeHtml(s) {
+    var div = document.createElement('div');
+    div.textContent = String(s == null ? '' : s);
+    return div.innerHTML;
+  }
+
+  // --- model explorer: compare up to 4 selected models ---
+  var cmpBtn = document.getElementById('cmp-btn');
+  var cmpPanel = document.getElementById('cmp-panel');
+  if (explorerTable && cmpBtn && cmpPanel) {
+    function selectedChecks() {
+      return Array.prototype.slice.call(explorerTable.querySelectorAll('.cmp-check:checked'));
+    }
+    function refreshCmpBtn() {
+      var n = selectedChecks().length;
+      cmpBtn.textContent = 'Comparar seleccionados (' + n + ')';
+      cmpBtn.disabled = n < 2;
+    }
+    explorerTable.querySelectorAll('.cmp-check').forEach(function (chk) {
+      chk.addEventListener('change', function () {
+        if (selectedChecks().length > 4) { chk.checked = false; }
+        refreshCmpBtn();
+      });
+    });
+    cmpBtn.addEventListener('click', function () {
+      var rows = selectedChecks().map(function (chk) { return chk.closest('tr'); });
+      var cells = ['ecost', 'einput', 'eoutput', 'ecustom'];
+      var head = '<tr><th>Modelo</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th><th>Coste personalizado</th><th>Calidad</th><th>Estado</th></tr>';
+      var body = rows.map(function (r) {
+        var name = r.querySelector('.exp-toggle').firstChild.textContent;
+        var tds = cells.map(function (k) {
+          var td = r.querySelector('[data-key="' + k + '"]');
+          return '<td class="num">' + (td ? td.textContent : '—') + '</td>';
+        }).join('');
+        var quality = r.querySelector('.qcell');
+        var status = r.querySelector('.pill');
+        return '<tr><td class="usage">' + escapeHtml(name) + '</td>' + tds +
+          '<td>' + (quality ? quality.outerHTML : '—') + '</td>' +
+          '<td>' + (status ? status.outerHTML : '—') + '</td></tr>';
+      }).join('');
+      cmpPanel.innerHTML = '<h4>Comparativa</h4><div class="table-scroll"><table class="grid"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+      cmpPanel.hidden = false;
+    });
+  }
+
+  // --- freshness indicator: computed client-side against wall-clock time,
+  // since a static page's "now" isn't known at generation time ---
+  var freshEl = document.getElementById('freshness');
+  if (freshEl) {
+    var generatedAt = new Date(freshEl.getAttribute('data-generated-at'));
+    if (!isNaN(generatedAt.getTime())) {
+      var hours = (Date.now() - generatedAt.getTime()) / 3600000;
+      var dot = freshEl.querySelector('.dot');
+      var cls = hours < 6 ? 'fresh' : (hours < 24 ? 'stale' : 'old');
+      dot.classList.add(cls);
+      dot.title = hours < 1
+        ? 'hace menos de 1 h'
+        : 'hace ' + Math.round(hours) + ' h';
+    }
+  }
 
   // --- scroll reveal + hero counters ---
   if (!window.gsap) { return; }
@@ -546,7 +895,9 @@ PAGE_HEAD = """<!doctype html>
 <body>
 <div class="topbar">
   <span class="brand"><span class="brand-mark"></span>AI Price Radar</span>
-  <span>Actualizado {day}</span>
+  <span class="freshness" id="freshness" data-generated-at="{generated_at}">
+    <span class="dot"></span><span class="freshness-text">Actualizado {generated_label}</span>
+  </span>
 </div>
 
 <div class="toc-wrap"><nav class="toc" aria-label="Secciones">{toc}</nav></div>
@@ -561,10 +912,11 @@ PAGE_HEAD = """<!doctype html>
   <div class="hero-inner">
     <span class="eyebrow">Escaneo diario de mercado</span>
     <h1>El mejor modelo de IA para programar, al precio de hoy.</h1>
-    <p class="lede">Cada mañana comparamos catálogo y precios de varios proveedores contra un benchmark público de programación, y ordenamos las opciones por coste real de tarea — no por lista de precios sin más.</p>
+    <p class="lede">Cada mañana comparamos catálogo y precios de varios proveedores contra benchmarks públicos de programación, y ordenamos las opciones por coste estimado de tarea — no por lista de precios sin más.</p>
     <div class="stat-row">
-      <div class="stat-tile"><span class="stat-num" data-value="{models_kept}">{models_kept}</span><div class="stat-label">rutas / modelos</div></div>
-      <div class="stat-tile"><span class="stat-num" data-value="{sources_with_data}">{sources_with_data}</span><div class="stat-label">fuentes con datos</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{unique_models}">{unique_models}</span><div class="stat-label">modelos únicos</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{models_kept}">{models_kept}</span><div class="stat-label">rutas / precios</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{sources_with_data}">{sources_with_data}</span><div class="stat-label">proveedores de precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{scored_routes}">{scored_routes}</span><div class="stat-label">rutas puntuadas</div></div>
     </div>
     <div class="chips">{chips}</div>
@@ -605,7 +957,7 @@ def _toc_html(entries):
     )
 
 
-def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None):
+def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, config=None):
     recs = snapshot["recommendations"]
     price_trends = price_trends or {}
     scored_categories = {
@@ -623,45 +975,72 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None):
     )
     paid_value_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
-        "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste/tarea</th><th>$/M input</th><th>$/M output</th>"
-        "<th>Calidad</th><th>Value</th></tr></thead>"
+        "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th>"
+        "<th>Calidad</th><th>Radar Value</th></tr></thead>"
         f"<tbody>{_section_paid_value(recs, scored_categories)}</tbody></table></div>"
         + _sparkline(price_trends.get("coding"))
     )
     paid_quality_table = (
         "<div class='table-scroll'><table class='grid'><thead><tr>"
-        "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste/tarea</th><th>$/M input</th><th>$/M output</th>"
+        "<th>Uso</th><th>Modelo</th><th>Proveedor</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th>"
         "<th>Calidad</th></tr></thead>"
         f"<tbody>{_section_paid_quality(recs, scored_categories)}</tbody></table></div>"
     )
 
-    blocks = [
-        ("01", "Mejor opción gratuita", free_table, ""),
+    raw_blocks = [
+        ("Mejor opción gratuita", free_table,
+         "«Gratis» solo cuenta cuando el proveedor lo declara explícitamente — un precio 0/0 sin esa "
+         "señal se trata como desconocido, no como gratis, y no entra en esta lista."),
         (
-            "02", "Mejor relación calidad/precio de pago", paid_value_table,
+            "Mejor relación calidad/precio entre modelos puntuados", paid_value_table,
             "Solo entra un modelo cuando el benchmark de coding lo respalda — un modelo barato "
-            "sin score todavía no aparece aquí, aunque merezca la pena; lo verás en las tablas de precio de arriba.",
+            "sin score todavía no aparece aquí, aunque merezca la pena; lo verás en las tablas de precio de arriba. "
+            "Radar Value es un índice propio (calidad medida × coste estimado), no un benchmark.",
         ),
-        ("03", "Opción premium por calidad", paid_quality_table, ""),
         (
-            "04", "Mismo modelo, ruta más barata", _section_opportunities(snapshot["cross_provider_opportunities"]),
-            "Compara el mismo modelo entre proveedores — no es una bajada de precio, es elegir mejor ruta hoy.",
+            "Mayor puntuación entre modelos de pago con benchmark disponible", paid_quality_table,
+            "No implica que sea la mejor opción absoluta del mercado — solo la de mayor calidad medida "
+            "entre los modelos que tienen benchmark.",
         ),
-        ("05", "Top 5 de pago por calidad/precio", _section_top5(recs, scored_categories), ""),
         (
-            "06", "Movimientos de precio",
-            _section_changes(has_previous, snapshot["changes"]["drops"], snapshot["changes"]["increases"]), "",
+            "Mismo modelo, ruta más barata", _section_opportunities(snapshot["cross_provider_opportunities"]),
+            "Compara el mismo modelo entre proveedores — no es una bajada de precio, es elegir mejor ruta hoy. "
+            "Solo se compara cuando la identidad del modelo está confirmada (mismo id normalizado o alias verificado) "
+            "y el precio de ambos lados es conocido (no `unknown`/dedicado).",
         ),
+        ("Top 5 de pago por calidad/precio", _section_top5(recs, scored_categories), ""),
+        (
+            "Movimientos de precio",
+            _section_changes(has_previous, snapshot["changes"]["drops"], snapshot["changes"]["increases"]),
+            "Solo se compara la misma ruta/proveedor frente al día anterior — nunca dos proveedores distintos.",
+        ),
+        (
+            "Explorador de modelos",
+            _section_explorer(snapshot.get("explorer") or [], (config or {}).get("task_profiles")),
+            "Catálogo completo, uno por modelo (no por ruta) — busca, expande para ver todas sus rutas y "
+            "compara hasta 4 a la vez.",
+        ),
+        ("Metodología", _section_methodology(config), ""),
     ]
     if ai_summary:
-        blocks.append(("07", "Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>", ""))
+        raw_blocks.append(("Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>", ""))
 
+    blocks = [(f"{i + 1:02d}", title, body, note) for i, (title, body, note) in enumerate(raw_blocks)]
     toc = _toc_html([(idx, title) for idx, title, _body, _note in blocks])
     sections = "".join(_section_html(idx, title, body, note) for idx, title, body, note in blocks)
 
+    generated_at = snapshot.get("generated_at", "")
+    try:
+        generated_label = datetime.fromisoformat(generated_at).strftime("%d/%m/%Y %H:%M %Z")
+    except (ValueError, TypeError):
+        generated_label = day
+
     head = PAGE_HEAD.format(
         day=day,
+        generated_at=_esc(generated_at),
+        generated_label=_esc(generated_label),
         style=STYLE,
+        unique_models=snapshot["stats"].get("unique_models", 0),
         models_kept=snapshot["stats"]["models_kept"],
         sources_with_data=snapshot["stats"]["providers_with_data"],
         scored_routes=snapshot["stats"]["scored_routes"],
