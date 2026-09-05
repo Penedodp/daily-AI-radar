@@ -1,4 +1,4 @@
-# AI Price Radar
+# Daily AI Radar
 
 Radar diario (GitHub Actions) que compara el catálogo de modelos de IA de varios
 proveedores, calcula el coste **estimado** por tipo de tarea y genera un ranking de
@@ -21,13 +21,19 @@ desconocido a una conclusión que los datos no respaldan (ver
    proveedor.
 3. Calcula el coste estimado por tarea (coding, agentic, razonamiento, general)
    según el mix de tokens de entrada/salida de cada perfil.
-4. Genera `reports/<fecha>.md`, `reports/latest.md` y `docs/index.html` con:
+4. Deduplica rutas exactas (mismo proveedor + id + tag/quantization) y valida
+   el snapshot: si encuentra un error crítico (precio inválido, identidad
+   inconsistente, benchmark sin fuente trazable...) **no publica** — sale con
+   código de error antes de escribir nada, y el workflow no llega al commit.
+5. Genera `reports/<fecha>.md`, `reports/latest.md` y `docs/index.html` con:
    - mejor opción gratis (verificada, no solo precio 0),
-   - mejor relación calidad/precio entre modelos puntuados,
+   - mejor relación calidad/precio **por fuente de benchmark** (Aider y
+     WebDev Arena nunca compiten en el mismo ranking),
    - mayor puntuación entre modelos de pago con benchmark disponible,
    - oportunidades de usar el mismo modelo por una ruta/proveedor más barata,
-   - bajadas/subidas de precio reales (mismo proveedor/ruta vs. el día anterior).
-5. Comitea `data/<fecha>.json` (snapshot completo) y el informe.
+   - bajadas/subidas de precio reales (mismo proveedor/ruta vs. el snapshot
+     anterior — con su fecha real, no siempre "ayer").
+6. Comitea `data/<fecha>.json` (snapshot completo) y el informe.
 
 ## Identidad de modelo: conservadora por diseño
 
@@ -68,8 +74,13 @@ Ver `tests/test_scoring.py`.
   Ver `tests/test_quality_bench.py`.
 - Aider y LMArena miden cosas distintas (corrección de código vs. preferencia
   humana en apps web) y sus puntuaciones **no son directamente comparables**
-  entre sí — la fuente exacta se muestra siempre junto al dato, no solo en el
-  tooltip.
+  entre sí. Por eso `recommendations()` produce un ranking independiente por
+  cada `(categoría, fuente)` — nunca un único ranking que mezcle ambas
+  escalas — y la fuente exacta se muestra siempre junto al dato, no solo en
+  el tooltip. Ver `tests/test_snapshot_validation.py::test_aider_and_webdev_never_rank_against_each_other`.
+- Se guarda también el score crudo (`raw_score`/`raw_unit`: `% pass rate` o
+  `Elo`), la fecha de captura del benchmark y su URL — visibles en el
+  tooltip de cada score.
 - **Agentic / razonamiento / general**: todavía no tienen una fuente de
   benchmark pública igual de fiable y automatizable. El informe lo indica
   explícitamente en vez de rellenar con una estimación.
@@ -110,6 +121,18 @@ Variables de entorno equivalentes a los secrets de arriba:
 `OPENROUTER_API_KEY`, `TOGETHER_API_KEY`, `NOVITA_API_KEY`,
 `CHEAPER_INFERENCE_API_KEY`, `OPENROUTER_MANAGEMENT_API_KEY`.
 
+## Validación del snapshot: warnings vs errors
+
+`main.py::validate_snapshot` corre en cada ejecución, antes de escribir
+ningún archivo, y distingue dos niveles:
+
+- **ERROR** (bloquea la publicación, `sys.exit(1)`): ruta duplicada tras
+  deduplicar, precio inválido (negativo/NaN/Infinito), `free=true` sin
+  `pricing_status` verificado, benchmark sin fuente/label trazable, o un
+  mismo `canonical_model` agrupando tamaños de modelo distintos.
+- **WARNING** (se registra, no bloquea): rutas con precio `unknown`, modelos
+  sin ningún benchmark todavía. Son condiciones esperadas del día a día.
+
 ## Tests
 
 ```bash
@@ -117,9 +140,14 @@ pip install -r requirements.txt
 python -m pytest tests/ -q
 ```
 
-Los tests protegen las reglas de negocio críticas: identidad de modelo
-(`tests/test_normalize.py`), matching de benchmark (`tests/test_quality_bench.py`)
-y estado de precio/gratis (`tests/test_scoring.py`). No dependen de red.
+El workflow diario ejecuta `pytest` **antes** de generar nada — si falla, no
+se publica. Los tests cubren identidad de modelo (`test_normalize.py`),
+matching de benchmark (`test_quality_bench.py`), estado de precio/gratis
+(`test_scoring.py`), etiquetado y deduplicación de rutas (`test_routes.py`),
+y un fixture de extremo a extremo (`test_snapshot_validation.py`) y de
+renderizado HTML (`test_report_html.py`) que reproducen los casos de ambos
+documentos de auditoría (variantes DeepSeek, standard/flex, Aider vs WebDev,
+precio `unknown`, etc). No dependen de red.
 
 ## Estructura
 
@@ -146,5 +174,7 @@ y estado de precio/gratis (`tests/test_scoring.py`). No dependen de red.
   por región/carga.
 - Agentic, razonamiento y general no tienen benchmark automatizado todavía.
 
-Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md` para el resto de mejoras pendientes
-(ficha de modelo, buscador, comparador, perfil de uso personalizado, etc.).
+Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md` y `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`
+para el historial completo de auditoría y las mejoras pendientes (histórico
+por ruta, señales de alerta 7/30d, simulador de cache hit, vistas
+más-rápido/más-estable por ruta, etc.).
