@@ -52,6 +52,27 @@ distintos en vez de uno solo — ver `tests/test_normalize.py`.
 La comparación "mismo modelo, ruta más barata" (sección 🔀) solo compara
 rutas cuyo `canonical_model` coincide exactamente por esta vía.
 
+### Identidad de modelo vs. identidad de ruta/endpoint
+
+`route_identity()` (`route_identity_v1`) es una identidad **más fina** que el
+`canonical_model`: incluye `route_tag` y `quantization`, y para rutas de
+OpenRouter usa el `provider_name` crudo de la API en vez de la etiqueta
+sintetizada para mostrar en pantalla (nunca la display label como identidad).
+Se usa para deduplicar, para detectar movimientos de precio y para el
+histórico — así "OpenAI Standard" y "OpenAI Flex", o dos cuantizaciones del
+mismo modelo, nunca se confunden entre sí ni con la ruta ganadora de otro
+día. Ver `tests/test_routes.py`.
+
+### `benchmark_scope`
+
+Todo score de calidad de hoy mide el **modelo/checkpoint** (`benchmark_scope
+= "model"`), nunca un endpoint concreto — una ruta con una cuantización
+distinta (FP4, por ejemplo) puede comportarse de forma distinta y no ha sido
+medida por separado. El dato queda explícito en cada score (tooltip y JSON)
+para que nunca se insinúe lo contrario. Es el punto de extensión pensado
+para que un futuro benchmark a nivel de endpoint pueda coexistir sin rehacer
+el modelo de datos.
+
 ## "Gratis" no es lo mismo que precio 0
 
 Un `0`/`0` de un proveedor puede significar gratis, pero también capacidad
@@ -86,6 +107,20 @@ Ver `tests/test_scoring.py`.
   explícitamente en vez de rellenar con una estimación.
 
 No hay ningún archivo de calidad curado a mano que mantener.
+
+## Gratis: qué es "disponible hoy" vs "mejor puntuado"
+
+El dashboard separa dos preguntas distintas. **"Mejor opción gratuita
+puntuada"** solo muestra un modelo si además tiene benchmark comparable.
+**"Modelos gratuitos disponibles hoy"** lista TODAS las rutas verificadas
+como gratis, tengan o no benchmark, en un orden neutral (nunca por calidad
+cuando no la tienen). Cada `FREE ⓘ` es un popover accesible (click, tap o
+foco+Enter — nunca depende solo de `title`) con los límites conocidos del
+proveedor, cargados desde `config/free_tiers.json` (editable sin tocar
+código). `openrouter/free` se trata como lo que es — un **router** que
+selecciona un modelo compatible por petición, no un checkpoint — así que
+nunca recibe una puntuación propia ni aparece en el Explorador de modelos
+(que es, por definición, de modelos). Ver `tests/test_free_tiers.py`.
 
 ## Radar Value
 
@@ -133,6 +168,28 @@ ningún archivo, y distingue dos niveles:
 - **WARNING** (se registra, no bloquea): rutas con precio `unknown`, modelos
   sin ningún benchmark todavía. Son condiciones esperadas del día a día.
 
+## Movimientos de precio: tarifa real, no coste estimado
+
+Una bajada/subida compara **tarifas** (`input_usd_per_million`/
+`output_usd_per_million`, misma `route_identity`) frente al snapshot
+anterior — nunca el `weighted_cost`, que también cambiaría si se edita
+`task_profiles` en `config.json` sin que ningún proveedor haya tocado su
+precio. El coste estimado del perfil se sigue registrando por separado
+(`estimated_cost_change_pct`) pero nunca se llama "cambio de precio". Ver
+`tests/test_price_changes.py`.
+
+## Data Health
+
+La sección "Metodología y Data Health" del dashboard expone, por snapshot:
+filas en bruto, duplicados eliminados, rutas con precio desconocido,
+modelos con benchmark propio vs. endpoints que solo heredan el score de su
+modelo vs. endpoints benchmarkeados específicamente (hoy, siempre 0 — no
+existe todavía una fuente a nivel de endpoint), y el recuento de avisos de
+validación. También incluye `calculation_context` (perfiles de tarea,
+ancla de Radar Value, y las versiones `scoring_version` /
+`benchmark_normalization_version` / `route_identity_version` — un snapshot
+antiguo nunca se reinterpreta con una fórmula nueva).
+
 ## Tests
 
 ```bash
@@ -143,11 +200,14 @@ python -m pytest tests/ -q
 El workflow diario ejecuta `pytest` **antes** de generar nada — si falla, no
 se publica. Los tests cubren identidad de modelo (`test_normalize.py`),
 matching de benchmark (`test_quality_bench.py`), estado de precio/gratis
-(`test_scoring.py`), etiquetado y deduplicación de rutas (`test_routes.py`),
-y un fixture de extremo a extremo (`test_snapshot_validation.py`) y de
-renderizado HTML (`test_report_html.py`) que reproducen los casos de ambos
-documentos de auditoría (variantes DeepSeek, standard/flex, Aider vs WebDev,
-precio `unknown`, etc). No dependen de red.
+(`test_scoring.py`), etiquetado/identidad/deduplicación de rutas
+(`test_routes.py`), movimientos de precio basados en tarifa real
+(`test_price_changes.py`), gratis/router/free-tiers (`test_free_tiers.py`),
+renderizado HTML (`test_report_html.py`) y un fixture de extremo a extremo
+(`test_snapshot_validation.py`) que reproduce los casos de los tres
+documentos de auditoría (variantes DeepSeek, standard/flex, Aider vs WebDev
+sin mezclarse ni con `max()`, precio `unknown`, Qwen3.8 dash/dot, etc). No
+dependen de red.
 
 ## Estructura
 
@@ -159,6 +219,7 @@ precio `unknown`, etc). No dependen de red.
 - `src/report_ai.py` — resumen en español generado con un modelo gratis de OpenRouter.
 - `src/report_html.py` — dashboard estático publicado en `docs/` (GitHub Pages).
 - `model_aliases.json` — reglas de canonicalización (editable).
+- `config/free_tiers.json` — condiciones de free tier por proveedor (editable, sin tocar código).
 - `data/` — snapshots diarios completos + caché de benchmarks.
 - `reports/` — informe diario en Markdown.
 - `docs/` — dashboard HTML publicado vía GitHub Pages.
@@ -173,8 +234,16 @@ precio `unknown`, etc). No dependen de red.
 - Latencia/throughput (cuando existen, vía rutas de OpenRouter) pueden variar
   por región/carga.
 - Agentic, razonamiento y general no tienen benchmark automatizado todavía.
+- El coste estimado no tiene en cuenta el porcentaje de cache hit todavía.
+- Un precio `unknown` que en realidad sea `dedicated`/`byok`/`contact_sales`
+  se queda como `unknown` hasta tener una señal explícita del proveedor —
+  nunca se infiere sin evidencia.
+- No existe todavía ningún benchmark a nivel de endpoint (por ruta/
+  cuantización) — `endpoint_specific_benchmarks` es siempre 0 hoy, y es la
+  respuesta correcta, no un hueco.
 
-Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md` y `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`
-para el historial completo de auditoría y las mejoras pendientes (histórico
-por ruta, señales de alerta 7/30d, simulador de cache hit, vistas
-más-rápido/más-estable por ruta, etc.).
+Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md`, `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`
+y `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_3.md` para el historial completo de
+auditoría y las mejoras pendientes (histórico por ruta/endpoint, "ruta
+ganadora" por día, señales de alerta 7/30d, simulador de cache hit, vistas
+más-rápido/más-estable/mayor-contexto por ruta, Benchmark Engine v2, etc.).

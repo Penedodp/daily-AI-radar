@@ -69,8 +69,14 @@
       "canonical": "mimo-v2.5"
     },
     {
-      "pattern": "(?i)qwen3\\.8[-_/ ]?max",
+      "_note": "Verified alias (audit #3 §10): some providers spell 'Qwen3.8' with dashes instead of a period (qwen-3-8-max vs qwen3.8-max). Pattern requires the exact '27b'/'max' suffix so it can never match the unrelated 'qwen3-8b' (Qwen 3, 8B) model.",
+      "pattern": "(?i)qwen[-_/]?3[.\\-_]?8[-_/ ]?max",
       "canonical": "qwen3.8-max"
+    },
+    {
+      "_note": "Verified alias (audit #3 §10): qwen-3-8-27b and qwen3.8-27b are the same checkpoint under different provider slug formatting.",
+      "pattern": "(?i)qwen[-_/]?3[.\\-_]?8[-_/ ]?27b",
+      "canonical": "qwen3.8-27b"
     },
     {
       "pattern": "(?i)qwen3\\.7[-_/ ]?max",
