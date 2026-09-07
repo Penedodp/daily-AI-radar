@@ -1,0 +1,43 @@
+{
+  "_meta": {
+    "purpose": "Free-tier conditions per provider, kept as data (not hardcoded in the renderer) so limits can be updated without touching code. Limits can and do change — always keep verified_at/source_url current.",
+    "schema": {
+      "provider": "must match the row's `provider` field exactly",
+      "status": "free | free_tier | promotional_free | free_router",
+      "requests_per_minute": "int or null",
+      "requests_per_day": "int or null, may grow with account credit — see unlock_condition",
+      "unlock_condition": "free text, e.g. how the daily quota can increase",
+      "requires_credit": "bool",
+      "context_notes": "free text — e.g. context/routing can differ from paid routes",
+      "availability_notes": "free text",
+      "verified_at": "ISO date this entry was last checked against the provider's own docs",
+      "source_url": "where this was verified"
+    }
+  },
+  "entries": [
+    {
+      "provider": "OpenRouter",
+      "status": "free_tier",
+      "requests_per_minute": 20,
+      "requests_per_day": 50,
+      "unlock_condition": "El límite diario sube a 1000 req/día tras añadir al menos 10 USD en créditos a la cuenta.",
+      "requires_credit": false,
+      "context_notes": "El contexto/routing de una ruta ':free' puede diferir de la ruta de pago del mismo modelo.",
+      "availability_notes": "Disponibilidad sujeta a capacidad del proveedor gratuito subyacente; puede rotar o desaparecer sin aviso.",
+      "verified_at": "2026-09-05",
+      "source_url": "https://openrouter.ai/docs/api-reference/limits"
+    },
+    {
+      "provider": "OpenRouter Free Router",
+      "status": "free_router",
+      "requests_per_minute": 20,
+      "requests_per_day": 50,
+      "unlock_condition": "El límite diario sube a 1000 req/día tras añadir al menos 10 USD en créditos a la cuenta.",
+      "requires_credit": false,
+      "context_notes": "openrouter/free no es un modelo: selecciona automáticamente entre los modelos gratuitos compatibles disponibles en cada petición.",
+      "availability_notes": "El modelo real que responde puede variar entre peticiones.",
+      "verified_at": "2026-09-05",
+      "source_url": "https://openrouter.ai/docs/api-reference/limits"
+    }
+  ]
+}
