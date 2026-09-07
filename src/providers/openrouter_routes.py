@@ -58,6 +58,10 @@ def fetch_routes(model_ids, max_models=35):
                 output_price=out * 1_000_000,
                 metadata={
                     "route_tag": ep.get("tag"),
+                    # Raw provider_name from the API, kept separate from the composed
+                    # display label in `provider` — route_identity() must never rely
+                    # on a human-facing label (audit #3 §5).
+                    "provider_name": ep.get("provider_name"),
                     "uptime_last_1d": ep.get("uptime_last_1d"),
                     "uptime_last_30m": ep.get("uptime_last_30m"),
                     "latency_p50": (ep.get("latency_last_30m") or {}).get("p50"),
