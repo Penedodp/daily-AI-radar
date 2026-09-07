@@ -74,3 +74,32 @@ def test_confidence_is_normalized_id_on_fallback():
 def test_confidence_is_normalized_id_when_guard_rejects_the_rule():
     _, conf = canonicalize_with_confidence("z-ai/glm-5.2-flash", ALIASES)
     assert conf == "normalized_id"
+
+
+def test_qwen_3_8_27b_dash_and_dot_spellings_are_verified_equivalent():
+    a = canonicalize("qwen/qwen3.8-27b", ALIASES)
+    b = canonicalize("provider/qwen-3-8-27b", ALIASES)
+    assert a == b == "qwen3.8-27b"
+
+
+def test_qwen_3_8_max_dash_and_dot_spellings_are_verified_equivalent():
+    a = canonicalize("qwen/qwen3.8-max", ALIASES)
+    b = canonicalize("provider/qwen-3-8-max", ALIASES)
+    assert a == b == "qwen3.8-max"
+
+
+def test_qwen_3_8_27b_never_collapses_with_qwen_3_8_max():
+    assert canonicalize("qwen/qwen3.8-27b", ALIASES) != canonicalize("qwen/qwen3.8-max", ALIASES)
+
+
+def test_qwen_3_8_27b_never_collapses_with_a_thinking_variant():
+    a = canonicalize("qwen/qwen3.8-27b", ALIASES)
+    b = canonicalize("qwen/qwen3.8-27b-thinking", ALIASES)
+    assert a != b
+
+
+def test_qwen_3_8_family_never_collapses_with_unrelated_qwen3_8b():
+    """qwen3-8b is Qwen 3 at 8B params — a completely different model from
+    the Qwen3.8 *version* family (27b/max/flash variants)."""
+    assert canonicalize("qwen/qwen3-8b", ALIASES) != canonicalize("qwen/qwen3.8-27b", ALIASES)
+    assert canonicalize("qwen/qwen3-8b", ALIASES) != canonicalize("qwen/qwen3.8-max", ALIASES)

@@ -68,11 +68,15 @@ def _fixture_models():
         # scored by BOTH — must still rank in two independent lists, never merged
         _raw("OpenRouter", "openrouter", "qwen/qwen3-max", 1.0, 3.0),
         # two OpenAI routes distinguished only by tag
-        _raw("OpenRouter → OpenAI", "openrouter-route", "openai/gpt-5.5", 1.0, 4.0),
-        _raw("OpenRouter → OpenAI (flex)", "openrouter-route", "openai/gpt-5.5", 0.6, 2.4),
+        _raw("OpenRouter → OpenAI", "openrouter-route", "openai/gpt-5.5", 1.0, 4.0,
+             metadata={"provider_name": "OpenAI", "route_tag": "standard"}),
+        _raw("OpenRouter → OpenAI (flex)", "openrouter-route", "openai/gpt-5.5", 0.6, 2.4,
+             metadata={"provider_name": "OpenAI", "route_tag": "flex"}),
         # two xAI routes distinguished only by tag
-        _raw("OpenRouter → xAI", "openrouter-route", "x-ai/grok-4.5", 2.0, 8.0),
-        _raw("OpenRouter → xAI (zdr)", "openrouter-route", "x-ai/grok-4.5", 2.5, 10.0),
+        _raw("OpenRouter → xAI", "openrouter-route", "x-ai/grok-4.5", 2.0, 8.0,
+             metadata={"provider_name": "xAI", "route_tag": "standard"}),
+        _raw("OpenRouter → xAI (zdr)", "openrouter-route", "x-ai/grok-4.5", 2.5, 10.0,
+             metadata={"provider_name": "xAI", "route_tag": "zdr"}),
         # unscored model
         _raw("OpenRouter", "openrouter", "some/unscored-model", 0.2, 0.8),
         # a route with latency/throughput metadata
@@ -195,6 +199,35 @@ def test_dedup_exact_routes_removes_literal_duplicates():
     deduped, removed = dedup_exact_routes(rows)
     assert removed == 1
     assert len(deduped) == 2
+
+
+def test_explorer_default_order_never_uses_max_of_two_benchmark_sources():
+    """Audit #3 §12: the Explorer must not sort by max(Aider, WebDev). A
+    pricier model with a HIGH score would win under a score-first sort
+    (best_score, -cost) — the fix must rank the cheaper model first instead,
+    proving quality is no longer the primary sort key at all."""
+    cheap_low_score = {
+        "canonical_model": "cheap-low-score", "model_id": "a/cheap-low-score", "provider": "p",
+        "source": "openrouter", "pricing_status": "paid", "input_usd_per_million": 0.1,
+        "output_usd_per_million": 0.1, "weighted_cost": 0.01, "context_length": 8000,
+        "metadata": {}, "identity_confidence": "normalized_id",
+        "quality_by_source": {"lmarena_webdev": {"scores": {"coding": 3.0}, "source_label": "LMArena WebDev Arena",
+                                                    "raw_score": 1100, "raw_unit": "Elo", "match_type": "exact",
+                                                    "benchmark_scope": "model"}},
+    }
+    pricier_high_score = {
+        "canonical_model": "pricier-high-score", "model_id": "a/pricier-high-score", "provider": "p",
+        "source": "openrouter", "pricing_status": "paid", "input_usd_per_million": 5.0,
+        "output_usd_per_million": 5.0, "weighted_cost": 0.5, "context_length": 8000,
+        "metadata": {}, "identity_confidence": "normalized_id",
+        "quality_by_source": {"aider_polyglot": {"scores": {"coding": 9.5}, "source_label": "Aider Polyglot Leaderboard",
+                                                    "raw_score": 95.0, "raw_unit": "% pass rate", "match_type": "exact",
+                                                    "benchmark_scope": "model"}},
+    }
+    # Under the old max(Aider, WebDev)-first sort, pricier_high_score (9.5) would rank
+    # ABOVE cheap_low_score (3.0) despite costing 50x more. That must no longer happen.
+    explorer = build_explorer([cheap_low_score, pricier_high_score])
+    assert explorer[0]["model"] == "cheap-low-score"
 
 
 def test_explorer_groups_by_canonical_model_not_by_route():

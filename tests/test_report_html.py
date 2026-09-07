@@ -1,7 +1,7 @@
 import re
 
 import report_html
-from report_html import build_html, _explorer_row, _price_text
+from report_html import build_html, _explorer_row, _price_text, _format_context_tokens, _provider_badge
 
 
 def test_explorer_table_is_declared_before_first_use_in_script():
@@ -64,3 +64,24 @@ def _minimal_snapshot():
 def test_build_html_with_no_data_does_not_crash_and_shows_placeholder():
     html = build_html(_minimal_snapshot(), "2026-09-05", has_previous=False, config={})
     assert "Próximamente" in html
+
+
+def test_context_tokens_format_as_round_units_not_kilobyte_overflow():
+    assert _format_context_tokens(32768) == "32K"
+    assert _format_context_tokens(65536) == "64K"
+    assert _format_context_tokens(131072) == "128K"
+    assert _format_context_tokens(262144) == "256K"
+    assert _format_context_tokens(1048576) == "1M"
+    assert _format_context_tokens(2097152) == "2M"
+    assert "1049K" not in _format_context_tokens(1048576)
+
+
+def test_provider_initials_ignore_parenthetical_slug_suffix():
+    html = _provider_badge("Darkbloom (darkbloom/fp4)")
+    assert ">D<" in html
+    assert ">D(<" not in html
+
+
+def test_provider_initials_use_both_words_for_two_word_names():
+    html = _provider_badge("Example Cloud")
+    assert ">EC<" in html
