@@ -1,6 +1,6 @@
 # Daily AI Radar — 2026-09-07
 
-> Generado 07/09/2026 10:23 WEST · **604 modelos únicos** · **999 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **186 endpoints de 35 modelos OpenRouter monitorizados** · **284 rutas puntuadas**.
+> Generado 07/09/2026 14:31 WEST · **604 modelos únicos** · **999 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **186 endpoints de 35 modelos OpenRouter monitorizados** · **284 rutas puntuadas**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
@@ -65,8 +65,8 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 | **deepseek-v4-pro-0813** | **CheaperInference** | $0.02413 | $0.4620 | $1.3860 | OpenRouter ($0.05482) | **56.0%** |
 | **llama-3.1-8b-instruct** | **Novita AI** | $0.00098 | $0.0200 | $0.0500 | OpenRouter ($0.00215) | **54.4%** |
 | **glm-5.2** | **CheaperInference** | $0.02353 | $0.4400 | $1.4025 | OpenRouter ($0.05138) | **54.2%** |
+| **deepseek-v4-flash-vision-exp** | **OpenRouter** | $0.01149 | $0.2200 | $0.6600 | Novita AI ($0.02298) | **50.0%** |
 | **deepseek-v3.1** | **Novita AI** | $0.01537 | $0.2700 | $1.0000 | Together AI ($0.03068) | **49.9%** |
-| **qwen3.6-35b-a3b** | **OpenRouter** | $0.00921 | $0.1000 | $0.9000 | Novita AI ($0.01788) | **48.5%** |
 
 ## 🏆 Top 5 de pago por calidad/precio (por fuente)
 
@@ -88,9 +88,7 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 
 - **gpt-5.6-terra** vía **CheaperInference** — **-52.9%** (ahora \$0.8000 in / \$4.8000 out)
 - **qwen3.5-397b-a17b** vía **OpenRouter** — **-33.1%** (ahora \$0.3900 in / \$2.3400 out)
-- **gpt-5.6-sol** vía **CheaperInference** — **-31.6%** (ahora \$1.1628 in / \$5.8140 out)
 - **glm-4.6** vía **OpenRouter** — **-21.8%** (ahora \$0.4300 in / \$1.7500 out)
-- **gpt-6-astra** vía **CheaperInference** — **-17.6%** (ahora \$7.0000 in / \$35.0000 out)
 - **qwen3-5-35b-a3b** vía **CheaperInference** — **-17.6%** (ahora \$0.2188 in / \$0.8750 out)
 - **glm** vía **OpenRouter** — **-11.1%** (ahora \$1.1200 in / \$3.5200 out)
 
@@ -98,12 +96,12 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 
 - **deepseek-v4-flash-0731** vía **OpenRouter** — +180.1% (ahora \$0.1400 in / \$0.2800 out)
 - **gpt-5.6-luna** vía **CheaperInference** — +112.5% (ahora \$0.1700 in / \$1.0200 out)
-- **deepseek-v4-flash-vision-exp** vía **OpenRouter** — +100.0% (ahora \$0.4400 in / \$1.3200 out)
+- **gpt-oss-120b** vía **CheaperInference** — +111.6% (ahora \$0.0847 in / \$0.4233 out)
 - **deepseek-v4-flash** vía **OpenRouter** — +77.8% (ahora \$0.0500 in / \$0.1600 out)
 - **deepseek-v4-pro** vía **OpenRouter** — +38.9% (ahora \$0.9553 in / \$1.9105 out)
 - **deepseek-v4-pro** vía **CheaperInference** — +23.3% (ahora \$0.4620 in / \$1.3860 out)
-- **claude-opus-4.6** vía **CheaperInference** — +21.4% (ahora \$4.2500 in / \$21.2500 out)
 - **gemini-3.1-flash-lite** vía **CheaperInference** — +15.1% (ahora \$0.2014 in / \$1.2085 out)
+- **gpt-5.4-nano** vía **CheaperInference** — +15.1% (ahora \$0.1611 in / \$1.0071 out)
 
 ## 🧪 Notas
 
