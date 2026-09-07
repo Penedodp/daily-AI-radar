@@ -1,16 +1,23 @@
 """Automated coding-quality scoring, sourced from public benchmarks.
 
-Two independent, no-API-key sources, combined with a clear precedence:
+Two independent, no-API-key sources, matched and kept SEPARATE — never
+combined into one ranking or averaged into one number (see
+DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md #2 and _3.md #12/§39):
 
   1. Aider Polyglot Leaderboard (Aider-AI/aider on GitHub) — a fixed
      pass/fail correctness test across languages. Narrower coverage (a
      maintainer has to run and submit each new model) but objective.
-     Preferred whenever it has a match.
   2. LMArena WebDev Arena (lmarena-ai/leaderboard-dataset on Hugging Face)
      — crowd-voted Elo rating for web-app generation. Broader and much
      faster to pick up brand-new releases (including non-Western labs like
      Zhipu/Alibaba/Moonshot) since it doesn't need anyone to run a fixed
-     suite. Used as a fallback when Aider has no match.
+     suite.
+
+A model with a match in BOTH sources keeps both scores, independently —
+`main.py` builds one ranking per (category, source) pair and a model can
+appear, with different numbers, in more than one. Both measure the
+checkpoint/model as a whole (`benchmark_scope = "model"`), never one
+specific provider endpoint/quantization.
 
 Both are matched against provider model IDs the same strict way: version
 numbers (3 vs 3.5, k2 vs k2.5, v3 vs v3.1...) must match exactly, and the

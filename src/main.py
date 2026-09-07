@@ -15,7 +15,7 @@ from quality_bench import (
 )
 from scoring import (
     costs_by_task, weighted_daily_cost, price_change, value_score,
-    is_free, compute_pricing_status, has_known_price,
+    is_free, compute_pricing_status, has_known_price, is_router_entity, is_free_available,
 )
 from report_ai import generate_summary
 from report_html import build_html
@@ -34,6 +34,16 @@ CATEGORY_SOURCES = {
     "coding": ["aider_polyglot", "lmarena_webdev"],
 }
 NO_BENCH_NOTE = "_Sin benchmark automatizado disponible todavía para esta categoría._"
+_KNOWN_EXPLORER_STATUSES = {"paid", "free", "promotional_free", "free_router"}
+
+# Bumped only when the formula/normalization itself changes — never
+# reinterprets past snapshots, which keep whatever version they were built
+# with (audit #3 §23-25).
+SCORING_VERSION = "radar_value_v1"
+BENCHMARK_NORMALIZATION_VERSION = {
+    "aider_polyglot": "aider_pass_rate_linear_v1",
+    "lmarena_webdev": "webdev_elo_950_1750_v1",
+}
 
 def load_json(path, default=None):
     if not path.exists():
@@ -67,24 +77,91 @@ def price_trend(data_dir, today, canonical_model, limit=14):
     return points
 
 def route_key(row):
+    """Model-scoped key: provider label + model id, no route/quantization.
+    Intentionally coarser than `route_identity()` — this is what benchmark
+    matching uses internally too (a benchmark measures the *model*, not one
+    specific endpoint; see `benchmark_scope`), so it must stay aligned with
+    `quality_bench.match_models`'s own key format."""
     return f"{row.get('provider','')}::{row.get('model_id','')}"
+
+ROUTE_IDENTITY_VERSION = "route_identity_v1"
+
+def route_identity(row):
+    """Stable identity of one endpoint/route — used for deduplication,
+    price-change detection and historical tracking, wherever two rows must
+    be recognized as "the same route over time" or rejected as duplicates.
+
+    Deliberately NOT based on the human-facing `provider` display label
+    (e.g. "OpenRouter → OpenAI (flex)"), which is synthesized for readability
+    and could theoretically collide or drift — see audit #3 §5. For
+    `openrouter-route` rows it uses the raw `provider_name` + `route_tag`
+    from the API instead; for plain price-list collectors, `provider` IS
+    already the stable identity (e.g. "Together AI"), so it's used directly.
+    """
+    meta = row.get("metadata") or {}
+    source = row.get("source", "")
+    if source == "openrouter-route":
+        parts = [
+            source, row.get("model_id", ""),
+            meta.get("provider_name") or "", meta.get("route_tag") or "",
+            meta.get("quantization") or "",
+        ]
+    else:
+        parts = [source, row.get("provider", ""), row.get("model_id", "")]
+    return ROUTE_IDENTITY_VERSION + "::" + "|".join(str(p) for p in parts)
+
+def _combined_tariff_change_pct(row):
+    """A single representative %-change for sorting/display in the
+    drops/increases lists, built ONLY from real tariff deltas (never
+    weighted_cost) — whichever of input/output moved the most, by
+    magnitude, since that's the more significant real change."""
+    candidates = [c for c in (row.get("input_change_pct"), row.get("output_change_pct")) if c is not None]
+    if not candidates:
+        return None
+    return max(candidates, key=abs)
+
+def free_limits_for(row, free_tiers):
+    """Data-driven free-tier conditions (config/free_tiers.json) — never
+    hardcoded in the renderer, so limits can be corrected without a code
+    change when a provider updates them (audit #3 §16)."""
+    if row.get("entity_type") == "router":
+        return free_tiers.get("OpenRouter Free Router")
+    if row.get("pricing_status") in {"free", "promotional_free"}:
+        return free_tiers.get(row.get("provider"))
+    return None
+
+def apply_price_change(row, old):
+    """Sets change-detection fields on `row` from `old` (the same route's row
+    in the previous snapshot, or None). Real tariff change (input/output
+    $/M) is computed separately from the estimated task-cost change — a
+    task_profiles edit in config.json must never be reported as a tariff
+    move (audit #3 §3)."""
+    row["input_change_pct"] = price_change(
+        row["input_usd_per_million"], old.get("input_usd_per_million") if old else None,
+    )
+    row["output_change_pct"] = price_change(
+        row["output_usd_per_million"], old.get("output_usd_per_million") if old else None,
+    )
+    row["change_pct"] = _combined_tariff_change_pct(row)
+    row["estimated_cost_change_pct"] = price_change(
+        row["weighted_cost"], old.get("weighted_cost") if old else None,
+    )
 
 def previous_map(snapshot):
     out = {}
     for r in (snapshot or {}).get("models", []):
-        out[route_key(r)] = r
+        out[route_identity(r)] = r
     return out
 
 def dedup_exact_routes(raw_rows):
-    """Exact-duplicate rows (same provider + model id + route/quantization)
-    must never reach the snapshot — two identical rows would silently double
-    a model's presence in every table. Keeps the first occurrence."""
+    """Exact-duplicate rows (same route_identity) must never reach the
+    snapshot — two identical rows would silently double a model's presence
+    in every table. Keeps the first occurrence."""
     seen = set()
     deduped = []
     duplicates = 0
     for r in raw_rows:
-        meta = r.get("metadata") or {}
-        key = (r.get("provider"), r.get("model_id"), meta.get("route_tag"), meta.get("quantization"))
+        key = route_identity(r)
         if key in seen:
             duplicates += 1
             continue
@@ -120,9 +197,16 @@ def compact(row, category=None, source=None):
             result["quality_source_label"] = q.get("source_label")
             result["quality_source_url"] = q.get("source_url")
             result["quality_captured_at"] = q.get("captured_at")
+            result["benchmark_scope"] = q.get("benchmark_scope", "model")
             result["value_score"] = (row.get("value_scores") or {}).get(source, {}).get(category)
     if row.get("change_pct") is not None:
         result["change_pct"] = round(row["change_pct"], 1)
+    if row.get("input_change_pct") is not None:
+        result["input_change_pct"] = round(row["input_change_pct"], 1)
+    if row.get("output_change_pct") is not None:
+        result["output_change_pct"] = round(row["output_change_pct"], 1)
+    if row.get("estimated_cost_change_pct") is not None:
+        result["estimated_cost_change_pct"] = round(row["estimated_cost_change_pct"], 1)
     return result
 
 def dedup_by_model(rows, limit):
@@ -249,9 +333,13 @@ def cross_provider_opportunities(models, config):
 def build_explorer(models):
     """One entry per canonical model (not per route), for the Model Explorer /
     search / compare UI. Cheapest known-price route is shown by default; every
-    route the model has is kept in `routes` for the expandable detail view."""
+    route the model has is kept in `routes` for the expandable detail view.
+    Routers (e.g. openrouter/free) are excluded — they have no single
+    checkpoint identity to compare (audit #3 §18); see `build_free_today`."""
     groups = defaultdict(list)
     for r in models:
+        if r.get("entity_type") == "router":
+            continue
         groups[r["canonical_model"]].append(r)
 
     out = []
@@ -266,6 +354,7 @@ def build_explorer(models):
                 "raw_score": q.get("raw_score"),
                 "raw_unit": q.get("raw_unit"),
                 "match_type": q.get("match_type"),
+                "benchmark_scope": q.get("benchmark_scope", "model"),
             }
             for source, q in (best.get("quality_by_source") or {}).items()
             if q.get("scores", {}).get("coding") is not None
@@ -303,11 +392,94 @@ def build_explorer(models):
             "search_text": " ".join(str(s) for s in search_bits if s).lower(),
         })
 
-    def best_score(m):
-        scores = [q["score"] for q in m["quality_by_source"].values() if q["score"] is not None]
-        return max(scores) if scores else -1
+    # Default order is a NEUTRAL criterion — never max(Aider, WebDev), which
+    # would silently compare two incompatible scales again (audit #3 §12).
+    # Known-priced models first (cheapest first), then unknown-priced ones,
+    # so nothing meaningful is hidden below the fold; sorting by quality is
+    # left to the user via the (per-source) column headers.
+    out.sort(key=lambda m: (m["pricing_status"] in _KNOWN_EXPLORER_STATUSES, -m["weighted_cost"]), reverse=True)
+    return out
 
-    out.sort(key=lambda m: (best_score(m), -m["weighted_cost"]), reverse=True)
+def _select_openrouter_route_candidates(openrouter_only, bench_candidates, previous):
+    """Union of: models with a benchmark match, free (`:free`) models, and
+    models that moved price meaningfully yesterday — not just whichever
+    models happen to be scored, which would bias `openrouter_routes`
+    coverage toward benchmarked models only (audit #3 §20)."""
+    mover_ids = set()
+    for entry in (previous or {}).get("changes", {}).get("drops", []):
+        if entry.get("raw_model"):
+            mover_ids.add(entry["raw_model"])
+    for entry in (previous or {}).get("changes", {}).get("increases", []):
+        if entry.get("raw_model"):
+            mover_ids.add(entry["raw_model"])
+
+    candidates = []
+    seen = set()
+    for r in openrouter_only:
+        model_id = r["model_id"]
+        if model_id in seen:
+            continue
+        is_scored = route_key(r) in bench_candidates
+        is_free_model = model_id.lower().endswith(":free")
+        is_mover = model_id in mover_ids
+        if is_scored or is_free_model or is_mover:
+            candidates.append(model_id)
+            seen.add(model_id)
+    return candidates
+
+def _benchmark_coverage_stats(models):
+    """Separates "a model has a benchmark" from "an endpoint was itself
+    benchmarked" — today the second number is always 0 (no endpoint-scoped
+    source exists yet), and that's the correct, honest answer, not a bug
+    (audit #3 §22)."""
+    benchmarked_models = {r["canonical_model"] for r in models if r.get("quality_by_source")}
+    endpoints_of_benchmarked_models = sum(1 for r in models if r["canonical_model"] in benchmarked_models)
+    endpoint_specific = sum(
+        1 for r in models
+        for q in (r.get("quality_by_source") or {}).values()
+        if q.get("benchmark_scope") == "endpoint"
+    )
+    return {
+        "models_with_benchmark": len(benchmarked_models),
+        "endpoints_of_benchmarked_models": endpoints_of_benchmarked_models,
+        "endpoint_specific_benchmarks": endpoint_specific,
+    }
+
+def build_free_today(models):
+    """Every free-available route today (including the free router),
+    regardless of benchmark — answers "what can I use for $0 right now",
+    a different question from "what's the best free model" (audit #3 §14).
+    Sorted by a neutral criterion (context, then name) — NOT by quality,
+    since most of these have no benchmark at all."""
+    out = []
+    seen_router = False
+    for r in models:
+        if r.get("entity_type") == "router":
+            if seen_router:
+                continue
+            seen_router = True
+        elif not is_free(r):
+            continue
+
+        best = None
+        for source, q in (r.get("quality_by_source") or {}).items():
+            sc = q["scores"].get("coding")
+            if sc is not None and (best is None or sc > best[1]):
+                best = (source, sc, q.get("source_label"))
+
+        out.append({
+            "model": r["canonical_model"],
+            "raw_model": r["model_id"],
+            "provider": r["provider"],
+            "entity_type": r["entity_type"],
+            "pricing_status": r["pricing_status"],
+            "context_length": r.get("context_length"),
+            "quality_score": best[1] if best else None,
+            "quality_source_label": best[2] if best else None,
+            "free_limits": r.get("free_limits"),
+        })
+
+    out.sort(key=lambda m: (m["entity_type"] == "router", -(m["context_length"] or 0), m["model"]))
     return out
 
 def validate_snapshot(models):
@@ -321,8 +493,7 @@ def validate_snapshot(models):
 
     seen_routes = set()
     for r in models:
-        meta = r.get("metadata") or {}
-        key = (r["provider"], r["model_id"], meta.get("route_tag"), meta.get("quantization"))
+        key = route_identity(r)
         if key in seen_routes:
             errors.append(f"ruta exacta duplicada tras deduplicar: {key}")
         seen_routes.add(key)
@@ -365,6 +536,10 @@ def validate_snapshot(models):
 def main():
     config = load_json(ROOT / "config.json", {})
     aliases = load_json(ROOT / "model_aliases.json", {"rules": []})
+    free_tiers = {
+        e["provider"]: e
+        for e in load_json(ROOT / "config" / "free_tiers.json", {"entries": []}).get("entries", [])
+    }
 
     now = datetime.now(ZoneInfo(config.get("timezone", "Europe/Lisbon")))
     day = now.date().isoformat()
@@ -404,27 +579,27 @@ def main():
             out[k]["aider_polyglot"] = v
         return out
 
-    # OpenRouter underlying routes: track only useful/scored model IDs, not all 400+.
+    # OpenRouter underlying routes: track a union of useful model IDs, not all
+    # 400+ and not ONLY the already-benchmarked ones (which would bias route
+    # coverage — audit #3 §20).
     openrouter_only = [r for r in raw_rows if r["source"] == "openrouter"]
     bench_candidates = bench_match_by_source(openrouter_only)
-    openrouter_candidates = []
-    seen = set()
-    for r in openrouter_only:
-        if route_key(r) in bench_candidates and r["model_id"] not in seen:
-            openrouter_candidates.append(r["model_id"])
-            seen.add(r["model_id"])
+    openrouter_candidates = _select_openrouter_route_candidates(openrouter_only, bench_candidates, previous)
+    route_limit = config.get("route_tracking_max_models", 35)
+    models_monitored = min(len(openrouter_candidates), route_limit)
 
     route_cfg = config.get("providers", {}).get("openrouter_routes", {})
     if route_cfg.get("enabled", True):
         try:
             route_rows, route_status = fetch_routes(
                 openrouter_candidates,
-                config.get("route_tracking_max_models", 35),
+                route_limit,
             )
             raw_rows.extend(route_rows)
             provider_status["openrouter_routes"] = {
                 "status": route_status,
                 "count": len(route_rows),
+                "models_monitored": models_monitored,
             }
         except Exception as exc:
             provider_status["openrouter_routes"] = {
@@ -452,8 +627,13 @@ def main():
 
         row["canonical_model"], row["identity_confidence"] = canonicalize_with_confidence(row["model_id"], aliases)
         row["pricing_status"] = compute_pricing_status(row)
+        row["entity_type"] = "router" if is_router_entity(row) else "model"
+        row["free_limits"] = free_limits_for(row, free_tiers)
 
-        matches = bench_matches.get(route_key(row)) or {}
+        # A router has no single checkpoint identity — it must never carry a
+        # model-level benchmark score, however a name-based match might fire
+        # (audit #3 §18).
+        matches = {} if row["entity_type"] == "router" else (bench_matches.get(route_key(row)) or {})
         row["quality_by_source"] = {}
         for source, bq in matches.items():
             row["quality_by_source"][source] = {
@@ -467,6 +647,14 @@ def main():
                 "n_cases": bq.get("n_cases"),
                 "match_ratio": bq.get("match_ratio"),
                 "match_type": bq.get("match_type"),
+                # Every benchmark today measures the checkpoint/model, matched via
+                # route_key() (provider+model_id, no route_tag/quantization) —
+                # never a specific endpoint. Kept explicit so a route showing a
+                # cheap FP4 price next to this score never implies FP4 itself was
+                # benchmarked (audit #3 §7/§8). Endpoint-scoped benchmarks are a
+                # future addition (Benchmark Engine v2) that can set this to
+                # "endpoint" without changing anything else in this data model.
+                "benchmark_scope": "model",
             }
 
         row["costs_by_task"] = costs_by_task(row, task_profiles)
@@ -481,11 +669,7 @@ def main():
                         sc, row["costs_by_task"][category], anchor,
                     )
 
-        old = prev_map.get(route_key(row))
-        row["change_pct"] = price_change(
-            row["weighted_cost"],
-            old.get("weighted_cost") if old else None,
-        )
+        apply_price_change(row, prev_map.get(route_identity(row)))
         models.append(row)
 
     # Detect same-route historical changes. Cross-provider differences are NOT called discounts.
@@ -527,6 +711,7 @@ def main():
     PRICE_SOURCES = {"openrouter", "cheaperinference", "together", "novita"}
     BENCH_SOURCES = {"aider_polyglot", "lmarena_webdev"}
     explorer = build_explorer(models)
+    free_today = build_free_today(models)
 
     errors, validation_warnings = validate_snapshot(models)
     for w in validation_warnings:
@@ -554,14 +739,24 @@ def main():
                 1 for k, s in provider_status.items() if k in BENCH_SOURCES and s.get("count", 0) > 0
             ),
             "openrouter_routes_analyzed": provider_status.get("openrouter_routes", {}).get("count", 0),
+            "openrouter_models_monitored": provider_status.get("openrouter_routes", {}).get("models_monitored", 0),
             "scored_routes": sum(1 for r in models if r.get("quality_by_source")),
             "unknown_price_routes": sum(1 for r in models if r.get("pricing_status") == "unknown"),
+            **_benchmark_coverage_stats(models),
+        },
+        "calculation_context": {
+            "task_profiles": task_profiles,
+            "value_cost_anchor_usd": anchor,
+            "scoring_version": SCORING_VERSION,
+            "benchmark_normalization_version": BENCHMARK_NORMALIZATION_VERSION,
+            "route_identity_version": ROUTE_IDENTITY_VERSION,
         },
         "recommendations": recs,
         "cross_provider_opportunities": opportunities,
         "changes": {"drops": drops, "increases": increases},
         "models": models,
         "explorer": explorer,
+        "free_today": free_today,
         "validation_warnings": validation_warnings,
     }
 
@@ -578,11 +773,17 @@ def main():
         f"**{len(models)} rutas/precios** · "
         f"**{stats['providers_with_data']} proveedores de precios** · "
         f"**{stats['benchmarks_active']} benchmarks activos** · "
-        f"**{stats['openrouter_routes_analyzed']} rutas OpenRouter analizadas** · "
+        f"**{stats['openrouter_routes_analyzed']} endpoints de "
+        f"{stats['openrouter_models_monitored']} modelos OpenRouter monitorizados** · "
         f"**{stats['scored_routes']} rutas puntuadas**.",
         "",
         "_Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: "
         "30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._",
+        "",
+        f"_Cobertura de benchmark: {stats['models_with_benchmark']} modelos con benchmark propio, "
+        f"{stats['endpoints_of_benchmarked_models']} endpoints heredan ese score de su modelo, "
+        f"{stats['endpoint_specific_benchmarks']} endpoints benchmarkeados de forma específica "
+        "(0 es lo esperado hoy — ver Metodología)._",
         "",
     ]
     if stats["duplicate_routes_removed"]:

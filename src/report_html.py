@@ -19,6 +19,7 @@ Pure stdlib string templating — no build step. Reuses the exact same
 """
 import html as html_lib
 import json
+import re
 from datetime import datetime
 
 LABELS = {
@@ -59,8 +60,25 @@ def _price_text(value, pricing_status, fmt=_money):
     return fmt(value)
 
 
+def _format_context_tokens(n):
+    """1048576 -> '1M', 262144 -> '256K' — never '1049K'. Context windows are
+    conventionally powers of 1024, so binary units round cleanly here where
+    decimal (÷1000) would not (audit #3 §29)."""
+    if n is None:
+        return "—"
+    if n >= 1_048_576:
+        m = round(n / 1_048_576, 1)
+        text = f"{m:.1f}".rstrip("0").rstrip(".")
+        return f"{text}M"
+    if n >= 1_024:
+        return f"{round(n / 1_024)}K"
+    return str(n)
+
+
 def _provider_badge(name):
-    label = (name or "?").split("→")[-1].strip()
+    # Strip any "(slug/suffix)" decoration before deriving initials — otherwise
+    # "Darkbloom (darkbloom/fp4)" would produce "D(" (audit #3 §31).
+    label = re.sub(r"\s*\([^)]*\)\s*$", "", (name or "?").split("→")[-1].strip())
     words = [w for w in label.replace("/", " ").split() if w]
     initials = "".join(w[0] for w in words[:2]).upper() or "?"
     color = _BADGE_PALETTE[sum(ord(c) for c in label) % len(_BADGE_PALETTE)]
@@ -77,7 +95,7 @@ _SOURCE_SHORT = {
 
 
 def _quality_span(score, label=None, ratio=None, source_label=None,
-                   raw_score=None, raw_unit=None, match_type=None):
+                   raw_score=None, raw_unit=None, match_type=None, benchmark_scope="model"):
     """The inner <span> only — callers that need to pack several source
     scores into one table cell (Model Explorer) use this directly instead of
     `_quality_cell`, which wraps a single one in its own <td>."""
@@ -93,7 +111,12 @@ def _quality_span(score, label=None, ratio=None, source_label=None,
         tooltip += f" · match ‘{label}’"
     if ratio is not None:
         tooltip += f" ({ratio * 100:.0f}% similitud de nombre{', fuzzy' if match_type == 'fuzzy' else ''})"
-    tooltip += ". Puntuaciones de benchmarks distintos no son directamente comparables entre sí."
+    if benchmark_scope == "model":
+        tooltip += (
+            " · benchmark del MODELO/checkpoint general, no de esta ruta/endpoint concreta "
+            "(puede usar otra cuantización o infraestructura sin medir por separado)."
+        )
+    tooltip += " Puntuaciones de benchmarks distintos no son directamente comparables entre sí."
     short_source = _SOURCE_SHORT.get(source_label, source_label or "auto")
     return (
         f"<span class='qcell' title='{_esc(tooltip)}'>"
@@ -104,10 +127,10 @@ def _quality_span(score, label=None, ratio=None, source_label=None,
 
 
 def _quality_cell(score, label=None, ratio=None, source_label=None, sortable=False,
-                   raw_score=None, raw_unit=None, match_type=None):
+                   raw_score=None, raw_unit=None, match_type=None, benchmark_scope="model"):
     key = " data-key='quality'" if sortable else ""
     value = "-1" if score is None else str(score)
-    span = _quality_span(score, label, ratio, source_label, raw_score, raw_unit, match_type)
+    span = _quality_span(score, label, ratio, source_label, raw_score, raw_unit, match_type, benchmark_scope)
     cls = " class='muted'" if score is None else ""
     return f"<td{key} data-value='{value}'{cls}>{span}</td>"
 
@@ -123,6 +146,7 @@ def _quality_cell_from(r):
         r.get("quality_score"), r.get("quality_label"), r.get("quality_match_ratio"),
         r.get("quality_source_label"), raw_score=r.get("quality_raw"),
         raw_unit=r.get("quality_raw_unit"), match_type=r.get("quality_match_type"),
+        benchmark_scope=r.get("benchmark_scope", "model"),
     )
 
 
@@ -157,6 +181,58 @@ def _section_free(recs):
     if not rows:
         rows.append("<tr><td class='usage'>—</td><td colspan='4' class='muted'>Ningún modelo gratuito puntuado todavía</td></tr>")
     return "".join(rows)
+
+
+_FREE_BADGE_META = {
+    "free": ("FREE", "pos"),
+    "promotional_free": ("FREE PROMO", "pos"),
+    "free_router": ("FREE ROUTER", "neutral"),
+}
+
+
+def _free_today_row(m):
+    label, cls = _FREE_BADGE_META.get(m["pricing_status"], ("—", "neutral"))
+    limits = m.get("free_limits")
+    if m.get("quality_score") is not None:
+        quality_html = _quality_span(m["quality_score"], None, None, m.get("quality_source_label"))
+    else:
+        quality_html = "<span class='muted'>Sin benchmark</span>"
+    context_text = _format_context_tokens(m.get("context_length"))
+    is_router = m["entity_type"] == "router"
+    model_esc = _esc("OpenRouter Free Router" if is_router else m["model"])
+    note = (
+        " <span class='meta'>selecciona automáticamente entre modelos gratuitos compatibles</span>"
+        if is_router else ""
+    )
+    if limits:
+        limits_json = _esc(json.dumps(limits, ensure_ascii=False))
+        badge = (
+            f"<button type='button' class='free-badge-btn pill {cls}' aria-expanded='false' "
+            f"data-limits='{limits_json}' aria-label='Ver límites de {model_esc}'>{label} ⓘ</button>"
+        )
+    else:
+        badge = f"<span class='pill {cls}'>{label}</span>"
+    return (
+        "<tr class='free-row'>"
+        f"<td class='usage'>{model_esc}{note}</td>"
+        f"<td>{_provider_badge(m['provider'])}</td>"
+        f"<td class='num'>{context_text}</td>"
+        f"<td>{quality_html}</td>"
+        f"<td>{badge}</td>"
+        "</tr>"
+    )
+
+
+def _section_free_today(free_today):
+    if not free_today:
+        return "<p class='muted'>Ningún modelo gratuito verificado disponible hoy.</p>"
+    rows = "".join(_free_today_row(m) for m in free_today)
+    return (
+        "<div class='table-scroll'><table class='grid' id='free-today-table'>"
+        "<thead><tr><th>Modelo</th><th>Proveedor</th><th>Contexto</th><th>Calidad</th><th>Estado</th></tr></thead>"
+        f"<tbody>{rows}</tbody></table></div>"
+        "<p class='muted note'>FREE ⓘ — clic, tap o Enter con foco para ver límites y condiciones verificadas del proveedor.</p>"
+    )
 
 
 def _section_paid_value(recs):
@@ -287,19 +363,19 @@ def _section_changes(has_previous, drops, increases):
 
 def _explorer_row(m):
     # A model can be scored by several sources at once — show each independently,
-    # never averaged/merged (audit #2 §2).
+    # never averaged/merged (audit #2 §2), and never sorted by max(Aider, WebDev)
+    # either (audit #3 §12) — this column is intentionally NOT sortable.
     qbs = m.get("quality_by_source") or {}
     if qbs:
-        best_score = max((q["score"] for q in qbs.values() if q["score"] is not None), default=-1)
         spans = "".join(
             _quality_span(q["score"], None, None, q.get("source_label"),
                           raw_score=q.get("raw_score"), raw_unit=q.get("raw_unit"),
-                          match_type=q.get("match_type"))
+                          match_type=q.get("match_type"), benchmark_scope=q.get("benchmark_scope", "model"))
             for q in qbs.values()
         )
-        quality_html = f"<td data-key='equality' data-value='{best_score}' class='quality-multi'>{spans}</td>"
+        quality_html = f"<td class='quality-multi'>{spans}</td>"
     else:
-        quality_html = "<td data-key='equality' data-value='-1' class='muted'>—</td>"
+        quality_html = "<td class='muted'>—</td>"
     if m["free"]:
         status_badge, status_cls = "Gratis", "pos"
     elif m.get("pricing_status") == "paid":
@@ -361,7 +437,7 @@ def _section_explorer(explorer, task_profiles=None):
         "<th></th><th>Modelo</th><th>Proveedor más barato</th>"
         "<th data-key='ecost'>Coste estimado</th><th data-key='einput'>$/M input</th>"
         "<th data-key='eoutput'>$/M output</th><th data-key='ecustom'>Coste personalizado</th>"
-        "<th data-key='equality'>Calidad</th><th>Estado</th>"
+        "<th>Calidad</th><th>Estado</th>"
         "</tr></thead>"
         f"<tbody>{rows}</tbody></table></div>"
         f"<p class='muted note' id='explorer-count'>{len(explorer)} modelos únicos. "
@@ -369,8 +445,11 @@ def _section_explorer(explorer, task_profiles=None):
     )
 
 
-def _section_methodology(config):
+def _section_methodology(config, stats=None, validation_warnings=None, calculation_context=None):
     config = config or {}
+    stats = stats or {}
+    validation_warnings = validation_warnings or []
+    calculation_context = calculation_context or {}
     anchor = config.get("value_cost_anchor_usd", 0.05)
     profiles = config.get("task_profiles", {})
     profile_rows = []
@@ -382,6 +461,26 @@ def _section_methodology(config):
             f"{_num_td(in_tok, in_text)}{_num_td(out_tok, out_text)}{_num_td(weight, weight)}</tr>"
         )
     rows = "".join(profile_rows)
+
+    health_rows = "".join(
+        f"<tr><td class='usage'>{label}</td>{_num_td(value, value)}</tr>"
+        for label, value in [
+            ("Filas en bruto", stats.get("raw_rows", 0)),
+            ("Duplicados exactos eliminados", stats.get("duplicate_routes_removed", 0)),
+            ("Rutas válidas publicadas", stats.get("models_kept", 0)),
+            ("Rutas con precio desconocido", stats.get("unknown_price_routes", 0)),
+            ("Modelos con benchmark propio", stats.get("models_with_benchmark", 0)),
+            ("Endpoints que heredan score de su modelo", stats.get("endpoints_of_benchmarked_models", 0)),
+            ("Endpoints benchmarkeados específicamente", stats.get("endpoint_specific_benchmarks", 0)),
+            ("Avisos de validación (no bloqueantes)", len(validation_warnings)),
+            ("Errores críticos de validación", 0),
+        ]
+    )
+    bench_versions = calculation_context.get("benchmark_normalization_version", {})
+    version_items = "".join(
+        f"<li><code>{_esc(k)}</code>: <code>{_esc(v)}</code></li>" for k, v in bench_versions.items()
+    )
+
     return f"""
 <div class="methodology">
   <h3>Precios</h3>
@@ -389,26 +488,45 @@ def _section_methodology(config):
   precio en $0/$0 no se asume gratis: solo cuenta como gratis cuando el proveedor lo declara
   explícitamente (hoy, el sufijo <code>:free</code> de OpenRouter); en cualquier otro caso queda como
   <em>desconocido</em> y no entra en ningún ranking por coste.</p>
-  <h3>Identidad de modelo</h3>
+  <p class="note">Los precios comparan tarifas de inferencia publicadas por cada proveedor y pueden no
+  incluir impuestos, comisiones de compra de créditos, fees de plataforma u otras condiciones
+  comerciales específicas de tu cuenta.</p>
+  <h3>Identidad de modelo y de ruta</h3>
   <p>Dos rutas se tratan como el mismo modelo solo cuando su id normalizado coincide exactamente o
   existe una regla de alias que no pierde información de tamaño, fecha o variante del checkpoint
   original. Nunca por similitud de nombre sin más — evita, por ejemplo, fusionar
-  <code>DeepSeek-R1</code> con <code>DeepSeek-R1-Distill-Qwen-32B</code>.</p>
+  <code>DeepSeek-R1</code> con <code>DeepSeek-R1-Distill-Qwen-32B</code>. Para deduplicación e
+  histórico se usa además una identidad de <em>ruta/endpoint</em> propia
+  (<code>{_esc(calculation_context.get('route_identity_version', 'route_identity_v1'))}</code>) que
+  distingue standard/flex/ZDR/priority y distintas cuantizaciones del mismo modelo, sin depender de la
+  etiqueta visible del proveedor.</p>
   <h3>Benchmarks</h3>
   <p><strong>Aider Polyglot Leaderboard</strong> mide corrección de código con un test fijo
   (pass/fail). <strong>LMArena WebDev Arena</strong> mide preferencia humana generando aplicaciones
   web (rating Elo). Son escalas distintas: nunca se combinan en un único ranking, y la fuente exacta
-  se muestra siempre junto al dato, no solo al pasar el ratón por encima.</p>
+  se muestra siempre junto al dato, no solo al pasar el ratón por encima. Todo benchmark actual mide
+  el <strong>modelo/checkpoint</strong> general (<code>benchmark_scope = model</code>), nunca una ruta
+  concreta — un endpoint con otra cuantización puede comportarse distinto y no ha sido medido por
+  separado.</p>
+  {f"<p class='note'>Versión de normalización por fuente: <ul>{version_items}</ul></p>" if version_items else ""}
   <h3>Coste estimado</h3>
   <p>Perfil de tokens fijo por tipo de tarea (editable en <code>config.json</code>):</p>
   <div class="table-scroll"><table class='grid'><thead><tr>
   <th>Uso</th><th>Input tokens</th><th>Output tokens</th><th>Peso</th>
   </tr></thead><tbody>{rows}</tbody></table></div>
+  <h3>Movimientos de precio</h3>
+  <p>Una bajada/subida real compara <strong>tarifas</strong> ($/M input y output) de la misma ruta
+  frente al snapshot anterior — nunca el coste estimado ponderado, que también se mueve si cambia el
+  perfil de tokens en <code>config.json</code> sin que ningún proveedor haya tocado su precio.</p>
   <h3>Radar Value</h3>
-  <p>Índice propio de este proyecto — <strong>no es un benchmark</strong>:
-  <code>calidad × 10 / sqrt(1 + coste_tarea / {anchor})</code>. Combina calidad medida y coste
-  estimado para ordenar por "valor"; el ancla de {anchor} USD/tarea es el punto en el que el coste
-  empieza a penalizar.</p>
+  <p>Índice propio de este proyecto (<code>{_esc(calculation_context.get('scoring_version', 'radar_value_v1'))}</code>)
+  — <strong>no es un benchmark</strong>: <code>calidad × 10 / sqrt(1 + coste_tarea / {anchor})</code>.
+  Combina calidad medida (de un benchmark del <em>modelo</em>) y coste estimado (de una <em>ruta</em>
+  concreta) para ordenar por "valor"; el ancla de {anchor} USD/tarea es el punto en el que el coste
+  empieza a penalizar. Cuando cambie la fórmula, la versión también cambia — un snapshot antiguo nunca
+  se reinterpreta con una fórmula nueva.</p>
+  <h3>Data Health</h3>
+  <div class="table-scroll"><table class='grid'><tbody>{health_rows}</tbody></table></div>
   <h3>Limitaciones</h3>
   <ul>
     <li>Los precios pueden cambiar durante el día — el snapshot es de un momento dado.</li>
@@ -416,6 +534,7 @@ def _section_methodology(config):
     <li>Benchmarks distintos no son directamente comparables entre sí.</li>
     <li>Latencia/throughput (cuando existen) pueden variar por región o carga.</li>
     <li>El coste estimado usa un perfil de tokens fijo; tu carga de trabajo real puede diferir.</li>
+    <li>El coste estimado no tiene en cuenta el porcentaje de cache hit todavía.</li>
   </ul>
 </div>
 """
@@ -643,6 +762,16 @@ td.quality-multi .qcell:last-child { margin-bottom: 0; }
 .pill.pos { color: var(--pos); background: color-mix(in srgb, var(--pos) 16%, transparent); }
 .pill.neg { color: var(--neg); background: color-mix(in srgb, var(--neg) 16%, transparent); }
 .pill.neutral { color: var(--muted); background: var(--panel); border: 1px solid var(--border); }
+.free-badge-btn {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; padding: 3px 9px; border-radius: 100px;
+  cursor: pointer; border: 1px solid transparent; background: none;
+}
+.free-badge-btn.pos { color: var(--pos); background: color-mix(in srgb, var(--pos) 16%, transparent); }
+.free-badge-btn.neutral { color: var(--muted); background: var(--panel); border-color: var(--border); }
+.free-badge-btn:hover { filter: brightness(1.1); }
+tr.free-detail td { background: color-mix(in srgb, var(--panel) 60%, transparent); white-space: normal; padding: 12px 16px; }
+tr.free-detail ul { margin: 0; padding-left: 18px; font-size: 0.84rem; color: var(--text); }
+tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0; }
 
 /* ---------- accessibility: focus & keyboard ---------- */
 a:focus-visible, button:focus-visible, input:focus-visible,
@@ -868,18 +997,20 @@ SCRIPT = """
         var routes;
         try { routes = JSON.parse(btn.getAttribute('data-routes')); } catch (e) { routes = []; }
         var cols = row.children.length;
-        var known = { free: 1, paid: 1, promotional_free: 1 };
+        var known = { free: 1, paid: 1, promotional_free: 1, free_router: 1 };
+        var statusLabels = { free: 'Gratis', paid: 'Pago', promotional_free: 'Free promo', free_router: 'Free router', dedicated: 'Dedicated' };
         var html = "<div class='exp-routes'>" + routes.map(function (r) {
-          var status = r.pricing_status === 'free' ? 'Gratis' : (r.pricing_status === 'paid' ? 'Pago' : 'Desconocido');
+          var status = statusLabels[r.pricing_status] || 'Desconocido';
           var isKnown = !!known[r.pricing_status];
           var priceText = isKnown ? ("$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out") : "— precio no disponible";
           var costText = isKnown ? ("coste estimado $" + r.weighted_cost.toFixed(5)) : "";
           var extras = [];
-          if (r.context_length) { extras.push(Math.round(r.context_length / 1000) + "K contexto"); }
-          if (r.quantization) { extras.push(escapeHtml(r.quantization)); }
+          if (r.context_length) { extras.push(formatContextTokens(r.context_length) + " contexto"); }
+          // A literal "unknown" quantization string is absence of data, not a real value — omit it.
+          if (r.quantization && r.quantization.toLowerCase() !== 'unknown') { extras.push(escapeHtml(r.quantization)); }
           if (r.latency_p50 != null) { extras.push("latencia p50 " + r.latency_p50 + " ms"); }
           if (r.throughput_p50 != null) { extras.push(r.throughput_p50 + " tok/s"); }
-          if (r.uptime_last_1d != null) { extras.push((r.uptime_last_1d * 100).toFixed(2) + "% uptime"); }
+          if (r.uptime_last_1d != null) { extras.push(r.uptime_last_1d.toFixed(2) + "% uptime · 24h"); }
           var extrasHtml = extras.length ? "<span class='meta'>" + extras.join(' · ') + "</span>" : "";
           return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
             "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" +
@@ -900,6 +1031,51 @@ SCRIPT = """
     div.textContent = String(s == null ? '' : s);
     return div.innerHTML;
   }
+  // 1048576 -> "1M", not "1049K" — round only within the chosen unit, never
+  // truncate up past it (audit #3 §29).
+  function formatContextTokens(n) {
+    if (n >= 1048576) {
+      var m = n / 1048576;
+      return (Math.round(m * 10) / 10).toString().replace(/\\.0$/, '') + 'M';
+    }
+    if (n >= 1024) { return Math.round(n / 1024) + 'K'; }
+    return String(n);
+  }
+
+  // --- free tier limits: accessible popover (click/tap/keyboard — a <button>
+  // is natively focusable and Enter/Space-activated, so no extra JS is needed
+  // for keyboard support beyond the click handler itself) ---
+  document.querySelectorAll('.free-badge-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var row = btn.closest('tr');
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      var existing = row.nextElementSibling;
+      if (existing && existing.classList.contains('free-detail')) { existing.remove(); }
+      document.querySelectorAll('.free-badge-btn[aria-expanded="true"]').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+      });
+      if (open) { btn.setAttribute('aria-expanded', 'false'); return; }
+      btn.setAttribute('aria-expanded', 'true');
+      var limits;
+      try { limits = JSON.parse(btn.getAttribute('data-limits')); } catch (e) { limits = null; }
+      if (!limits) { return; }
+      var parts = [];
+      if (limits.requests_per_minute != null) { parts.push(limits.requests_per_minute + ' req/min'); }
+      if (limits.requests_per_day != null) { parts.push(limits.requests_per_day + ' req/día'); }
+      if (limits.unlock_condition) { parts.push(limits.unlock_condition); }
+      if (limits.context_notes) { parts.push(limits.context_notes); }
+      if (limits.availability_notes) { parts.push(limits.availability_notes); }
+      var listHtml = '<ul>' + parts.map(function (p) { return '<li>' + escapeHtml(p) + '</li>'; }).join('') + '</ul>';
+      var footBits = [];
+      if (limits.verified_at) { footBits.push('Verificado: ' + limits.verified_at); }
+      if (limits.source_url) { footBits.push('<a href="' + escapeHtml(limits.source_url) + '" target="_blank" rel="noopener">fuente</a>'); }
+      var foot = footBits.length ? '<p class="meta">' + footBits.join(' · ') + '</p>' : '';
+      var tr = document.createElement('tr');
+      tr.className = 'free-detail';
+      tr.innerHTML = '<td colspan="' + row.children.length + '">' + listHtml + foot + '</td>';
+      row.parentNode.insertBefore(tr, row.nextSibling);
+    });
+  });
 
   // --- model explorer: compare up to 4 selected models ---
   var cmpBtn = document.getElementById('cmp-btn');
@@ -1024,7 +1200,7 @@ PAGE_HEAD = """<!doctype html>
       <div class="stat-tile"><span class="stat-num" data-value="{unique_models}">{unique_models}</span><div class="stat-label">modelos únicos</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{models_kept}">{models_kept}</span><div class="stat-label">rutas / precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{sources_with_data}">{sources_with_data}</span><div class="stat-label">proveedores de precios</div></div>
-      <div class="stat-tile"><span class="stat-num" data-value="{openrouter_routes}">{openrouter_routes}</span><div class="stat-label">rutas OpenRouter analizadas</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{openrouter_routes}">{openrouter_routes}</span><div class="stat-label">endpoints OpenRouter · {openrouter_models_monitored} modelos</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{scored_routes}">{scored_routes}</span><div class="stat-label">rutas puntuadas</div></div>
     </div>
     <div class="chips">{chips}</div>
@@ -1095,9 +1271,18 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
     )
 
     raw_blocks = [
-        ("Mejor opción gratuita", free_table,
+        ("Mejor opción gratuita puntuada", free_table,
          "«Gratis» solo cuenta cuando el proveedor lo declara explícitamente — un precio 0/0 sin esa "
-         "señal se trata como desconocido, no como gratis, y no entra en esta lista."),
+         "señal se trata como desconocido, no como gratis, y no entra en esta lista. Solo aparece aquí si "
+         "existe un benchmark comparable — para ver TODOS los modelos gratuitos, con o sin benchmark, mira "
+         "la siguiente sección."),
+        (
+            "Modelos gratuitos disponibles hoy", _section_free_today(snapshot.get("free_today") or []),
+            "Todas las rutas verificadas como gratuitas, tengan o no benchmark — no se ordenan por calidad "
+            "cuando no la tienen. FREE ⓘ muestra los límites conocidos del proveedor (rate limit, cuota diaria, "
+            "condiciones de desbloqueo); un router (openrouter/free) selecciona automáticamente entre modelos "
+            "compatibles y nunca recibe una puntuación propia.",
+        ),
         (
             "Mejor relación calidad/precio entre modelos puntuados", paid_value_table,
             "Solo entra un modelo cuando el benchmark de coding lo respalda — un modelo barato "
@@ -1128,7 +1313,14 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
             "Catálogo completo, uno por modelo (no por ruta) — busca, expande para ver todas sus rutas y "
             "compara hasta 4 a la vez.",
         ),
-        ("Metodología", _section_methodology(config), ""),
+        (
+            "Metodología y Data Health",
+            _section_methodology(
+                config, snapshot.get("stats"), snapshot.get("validation_warnings"),
+                snapshot.get("calculation_context"),
+            ),
+            "",
+        ),
     ]
     if ai_summary:
         raw_blocks.append(("Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>", ""))
@@ -1152,6 +1344,7 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
         models_kept=snapshot["stats"]["models_kept"],
         sources_with_data=snapshot["stats"]["providers_with_data"],
         openrouter_routes=snapshot["stats"].get("openrouter_routes_analyzed", 0),
+        openrouter_models_monitored=snapshot["stats"].get("openrouter_models_monitored", 0),
         scored_routes=snapshot["stats"]["scored_routes"],
         chips=_status_chips(snapshot["provider_status"]),
         toc=toc,

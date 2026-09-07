@@ -26,7 +26,18 @@ _VARIANT_TOKENS = {
 
 
 def _tokens(s):
-    return set(_TOKEN.findall((s or "").lower()))
+    """Decimal tokens (e.g. "3.8") are also split into their digit parts
+    ("3", "8") so a version written with a dot in one provider's slug and
+    with a dash in another's ("qwen3.8-27b" vs "qwen-3-8-27b") tokenizes
+    identically for the guard below — otherwise a verified alias covering
+    both spellings would always look like it's dropping information."""
+    toks = _TOKEN.findall((s or "").lower())
+    out = set()
+    for t in toks:
+        out.add(t)
+        if "." in t:
+            out.update(t.split("."))
+    return out
 
 
 def _has_unaccounted_variant(raw_slug, canonical):
