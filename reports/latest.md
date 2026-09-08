@@ -1,10 +1,10 @@
 # Daily AI Radar — 2026-09-08
 
-> Generado 08/09/2026 14:41 WEST · **612 modelos únicos** · **988 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **179 endpoints de 35 modelos OpenRouter monitorizados** · **76 modelos con benchmark**.
+> Generado 08/09/2026 15:09 WEST · **612 modelos únicos** · **987 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **178 endpoints de 35 modelos OpenRouter monitorizados** · **76 modelos con benchmark**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
-_Cobertura de benchmark: 76 modelos con benchmark propio, 282 endpoints heredan ese score de su modelo, 0 endpoints benchmarkeados de forma específica (0 es lo esperado hoy — ver Metodología)._
+_Cobertura de benchmark: 76 modelos con benchmark propio, 281 endpoints heredan ese score de su modelo, 0 endpoints benchmarkeados de forma específica (0 es lo esperado hoy — ver Metodología)._
 
 _3 ruta(s) duplicada(s) exacta(s) detectada(s) y eliminada(s) antes de publicar._
 
@@ -20,7 +20,7 @@ _121 ruta(s) con precio `unknown` (0/0 sin señal explícita de gratis) — no e
 | novita | `ok` | 156 |
 | aider_polyglot | `ok` | 68 |
 | lmarena_webdev | `ok` | 125 |
-| openrouter_routes | `ok` | 179 |
+| openrouter_routes | `ok` | 178 |
 
 ## 🆓 Mejor opción gratuita puntuada
 
@@ -90,9 +90,9 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 - **deepseek-v4-flash-0731** vía **OpenRouter** — **-53.6%** (ahora \$0.0650 in / \$0.1800 out)
 - **gpt-5.6-luna** vía **CheaperInference** — **-52.9%** (ahora \$0.0800 in / \$0.4800 out)
 - **gpt-oss-120b** vía **CheaperInference** — **-52.7%** (ahora \$0.0400 in / \$0.2000 out)
+- **deepseek-v4-flash-0731** vía **OpenRouter → Alibaba** — **-50.0%** (ahora \$0.1760 in / \$0.5280 out)
 - **gpt-5.6-sol** vía **CheaperInference** — **-41.2%** (ahora \$1.0000 in / \$5.0000 out)
 - **qwen3.8-27b** vía **OpenRouter → Io Net (io-net/fp8)** — **-40.6%** (ahora \$0.2850 in / \$2.6600 out)
-- **minimax-m1** vía **OpenRouter** — **-27.3%** (ahora \$0.4000 in / \$2.2000 out)
 - **gpt-6-astra** vía **CheaperInference** — **-17.6%** (ahora \$7.0000 in / \$35.0000 out)
 
 ### Subidas

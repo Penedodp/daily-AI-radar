@@ -238,18 +238,32 @@ tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;
   .block-note { font-size: 0.82rem; }
 
   table.grid { font-size: 0.78rem; }
-  table.grid th, table.grid td { padding: 8px 8px; }
+  table.grid th, table.grid td { padding: 8px 6px; }
   /* Only text-heavy cells wrap; numeric/price cells and status pills stay
-     compact single-line so the columns don't balloon vertically either. */
+     compact single-line so the columns don't balloon vertically either.
+     `overflow-wrap: anywhere` only breaks when a chunk truly doesn't fit —
+     unlike a lone `max-width` on a td, which the browser's default
+     table-layout:auto algorithm can ignore (column widths are computed
+     from EVERY row's natural content first), this needs table-layout:fixed
+     on the table itself to actually take effect — see #explorer-table below,
+     which is where this mattered most (the "model column is unreadable"
+     regression: header text like "Coste personalizado" was claiming a full
+     column's worth of width regardless of any max-width on other cells). */
   table.grid td.usage, table.grid td.muted, table.grid td .meta {
-    white-space: normal; word-break: break-word; max-width: 42vw;
+    white-space: normal; overflow-wrap: anywhere; word-break: normal;
   }
   .qcell { gap: 5px; }
   .qbar { width: 26px; }
   .qsrc { font-size: 0.6rem; padding: 1px 5px; }
   td.quality-multi .qcell { margin-bottom: 6px; }
 
+  /* Bug fix: `.search-input`'s desktop `flex: 1 1 260px` sets its
+     FLEX-BASIS on the main axis — once this container becomes a COLUMN
+     flex layout on mobile, that main axis is vertical, so the 260px was
+     being applied to HEIGHT instead of width (the "gigantic search box"
+     regression). `flex: none` + explicit width removes the ambiguity. */
   .explorer-controls { flex-direction: column; align-items: stretch; }
+  .explorer-controls .search-input { flex: none; width: 100%; }
   .profile-inputs { flex-direction: column; align-items: flex-start; gap: 8px; }
   .profile-inputs label { width: 100%; }
   .profile-inputs input { width: 100%; box-sizing: border-box; }
@@ -260,15 +274,29 @@ tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;
 
   .simple-head { padding: 24px 14px 4px; }
 
-  /* FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #26/#32: on a narrow screen the
-     Explorer drops $/M input and $/M output (still reachable by tapping a
-     model row for the full route detail) but keeps Modelo, Proveedor,
-     Coste, Coste personalizado, Calidad and Estado — so the custom-profile
-     feature stays fully usable on mobile, not hidden with its column. */
+  /* FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #26/#27/#32: on a narrow screen the
+     Explorer drops $/M input, $/M output AND Coste personalizado (still
+     reachable by tapping a model row for the full route detail; the
+     input/output fields above the table keep working, they just don't
+     also need their own column at 360-430px) and keeps Modelo, Proveedor,
+     Coste, Calidad, Estado. `table-layout: fixed` + explicit widths is the
+     real fix for the "model column unreadable" bug: under the browser's
+     default table-layout:auto, column widths are computed from the widest
+     content across ALL 400+ rows first — a lone max-width on a <td> is
+     simply ignored by that algorithm, so Modelo kept getting squeezed to
+     almost nothing regardless of any per-cell CSS. */
+  #explorer-table { table-layout: fixed; }
+  #explorer-table th:nth-child(1), #explorer-table td:nth-child(1) { width: 32px; padding-left: 4px; padding-right: 2px; }
+  #explorer-table th:nth-child(2), #explorer-table td:nth-child(2) { width: 40%; }
+  #explorer-table th:nth-child(3), #explorer-table td:nth-child(3) { width: 22%; }
+  #explorer-table th:nth-child(4), #explorer-table td:nth-child(4) { width: 16%; }
   #explorer-table th:nth-child(5), #explorer-table td:nth-child(5),
-  #explorer-table th:nth-child(6), #explorer-table td:nth-child(6) {
+  #explorer-table th:nth-child(6), #explorer-table td:nth-child(6),
+  #explorer-table th:nth-child(7), #explorer-table td:nth-child(7) {
     display: none;
   }
+  #explorer-table th:nth-child(8), #explorer-table td:nth-child(8) { width: 14%; }
+  #explorer-table th:nth-child(9), #explorer-table td:nth-child(9) { width: 8%; }
 
   .cmp-table th, .cmp-table td { min-width: 110px; font-size: 0.78rem; }
 
@@ -398,8 +426,8 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 <body>
 <div class="topbar">
   <span class="brand"><span class="brand-mark"></span>Daily AI Radar</span>
-  <span class="freshness" id="freshness" data-generated-at="2026-09-08T14:41:04.246427+01:00">
-    <span class="dot"></span><span class="freshness-text">Actualizado 08/09/2026 14:41 UTC+01:00</span>
+  <span class="freshness" id="freshness" data-generated-at="2026-09-08T15:09:45.927714+01:00">
+    <span class="dot"></span><span class="freshness-text">Actualizado 08/09/2026 15:09 UTC+01:00</span>
   </span>
 </div>
 
@@ -420,12 +448,12 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
     <p class="lede">Cada mañana comparamos catálogo y precios de varios proveedores contra benchmarks públicos de programación, y ordenamos las opciones por coste estimado de tarea — no por lista de precios sin más.</p>
     <div class="stat-row">
       <div class="stat-tile"><span class="stat-num" data-value="612">612</span><div class="stat-label">modelos únicos</div></div>
-      <div class="stat-tile"><span class="stat-num" data-value="988">988</span><div class="stat-label">rutas / precios</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="987">987</span><div class="stat-label">rutas / precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="4">4</span><div class="stat-label">proveedores de precios</div></div>
-      <div class="stat-tile"><span class="stat-num" data-value="179">179</span><div class="stat-label">endpoints OpenRouter · 35 modelos</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="178">178</span><div class="stat-label">endpoints OpenRouter · 35 modelos</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="76">76</span><div class="stat-label">modelos con benchmark propio</div></div>
     </div>
-    <div class="chips"><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>openrouter</span><span class='chip-count'>421</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>cheaperinference</span><span class='chip-count'>59</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>together</span><span class='chip-count'>187</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>novita</span><span class='chip-count'>156</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>aider_polyglot</span><span class='chip-count'>68</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>lmarena_webdev</span><span class='chip-count'>125</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>openrouter_routes</span><span class='chip-count'>179</span></span></div>
+    <div class="chips"><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>openrouter</span><span class='chip-count'>421</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>cheaperinference</span><span class='chip-count'>59</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>together</span><span class='chip-count'>187</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>novita</span><span class='chip-count'>156</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>aider_polyglot</span><span class='chip-count'>68</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>lmarena_webdev</span><span class='chip-count'>125</span></span><span class='chip'><span class='chip-dot chip-ok'></span><span class='chip-name'>openrouter_routes</span><span class='chip-count'>178</span></span></div>
   </div>
 </header>
 
@@ -470,7 +498,7 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 <section class="block reveal" id="s07">
   <div class="block-head"><span class="idx">07</span><h2>Movimientos de precio (vs ayer)</h2></div>
   <p class='block-note'>Solo se compara la misma ruta/proveedor frente al snapshot anterior — nunca dos proveedores distintos, y un cambio en el perfil de tokens nunca se cuenta como cambio de tarifa.</p>
-  <h3>Bajadas</h3><ul class='changes'><li><strong>deepseek-chat-v3.1</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-54.5%</span> <span class='meta'>ahora $0.2500 in / $0.9500 out</span></li><li><strong>deepseek-v4-flash-0731</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-53.6%</span> <span class='meta'>ahora $0.0650 in / $0.1800 out</span></li><li><strong>gpt-5.6-luna</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-52.9%</span> <span class='meta'>ahora $0.0800 in / $0.4800 out</span></li><li><strong>gpt-oss-120b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-52.7%</span> <span class='meta'>ahora $0.0400 in / $0.2000 out</span></li><li><strong>gpt-5.6-sol</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-41.2%</span> <span class='meta'>ahora $1.0000 in / $5.0000 out</span></li><li><strong>qwen3.8-27b</strong> vía <span class='provider-cell'><span class='provider'><span class='provider-dot' style='background:#34d399'>IN</span>OpenRouter → Io Net</span><span class='meta provider-tech'>io-net/fp8 · fp8</span></span> <span class='pill pos'>-40.6%</span> <span class='meta'>ahora $0.2850 in / $2.6600 out</span></li><li><strong>minimax-m1</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-27.3%</span> <span class='meta'>ahora $0.4000 in / $2.2000 out</span></li><li><strong>gpt-6-astra</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-17.6%</span> <span class='meta'>ahora $7.0000 in / $35.0000 out</span></li></ul><h3>Subidas</h3><ul class='changes'><li><strong>qwen3-14b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+279.2%</span> <span class='meta'>ahora $0.2275 in / $0.9100 out</span></li><li><strong>qwen3.5-397b-a17b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+49.6%</span> <span class='meta'>ahora $0.5500 in / $3.5000 out</span></li><li><strong>glm-4.6</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+27.9%</span> <span class='meta'>ahora $0.5500 in / $2.2000 out</span></li><li><strong>deepseek-chat-v3-0324</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+16.0%</span> <span class='meta'>ahora $0.2900 in / $1.1400 out</span></li><li><strong>deepseek-v4-flash-0731</strong> vía <span class='provider-cell'><span class='provider'><span class='provider-dot' style='background:#f5a623'>M2</span>OpenRouter → Mancer 2</span><span class='meta provider-tech'>mancer/fp8 · fp8</span></span> <span class='pill neg'>+10.0%</span> <span class='meta'>ahora $0.1650 in / $0.5000 out</span></li></ul>
+  <h3>Bajadas</h3><ul class='changes'><li><strong>deepseek-chat-v3.1</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-54.5%</span> <span class='meta'>ahora $0.2500 in / $0.9500 out</span></li><li><strong>deepseek-v4-flash-0731</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill pos'>-53.6%</span> <span class='meta'>ahora $0.0650 in / $0.1800 out</span></li><li><strong>gpt-5.6-luna</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-52.9%</span> <span class='meta'>ahora $0.0800 in / $0.4800 out</span></li><li><strong>gpt-oss-120b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-52.7%</span> <span class='meta'>ahora $0.0400 in / $0.2000 out</span></li><li><strong>deepseek-v4-flash-0731</strong> vía <span class='provider-cell'><span class='provider'><span class='provider-dot' style='background:#facc15'>A</span>OpenRouter → Alibaba</span><span class='meta provider-tech'>alibaba</span></span> <span class='pill pos'>-50.0%</span> <span class='meta'>ahora $0.1760 in / $0.5280 out</span></li><li><strong>gpt-5.6-sol</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-41.2%</span> <span class='meta'>ahora $1.0000 in / $5.0000 out</span></li><li><strong>qwen3.8-27b</strong> vía <span class='provider-cell'><span class='provider'><span class='provider-dot' style='background:#34d399'>IN</span>OpenRouter → Io Net</span><span class='meta provider-tech'>io-net/fp8 · fp8</span></span> <span class='pill pos'>-40.6%</span> <span class='meta'>ahora $0.2850 in / $2.6600 out</span></li><li><strong>gpt-6-astra</strong> vía <span class='provider'><span class='provider-dot' style='background:#f87171'>C</span>CheaperInference</span> <span class='pill pos'>-17.6%</span> <span class='meta'>ahora $7.0000 in / $35.0000 out</span></li></ul><h3>Subidas</h3><ul class='changes'><li><strong>qwen3-14b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+279.2%</span> <span class='meta'>ahora $0.2275 in / $0.9100 out</span></li><li><strong>qwen3.5-397b-a17b</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+49.6%</span> <span class='meta'>ahora $0.5500 in / $3.5000 out</span></li><li><strong>glm-4.6</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+27.9%</span> <span class='meta'>ahora $0.5500 in / $2.2000 out</span></li><li><strong>deepseek-chat-v3-0324</strong> vía <span class='provider'><span class='provider-dot' style='background:#f472b6'>O</span>OpenRouter</span> <span class='pill neg'>+16.0%</span> <span class='meta'>ahora $0.2900 in / $1.1400 out</span></li><li><strong>deepseek-v4-flash-0731</strong> vía <span class='provider-cell'><span class='provider'><span class='provider-dot' style='background:#f5a623'>M2</span>OpenRouter → Mancer 2</span><span class='meta provider-tech'>mancer/fp8 · fp8</span></span> <span class='pill neg'>+10.0%</span> <span class='meta'>ahora $0.1650 in / $0.5000 out</span></li></ul>
 </section>
 
 <section class="block reveal" id="s08">
@@ -495,8 +523,24 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
         if (idx === -1) { return; }
         if (entry.isIntersecting) {
           tocLinks.forEach(function (a) { a.classList.remove('active'); });
-          tocLinks[idx].classList.add('active');
-          tocLinks[idx].scrollIntoView({ block: 'nearest', inline: 'center' });
+          var link = tocLinks[idx];
+          link.classList.add('active');
+          // Scroll the (horizontally-scrollable) toc bar itself so the
+          // active link is visible — NEVER the page. `.toc-wrap` isn't
+          // sticky, so it can be scrolled off-screen above the viewport;
+          // scrollIntoView's vertical axis would then yank the whole page
+          // back up to bring it into view (this was a real regression:
+          // "scroll down snaps back to top"). Only ever touch scrollLeft.
+          var container = link.closest('.toc');
+          if (container) {
+            var linkRect = link.getBoundingClientRect();
+            var contRect = container.getBoundingClientRect();
+            if (linkRect.left < contRect.left) {
+              container.scrollLeft += linkRect.left - contRect.left - 12;
+            } else if (linkRect.right > contRect.right) {
+              container.scrollLeft += linkRect.right - contRect.right + 12;
+            }
+          }
         }
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
