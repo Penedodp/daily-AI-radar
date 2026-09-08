@@ -1,6 +1,6 @@
 # Daily AI Radar — 2026-09-08
 
-> Generado 08/09/2026 12:03 WEST · **614 modelos únicos** · **990 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **179 endpoints de 35 modelos OpenRouter monitorizados** · **282 rutas puntuadas**.
+> Generado 08/09/2026 13:09 WEST · **614 modelos únicos** · **990 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **179 endpoints de 35 modelos OpenRouter monitorizados** · **282 rutas puntuadas**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
@@ -19,7 +19,7 @@ _123 ruta(s) con precio `unknown` (0/0 sin señal explícita de gratis) — no e
 | together | `ok` | 187 |
 | novita | `ok` | 156 |
 | aider_polyglot | `ok` | 68 |
-| lmarena_webdev | `ok` | 125 |
+| lmarena_webdev | `cached_stale` | 125 |
 | openrouter_routes | `ok` | 179 |
 
 ## 🆓 Mejor opción gratuita puntuada
