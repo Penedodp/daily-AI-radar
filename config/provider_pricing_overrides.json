@@ -14,19 +14,19 @@
   "entries": [
     {
       "provider": "Novita AI",
-      "model_id": "ling-3.0-flash-fin",
+      "model_id": "inclusionai/ling-3.0-flash-fin",
       "pricing_status": "free",
-      "verified_at": "2026-09-07",
+      "verified_at": "2026-09-08",
       "source_url": "https://novita.ai/pricing",
-      "notes": "Novita lists Ling-3.0-Flash-Fin at $0/$0 as a genuinely free specialized (finance) endpoint, not a missing price."
+      "notes": "Novita lists Ling-3.0-Flash-Fin at $0/$0 as a genuinely free specialized (finance) endpoint, not a missing price. FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #3: model_id corrected to the collector's actual namespaced raw id (was missing the 'inclusionai/' prefix, so the override silently never matched)."
     },
     {
       "provider": "Novita AI",
-      "model_id": "ling-3.0-flash-sante",
+      "model_id": "inclusionai/ling-3.0-flash-sante",
       "pricing_status": "promotional_free",
-      "verified_at": "2026-09-07",
+      "verified_at": "2026-09-08",
       "source_url": "https://novita.ai/pricing",
-      "notes": "Novita runs Ling-3.0-Flash-Sante (healthcare) as a time-limited promotional free tier at $0/$0."
+      "notes": "Novita runs Ling-3.0-Flash-Sante (healthcare) as a time-limited promotional free tier at $0/$0. FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #3: model_id corrected to the collector's actual namespaced raw id."
     }
   ]
 }
