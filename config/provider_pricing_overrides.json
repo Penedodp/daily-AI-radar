@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "purpose": "PRE_BENCH_V2_FINAL_CLEANUP #5-#8: a price of 0/0 from a collector is ambiguous (real free tier, dedicated-only capacity, or a missing price). An override lets us record an EXPLICIT, dated, sourced classification for a specific (provider, model_id) pair instead of guessing from the raw 0/0 signal alone.",
+    "schema": {
+      "provider": "Provider label exactly as it appears in the row (e.g. 'Novita AI')",
+      "model_id": "Raw model_id exactly as returned by the collector",
+      "pricing_status": "'free' or 'promotional_free' only — never used to fabricate a paid price",
+      "verified_at": "ISO date the classification was last checked against the provider's own docs/pricing page",
+      "source_url": "Provider page used to verify",
+      "notes": "Free text: why this is classified this way"
+    },
+    "staleness_days": 30
+  },
+  "entries": [
+    {
+      "provider": "Novita AI",
+      "model_id": "ling-3.0-flash-fin",
+      "pricing_status": "free",
+      "verified_at": "2026-09-07",
+      "source_url": "https://novita.ai/pricing",
+      "notes": "Novita lists Ling-3.0-Flash-Fin at $0/$0 as a genuinely free specialized (finance) endpoint, not a missing price."
+    },
+    {
+      "provider": "Novita AI",
+      "model_id": "ling-3.0-flash-sante",
+      "pricing_status": "promotional_free",
+      "verified_at": "2026-09-07",
+      "source_url": "https://novita.ai/pricing",
+      "notes": "Novita runs Ling-3.0-Flash-Sante (healthcare) as a time-limited promotional free tier at $0/$0."
+    }
+  ]
+}
