@@ -103,3 +103,57 @@ def test_qwen_3_8_family_never_collapses_with_unrelated_qwen3_8b():
     the Qwen3.8 *version* family (27b/max/flash variants)."""
     assert canonicalize("qwen/qwen3-8b", ALIASES) != canonicalize("qwen/qwen3.8-27b", ALIASES)
     assert canonicalize("qwen/qwen3-8b", ALIASES) != canonicalize("qwen/qwen3.8-max", ALIASES)
+
+
+# PRE_BENCH_V2_FINAL_CLEANUP #1/#4/#39 — the Ling-3.0-Flash false-merge bug
+# and the generic unknown-suffix policy that replaces it.
+
+def test_ling_flash_never_collapses_with_sante_variant():
+    a = canonicalize("novita/ling-3.0-flash", ALIASES)
+    b = canonicalize("novita/ling-3.0-flash-sante", ALIASES)
+    assert a != b
+    assert a == "ling-3.0-flash"
+    assert b == "ling-3.0-flash-sante"
+
+
+def test_ling_flash_never_collapses_with_fin_variant():
+    a = canonicalize("novita/ling-3.0-flash", ALIASES)
+    b = canonicalize("novita/ling-3.0-flash-fin", ALIASES)
+    assert a != b
+    assert b == "ling-3.0-flash-fin"
+
+
+def test_ling_flash_sante_never_collapses_with_fin():
+    a = canonicalize("novita/ling-3.0-flash-sante", ALIASES)
+    b = canonicalize("novita/ling-3.0-flash-fin", ALIASES)
+    assert a != b
+
+
+def test_ling_flash_typographic_variants_still_collapse():
+    # Pure formatting differences (dashes/underscores/case) on the SAME
+    # checkpoint must still converge — the guard blocks semantic suffixes,
+    # not formatting.
+    a = canonicalize("Ling_3.0_Flash", ALIASES)
+    b = canonicalize("Ling-3.0-Flash", ALIASES)
+    assert a == b == "ling-3.0-flash"
+
+
+def test_generic_unknown_suffix_blocks_alias_even_without_a_blacklist_entry():
+    """Any unrecognized semantic suffix — not just the ones we've already
+    special-cased — must block a broad alias rule. Uses the real glm-5.2
+    rule as a stand-in generic base+unknown-suffix case."""
+    a = canonicalize("z-ai/glm-5.2", ALIASES)
+    b = canonicalize("z-ai/glm-5.2-legal", ALIASES)
+    c = canonicalize("z-ai/glm-5.2-medical", ALIASES)
+    assert a != b
+    assert a != c
+    assert b != c
+
+
+def test_explicit_verified_alias_can_still_permit_equivalence():
+    # qwen3.8-27b / qwen-3-8-27b is an explicit, verified allowlisted rule
+    # (different SEPARATORS, same digits) — this must keep matching even
+    # under the stricter allowlist-based guard.
+    a = canonicalize("qwen/qwen3.8-27b", ALIASES)
+    b = canonicalize("provider/qwen-3-8-27b", ALIASES)
+    assert a == b == "qwen3.8-27b"

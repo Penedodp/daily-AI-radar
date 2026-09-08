@@ -1,7 +1,10 @@
 import re
 
 import report_html
-from report_html import build_html, _explorer_row, _price_text, _format_context_tokens, _provider_badge
+from report_html import (
+    build_html, _explorer_row, _price_text, _format_context_tokens, _provider_badge,
+    _section_free, _section_paid_value, _section_paid_quality,
+)
 
 
 def test_explorer_table_is_declared_before_first_use_in_script():
@@ -34,6 +37,28 @@ def test_explorer_row_shows_dash_not_fake_price_for_unknown_status():
     html = _explorer_row(model)
     assert "$0.0000" not in html
     assert "data-value='-999999'" in html
+
+
+def _empty_row_span(html):
+    """Sum of column widths in the single fallback <tr>: 1 (the plain <td>)
+    plus whatever the colspan says."""
+    colspan = re.search(r"colspan='(\d+)'", html)
+    return 1 + (int(colspan.group(1)) if colspan else 0)
+
+
+def test_free_table_empty_row_colspan_matches_header_column_count():
+    # PRE_BENCH_V2_FINAL_CLEANUP #37: "Uso, Modelo, Calidad, Proveedor, $/M input, $/M output" = 6 columns.
+    assert _empty_row_span(_section_free({})) == 6
+
+
+def test_paid_value_table_empty_row_colspan_matches_header_column_count():
+    # "Uso, Modelo, Proveedor, Coste, $/M input, $/M output, Calidad, Radar Value" = 8 columns.
+    assert _empty_row_span(_section_paid_value({})) == 8
+
+
+def test_paid_quality_table_empty_row_colspan_matches_header_column_count():
+    # "Uso, Modelo, Proveedor, Coste, $/M input, $/M output, Calidad" = 7 columns.
+    assert _empty_row_span(_section_paid_quality({})) == 7
 
 
 def test_branding_is_daily_ai_radar_everywhere():

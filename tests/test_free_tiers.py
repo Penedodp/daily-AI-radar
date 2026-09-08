@@ -55,7 +55,30 @@ def test_free_today_includes_unscored_free_models():
     free_today = build_free_today(models)
     assert len(free_today) == 1
     assert free_today[0]["model"] == "glm-5.2"
-    assert free_today[0]["quality_score"] is None
+    assert free_today[0]["quality_by_source"] == {}
+
+
+def test_free_today_never_reduces_two_benchmark_sources_to_a_single_max():
+    row = _model_row("glm-5.2", "OpenRouter", "free", context_length=131072, quality_by_source={
+        "aider_polyglot": {"scores": {"coding": 3.0}, "source_label": "Aider Polyglot Leaderboard"},
+        "lmarena_webdev": {"scores": {"coding": 9.0}, "source_label": "LMArena WebDev Arena"},
+    })
+    free_today = build_free_today([row])
+    qbs = free_today[0]["quality_by_source"]
+    assert set(qbs) == {"aider_polyglot", "lmarena_webdev"}
+    assert qbs["aider_polyglot"]["score"] == 3.0
+    assert qbs["lmarena_webdev"]["score"] == 9.0
+
+
+def test_free_today_groups_multiple_free_routes_under_one_model_row():
+    models = [
+        _model_row("glm-5.2", "OpenRouter", "free", context_length=131072),
+        _model_row("glm-5.2", "Novita", "free", context_length=65536),
+    ]
+    free_today = build_free_today(models)
+    assert len(free_today) == 1
+    assert free_today[0]["routes_count"] == 2
+    assert {r["provider"] for r in free_today[0]["routes"]} == {"OpenRouter", "Novita"}
 
 
 def test_free_today_includes_router_once_and_lists_it_last():
