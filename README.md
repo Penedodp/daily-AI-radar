@@ -10,6 +10,26 @@ nuevo. El proyecto prioriza **fiabilidad sobre cobertura**: prefiere un dato
 desconocido a una conclusión que los datos no respaldan (ver
 `DAILY_AI_RADAR_CLAUDE_PLAN.md` para el criterio completo).
 
+## Estructura de páginas
+
+El dashboard son 4 páginas estáticas, no una sola tabla interminable:
+
+- **`docs/index.html` (Radar)** — decisión rápida: mejores opciones, gratis
+  destacados, value/calidad, ahorro entre proveedores, Top 5, movimientos de
+  precio. Nunca renderiza el catálogo completo.
+- **`docs/explorer.html` (Explorer)** — profundidad: catálogo completo con
+  búsqueda, filtros, perfil de coste personalizado, comparador multi-modelo
+  y detalle de rutas. Enlazado desde Radar ("Explorar todos los modelos →").
+- **`docs/methodology.html` (Metodología)** — confianza: fuentes, reglas de
+  pricing/gratis, alcance de benchmark, identidad de ruta, scoring y Data
+  Health.
+- **`docs/benchmarks.html` (Benchmarks)** — placeholder "Próximamente",
+  reservado para Benchmark Engine v2 (todavía sin empezar).
+
+Las cuatro comparten cabecera, navegación (`RADAR | EXPLORER | BENCHMARKS |
+METODOLOGÍA`, con estado activo visible) y el mismo CSS/JS — sin
+`prefers-reduced-motion` en ninguna, por decisión explícita del usuario.
+
 ## Qué hace cada mañana
 
 1. Descarga el catálogo de precios de cada proveedor configurado.
@@ -250,10 +270,12 @@ matching de benchmark (`test_quality_bench.py`), el Model Benchmark Registry
 (`test_routes.py`), movimientos de precio basados en tarifa real
 (`test_price_changes.py`), gratis/router/free-tiers (`test_free_tiers.py`),
 renderizado HTML incluida la regresión de `colspan` (`test_report_html.py`)
-y un fixture de extremo a extremo (`test_snapshot_validation.py`) que
+un fixture de extremo a extremo (`test_snapshot_validation.py`) que
 reproduce los casos de los documentos de auditoría (variantes DeepSeek,
 standard/flex, Aider vs WebDev sin mezclarse ni con `max()`, precio
-`unknown`, Qwen3.8 dash/dot, etc). No dependen de red.
+`unknown`, Qwen3.8 dash/dot, etc), y la separación Radar/Explorer/
+Metodología, exclusión del router y overrides namespaced
+(`test_final_ux_architecture.py`). No dependen de red.
 
 ## Estructura
 
@@ -290,16 +312,29 @@ standard/flex, Aider vs WebDev sin mezclarse ni con `max()`, precio
   respuesta correcta, no un hueco.
 - El histórico por-ruta (`endpoint_price_trend`) existe como función base
   pero no está expuesto todavía en el dashboard — solo Best Market History.
-- El comparador de modelos (comparar seleccionados en el Explorador) todavía
-  lee de las celdas visibles de la tabla, no de una vista dedicada
-  modelo-vs-modelo con una fila por benchmark, ni existe todavía un
-  comparador ruta-vs-ruta separado.
+- El comparador (Explorer) ya es multi-benchmark y transpuesto (una fila por
+  fuente de benchmark, raw score primero, badge MODEL/ENDPOINT visible), pero
+  compara solo **modelos** — no existe todavía un comparador **ruta-vs-ruta**
+  separado (provider/endpoint/quantization/latencia/throughput/uptime lado a
+  lado).
 - No hay cupos por categoría (recomendación/gratis/price-mover/...) al elegir
-  qué modelos de OpenRouter monitorizar — la selección es una unión simple.
+  qué modelos de OpenRouter monitorizar — la selección es una unión simple, y
+  no se guarda un `route_monitor_reason` explícito por ruta.
+- La paginación del Explorer (50/100/Todos) es solo de visibilidad en el DOM
+  — todas las filas se generan en el HTML estático; no existe un
+  `explorer-data.json` cargado bajo demanda.
+- `docs/benchmarks.html` es un placeholder "Próximamente" — Benchmark Engine
+  v2 no ha empezado.
+- El pase de móvil se ha validado por CSS/estructura (sin scroll horizontal
+  global, texto largo con salto de línea, popovers por tap, tablas con
+  columna sticky en el comparador) pero no con un navegador real en
+  dispositivos físicos — no hay smoke tests Playwright todavía (ver el
+  propio documento de arquitectura, que lo deja como opcional).
 
 Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md`, `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`,
-`DAILY_AI_RADAR_CONTINUACION_AUDITORIA_3.md` y
-`DAILY_AI_RADAR_PRE_BENCH_V2_FINAL_CLEANUP.md` para el historial completo de
+`DAILY_AI_RADAR_CONTINUACION_AUDITORIA_3.md`,
+`DAILY_AI_RADAR_PRE_BENCH_V2_FINAL_CLEANUP.md` y
+`DAILY_AI_RADAR_FINAL_PRE_BENCH_V2_UX_ARCHITECTURE.md` para el historial completo de
 auditoría y las mejoras pendientes (histórico por ruta/endpoint expuesto en
 UI, "ruta ganadora" guardada explícitamente en el histórico, señales de
 alerta 7/30d, simulador de cache hit, comparador multi-benchmark completo,
