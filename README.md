@@ -41,13 +41,19 @@ desconocido a una conclusión que los datos no respaldan (ver
 todas las variantes de `deepseek*r1*`, por ejemplo) porque hace falta para
 unificar cómo distintos proveedores escriben el mismo checkpoint. Pero antes
 de aplicar cualquiera de esas reglas, `src/normalize.py` comprueba que el id
-original no lleve un tamaño (`32b`), fecha/checkpoint (`0528`, `20240806`) o
-palabra de variante (`distill`, `instruct`, `preview`, `thinking`...) que la
-regla no represente ya. Si lo lleva, la regla se descarta y el modelo cae al
-normalizado seguro (solo formato, nunca fusiona información), en vez de
-fusionarse con un checkpoint distinto. Por eso `deepseek-r1`,
-`deepseek-r1-0528` y `deepseek-r1-distill-llama-70b` quedan como tres modelos
-distintos en vez de uno solo — ver `tests/test_normalize.py`.
+original no lleve NINGÚN token (tamaño, fecha/checkpoint, palabra de variante,
+o cualquier otra cosa) que la regla no represente ya. La política es una
+**lista blanca, no una lista negra**: solo convergen diferencias puramente
+sintácticas (separadores, mayúsculas, puntuación decimal); cualquier resto
+semántico —conocido o no— bloquea el alias, en vez de dejar pasar solo los
+que ya conocíamos como peligrosos (`distill`, `sante`, `fin`...). Este cambio
+de política (PRE_BENCH_V2_FINAL_CLEANUP) corrigió un falso merge real:
+`Ling-3.0-Flash`, `Ling-3.0-Flash-Sante` y `Ling-3.0-Flash-Fin` son
+checkpoints especializados distintos de Novita y antes colapsaban en uno
+solo. Por eso `deepseek-r1`, `deepseek-r1-0528` y
+`deepseek-r1-distill-llama-70b` (o `ling-3.0-flash` y `ling-3.0-flash-sante`)
+quedan como modelos distintos en vez de uno solo — ver
+`tests/test_normalize.py`.
 
 La comparación "mismo modelo, ruta más barata" (sección 🔀) solo compara
 rutas cuyo `canonical_model` coincide exactamente por esta vía.
@@ -73,20 +79,45 @@ para que nunca se insinúe lo contrario. Es el punto de extensión pensado
 para que un futuro benchmark a nivel de endpoint pueda coexistir sin rehacer
 el modelo de datos.
 
+### Model Benchmark Registry
+
+Un benchmark mide el **modelo canónico**, no la cadena cruda de una ruta
+concreta. Antes, cada ruta buscaba su propio match de benchmark por su
+propio `model_id` — así que dos rutas del mismo modelo (dos proveedores con
+la ruta de OpenRouter, por ejemplo) podían acabar con cobertura de benchmark
+distinta solo porque uno de los dos slugs no encajó con el fuzzy-match del
+leaderboard. `main.py::build_model_benchmark_registry()` corrige esto:
+agrupa todos los matches por `canonical_model`, se queda con el de mayor
+confianza (`match_ratio`) por cada fuente, y todas las rutas de ese modelo
+comparten exactamente el mismo resultado. Ver
+`tests/test_model_benchmark_registry.py`.
+
 ## "Gratis" no es lo mismo que precio 0
 
 Un `0`/`0` de un proveedor puede significar gratis, pero también capacidad
 dedicada sin tarifa serverless, precio no disponible, o un valor ausente
 convertido a cero. `src/scoring.py::compute_pricing_status` solo marca una
-ruta como `free` cuando hay una señal explícita y comprobable (hoy: el sufijo
-`:free` de OpenRouter); cualquier otro `0`/`0` queda como `unknown` y **no**
-entra ni en el ranking de gratis ni en el de pago (no sabemos su coste real).
-Ver `tests/test_scoring.py`.
+ruta como `free`/`promotional_free` cuando existe una señal verificable:
+- una señal del propio collector (hoy: el sufijo `:free` de OpenRouter), o
+- un **override de proveedor verificado a mano**
+  (`config/provider_pricing_overrides.json`) con `verified_at` y
+  `source_url` — usado, por ejemplo, para Ling-3.0-Flash-Fin/-Sante de
+  Novita, que la API reporta como `0/0` pero que Novita publica
+  explícitamente como gratis/promocional en su propia página de precios.
+
+Cualquier otro `0`/`0` sin señal queda como `unknown` y **no** entra ni en el
+ranking de gratis ni en el de pago (no sabemos su coste real). Un override
+con más de `staleness_days` (30 por defecto) sin volver a verificarse se
+marca `pricing_overrides_stale` en Data Health — no se invalida solo, pero
+deja de mostrarse con la misma confianza que uno recién comprobado.
+Ver `tests/test_pricing_overrides.py`.
 
 ## Puntuación de calidad: automática, no manual
 
-- **Coding**: pass-rate del Aider Polyglot Leaderboard (prioritario) o rating
-  Elo de LMArena WebDev Arena (respaldo), escalados a 0–10. El matching es
+- **Coding**: pass-rate del Aider Polyglot Leaderboard y rating Elo de LMArena
+  WebDev Arena, escalados a 0–10 **cada uno por separado** (ninguno es
+  "principal" ni "de respaldo" del otro — un modelo con match en ambos
+  conserva las dos puntuaciones de forma independiente). El matching es
   estricto: los números de versión y fechas de checkpoint (`3` vs `3.5`,
   `k2` vs `k2.5`, `0324` vs `0824`...) deben coincidir exactamente, y no se
   eliminan palabras que puedan distinguir un checkpoint (`base`, `instruct`,
@@ -178,6 +209,18 @@ precio. El coste estimado del perfil se sigue registrando por separado
 (`estimated_cost_change_pct`) pero nunca se llama "cambio de precio". Ver
 `tests/test_price_changes.py`.
 
+## Best Market History (no "histórico del modelo")
+
+El gráfico de evolución de coste de cada categoría es explícitamente **Best
+Market History**: el coste de la ruta más barata cada día, que puede cambiar
+de proveedor de un día a otro — no el histórico de una ruta fija. El
+dashboard lo etiqueta así (no "histórico del modelo") y avisa cuando el
+proveedor ganador cambió durante el periodo mostrado, o cuando
+`scoring_version` cambió a mitad de serie (los puntos ya no usan
+necesariamente la misma fórmula). `main.py::endpoint_price_trend()` es la
+base preparada (no expuesta todavía en el dashboard) para un futuro
+histórico por-ruta que nunca mezcle dos `route_identity` distintas.
+
 ## Data Health
 
 La sección "Metodología y Data Health" del dashboard expone, por snapshot:
@@ -198,16 +241,19 @@ python -m pytest tests/ -q
 ```
 
 El workflow diario ejecuta `pytest` **antes** de generar nada — si falla, no
-se publica. Los tests cubren identidad de modelo (`test_normalize.py`),
-matching de benchmark (`test_quality_bench.py`), estado de precio/gratis
-(`test_scoring.py`), etiquetado/identidad/deduplicación de rutas
+se publica. Los tests cubren identidad de modelo (`test_normalize.py`,
+incluida la política de sufijo-desconocido y el caso Ling-3.0-Flash),
+matching de benchmark (`test_quality_bench.py`), el Model Benchmark Registry
+(`test_model_benchmark_registry.py`), estado de precio/gratis
+(`test_scoring.py`), overrides de precio verificados
+(`test_pricing_overrides.py`), etiquetado/identidad/deduplicación de rutas
 (`test_routes.py`), movimientos de precio basados en tarifa real
 (`test_price_changes.py`), gratis/router/free-tiers (`test_free_tiers.py`),
-renderizado HTML (`test_report_html.py`) y un fixture de extremo a extremo
-(`test_snapshot_validation.py`) que reproduce los casos de los tres
-documentos de auditoría (variantes DeepSeek, standard/flex, Aider vs WebDev
-sin mezclarse ni con `max()`, precio `unknown`, Qwen3.8 dash/dot, etc). No
-dependen de red.
+renderizado HTML incluida la regresión de `colspan` (`test_report_html.py`)
+y un fixture de extremo a extremo (`test_snapshot_validation.py`) que
+reproduce los casos de los documentos de auditoría (variantes DeepSeek,
+standard/flex, Aider vs WebDev sin mezclarse ni con `max()`, precio
+`unknown`, Qwen3.8 dash/dot, etc). No dependen de red.
 
 ## Estructura
 
@@ -220,6 +266,7 @@ dependen de red.
 - `src/report_html.py` — dashboard estático publicado en `docs/` (GitHub Pages).
 - `model_aliases.json` — reglas de canonicalización (editable).
 - `config/free_tiers.json` — condiciones de free tier por proveedor (editable, sin tocar código).
+- `config/provider_pricing_overrides.json` — clasificaciones `free`/`promotional_free` verificadas a mano para precios `0/0` ambiguos (editable, con `verified_at`/`source_url`).
 - `data/` — snapshots diarios completos + caché de benchmarks.
 - `reports/` — informe diario en Markdown.
 - `docs/` — dashboard HTML publicado vía GitHub Pages.
@@ -241,9 +288,19 @@ dependen de red.
 - No existe todavía ningún benchmark a nivel de endpoint (por ruta/
   cuantización) — `endpoint_specific_benchmarks` es siempre 0 hoy, y es la
   respuesta correcta, no un hueco.
+- El histórico por-ruta (`endpoint_price_trend`) existe como función base
+  pero no está expuesto todavía en el dashboard — solo Best Market History.
+- El comparador de modelos (comparar seleccionados en el Explorador) todavía
+  lee de las celdas visibles de la tabla, no de una vista dedicada
+  modelo-vs-modelo con una fila por benchmark, ni existe todavía un
+  comparador ruta-vs-ruta separado.
+- No hay cupos por categoría (recomendación/gratis/price-mover/...) al elegir
+  qué modelos de OpenRouter monitorizar — la selección es una unión simple.
 
-Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md`, `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`
-y `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_3.md` para el historial completo de
-auditoría y las mejoras pendientes (histórico por ruta/endpoint, "ruta
-ganadora" por día, señales de alerta 7/30d, simulador de cache hit, vistas
-más-rápido/más-estable/mayor-contexto por ruta, Benchmark Engine v2, etc.).
+Ver `DAILY_AI_RADAR_CLAUDE_PLAN.md`, `DAILY_AI_RADAR_CONTINUACION_AUDITORIA_2.md`,
+`DAILY_AI_RADAR_CONTINUACION_AUDITORIA_3.md` y
+`DAILY_AI_RADAR_PRE_BENCH_V2_FINAL_CLEANUP.md` para el historial completo de
+auditoría y las mejoras pendientes (histórico por ruta/endpoint expuesto en
+UI, "ruta ganadora" guardada explícitamente en el histórico, señales de
+alerta 7/30d, simulador de cache hit, comparador multi-benchmark completo,
+cupos de monitorización, Benchmark Engine v2, etc.).

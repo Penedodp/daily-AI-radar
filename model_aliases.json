@@ -95,6 +95,17 @@
       "canonical": "ling-3.0-flash-fast"
     },
     {
+      "_note": "PRE_BENCH_V2_FINAL_CLEANUP #6: Ling-3.0-Flash-Sante is a Novita healthcare-specialized variant, a different checkpoint from base Ling-3.0-Flash. Must never collapse into it.",
+      "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash[-_/ ]?sante",
+      "canonical": "ling-3.0-flash-sante"
+    },
+    {
+      "_note": "PRE_BENCH_V2_FINAL_CLEANUP #6: Ling-3.0-Flash-Fin is a Novita finance-specialized variant, a different checkpoint from base Ling-3.0-Flash. Must never collapse into it.",
+      "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash[-_/ ]?fin",
+      "canonical": "ling-3.0-flash-fin"
+    },
+    {
+      "_note": "PRE_BENCH_V2_FINAL_CLEANUP #1/#2: this rule must stay narrow now that the canonicalization guard is an allowlist — it must not match -sante/-fin/-coder/... suffixed variants, only the base checkpoint (with optional pure formatting noise already covered by the guard).",
       "pattern": "(?i)ling[-_/ ]?3(\\.0)?[-_/ ]?flash",
       "canonical": "ling-3.0-flash"
     },
