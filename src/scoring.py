@@ -38,21 +38,31 @@ ROUTER_MODEL_IDS = {"openrouter/free"}
 def is_router_entity(row):
     return (row.get("model_id") or "").lower() in ROUTER_MODEL_IDS
 
-def compute_pricing_status(row):
+def override_key(provider, model_id):
+    return f"{provider or ''}::{(model_id or '').lower()}"
+
+def compute_pricing_status(row, overrides=None):
     """A price of 0/0 is ambiguous: free tier, dedicated-only capacity,
     missing/unavailable price, or a collector error can all surface as
-    zero. We only call a route "free" when there is an explicit, checkable
-    signal for it (today: OpenRouter's own `:free` id suffix), or
-    "free_router" for a known model-selecting router (`openrouter/free`
-    itself, which is not one fixed checkpoint). Everything else that reports
-    0/0 is "unknown" — priced but not verifiably free — and must not enter
-    free-tier rankings or paid cost rankings either, since we don't actually
-    know its real cost.
+    zero. Precedence (PRE_BENCH_V2_FINAL_CLEANUP #7), highest first:
+      1. explicit paid signal (input/output > 0) — always wins;
+      2. a verified provider pricing override (config/provider_pricing_overrides.json) —
+         a human checked the provider's own pricing page and dated it;
+      3. a known collector-level signal (OpenRouter's own `:free` id suffix,
+         the `openrouter/free` router itself);
+      4. "unknown" — priced but not verifiably free, must not enter
+         free-tier rankings or paid cost rankings either, since we don't
+         actually know its real cost.
+    `overrides`: {override_key(provider, model_id): entry}, entry has at
+    least "pricing_status" ('free' or 'promotional_free').
     """
     inp = row.get("input_usd_per_million", 0) or 0
     out = row.get("output_usd_per_million", 0) or 0
     if inp > 0 or out > 0:
         return "paid"
+    override = (overrides or {}).get(override_key(row.get("provider"), row.get("model_id")))
+    if override and override.get("pricing_status") in {"free", "promotional_free"}:
+        return override["pricing_status"]
     if is_router_entity(row):
         return "free_router"
     if (row.get("model_id") or "").lower().endswith(":free"):

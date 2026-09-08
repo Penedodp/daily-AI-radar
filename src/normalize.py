@@ -17,12 +17,6 @@ the safe, information-preserving slug normalization instead.
 import re
 
 _TOKEN = re.compile(r"[a-z]+|\d+(?:\.\d+)?")
-_VARIANT_TOKENS = {
-    "distill", "base", "instruct", "chat", "thinking", "reasoning",
-    "preview", "turbo", "flash", "mini", "nano", "highspeed", "vl",
-    "vision", "lite", "exp", "experimental", "fast", "pro", "max",
-    "ultra", "super", "b", "m", "k",  # trailing size-unit letters (32b, 8m...)
-}
 
 
 def _tokens(s):
@@ -41,17 +35,22 @@ def _tokens(s):
 
 
 def _has_unaccounted_variant(raw_slug, canonical):
-    """True if raw_slug carries a token (size, date/checkpoint number, or
-    known variant word) that `canonical` doesn't already represent — i.e.
-    collapsing to `canonical` would lose information that could distinguish
-    a different checkpoint. Any leftover purely-numeric token is treated as
-    suspicious (it could be a size like 32/70, a date like 0528/20240806, or
-    a version segment) unless the canonical string already accounts for it."""
+    """True if raw_slug carries ANY token that `canonical` doesn't already
+    represent — i.e. collapsing to `canonical` would lose information that
+    could distinguish a different checkpoint.
+
+    PRE_BENCH_V2_FINAL_CLEANUP #2/#3: this used to be a blacklist of "known
+    dangerous" words (distill, instruct, thinking, ...) plus bare digits.
+    That only protects against variant suffixes we've already seen — a new
+    specialization word (e.g. "-sante", "-fin", "-legal", "-medical") would
+    silently pass through and merge a specialized model into its base model
+    (the Ling-3.0-Flash-Sante / -Fin false-merge bug). The policy is now an
+    allowlist instead of a blacklist: an alias may only collapse PURELY
+    SYNTACTIC differences (separators, case, decimal punctuation) that
+    literally tokenize into what the canonical string already contains. Any
+    leftover token at all — known or unknown — blocks the alias."""
     leftover = _tokens(raw_slug) - _tokens(canonical)
-    for tok in leftover:
-        if tok.isdigit() or tok in _VARIANT_TOKENS:
-            return True
-    return False
+    return bool(leftover)
 
 
 def canonicalize_with_confidence(model_id, aliases):

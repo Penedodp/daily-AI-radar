@@ -16,6 +16,7 @@ from quality_bench import (
 from scoring import (
     costs_by_task, weighted_daily_cost, price_change, value_score,
     is_free, compute_pricing_status, has_known_price, is_router_entity, is_free_available,
+    override_key,
 )
 from report_ai import generate_summary
 from report_html import build_html
@@ -56,24 +57,60 @@ def previous_snapshot(data_dir, today):
         return None, None
     return load_json(candidates[0], {}), candidates[0].stem
 
-def price_trend(data_dir, today, canonical_model, limit=14):
-    """Cheapest weighted_cost for `canonical_model` on each of the last
-    `limit` days (oldest first), read straight from the committed snapshots."""
+def best_market_history(data_dir, today, canonical_model, limit=14):
+    """PRE_BENCH_V2_FINAL_CLEANUP #31/#34: this is explicitly BEST MARKET
+    HISTORY — the cheapest route's cost for `canonical_model` on each of the
+    last `limit` days (oldest first) — NOT one route's own price history
+    (that's `endpoint_price_trend` below). The winning route can be a
+    different provider/quantization from one day to the next, so each point
+    also records which route won and under which calculation_context, so a
+    consumer can tell whether two points are even comparable (#32)."""
     files = [p for p in sorted(data_dir.glob("*.json")) if p.stem != today][-limit:]
     points = []
     for p in files:
         snap = load_json(p, None)
         if not snap:
             continue
-        best = None
+        best_row = None
         for r in snap.get("models", []):
             if r.get("canonical_model") != canonical_model:
                 continue
             cost = r.get("weighted_cost")
-            if cost is not None and (best is None or cost < best):
-                best = cost
-        if best is not None:
-            points.append({"date": p.stem, "cost": best})
+            if cost is not None and (best_row is None or cost < best_row.get("weighted_cost")):
+                best_row = r
+        if best_row is not None:
+            calc_ctx = snap.get("calculation_context") or {}
+            points.append({
+                "date": p.stem,
+                "cost": best_row["weighted_cost"],
+                "route_identity": route_identity(best_row),
+                "provider": best_row.get("provider"),
+                "scoring_version": calc_ctx.get("scoring_version"),
+            })
+    return points
+
+def price_trend(data_dir, today, canonical_model, limit=14):
+    """Back-compat shim for callers that only want (date, cost) pairs."""
+    return [{"date": p["date"], "cost": p["cost"]} for p in best_market_history(data_dir, today, canonical_model, limit)]
+
+def endpoint_price_trend(data_dir, today, target_route_identity, limit=14):
+    """PRE_BENCH_V2_FINAL_CLEANUP #33: history of ONE specific route/endpoint
+    (never mixing routes) — a preparatory building block for a future
+    per-route history view. Uses exclusively `route_identity()`, never the
+    coarser `route_key()`."""
+    files = [p for p in sorted(data_dir.glob("*.json")) if p.stem != today][-limit:]
+    points = []
+    for p in files:
+        snap = load_json(p, None)
+        if not snap:
+            continue
+        for r in snap.get("models", []):
+            if route_identity(r) == target_route_identity:
+                points.append({"date": p.stem, "cost": r.get("weighted_cost"),
+                               "context_length": r.get("context_length"),
+                               "throughput_p50": (r.get("metadata") or {}).get("throughput_p50"),
+                               "uptime_last_1d": (r.get("metadata") or {}).get("uptime_last_1d")})
+                break
     return points
 
 def route_key(row):
@@ -119,6 +156,29 @@ def _combined_tariff_change_pct(row):
     if not candidates:
         return None
     return max(candidates, key=abs)
+
+def build_model_benchmark_registry(models):
+    """Model Benchmark Registry (PRE_BENCH_V2_FINAL_CLEANUP #11-15): a
+    benchmark measures the canonical MODEL, not any one route's raw slug —
+    two routes of the exact same model must never disagree on whether/how
+    they're benchmarked just because one provider's slug string happened to
+    fuzzy-match and a differently-formatted one from another provider
+    didn't. Consumes and removes each row's `_route_quality_by_source`
+    (its own raw per-route match, keyed by source) and returns ONE registry
+    entry per canonical model — keeping, per source, whichever route matched
+    with the highest confidence — so every route of that model can share the
+    exact same benchmark reference instead of each owning its own
+    (possibly-inconsistent) copy."""
+    model_benchmarks = defaultdict(dict)
+    for row in models:
+        route_bench = row.pop("_route_quality_by_source", {})
+        if row.get("entity_type") == "router":
+            continue
+        for source, q in route_bench.items():
+            existing = model_benchmarks[row["canonical_model"]].get(source)
+            if existing is None or (q.get("match_ratio") or 0) > (existing.get("match_ratio") or 0):
+                model_benchmarks[row["canonical_model"]][source] = q
+    return model_benchmarks
 
 def free_limits_for(row, free_tiers):
     """Data-driven free-tier conditions (config/free_tiers.json) — never
@@ -445,41 +505,113 @@ def _benchmark_coverage_stats(models):
         "endpoint_specific_benchmarks": endpoint_specific,
     }
 
+def _pricing_override_stats(models, today, staleness_days):
+    """PRE_BENCH_V2_FINAL_CLEANUP #41/#42: an override doesn't get silently
+    invalidated once it's old, but it does get flagged in Data Health so a
+    stale claim ('this is free, verified 2026-01-01') isn't presented with
+    the same confidence as a freshly-checked one."""
+    active, stale = 0, 0
+    try:
+        today_date = datetime.fromisoformat(today).date()
+    except ValueError:
+        today_date = None
+    for r in models:
+        override = r.get("pricing_override")
+        if not override:
+            continue
+        active += 1
+        verified_at = override.get("verified_at")
+        is_stale = True
+        if verified_at and today_date:
+            try:
+                age = (today_date - datetime.fromisoformat(verified_at).date()).days
+                is_stale = age > staleness_days
+            except ValueError:
+                is_stale = True
+        if is_stale:
+            stale += 1
+    return {"pricing_overrides_active": active, "pricing_overrides_stale": stale}
+
+def _free_route_bench(r):
+    """Per-source scores for one free route, kept separate — never collapsed
+    to a single max() across heterogeneous benchmark scales
+    (PRE_BENCH_V2_FINAL_CLEANUP #9/#10)."""
+    return {
+        source: {
+            "score": q["scores"].get("coding"),
+            "source_label": q.get("source_label"),
+            "raw_score": q.get("raw_score"),
+            "raw_unit": q.get("raw_unit"),
+            "benchmark_scope": q.get("benchmark_scope", "model"),
+        }
+        for source, q in (r.get("quality_by_source") or {}).items()
+        if q.get("scores", {}).get("coding") is not None
+    }
+
 def build_free_today(models):
     """Every free-available route today (including the free router),
     regardless of benchmark — answers "what can I use for $0 right now",
     a different question from "what's the best free model" (audit #3 §14).
-    Sorted by a neutral criterion (context, then name) — NOT by quality,
-    since most of these have no benchmark at all."""
-    out = []
-    seen_router = False
+
+    Grouped ONE ROW PER CANONICAL MODEL, with its individual free routes
+    listed underneath for expansion (PRE_BENCH_V2_FINAL_CLEANUP #10/#21) —
+    a model with several free routes (e.g. across providers or
+    quantizations) must appear once, not once per route. Quality is never
+    reduced to a single max() across benchmark sources (#9): each source's
+    score is kept independently, or "Sin benchmark compatible" if none
+    matched. Sorted by a neutral criterion (context, then name) — NOT by
+    quality."""
+    groups = defaultdict(list)
+    router_row = None
     for r in models:
         if r.get("entity_type") == "router":
-            if seen_router:
-                continue
-            seen_router = True
-        elif not is_free(r):
+            router_row = router_row or r
             continue
+        if not is_free(r):
+            continue
+        groups[r["canonical_model"]].append(r)
 
-        best = None
-        for source, q in (r.get("quality_by_source") or {}).items():
-            sc = q["scores"].get("coding")
-            if sc is not None and (best is None or sc > best[1]):
-                best = (source, sc, q.get("source_label"))
-
+    out = []
+    for canonical, rows in groups.items():
+        rows_sorted = sorted(rows, key=lambda r: -(r.get("context_length") or 0))
+        best = rows_sorted[0]
         out.append({
-            "model": r["canonical_model"],
-            "raw_model": r["model_id"],
-            "provider": r["provider"],
-            "entity_type": r["entity_type"],
-            "pricing_status": r["pricing_status"],
-            "context_length": r.get("context_length"),
-            "quality_score": best[1] if best else None,
-            "quality_source_label": best[2] if best else None,
-            "free_limits": r.get("free_limits"),
+            "model": canonical,
+            "entity_type": "model",
+            "provider": best["provider"],
+            "pricing_status": best["pricing_status"],
+            "context_length": best.get("context_length"),
+            "quality_by_source": _free_route_bench(best),
+            "free_limits": best.get("free_limits"),
+            "routes_count": len(rows_sorted),
+            "routes": [
+                {
+                    "raw_model": r["model_id"],
+                    "provider": r["provider"],
+                    "pricing_status": r["pricing_status"],
+                    "context_length": r.get("context_length"),
+                    "quantization": (r.get("metadata") or {}).get("quantization"),
+                    "free_limits": r.get("free_limits"),
+                    "pricing_override": r.get("pricing_override"),
+                }
+                for r in rows_sorted
+            ],
         })
 
-    out.sort(key=lambda m: (m["entity_type"] == "router", -(m["context_length"] or 0), m["model"]))
+    out.sort(key=lambda m: (-(m["context_length"] or 0), m["model"]))
+
+    if router_row is not None:
+        out.append({
+            "model": router_row["canonical_model"],
+            "entity_type": "router",
+            "provider": router_row["provider"],
+            "pricing_status": router_row["pricing_status"],
+            "context_length": router_row.get("context_length"),
+            "quality_by_source": {},
+            "free_limits": router_row.get("free_limits"),
+            "routes_count": 1,
+            "routes": [],
+        })
     return out
 
 def validate_snapshot(models):
@@ -531,6 +663,26 @@ def validate_snapshot(models):
     if unscored_count:
         warnings.append(f"{unscored_count} ruta(s) sin ningún benchmark de coding todavía")
 
+    for r in models:
+        override = r.get("pricing_override")
+        if not override:
+            continue
+        if not override.get("verified_at"):
+            warnings.append(
+                f"pricing override sin fecha de verificación: {r['provider']} / {r['model_id']}"
+            )
+        if override.get("pricing_status") == "promotional_free" and not override.get("source_url"):
+            warnings.append(
+                f"promotional_free override sin source_url: {r['provider']} / {r['model_id']}"
+            )
+
+    for r in models:
+        for source, q in (r.get("quality_by_source") or {}).items():
+            if q.get("benchmark_scope") == "model" and not r.get("canonical_model"):
+                errors.append(f"benchmark scope=model sin canonical_model válido: {r.get('model_id')} ({source})")
+            if q.get("benchmark_scope") == "endpoint" and not route_identity(r):
+                errors.append(f"benchmark scope=endpoint sin route_identity: {r.get('model_id')} ({source})")
+
     return errors, warnings
 
 def main():
@@ -540,6 +692,12 @@ def main():
         e["provider"]: e
         for e in load_json(ROOT / "config" / "free_tiers.json", {"entries": []}).get("entries", [])
     }
+    pricing_overrides_cfg = load_json(ROOT / "config" / "provider_pricing_overrides.json", {"entries": []})
+    pricing_overrides = {
+        override_key(e["provider"], e["model_id"]): e
+        for e in pricing_overrides_cfg.get("entries", [])
+    }
+    override_staleness_days = pricing_overrides_cfg.get("_meta", {}).get("staleness_days", 30)
 
     now = datetime.now(ZoneInfo(config.get("timezone", "Europe/Lisbon")))
     day = now.date().isoformat()
@@ -626,17 +784,20 @@ def main():
             continue
 
         row["canonical_model"], row["identity_confidence"] = canonicalize_with_confidence(row["model_id"], aliases)
-        row["pricing_status"] = compute_pricing_status(row)
+        row["pricing_status"] = compute_pricing_status(row, pricing_overrides)
+        row["pricing_override"] = pricing_overrides.get(override_key(row.get("provider"), row.get("model_id")))
         row["entity_type"] = "router" if is_router_entity(row) else "model"
         row["free_limits"] = free_limits_for(row, free_tiers)
 
         # A router has no single checkpoint identity — it must never carry a
         # model-level benchmark score, however a name-based match might fire
-        # (audit #3 §18).
+        # (audit #3 §18). Matched here per RAW route (route_key = provider +
+        # raw model_id) — this is only the input to the Model Benchmark
+        # Registry step below, not the final per-row score yet.
         matches = {} if row["entity_type"] == "router" else (bench_matches.get(route_key(row)) or {})
-        row["quality_by_source"] = {}
+        row["_route_quality_by_source"] = {}
         for source, bq in matches.items():
-            row["quality_by_source"][source] = {
+            row["_route_quality_by_source"][source] = {
                 "label": bq["label"],
                 "source_label": bq.get("source_label", source),
                 "source_url": bq.get("source_url"),
@@ -657,6 +818,14 @@ def main():
                 "benchmark_scope": "model",
             }
 
+        models.append(row)
+
+    model_benchmarks = build_model_benchmark_registry(models)
+    for row in models:
+        row["quality_by_source"] = (
+            {} if row["entity_type"] == "router"
+            else dict(model_benchmarks.get(row["canonical_model"], {}))
+        )
         row["costs_by_task"] = costs_by_task(row, task_profiles)
         row["weighted_cost"] = weighted_daily_cost(row, task_profiles)
         row["value_scores"] = {}
@@ -668,9 +837,7 @@ def main():
                     row["value_scores"][source][category] = value_score(
                         sc, row["costs_by_task"][category], anchor,
                     )
-
         apply_price_change(row, prev_map.get(route_identity(row)))
-        models.append(row)
 
     # Detect same-route historical changes. Cross-provider differences are NOT called discounts.
     drops, increases = [], []
@@ -698,8 +865,11 @@ def main():
             pick = sdata["best_paid_value"]
             if not pick:
                 continue
-            points = price_trend(data_dir, day, pick["model"])
-            points.append({"date": day, "cost": pick["weighted_cost"]})
+            points = best_market_history(data_dir, day, pick["model"])
+            points.append({
+                "date": day, "cost": pick["weighted_cost"],
+                "provider": pick["provider"], "scoring_version": SCORING_VERSION,
+            })
             if len(points) >= 2:
                 price_trends[category][source] = {
                     "model": pick["model"], "points": points,
@@ -743,6 +913,9 @@ def main():
             "scored_routes": sum(1 for r in models if r.get("quality_by_source")),
             "unknown_price_routes": sum(1 for r in models if r.get("pricing_status") == "unknown"),
             **_benchmark_coverage_stats(models),
+            **_pricing_override_stats(models, day, override_staleness_days),
+            "free_models": sum(1 for r in models if r.get("pricing_status") == "free"),
+            "promotional_free_models": sum(1 for r in models if r.get("pricing_status") == "promotional_free"),
         },
         "calculation_context": {
             "task_profiles": task_profiles,

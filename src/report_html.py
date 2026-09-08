@@ -98,7 +98,12 @@ def _quality_span(score, label=None, ratio=None, source_label=None,
                    raw_score=None, raw_unit=None, match_type=None, benchmark_scope="model"):
     """The inner <span> only — callers that need to pack several source
     scores into one table cell (Model Explorer) use this directly instead of
-    `_quality_cell`, which wraps a single one in its own <td>."""
+    `_quality_cell`, which wraps a single one in its own <td>.
+
+    PRE_BENCH_V2_FINAL_CLEANUP #19/#20: raw score and MODEL/ENDPOINT scope
+    are shown as VISIBLE text, not only inside a hover-only `title` tooltip —
+    a tooltip is unusable on a touch screen, and the scope in particular is
+    exactly the fact this whole plan exists to stop people from missing."""
     if score is None:
         return "—"
     pct = max(0.0, min(100.0, score * 10))
@@ -118,11 +123,19 @@ def _quality_span(score, label=None, ratio=None, source_label=None,
         )
     tooltip += " Puntuaciones de benchmarks distintos no son directamente comparables entre sí."
     short_source = _SOURCE_SHORT.get(source_label, source_label or "auto")
+    raw_html = (
+        f"<span class='qraw'>{raw_score:g}{_esc(' ' + raw_unit) if raw_unit else ''}</span>"
+        if raw_score is not None else ""
+    )
+    scope_label = "MODEL" if benchmark_scope == "model" else "ENDPOINT"
+    scope_html = f"<span class='qscope qscope-{_esc(benchmark_scope)}'>{scope_label}</span>"
     return (
         f"<span class='qcell' title='{_esc(tooltip)}'>"
         f"<span class='qbar'><span class='qbar-fill {tier}' style='width:{pct:.0f}%'></span></span>"
-        f"<span class='qval'>{score:.1f}</span>"
-        f"<span class='qsrc'>{_esc(short_source)}</span></span>"
+        f"{raw_html}"
+        f"<span class='qval'>norm. {score:.1f}/10</span>"
+        f"<span class='qsrc'>{_esc(short_source)}</span>"
+        f"{scope_html}</span>"
     )
 
 
@@ -179,7 +192,7 @@ def _section_free(recs):
             f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}</tr>"
         )
     if not rows:
-        rows.append("<tr><td class='usage'>—</td><td colspan='4' class='muted'>Ningún modelo gratuito puntuado todavía</td></tr>")
+        rows.append("<tr><td class='usage'>—</td><td colspan='5' class='muted'>Ningún modelo gratuito puntuado todavía</td></tr>")
     return "".join(rows)
 
 
@@ -193,10 +206,18 @@ _FREE_BADGE_META = {
 def _free_today_row(m):
     label, cls = _FREE_BADGE_META.get(m["pricing_status"], ("—", "neutral"))
     limits = m.get("free_limits")
-    if m.get("quality_score") is not None:
-        quality_html = _quality_span(m["quality_score"], None, None, m.get("quality_source_label"))
+    # Per-source scores, kept separate — never max()'d across benchmarks of
+    # different scales (PRE_BENCH_V2_FINAL_CLEANUP #9/#10).
+    qbs = m.get("quality_by_source") or {}
+    if qbs:
+        quality_html = "<span class='quality-multi'>" + "".join(
+            _quality_span(q["score"], None, None, q.get("source_label"),
+                          raw_score=q.get("raw_score"), raw_unit=q.get("raw_unit"),
+                          benchmark_scope=q.get("benchmark_scope", "model"))
+            for q in qbs.values()
+        ) + "</span>"
     else:
-        quality_html = "<span class='muted'>Sin benchmark</span>"
+        quality_html = "<span class='muted'>Sin benchmark compatible</span>"
     context_text = _format_context_tokens(m.get("context_length"))
     is_router = m["entity_type"] == "router"
     model_esc = _esc("OpenRouter Free Router" if is_router else m["model"])
@@ -204,6 +225,19 @@ def _free_today_row(m):
         " <span class='meta'>selecciona automáticamente entre modelos gratuitos compatibles</span>"
         if is_router else ""
     )
+    n_routes = m.get("routes_count", 1)
+    # One row per canonical MODEL (#10/#21): 2+ free routes expand below
+    # instead of duplicating the model row once per route.
+    if not is_router and n_routes > 1:
+        route_word = "ruta" if n_routes == 1 else "rutas"
+        routes_json = _esc(json.dumps(m.get("routes") or [], ensure_ascii=False))
+        name_cell = (
+            f"<button type='button' class='exp-toggle free-route-toggle' aria-expanded='false' "
+            f"data-routes='{routes_json}'>{model_esc}"
+            f"<span class='exp-count'>{n_routes} {route_word} gratuitas</span></button>{note}"
+        )
+    else:
+        name_cell = f"{model_esc}{note}"
     if limits:
         limits_json = _esc(json.dumps(limits, ensure_ascii=False))
         badge = (
@@ -214,7 +248,7 @@ def _free_today_row(m):
         badge = f"<span class='pill {cls}'>{label}</span>"
     return (
         "<tr class='free-row'>"
-        f"<td class='usage'>{model_esc}{note}</td>"
+        f"<td class='usage'>{name_cell}</td>"
         f"<td>{_provider_badge(m['provider'])}</td>"
         f"<td class='num'>{context_text}</td>"
         f"<td>{quality_html}</td>"
@@ -251,7 +285,7 @@ def _section_paid_value(recs):
             f"{_num_td(r.get('value_score'), r.get('value_score', '—'))}</tr>"
         )
     if not rows:
-        rows.append("<tr><td class='usage'>—</td><td colspan='6' class='muted'>Ningún modelo de pago supera el mínimo de calidad</td></tr>")
+        rows.append("<tr><td class='usage'>—</td><td colspan='7' class='muted'>Ningún modelo de pago supera el mínimo de calidad</td></tr>")
     return "".join(rows)
 
 
@@ -270,7 +304,7 @@ def _section_paid_quality(recs):
             f"{_quality_cell_from(r)}</tr>"
         )
     if not rows:
-        rows.append("<tr><td class='usage'>—</td><td colspan='5' class='muted'>Sin candidatos de pago puntuados</td></tr>")
+        rows.append("<tr><td class='usage'>—</td><td colspan='6' class='muted'>Sin candidatos de pago puntuados</td></tr>")
     return "".join(rows)
 
 
@@ -561,12 +595,30 @@ def _sparkline(trend, width=560, height=64, title=None):
     delta_sign = "" if delta <= 0 else "+"
     model_esc = _esc(trend["model"])
     source_suffix = f" · {_esc(title)}" if title else ""
+    # PRE_BENCH_V2_FINAL_CLEANUP #31/#32/#34: this is BEST MARKET HISTORY —
+    # the cheapest route each day, which can silently change provider — say
+    # so explicitly rather than calling it "el histórico del modelo", and
+    # flag when the scoring formula changed mid-series so the line isn't
+    # read as if every point used the same math.
+    providers = {p.get("provider") for p in points if p.get("provider")}
+    versions = {p.get("scoring_version") for p in points if p.get("scoring_version")}
+    caveats = []
+    if len(providers) > 1:
+        caveats.append("la ruta más barata cambió de proveedor durante el periodo")
+    if len(versions) > 1:
+        caveats.append("la fórmula de Radar Value cambió durante el periodo (scoring_version distinta)")
+    caveat_html = (
+        f"<div class='spark-caveat'>⚠ {_esc('; '.join(caveats))}</div>" if caveats else ""
+    )
     return (
         "<div class='spark'>"
-        f"<div class='spark-head'>Evolución de <strong>{model_esc}</strong>{source_suffix} "
+        f"<div class='spark-head'>Best Market History de <strong>{model_esc}</strong>{source_suffix} "
         f"<span class='pill {delta_cls}'>{delta_sign}{delta:.1f}% en {n} días</span></div>"
+        f"<p class='muted note'>Coste de la ruta más barata cada día — no el histórico de una ruta fija; "
+        "puede cambiar de proveedor de un día a otro.</p>"
+        f"{caveat_html}"
         f"<svg viewBox='0 0 {width} {height}' preserveAspectRatio='none' class='spark-svg' role='img' "
-        f"aria-label='Evolución de coste de {model_esc} en los últimos {n} días'>"
+        f"aria-label='Best Market History de {model_esc} en los últimos {n} días'>"
         f"<polygon points='{area}' class='spark-area'></polygon>"
         f"<polyline points='{line}' class='spark-line'></polyline>"
         f"<circle cx='{xs[-1]:.1f}' cy='{ys[-1]:.1f}' r='3.2' class='spark-dot'></circle>"
@@ -740,11 +792,18 @@ table.grid td.muted { color: var(--muted); white-space: normal; }
 .qbar-fill.tier-good { background: var(--pos); }
 .qbar-fill.tier-mid { background: var(--accent); }
 .qbar-fill.tier-low { background: var(--neg); }
-.qval { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); }
+.qraw { font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.qval { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.82em; }
 .qsrc {
   font-size: 0.66rem; letter-spacing: .01em; color: var(--muted); background: var(--panel-2, var(--panel));
   border: 1px solid var(--border); border-radius: 999px; padding: 1px 6px; white-space: nowrap;
 }
+.qscope {
+  font-size: 0.6rem; letter-spacing: .04em; font-weight: 700; border-radius: 4px; padding: 1px 5px;
+  white-space: nowrap;
+}
+.qscope-model { color: var(--muted); background: var(--panel); border: 1px solid var(--border); }
+.qscope-endpoint { color: var(--accent); background: var(--accent-soft); }
 td.quality-multi { display: table-cell; }
 td.quality-multi .qcell { display: flex; margin-bottom: 4px; }
 td.quality-multi .qcell:last-child { margin-bottom: 0; }
@@ -772,6 +831,46 @@ td.quality-multi .qcell:last-child { margin-bottom: 0; }
 tr.free-detail td { background: color-mix(in srgb, var(--panel) 60%, transparent); white-space: normal; padding: 12px 16px; }
 tr.free-detail ul { margin: 0; padding-left: 18px; font-size: 0.84rem; color: var(--text); }
 tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0; }
+
+/* ---------- mobile (PRE_BENCH_V2_FINAL_CLEANUP: mobile pass) ----------
+   Tables keep .table-scroll's horizontal scroll for genuinely numeric/dense
+   columns, but long free-text cells (model name, notes, quality badges)
+   must WRAP instead of forcing the whole row to grow — otherwise one long
+   cell drags the entire table far wider than the viewport and every other
+   column ends up with huge, disproportionate gaps next to it. */
+@media (max-width: 640px) {
+  main { padding: 0 14px 72px; }
+  .topbar, .toc { padding-left: 14px; padding-right: 14px; }
+  .hero { padding: 8px 14px 28px; }
+  .hero h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
+  .hero p.lede { font-size: 0.92rem; max-width: none; }
+  .stat-row { gap: 18px 24px; margin-top: 22px; }
+  .stat-tile .stat-num { font-size: 1.3rem; }
+  .stat-tile .stat-label { font-size: 0.7rem; max-width: 30ch; }
+  .block-head h2 { font-size: 1.1rem; }
+  .block-note { font-size: 0.82rem; }
+
+  table.grid { font-size: 0.78rem; }
+  table.grid th, table.grid td { padding: 8px 8px; }
+  /* Only text-heavy cells wrap; numeric/price cells and status pills stay
+     compact single-line so the columns don't balloon vertically either. */
+  table.grid td.usage, table.grid td.muted, table.grid td .meta {
+    white-space: normal; word-break: break-word; max-width: 42vw;
+  }
+  .qcell { gap: 5px; }
+  .qbar { width: 26px; }
+  .qsrc { font-size: 0.6rem; padding: 1px 5px; }
+  td.quality-multi .qcell { margin-bottom: 6px; }
+
+  .explorer-controls { flex-direction: column; align-items: stretch; }
+  .profile-inputs { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .profile-inputs label { width: 100%; }
+  .profile-inputs input { width: 100%; box-sizing: border-box; }
+  .cmp-btn, .search-input { width: 100%; box-sizing: border-box; }
+
+  .chips { gap: 8px; }
+  .chip { padding: 5px 10px 5px 8px; font-size: 0.76rem; }
+}
 
 /* ---------- accessibility: focus & keyboard ---------- */
 a:focus-visible, button:focus-visible, input:focus-visible,
@@ -803,6 +902,13 @@ table.grid[data-sortable] th[data-key][aria-sort="descending"]::after { content:
 tr.exp-detail td { background: color-mix(in srgb, var(--panel) 60%, transparent); white-space: normal; padding: 12px 16px; }
 .exp-routes { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; }
 .exp-routes .exp-route-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.route-sort-controls { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.route-sort-btn {
+  font-size: 0.74rem; padding: 4px 10px; border-radius: 100px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--muted); cursor: pointer;
+}
+.route-sort-btn.active { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
+.route-sort-btn:hover { color: var(--text); }
 tr.hidden-row { display: none; }
 .cmp-panel { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: var(--panel); }
 .cmp-panel h4 { margin: 0 0 12px; font-size: 0.95rem; }
@@ -853,6 +959,7 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 .spark-line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
 .spark-dot { fill: var(--accent); }
 .spark-foot { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); margin-top: 6px; }
+.spark-caveat { font-size: 0.78rem; color: var(--accent); margin: 4px 0 8px; }
 
 .muted { color: var(--muted); }
 .note { color: var(--muted); font-size: 0.85rem; }
@@ -999,30 +1106,61 @@ SCRIPT = """
         var cols = row.children.length;
         var known = { free: 1, paid: 1, promotional_free: 1, free_router: 1 };
         var statusLabels = { free: 'Gratis', paid: 'Pago', promotional_free: 'Free promo', free_router: 'Free router', dedicated: 'Dedicated' };
-        var html = "<div class='exp-routes'>" + routes.map(function (r) {
-          var status = statusLabels[r.pricing_status] || 'Desconocido';
-          var isKnown = !!known[r.pricing_status];
-          var priceText = isKnown ? ("$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out") : "— precio no disponible";
-          var costText = isKnown ? ("coste estimado $" + r.weighted_cost.toFixed(5)) : "";
-          var extras = [];
-          if (r.context_length) { extras.push(formatContextTokens(r.context_length) + " contexto"); }
-          // A literal "unknown" quantization string is absence of data, not a real value — omit it.
-          if (r.quantization && r.quantization.toLowerCase() !== 'unknown') { extras.push(escapeHtml(r.quantization)); }
-          if (r.latency_p50 != null) { extras.push("latencia p50 " + r.latency_p50 + " ms"); }
-          if (r.throughput_p50 != null) { extras.push(r.throughput_p50 + " tok/s"); }
-          if (r.uptime_last_1d != null) { extras.push(r.uptime_last_1d.toFixed(2) + "% uptime · 24h"); }
-          var extrasHtml = extras.length ? "<span class='meta'>" + extras.join(' · ') + "</span>" : "";
-          return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
-            "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" +
-            "<span class='meta'>" + priceText + "</span>" +
-            (costText ? "<span class='meta'>" + costText + "</span>" : "") +
-            extrasHtml +
-            "<span class='pill neutral'>" + status + "</span></div>";
+        function renderRoutesList(list) {
+          return "<div class='exp-routes'>" + list.map(function (r) {
+            var status = statusLabels[r.pricing_status] || 'Desconocido';
+            var isKnown = !!known[r.pricing_status];
+            var priceText = isKnown ? ("$" + r.input.toFixed(4) + " in / $" + r.output.toFixed(4) + " out") : "— precio no disponible";
+            var costText = isKnown ? ("coste estimado $" + r.weighted_cost.toFixed(5)) : "";
+            var extras = [];
+            if (r.context_length) { extras.push(formatContextTokens(r.context_length) + " contexto"); }
+            // A literal "unknown" quantization string is absence of data, not a real value — omit it.
+            if (r.quantization && r.quantization.toLowerCase() !== 'unknown') { extras.push(escapeHtml(r.quantization)); }
+            if (r.latency_p50 != null) { extras.push("latencia p50 " + r.latency_p50 + " ms"); }
+            if (r.throughput_p50 != null) { extras.push(r.throughput_p50 + " tok/s"); }
+            if (r.uptime_last_1d != null) { extras.push(r.uptime_last_1d.toFixed(2) + "% uptime · 24h"); }
+            var extrasHtml = extras.length ? "<span class='meta'>" + extras.join(' · ') + "</span>" : "";
+            return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
+              "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" +
+              "<span class='meta'>" + priceText + "</span>" +
+              (costText ? "<span class='meta'>" + costText + "</span>" : "") +
+              extrasHtml +
+              "<span class='pill neutral'>" + status + "</span></div>";
+          }).join('') + "</div>";
+        }
+        // PRE_BENCH_V2_FINAL_CLEANUP #35/#36: simple route sort views —
+        // Cheapest/Fastest/Highest uptime/Largest context — no "balanced"
+        // score. Routes missing the sorted field are pushed to the end,
+        // never treated as if they were 0.
+        var sortDefs = {
+          cost: { label: 'Más barata', get: function (r) { return known[r.pricing_status] ? r.weighted_cost : null; }, dir: 1 },
+          throughput: { label: 'Más rápida', get: function (r) { return r.throughput_p50; }, dir: -1 },
+          uptime: { label: 'Mayor uptime', get: function (r) { return r.uptime_last_1d; }, dir: -1 },
+          context: { label: 'Mayor contexto', get: function (r) { return r.context_length; }, dir: -1 },
+        };
+        function sortRoutes(key) {
+          var def = sortDefs[key];
+          var withVal = [], withoutVal = [];
+          routes.forEach(function (r) { (def.get(r) == null ? withoutVal : withVal).push(r); });
+          withVal.sort(function (a, b) { return (def.get(a) - def.get(b)) * def.dir; });
+          return withVal.concat(withoutVal);
+        }
+        var controlsHtml = "<div class='route-sort-controls'>" + Object.keys(sortDefs).map(function (k) {
+          return "<button type='button' class='route-sort-btn" + (k === 'cost' ? ' active' : '') +
+            "' data-sort='" + k + "'>" + escapeHtml(sortDefs[k].label) + "</button>";
         }).join('') + "</div>";
         var tr = document.createElement('tr');
         tr.className = 'exp-detail';
-        tr.innerHTML = "<td colspan='" + cols + "'>" + html + "</td>";
+        tr.innerHTML = "<td colspan='" + cols + "'>" + controlsHtml +
+          "<div class='route-list-container'>" + renderRoutesList(sortRoutes('cost')) + "</div></td>";
         row.parentNode.insertBefore(tr, row.nextSibling);
+        tr.querySelectorAll('.route-sort-btn').forEach(function (sbtn) {
+          sbtn.addEventListener('click', function () {
+            tr.querySelectorAll('.route-sort-btn').forEach(function (b) { b.classList.remove('active'); });
+            sbtn.classList.add('active');
+            tr.querySelector('.route-list-container').innerHTML = renderRoutesList(sortRoutes(sbtn.getAttribute('data-sort')));
+          });
+        });
       });
     });
   }
@@ -1073,6 +1211,38 @@ SCRIPT = """
       var tr = document.createElement('tr');
       tr.className = 'free-detail';
       tr.innerHTML = '<td colspan="' + row.children.length + '">' + listHtml + foot + '</td>';
+      row.parentNode.insertBefore(tr, row.nextSibling);
+    });
+  });
+
+  // --- free today: expand a model's individual free routes (provider,
+  // quantization, context) — a model with several free routes shows once,
+  // routes expand on demand (PRE_BENCH_V2_FINAL_CLEANUP #10/#21) ---
+  document.querySelectorAll('.free-route-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var row = btn.closest('tr');
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      var existing = row.nextElementSibling;
+      if (existing && existing.classList.contains('free-routes-detail')) { existing.remove(); }
+      document.querySelectorAll('.free-route-toggle[aria-expanded="true"]').forEach(function (t) {
+        t.setAttribute('aria-expanded', 'false');
+      });
+      if (open) { btn.setAttribute('aria-expanded', 'false'); return; }
+      btn.setAttribute('aria-expanded', 'true');
+      var routes;
+      try { routes = JSON.parse(btn.getAttribute('data-routes')); } catch (e) { routes = []; }
+      var html = "<div class='exp-routes'>" + routes.map(function (r) {
+        var extras = [];
+        if (r.context_length) { extras.push(formatContextTokens(r.context_length) + " contexto"); }
+        if (r.quantization && r.quantization.toLowerCase() !== 'unknown') { extras.push(escapeHtml(r.quantization)); }
+        if (r.pricing_override) { extras.push('override verificado ' + escapeHtml(r.pricing_override.verified_at || '')); }
+        var extrasHtml = extras.length ? "<span class='meta'>" + extras.join(' · ') + "</span>" : "";
+        return "<div class='exp-route-row'><strong>" + escapeHtml(r.provider) + "</strong>" +
+          "<span class='meta'>" + escapeHtml(r.raw_model) + "</span>" + extrasHtml + "</div>";
+      }).join('') + "</div>";
+      var tr = document.createElement('tr');
+      tr.className = 'free-routes-detail';
+      tr.innerHTML = '<td colspan="' + row.children.length + '">' + html + '</td>';
       row.parentNode.insertBefore(tr, row.nextSibling);
     });
   });
@@ -1201,7 +1371,7 @@ PAGE_HEAD = """<!doctype html>
       <div class="stat-tile"><span class="stat-num" data-value="{models_kept}">{models_kept}</span><div class="stat-label">rutas / precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{sources_with_data}">{sources_with_data}</span><div class="stat-label">proveedores de precios</div></div>
       <div class="stat-tile"><span class="stat-num" data-value="{openrouter_routes}">{openrouter_routes}</span><div class="stat-label">endpoints OpenRouter · {openrouter_models_monitored} modelos</div></div>
-      <div class="stat-tile"><span class="stat-num" data-value="{scored_routes}">{scored_routes}</span><div class="stat-label">rutas puntuadas</div></div>
+      <div class="stat-tile"><span class="stat-num" data-value="{models_with_benchmark}">{models_with_benchmark}</span><div class="stat-label">modelos con benchmark propio</div></div>
     </div>
     <div class="chips">{chips}</div>
   </div>
@@ -1345,7 +1515,7 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
         sources_with_data=snapshot["stats"]["providers_with_data"],
         openrouter_routes=snapshot["stats"].get("openrouter_routes_analyzed", 0),
         openrouter_models_monitored=snapshot["stats"].get("openrouter_models_monitored", 0),
-        scored_routes=snapshot["stats"]["scored_routes"],
+        models_with_benchmark=snapshot["stats"].get("models_with_benchmark", 0),
         chips=_status_chips(snapshot["provider_status"]),
         toc=toc,
     )
