@@ -2,6 +2,7 @@ from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from collections import defaultdict
+import hashlib
 import json
 import re
 
@@ -19,7 +20,9 @@ from scoring import (
     override_key,
 )
 from report_ai import generate_summary
-from report_html import build_html
+from report_html import (
+    build_html, build_explorer_page, build_methodology_page, build_benchmarks_placeholder_page,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 LABELS = {
@@ -45,6 +48,15 @@ BENCHMARK_NORMALIZATION_VERSION = {
     "aider_polyglot": "aider_pass_rate_linear_v1",
     "lmarena_webdev": "webdev_elo_950_1750_v1",
 }
+
+def task_profiles_fingerprint(task_profiles):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #16: a short, stable fingerprint of
+    `task_profiles` so two historical points can be checked for compatibility
+    before being connected on a chart — an edit to config.json's token
+    profiles changes this, even though nothing about pricing moved."""
+    return hashlib.sha1(
+        json.dumps(task_profiles, sort_keys=True).encode("utf-8")
+    ).hexdigest()[:12]
 
 def load_json(path, default=None):
     if not path.exists():
@@ -85,7 +97,10 @@ def best_market_history(data_dir, today, canonical_model, limit=14):
                 "cost": best_row["weighted_cost"],
                 "route_identity": route_identity(best_row),
                 "provider": best_row.get("provider"),
+                "route_tag": (best_row.get("metadata") or {}).get("route_tag"),
+                "quantization": (best_row.get("metadata") or {}).get("quantization"),
                 "scoring_version": calc_ctx.get("scoring_version"),
+                "task_profiles_version": task_profiles_fingerprint(calc_ctx.get("task_profiles", {})),
             })
     return points
 
@@ -180,14 +195,37 @@ def build_model_benchmark_registry(models):
                 model_benchmarks[row["canonical_model"]][source] = q
     return model_benchmarks
 
+def commercial_provider(row):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #14/#24/#28: the entity that owns
+    the free-tier/commercial POLICY (e.g. "OpenRouter") is not always the
+    literal `provider` display label — for an `openrouter-route` row that
+    label also encodes the underlying infra endpoint_provider (e.g.
+    "OpenRouter → Nvidia"), which has no free-tier policy of its own.
+    Free-tier limits are a property of the commercial_provider only."""
+    if row.get("source") in {"openrouter", "openrouter-route"}:
+        return "OpenRouter"
+    return row.get("provider")
+
+def endpoint_provider(row):
+    """The underlying infra/provider actually serving an OpenRouter route
+    (e.g. "Nvidia", "GMICloud") — distinct from `commercial_provider`
+    (always "OpenRouter" for these rows). None for non-route sources, where
+    `provider` already IS the one and only relevant identity."""
+    if row.get("source") == "openrouter-route":
+        return (row.get("metadata") or {}).get("provider_name")
+    return None
+
 def free_limits_for(row, free_tiers):
     """Data-driven free-tier conditions (config/free_tiers.json) — never
     hardcoded in the renderer, so limits can be corrected without a code
-    change when a provider updates them (audit #3 §16)."""
+    change when a provider updates them (audit #3 §16). Looked up by
+    `commercial_provider`, not the raw `provider` display label, so a
+    subroute like "OpenRouter → Nvidia" still inherits OpenRouter's own
+    free-tier policy instead of missing it entirely (#14)."""
     if row.get("entity_type") == "router":
         return free_tiers.get("OpenRouter Free Router")
     if row.get("pricing_status") in {"free", "promotional_free"}:
-        return free_tiers.get(row.get("provider"))
+        return free_tiers.get(commercial_provider(row))
     return None
 
 def apply_price_change(row, old):
@@ -234,6 +272,11 @@ def compact(row, category=None, source=None):
         "model": row["canonical_model"],
         "raw_model": row["model_id"],
         "provider": row["provider"],
+        "commercial_provider": row.get("commercial_provider"),
+        "endpoint_provider": row.get("endpoint_provider"),
+        "route_tag": (row.get("metadata") or {}).get("route_tag"),
+        "quantization": (row.get("metadata") or {}).get("quantization"),
+        "route_identity": route_identity(row),
         "source": row["source"],
         "free": is_free(row),
         "pricing_status": row.get("pricing_status"),
@@ -427,6 +470,9 @@ def build_explorer(models):
             "routes": [
                 {
                     "provider": r["provider"],
+                    "commercial_provider": r.get("commercial_provider"),
+                    "endpoint_provider": r.get("endpoint_provider"),
+                    "route_tag": (r.get("metadata") or {}).get("route_tag"),
                     "raw_model": r["model_id"],
                     "pricing_status": r.get("pricing_status"),
                     "input": round(r["input_usd_per_million"], 6),
@@ -503,6 +549,23 @@ def _benchmark_coverage_stats(models):
         "models_with_benchmark": len(benchmarked_models),
         "endpoints_of_benchmarked_models": endpoints_of_benchmarked_models,
         "endpoint_specific_benchmarks": endpoint_specific,
+    }
+
+def _pricing_override_match_stats(models, overrides):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #2/#5: an override that's configured
+    but never matches any live row is a silent bug (usually a stale/wrong
+    model_id) — surface it as configured/used/unused instead of only
+    trusting that a match happened."""
+    used_keys = {
+        override_key(r.get("provider"), r.get("model_id"))
+        for r in models if r.get("pricing_override")
+    }
+    configured = len(overrides)
+    used = len(used_keys & set(overrides.keys()))
+    return {
+        "pricing_overrides_configured": configured,
+        "pricing_overrides_used": used,
+        "pricing_overrides_unused": configured - used,
     }
 
 def _pricing_override_stats(models, today, staleness_days):
@@ -614,7 +677,7 @@ def build_free_today(models):
         })
     return out
 
-def validate_snapshot(models):
+def validate_snapshot(models, pricing_overrides=None):
     """Two-tier invariant checks (Fase 6 §6): ERRORs mean a bug slipped past
     the conservative rules elsewhere and must block publishing (the daily
     workflow exits non-zero and the commit/push step never runs). WARNINGs
@@ -622,6 +685,19 @@ def validate_snapshot(models):
     that are worth surfacing but must never stop the run — see the plan's
     'mostrar el dato en vez de ocultarlo' principle."""
     errors, warnings = [], []
+
+    if pricing_overrides:
+        override_stats = _pricing_override_match_stats(models, pricing_overrides)
+        if override_stats["pricing_overrides_configured"] > 0 and override_stats["pricing_overrides_used"] == 0:
+            warnings.append(
+                f"{override_stats['pricing_overrides_configured']} pricing override(s) configurado(s) pero "
+                "NINGUNO hizo match con una ruta real — probablemente un model_id desactualizado o mal escrito"
+            )
+        elif override_stats["pricing_overrides_unused"] > 0:
+            warnings.append(
+                f"{override_stats['pricing_overrides_unused']} de {override_stats['pricing_overrides_configured']} "
+                "pricing override(s) configurado(s) no hicieron match con ninguna ruta"
+            )
 
     seen_routes = set()
     for r in models:
@@ -788,6 +864,8 @@ def main():
         row["pricing_override"] = pricing_overrides.get(override_key(row.get("provider"), row.get("model_id")))
         row["entity_type"] = "router" if is_router_entity(row) else "model"
         row["free_limits"] = free_limits_for(row, free_tiers)
+        row["commercial_provider"] = commercial_provider(row)
+        row["endpoint_provider"] = endpoint_provider(row)
 
         # A router has no single checkpoint identity — it must never carry a
         # model-level benchmark score, however a name-based match might fire
@@ -866,9 +944,18 @@ def main():
             if not pick:
                 continue
             points = best_market_history(data_dir, day, pick["model"])
+            # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #15: TODAY's point must carry
+            # the same identity/versioning fields as every historical point —
+            # otherwise the most recent point on the chart is the one entry
+            # that can't be checked for route/profile compatibility.
             points.append({
                 "date": day, "cost": pick["weighted_cost"],
-                "provider": pick["provider"], "scoring_version": SCORING_VERSION,
+                "route_identity": pick["route_identity"],
+                "provider": pick["provider"],
+                "route_tag": pick.get("route_tag"),
+                "quantization": pick.get("quantization"),
+                "scoring_version": SCORING_VERSION,
+                "task_profiles_version": task_profiles_fingerprint(task_profiles),
             })
             if len(points) >= 2:
                 price_trends[category][source] = {
@@ -883,7 +970,7 @@ def main():
     explorer = build_explorer(models)
     free_today = build_free_today(models)
 
-    errors, validation_warnings = validate_snapshot(models)
+    errors, validation_warnings = validate_snapshot(models, pricing_overrides)
     for w in validation_warnings:
         print(f"[WARN] {w}")
     if errors:
@@ -901,7 +988,15 @@ def main():
             "duplicate_routes_removed": duplicate_routes_removed,
             "models_kept": len(models),
             "models_filtered": filtered,
-            "unique_models": len({r["canonical_model"] for r in models}),
+            # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #6/#7/#43: entity_type == "router"
+            # (e.g. openrouter/free) is a dynamic service, not a checkpoint — it
+            # must never inflate a "model" count.
+            "unique_models": len({
+                r["canonical_model"] for r in models if r.get("entity_type") != "router"
+            }),
+            "router_entities_excluded": len({
+                r["canonical_model"] for r in models if r.get("entity_type") == "router"
+            }),
             "providers_with_data": sum(
                 1 for k, s in provider_status.items() if k in PRICE_SOURCES and s.get("count", 0) > 0
             ),
@@ -910,15 +1005,29 @@ def main():
             ),
             "openrouter_routes_analyzed": provider_status.get("openrouter_routes", {}).get("count", 0),
             "openrouter_models_monitored": provider_status.get("openrouter_routes", {}).get("models_monitored", 0),
-            "scored_routes": sum(1 for r in models if r.get("quality_by_source")),
+            # "routes_with_model_benchmark" is the accurate name (#42): a route
+            # inheriting its canonical model's registry entry, not a route with
+            # its OWN benchmark (that's endpoint_specific_benchmarks, below).
+            "routes_with_model_benchmark": sum(
+                1 for r in models if r.get("entity_type") != "router" and r.get("quality_by_source")
+            ),
             "unknown_price_routes": sum(1 for r in models if r.get("pricing_status") == "unknown"),
             **_benchmark_coverage_stats(models),
             **_pricing_override_stats(models, day, override_staleness_days),
-            "free_models": sum(1 for r in models if r.get("pricing_status") == "free"),
-            "promotional_free_models": sum(1 for r in models if r.get("pricing_status") == "promotional_free"),
+            **_pricing_override_match_stats(models, pricing_overrides),
+            "free_models": len({
+                r["canonical_model"] for r in models
+                if r.get("entity_type") != "router" and is_free(r)
+            }),
+            "free_routes": sum(1 for r in models if r.get("entity_type") != "router" and is_free(r)),
+            "promotional_free_models": len({
+                r["canonical_model"] for r in models
+                if r.get("entity_type") != "router" and r.get("pricing_status") == "promotional_free"
+            }),
         },
         "calculation_context": {
             "task_profiles": task_profiles,
+            "task_profiles_version": task_profiles_fingerprint(task_profiles),
             "value_cost_anchor_usd": anchor,
             "scoring_version": SCORING_VERSION,
             "benchmark_normalization_version": BENCHMARK_NORMALIZATION_VERSION,
@@ -931,6 +1040,20 @@ def main():
         "explorer": explorer,
         "free_today": free_today,
         "validation_warnings": validation_warnings,
+        # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #8/#9: persisted top-level so the
+        # Model Benchmark Registry is a real, inspectable source of truth
+        # instead of only living inside each row's (duplicated) copy.
+        "model_registry": {
+            canonical: {
+                "display_name": canonical,
+                "benchmarks": bench,
+            }
+            for canonical, bench in model_benchmarks.items()
+        },
+        # Placeholder for endpoint-scoped benchmarks (AutoExacto, Endpoint
+        # Accuracy, ...) — always {} today, which is the correct, honest
+        # answer, not a gap (Benchmark Engine v2 territory).
+        "endpoint_benchmarks": {},
     }
 
     (data_dir / f"{day}.json").write_text(
@@ -948,7 +1071,7 @@ def main():
         f"**{stats['benchmarks_active']} benchmarks activos** · "
         f"**{stats['openrouter_routes_analyzed']} endpoints de "
         f"{stats['openrouter_models_monitored']} modelos OpenRouter monitorizados** · "
-        f"**{stats['scored_routes']} rutas puntuadas**.",
+        f"**{stats['models_with_benchmark']} modelos con benchmark**.",
         "",
         "_Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: "
         "30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._",
@@ -1166,11 +1289,19 @@ def main():
     (reports_dir / f"{day}.md").write_text(report, encoding="utf-8")
     (reports_dir / "latest.md").write_text(report, encoding="utf-8")
 
+    # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #17-#20: RADAR (decisión rápida),
+    # EXPLORER (profundidad/catálogo) and METHODOLOGY (confianza) are now
+    # separate static pages instead of one giant index.html.
     dashboard = build_html(
         snapshot, day, has_previous=bool(previous), ai_summary=ai,
         price_trends=price_trends, config=config,
     )
     (docs_dir / "index.html").write_text(dashboard, encoding="utf-8")
+    (docs_dir / "explorer.html").write_text(build_explorer_page(snapshot, day, config=config), encoding="utf-8")
+    (docs_dir / "methodology.html").write_text(build_methodology_page(snapshot, day, config=config), encoding="utf-8")
+    (docs_dir / "benchmarks.html").write_text(
+        build_benchmarks_placeholder_page(day, generated_at=now.isoformat()), encoding="utf-8"
+    )
 
     try:
         print(report)

@@ -88,6 +88,32 @@ def _provider_badge(name):
     )
 
 
+def _provider_cell(r):
+    """Two-line provider rendering (FINAL_PRE_BENCH_V2_UX_ARCHITECTURE
+    #27/#29): a human line ("OpenRouter → Google") plus a technical line
+    (route tag / quantization) below it, instead of one long composed
+    string ("OpenRouter → Google (google-vertex/global/flex)") that forces
+    the whole row wider than the viewport. Falls back to the plain
+    single-line badge when there's no extra technical detail to split out.
+    `r` is expected to be a `compact()`-shaped dict."""
+    endpoint_prov = r.get("endpoint_provider")
+    tech_bits = [
+        b for b in (r.get("route_tag"), r.get("quantization"))
+        if b and str(b).strip().lower() != "unknown"
+    ]
+    if not endpoint_prov and not tech_bits:
+        return _provider_badge(r.get("provider"))
+    main_label = r.get("commercial_provider") or r.get("provider")
+    if endpoint_prov:
+        main_label = f"{main_label} → {endpoint_prov}"
+    badge = _provider_badge(main_label)
+    tech_html = (
+        f"<span class='meta provider-tech'>{_esc(' · '.join(str(b) for b in tech_bits))}</span>"
+        if tech_bits else ""
+    )
+    return f"<span class='provider-cell'>{badge}{tech_html}</span>"
+
+
 _SOURCE_SHORT = {
     "Aider Polyglot Leaderboard": "Aider",
     "LMArena WebDev Arena": "WebDev Arena",
@@ -277,7 +303,7 @@ def _section_paid_value(recs):
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
-            f"<td>{_provider_badge(r['provider'])}</td>"
+            f"<td>{_provider_cell(r)}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _price_text(r['input'], r['pricing_status']))}"
             f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}"
@@ -297,7 +323,7 @@ def _section_paid_quality(recs):
             continue
         rows.append(
             f"<tr><td class='usage'>{label}</td><td><strong>{_esc(r['model'])}</strong></td>"
-            f"<td>{_provider_badge(r['provider'])}</td>"
+            f"<td>{_provider_cell(r)}</td>"
             f"{_num_td(r['task_cost'], _cost(r['task_cost']))}"
             f"{_num_td(r['input'], _price_text(r['input'], r['pricing_status']))}"
             f"{_num_td(r['output'], _price_text(r['output'], r['pricing_status']))}"
@@ -319,7 +345,7 @@ def _section_top5(recs):
         blocks.append(f"<h3>{label} · {_esc(sdata['source_label'])}</h3>")
         items = "".join(
             f"<li><span class='rank'>{i}</span><div><strong>{_esc(r['model'])}</strong> vía "
-            f"{_provider_badge(r['provider'])}<div class='meta'>"
+            f"{_provider_cell(r)}<div class='meta'>"
             f"calidad {r.get('quality_score','—')}/10 · coste estimado {_cost(r['task_cost'])} "
             f"({_price_text(r['input'], r['pricing_status'])} in / {_price_text(r['output'], r['pricing_status'])} out) "
             f"· Radar Value {r.get('value_score','—')}"
@@ -340,7 +366,7 @@ def _section_opportunities(opportunities):
         a, b = o["cheapest"], o["next"]
         saving_pill = f"<span class='pill pos'>-{o['saving_vs_next_pct']:.1f}%</span>"
         rows.append(
-            f"<tr><td><strong>{_esc(o['model'])}</strong></td><td>{_provider_badge(a['provider'])}</td>"
+            f"<tr><td><strong>{_esc(o['model'])}</strong></td><td>{_provider_cell(a)}</td>"
             f"{_num_td(a['weighted_cost'], _cost(a['weighted_cost']), 'cost')}"
             f"{_num_td(a['input'], _money(a['input']), 'input')}{_num_td(a['output'], _money(a['output']), 'output')}"
             f"<td>{_esc(b['provider'])} ({_cost(b['weighted_cost'])})</td>"
@@ -376,7 +402,7 @@ def _section_changes(has_previous, drops, increases):
     parts = []
     if drops:
         items = "".join(
-            f"<li><strong>{_esc(r['model'])}</strong> vía {_provider_badge(r['provider'])} "
+            f"<li><strong>{_esc(r['model'])}</strong> vía {_provider_cell(r)} "
             f"<span class='pill pos'>{r['change_pct']:.1f}%</span> "
             f"<span class='meta'>ahora {_money(r['input'])} in / {_money(r['output'])} out</span></li>"
             for r in drops[:12]
@@ -386,7 +412,7 @@ def _section_changes(has_previous, drops, increases):
         parts.append("<p class='muted'>No se detectaron bajadas ≥ al umbral en la misma ruta/proveedor.</p>")
     if increases:
         items = "".join(
-            f"<li><strong>{_esc(r['model'])}</strong> vía {_provider_badge(r['provider'])} "
+            f"<li><strong>{_esc(r['model'])}</strong> vía {_provider_cell(r)} "
             f"<span class='pill neg'>+{r['change_pct']:.1f}%</span> "
             f"<span class='meta'>ahora {_money(r['input'])} in / {_money(r['output'])} out</span></li>"
             for r in increases[:8]
@@ -429,9 +455,21 @@ def _explorer_row(m):
     # Sentinel (None -> "-999999" in _num_td) so an unknown price never sorts
     # as if it were the cheapest option in the table.
     in_value, out_value, cost_value = (m["input"], m["output"], m["weighted_cost"]) if known else (None, None, None)
+    # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #11: the comparator must show every
+    # benchmark source independently (never just "the first .qcell found in
+    # the DOM") — carry the full per-source data as JSON on the checkbox so
+    # the comparator can build a proper transposed table without scraping
+    # rendered markup.
+    cmp_payload = _esc(json.dumps({
+        "model": m["model"], "provider": m["best_provider"], "pricing_status": m["pricing_status"],
+        "known": known, "cost": cost_value, "input": in_value, "output": out_value,
+        "status_label": status_badge, "status_cls": status_cls,
+        "quality_by_source": m.get("quality_by_source") or {},
+    }, ensure_ascii=False))
     return (
         f"<tr class='exp-row' data-search='{search_text}' data-pricing-status='{_esc(m['pricing_status'])}'>"
-        f"<td><input type='checkbox' class='cmp-check' data-model='{model_esc}' aria-label='Seleccionar {model_esc} para comparar'></td>"
+        f"<td><input type='checkbox' class='cmp-check' data-model='{model_esc}' data-cmp='{cmp_payload}' "
+        f"aria-label='Seleccionar {model_esc} para comparar'></td>"
         f"<td class='usage'>"
         f"<button type='button' class='exp-toggle' aria-expanded='false' data-routes='{routes_json}'>"
         f"{model_esc}<span class='exp-count'>{n_routes} {route_word}</span></button></td>"
@@ -458,6 +496,16 @@ def _section_explorer(explorer, task_profiles=None):
         "<input type='search' id='model-search' class='search-input' "
         "placeholder='Buscar modelo, proveedor…' aria-label='Buscar modelo o proveedor'>"
         "<button type='button' id='cmp-btn' class='cmp-btn' disabled>Comparar seleccionados (0)</button>"
+        "</div>"
+        # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #23: never render/reveal 600+
+        # rows animated at once by default — start capped, let the user ask
+        # for more. All rows still exist in the DOM (so search/sort/compare
+        # keep working across the full catalog), only visibility changes.
+        "<div class='page-size-controls' role='group' aria-label='Filas visibles'>"
+        "<span class='profile-label'>Mostrar:</span>"
+        "<button type='button' class='page-size-btn active' data-page-size='50'>50</button>"
+        "<button type='button' class='page-size-btn' data-page-size='100'>100</button>"
+        "<button type='button' class='page-size-btn' data-page-size='all'>Todos</button>"
         "</div>"
         "<div class='profile-inputs' id='profile-inputs'>"
         "<span class='profile-label'>Perfil personalizado:</span>"
@@ -602,11 +650,14 @@ def _sparkline(trend, width=560, height=64, title=None):
     # read as if every point used the same math.
     providers = {p.get("provider") for p in points if p.get("provider")}
     versions = {p.get("scoring_version") for p in points if p.get("scoring_version")}
+    profile_versions = {p.get("task_profiles_version") for p in points if p.get("task_profiles_version")}
     caveats = []
     if len(providers) > 1:
         caveats.append("la ruta más barata cambió de proveedor durante el periodo")
     if len(versions) > 1:
         caveats.append("la fórmula de Radar Value cambió durante el periodo (scoring_version distinta)")
+    if len(profile_versions) > 1:
+        caveats.append("el perfil de tarea (task_profiles) cambió durante el periodo — los costes no son directamente comparables punto a punto")
     caveat_html = (
         f"<div class='spark-caveat'>⚠ {_esc('; '.join(caveats))}</div>" if caveats else ""
     )
@@ -683,8 +734,23 @@ p { text-wrap: pretty; }
 .topbar .brand { display: flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; }
 .topbar .brand-mark { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
-/* ---------- section nav (sticky) ---------- */
-.toc-wrap { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border); }
+/* ---------- main navigation (sticky, top-level pages) ---------- */
+.mainnav-wrap { position: sticky; top: 0; z-index: 15; background: var(--bg); border-bottom: 1px solid var(--border); }
+.mainnav {
+  max-width: 1120px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.mainnav::-webkit-scrollbar { display: none; }
+.mainnav a {
+  flex: none; padding: 14px 14px; text-decoration: none; font-weight: 600;
+  font-size: 0.82rem; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.mainnav a:hover { color: var(--text); }
+.mainnav a.active { color: var(--text); border-bottom-color: var(--accent); }
+.mainnav a.disabled { opacity: 0.45; pointer-events: none; }
+
+/* ---------- section nav (per-page anchors, non-sticky — mainnav owns the sticky slot) ---------- */
+.toc-wrap { background: var(--bg); border-bottom: 1px solid var(--border); }
 .toc {
   max-width: 1120px; margin: 0 auto; padding: 0 20px; display: flex; gap: 4px; overflow-x: auto;
   scrollbar-width: none;
@@ -747,6 +813,11 @@ p { text-wrap: pretty; }
 .chip-name { color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; }
 .chip-count { font-family: var(--font-mono); font-weight: 600; }
 
+/* ---------- simple page header (Explorer/Methodology/Benchmarks) ---------- */
+.simple-head { max-width: 1120px; margin: 0 auto; padding: 32px 20px 8px; }
+.simple-head h1 { font-size: clamp(1.5rem, 3.5vw, 2.1rem); font-weight: 600; }
+.simple-head .lede { color: var(--muted); font-size: 0.98rem; margin: 10px 0 0; max-width: 68ch; }
+
 /* ---------- sections ---------- */
 section.block { margin: 64px 0; }
 .block-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
@@ -780,6 +851,8 @@ table.grid tbody tr:hover { background: var(--accent-soft); }
 table.grid td.usage { color: var(--muted); font-size: 0.82rem; width: 1%; }
 table.grid td.muted { color: var(--muted); white-space: normal; }
 
+.provider-cell { display: inline-flex; flex-direction: column; gap: 2px; }
+.provider-cell .provider-tech { font-size: 0.72rem; padding-left: 28px; }
 .provider { display: inline-flex; align-items: center; gap: 8px; }
 .provider-dot {
   width: 20px; height: 20px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;
@@ -840,7 +913,7 @@ tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;
    column ends up with huge, disproportionate gaps next to it. */
 @media (max-width: 640px) {
   main { padding: 0 14px 72px; }
-  .topbar, .toc { padding-left: 14px; padding-right: 14px; }
+  .topbar, .toc, .mainnav { padding-left: 14px; padding-right: 14px; }
   .hero { padding: 8px 14px 28px; }
   .hero h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
   .hero p.lede { font-size: 0.92rem; max-width: none; }
@@ -870,6 +943,23 @@ tr.free-detail .meta { color: var(--muted); font-size: 0.78rem; margin: 6px 0 0;
 
   .chips { gap: 8px; }
   .chip { padding: 5px 10px 5px 8px; font-size: 0.76rem; }
+
+  .simple-head { padding: 24px 14px 4px; }
+
+  /* FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #26/#32: on a narrow screen the
+     Explorer drops $/M input and $/M output (still reachable by tapping a
+     model row for the full route detail) but keeps Modelo, Proveedor,
+     Coste, Coste personalizado, Calidad and Estado — so the custom-profile
+     feature stays fully usable on mobile, not hidden with its column. */
+  #explorer-table th:nth-child(5), #explorer-table td:nth-child(5),
+  #explorer-table th:nth-child(6), #explorer-table td:nth-child(6) {
+    display: none;
+  }
+
+  .cmp-table th, .cmp-table td { min-width: 110px; font-size: 0.78rem; }
+
+  /* Route-sort and page-size controls: wrap tightly, full tap targets */
+  .route-sort-btn, .page-size-btn { padding: 6px 12px; }
 }
 
 /* ---------- accessibility: focus & keyboard ---------- */
@@ -909,9 +999,26 @@ tr.exp-detail td { background: color-mix(in srgb, var(--panel) 60%, transparent)
 }
 .route-sort-btn.active { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
 .route-sort-btn:hover { color: var(--text); }
+.page-size-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 14px; }
+.page-size-btn {
+  font-size: 0.78rem; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--muted); cursor: pointer;
+}
+.page-size-btn.active { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
+.page-size-btn:hover { color: var(--text); }
+tr.hidden-page { display: none; }
 tr.hidden-row { display: none; }
 .cmp-panel { margin-bottom: 20px; border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: var(--panel); }
 .cmp-panel h4 { margin: 0 0 12px; font-size: 0.95rem; }
+/* Transposed comparator: metric-label column stays put while the model
+   columns scroll horizontally inside .table-scroll — never a global
+   horizontal scroll (#13/#31). */
+.cmp-table th.cmp-row-label {
+  position: sticky; left: 0; z-index: 1; background: var(--panel);
+  text-align: left; white-space: normal; min-width: 120px;
+}
+.cmp-table th, .cmp-table td { min-width: 130px; }
+.cmp-table td { white-space: normal; }
 .profile-inputs {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding: 12px 16px;
   border: 1px dashed var(--border); border-radius: 10px; font-size: 0.82rem;
@@ -963,6 +1070,11 @@ ul.changes .meta { color: var(--muted); font-size: 0.82rem; }
 
 .muted { color: var(--muted); }
 .note { color: var(--muted); font-size: 0.85rem; }
+.cta-link {
+  display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--accent);
+  text-decoration: none; font-size: 0.98rem;
+}
+.cta-link:hover { text-decoration: underline; }
 .ai-summary { white-space: pre-wrap; line-height: 1.65; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); }
 
 /* reveal-on-scroll: hidden state only applied once GSAP is confirmed running */
@@ -1063,28 +1175,57 @@ SCRIPT = """
     recalcCustomCost();
   }
 
-  // --- model explorer: search filter ---
-  if (searchInput && explorerTable) {
-    searchInput.addEventListener('input', function () {
-      var needle = searchInput.value.trim().toLowerCase();
-      var visible = 0;
-      explorerTable.querySelectorAll('tbody tr.exp-row').forEach(function (row) {
-        var hay = row.getAttribute('data-search') || '';
-        var match = !needle || hay.indexOf(needle) !== -1;
-        row.classList.toggle('hidden-row', !match);
-        if (match) { visible++; }
-        var detail = row.nextElementSibling;
-        if (detail && detail.classList.contains('exp-detail')) {
-          detail.classList.toggle('hidden-row', !match);
-        }
-      });
-      if (explorerCount) {
-        explorerCount.textContent = needle
-          ? visible + ' de ' + explorerTable.querySelectorAll('tbody tr.exp-row').length + ' modelos coinciden con "' + searchInput.value.trim() + '".'
-          : explorerTable.querySelectorAll('tbody tr.exp-row').length + ' modelos únicos. Haz clic en un modelo para ver todas sus rutas. Selecciona hasta 4 para compararlos.';
+  // --- model explorer: search filter + pagination (combined) ---
+  // FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #23/#24: never dump 600+ rows by
+  // default. Every row still lives in the DOM (search/sort/compare need the
+  // full catalog), only default VISIBILITY is capped — a search in progress
+  // always shows every match regardless of the page-size cap.
+  var explorerPageSize = 50;
+  function applyExplorerVisibility() {
+    if (!explorerTable) { return; }
+    var needle = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    var allExpRows = Array.prototype.slice.call(explorerTable.querySelectorAll('tbody tr.exp-row'));
+    var shownSoFar = 0;
+    var visibleCount = 0;
+    allExpRows.forEach(function (row) {
+      var hay = row.getAttribute('data-search') || '';
+      var searchMatch = !needle || hay.indexOf(needle) !== -1;
+      row.classList.toggle('hidden-row', !searchMatch);
+      var withinPage = true;
+      if (searchMatch) {
+        withinPage = !!needle || explorerPageSize === 'all' || shownSoFar < explorerPageSize;
+        shownSoFar++;
+      }
+      row.classList.toggle('hidden-page', !(searchMatch && withinPage));
+      if (searchMatch && withinPage) { visibleCount++; }
+      var detail = row.nextElementSibling;
+      if (detail && detail.classList.contains('exp-detail')) {
+        detail.classList.toggle('hidden-row', !(searchMatch && withinPage));
       }
     });
+    if (explorerCount) {
+      var total = allExpRows.length;
+      if (needle) {
+        explorerCount.textContent = visibleCount + ' de ' + total + ' modelos coinciden con "' + searchInput.value.trim() + '".';
+      } else {
+        var pageLabel = explorerPageSize === 'all' ? 'todos' : ('los primeros ' + explorerPageSize);
+        explorerCount.textContent = 'Mostrando ' + pageLabel + ' de ' + total + ' modelos únicos. Haz clic en un modelo para ver todas sus rutas. Selecciona hasta 4 para compararlos.';
+      }
+    }
   }
+  if (searchInput && explorerTable) {
+    searchInput.addEventListener('input', applyExplorerVisibility);
+  }
+  document.querySelectorAll('.page-size-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.page-size-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var size = btn.getAttribute('data-page-size');
+      explorerPageSize = size === 'all' ? 'all' : parseInt(size, 10);
+      applyExplorerVisibility();
+    });
+  });
+  applyExplorerVisibility();
 
   // --- model explorer: expand routes ---
   if (explorerTable) {
@@ -1265,23 +1406,60 @@ SCRIPT = """
         refreshCmpBtn();
       });
     });
+    // FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #11/#12/#13: TRANSPOSED comparator
+    // (one column per model, one row per metric/benchmark) so it can show
+    // every independent benchmark source instead of only the first .qcell
+    // found in the DOM, and so it grows in height (more benchmark rows) —
+    // not in uncontrolled width — as more sources are added later. The
+    // metric-label column is sticky so it stays readable while scrolling
+    // horizontally on narrow screens (mobile comparator strategy, #13).
     cmpBtn.addEventListener('click', function () {
-      var rows = selectedChecks().map(function (chk) { return chk.closest('tr'); });
-      var cells = ['ecost', 'einput', 'eoutput', 'ecustom'];
-      var head = '<tr><th>Modelo</th><th>Coste estimado</th><th>$/M input</th><th>$/M output</th><th>Coste personalizado</th><th>Calidad</th><th>Estado</th></tr>';
-      var body = rows.map(function (r) {
-        var name = r.querySelector('.exp-toggle').firstChild.textContent;
-        var tds = cells.map(function (k) {
-          var td = r.querySelector('[data-key="' + k + '"]');
-          return '<td class="num">' + (td ? td.textContent : '—') + '</td>';
-        }).join('');
-        var quality = r.querySelector('.qcell');
-        var status = r.querySelector('.pill');
-        return '<tr><td class="usage">' + escapeHtml(name) + '</td>' + tds +
-          '<td>' + (quality ? quality.outerHTML : '—') + '</td>' +
-          '<td>' + (status ? status.outerHTML : '—') + '</td></tr>';
-      }).join('');
-      cmpPanel.innerHTML = '<h4>Comparativa</h4><div class="table-scroll"><table class="grid"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+      var models = selectedChecks().map(function (chk) {
+        try { return JSON.parse(chk.getAttribute('data-cmp')); } catch (e) { return null; }
+      }).filter(Boolean);
+      if (!models.length) { return; }
+
+      var sourceLabels = {};
+      models.forEach(function (m) {
+        Object.keys(m.quality_by_source || {}).forEach(function (src) {
+          sourceLabels[src] = (m.quality_by_source[src] || {}).source_label || src;
+        });
+      });
+      var sourceKeys = Object.keys(sourceLabels);
+
+      function costText(m) { return m.known && m.cost != null ? ('$' + m.cost.toFixed(5)) : '—'; }
+      function priceText(m, v) { return m.known && v != null ? ('$' + v.toFixed(4)) : '—'; }
+      function metricRow(label, cellFn) {
+        return '<tr><th class="cmp-row-label">' + escapeHtml(label) + '</th>' +
+          models.map(function (m) { return cellFn(m); }).join('') + '</tr>';
+      }
+
+      var headCells = models.map(function (m) { return '<th>' + escapeHtml(m.model) + '</th>'; }).join('');
+      var rowsHtml = '';
+      rowsHtml += metricRow('Proveedor', function (m) { return '<td>' + escapeHtml(m.provider) + '</td>'; });
+      rowsHtml += metricRow('Coste estimado / tarea', function (m) { return '<td class="num">' + costText(m) + '</td>'; });
+      rowsHtml += metricRow('$/M input', function (m) { return '<td class="num">' + priceText(m, m.input) + '</td>'; });
+      rowsHtml += metricRow('$/M output', function (m) { return '<td class="num">' + priceText(m, m.output) + '</td>'; });
+      sourceKeys.forEach(function (src) {
+        rowsHtml += metricRow(sourceLabels[src], function (m) {
+          var q = (m.quality_by_source || {})[src];
+          if (!q || q.score == null) { return '<td class="muted">—</td>'; }
+          var rawHtml = q.raw_score != null
+            ? '<strong>' + escapeHtml(q.raw_score + (q.raw_unit ? ' ' + q.raw_unit : '')) + '</strong><br>'
+            : '';
+          var scope = q.benchmark_scope === 'endpoint' ? 'endpoint' : 'model';
+          return '<td>' + rawHtml + '<span class="meta">norm. ' + q.score.toFixed(1) + '/10 ' +
+            '<span class="qscope qscope-' + scope + '">' + scope.toUpperCase() + '</span></span></td>';
+        });
+      });
+      rowsHtml += metricRow('Estado', function (m) {
+        return '<td><span class="pill ' + m.status_cls + '">' + escapeHtml(m.status_label) + '</span></td>';
+      });
+
+      var emptyNote = sourceKeys.length === 0
+        ? '<p class="muted note">Ninguno de los modelos seleccionados tiene benchmark todavía.</p>' : '';
+      cmpPanel.innerHTML = '<h4>Comparativa</h4><div class="table-scroll"><table class="grid cmp-table">' +
+        '<thead><tr><th></th>' + headCells + '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div>' + emptyNote;
       cmpPanel.hidden = false;
     });
   }
@@ -1309,7 +1487,12 @@ SCRIPT = """
   document.documentElement.classList.add('gsap-ready');
 
   document.querySelectorAll('.reveal').forEach(function (section) {
-    var rows = section.querySelectorAll('tbody tr, ol.top5 > li, ul.changes > li');
+    // FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #51: never animate hundreds of rows
+    // individually (the Explorer/Free-today tables can have 50-600+) — the
+    // container itself still reveals, and at most the first batch of rows
+    // gets the per-row stagger.
+    var allRows = section.querySelectorAll('tbody tr, ol.top5 > li, ul.changes > li');
+    var rows = Array.prototype.slice.call(allRows, 0, 40);
     var tl = gsap.timeline({
       scrollTrigger: hasScrollTrigger
         ? { trigger: section, start: 'top 85%', once: true }
@@ -1353,6 +1536,8 @@ PAGE_HEAD = """<!doctype html>
   </span>
 </div>
 
+{nav}
+
 <div class="toc-wrap"><nav class="toc" aria-label="Secciones">{toc}</nav></div>
 
 <header class="hero">
@@ -1380,6 +1565,35 @@ PAGE_HEAD = """<!doctype html>
 <main>
 """
 
+SIMPLE_HEAD = """<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily AI Radar — {page_title}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>{style}</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand"><span class="brand-mark"></span>Daily AI Radar</span>
+  <span class="freshness" id="freshness" data-generated-at="{generated_at}">
+    <span class="dot"></span><span class="freshness-text">Actualizado {generated_label}</span>
+  </span>
+</div>
+
+{nav}
+
+<header class="simple-head">
+  <h1>{page_title}</h1>
+  <p class="lede">{page_lede}</p>
+</header>
+
+<main>
+"""
+
 SECTION_TEMPLATE = """
 <section class="block reveal" id="s{idx}">
   <div class="block-head"><span class="idx">{idx}</span><h2>{title}</h2></div>
@@ -1402,6 +1616,28 @@ PAGE_TAIL = """
 def _section_html(idx, title, body, note=""):
     note_html = f"<p class='block-note'>{note}</p>" if note else ""
     return SECTION_TEMPLATE.format(idx=idx, title=title, body=body, note=note_html)
+
+
+_NAV_ITEMS = [
+    ("radar", "index.html", "Radar"),
+    ("explorer", "explorer.html", "Explorer"),
+    ("benchmarks", "benchmarks.html", "Benchmarks"),
+    ("methodology", "methodology.html", "Metodología"),
+]
+
+
+def _nav_html(active):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #21/#22: a top-level nav shared by
+    every page, with a visible active state — reuses the same
+    scrollable-tabs pattern as the per-page section anchors (`.toc`) so it
+    degrades to horizontal scroll instead of wrapping/breaking on narrow
+    screens, with no separate mobile-only markup to maintain."""
+    links = "".join(
+        f"<a href='{href}'{' class=\"active\"' if key == active else ''}"
+        f"{' aria-current=\"page\"' if key == active else ''}>{label}</a>"
+        for key, href, label in _NAV_ITEMS
+    )
+    return f"<div class='mainnav-wrap'><nav class='mainnav' aria-label='Navegación principal'>{links}</nav></div>"
 
 
 def _toc_html(entries):
@@ -1477,23 +1713,21 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
             "Solo se compara la misma ruta/proveedor frente al snapshot anterior — nunca dos proveedores distintos, "
             "y un cambio en el perfil de tokens nunca se cuenta como cambio de tarifa.",
         ),
-        (
-            "Explorador de modelos",
-            _section_explorer(snapshot.get("explorer") or [], (config or {}).get("task_profiles")),
-            "Catálogo completo, uno por modelo (no por ruta) — busca, expande para ver todas sus rutas y "
-            "compara hasta 4 a la vez.",
-        ),
-        (
-            "Metodología y Data Health",
-            _section_methodology(
-                config, snapshot.get("stats"), snapshot.get("validation_warnings"),
-                snapshot.get("calculation_context"),
-            ),
-            "",
-        ),
     ]
     if ai_summary:
         raw_blocks.append(("Estrategia recomendada para hoy", f"<div class='ai-summary'>{_esc(ai_summary)}</div>", ""))
+
+    # FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #18: Radar is the "decisión rápida"
+    # page — it stops here. The full catalog/search/comparator lives on its
+    # own page now (#19), reached with one click/tap.
+    n_models = snapshot["stats"].get("unique_models", 0)
+    raw_blocks.append((
+        "Explorar el catálogo completo",
+        f"<p>Radar solo muestra una selección curada. El catálogo completo "
+        f"({n_models} modelos, con búsqueda, filtros y comparador) vive en su propia página.</p>"
+        "<p><a class='cta-link' href='explorer.html'>Explorar todos los modelos →</a></p>",
+        "",
+    ))
 
     blocks = [(f"{i + 1:02d}", title, body, note) for i, (title, body, note) in enumerate(raw_blocks)]
     toc = _toc_html([(idx, title) for idx, title, _body, _note in blocks])
@@ -1517,7 +1751,87 @@ def build_html(snapshot, day, has_previous, ai_summary=None, price_trends=None, 
         openrouter_models_monitored=snapshot["stats"].get("openrouter_models_monitored", 0),
         models_with_benchmark=snapshot["stats"].get("models_with_benchmark", 0),
         chips=_status_chips(snapshot["provider_status"]),
+        nav=_nav_html("radar"),
         toc=toc,
     )
     tail = PAGE_TAIL.format(script=SCRIPT)
     return head + sections + tail
+
+
+def build_explorer_page(snapshot, day, config=None):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #19: catálogo completo, búsqueda,
+    filtros, comparador y detalle de rutas — todo lo que antes vivía dentro
+    de la home. Página independiente para que Radar se quede compacta."""
+    n_models = len(snapshot.get("explorer") or [])
+    body = _section_explorer(snapshot.get("explorer") or [], (config or {}).get("task_profiles"))
+    generated_at = snapshot.get("generated_at", "")
+    try:
+        generated_label = datetime.fromisoformat(generated_at).strftime("%d/%m/%Y %H:%M %Z")
+    except (ValueError, TypeError):
+        generated_label = day
+    head = SIMPLE_HEAD.format(
+        page_title="Explorer",
+        page_lede=(
+            f"Catálogo completo — {n_models} modelos, uno por modelo (no por ruta). Busca, expande "
+            "para ver todas sus rutas y compara hasta 4 a la vez."
+        ),
+        generated_at=_esc(generated_at),
+        generated_label=_esc(generated_label),
+        style=STYLE,
+        nav=_nav_html("explorer"),
+    )
+    section = f"<section class='block reveal' id='explorer-section'>{body}</section>"
+    tail = PAGE_TAIL.format(script=SCRIPT)
+    return head + section + tail
+
+
+def build_methodology_page(snapshot, day, config=None):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #20: fuentes, reglas de pricing/
+    free, benchmark scope, route identity, scoring y Data Health — la
+    "confianza" del producto, separada de la decisión rápida de Radar."""
+    body = _section_methodology(
+        config, snapshot.get("stats"), snapshot.get("validation_warnings"),
+        snapshot.get("calculation_context"),
+    )
+    generated_at = snapshot.get("generated_at", "")
+    try:
+        generated_label = datetime.fromisoformat(generated_at).strftime("%d/%m/%Y %H:%M %Z")
+    except (ValueError, TypeError):
+        generated_label = day
+    head = SIMPLE_HEAD.format(
+        page_title="Metodología",
+        page_lede="Fuentes, reglas de pricing y de gratis, alcance de cada benchmark, identidad de ruta, scoring y Data Health.",
+        generated_at=_esc(generated_at),
+        generated_label=_esc(generated_label),
+        style=STYLE,
+        nav=_nav_html("methodology"),
+    )
+    section = f"<section class='block reveal' id='methodology-section'>{body}</section>"
+    tail = PAGE_TAIL.format(script=SCRIPT)
+    return head + section + tail
+
+
+def build_benchmarks_placeholder_page(day, generated_at=""):
+    """FINAL_PRE_BENCH_V2_UX_ARCHITECTURE #17/#63: reserved for Benchmark
+    Engine v2 — NOT started in this iteration. A visible placeholder beats a
+    broken nav link."""
+    try:
+        generated_label = datetime.fromisoformat(generated_at).strftime("%d/%m/%Y %H:%M %Z")
+    except (ValueError, TypeError):
+        generated_label = day
+    head = SIMPLE_HEAD.format(
+        page_title="Benchmarks",
+        page_lede="Próximamente. Esta sección reunirá la evidencia detallada por benchmark (Benchmark Engine v2) — todavía no ha comenzado.",
+        generated_at=_esc(generated_at),
+        generated_label=_esc(generated_label),
+        style=STYLE,
+        nav=_nav_html("benchmarks"),
+    )
+    section = (
+        "<section class='block'><p class='muted'>Esta sección está reservada para Benchmark Engine v2 "
+        "(múltiples fuentes de benchmark, comparador ampliado, evidencia por modelo). Mientras tanto, "
+        "los benchmarks disponibles hoy (Aider Polyglot, LMArena WebDev Arena) se muestran en "
+        "<a href='index.html'>Radar</a> y en el <a href='explorer.html'>Explorer</a>.</p></section>"
+    )
+    tail = PAGE_TAIL.format(script=SCRIPT)
+    return head + section + tail
