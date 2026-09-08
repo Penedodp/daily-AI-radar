@@ -7,6 +7,41 @@ from report_html import (
 )
 
 
+def test_toc_active_link_tracking_never_scrolls_the_page_vertically():
+    """Regression: `.toc-wrap` used to be `position: sticky`, so calling
+    `scrollIntoView({block: 'nearest', ...})` on the active toc link was a
+    no-op (it was always already visible). Once `.toc-wrap` stopped being
+    sticky (mainnav took over that slot), the same call started yanking the
+    whole page back up to bring the (now off-screen) toc bar into view —
+    "scroll down snaps back to top". `scrollIntoView` must never be called
+    on a toc link; only `scrollLeft` on its horizontal container."""
+    script = report_html.SCRIPT
+    assert ".scrollIntoView(" not in script
+
+
+def test_mobile_search_input_is_not_flex_basis_260px_in_a_column_container():
+    """Regression: `.search-input`'s desktop `flex: 1 1 260px` sets
+    flex-basis on the main axis. `.explorer-controls` becomes a COLUMN flex
+    container on mobile, so that 260px landed on HEIGHT instead of width —
+    a search box occupying nearly half the screen. Mobile must override it
+    to `flex: none` with an explicit width instead."""
+    style = report_html.STYLE
+    mobile_block = style[style.index("@media (max-width: 640px)"):]
+    assert ".explorer-controls .search-input { flex: none;" in mobile_block
+
+
+def test_explorer_table_uses_fixed_layout_on_mobile_so_model_column_gets_real_width():
+    """Regression: under the browser's default table-layout:auto, a lone
+    max-width on a <td> is ignored — column widths are computed from the
+    widest content across ALL rows first, so Modelo kept getting squeezed
+    to near-nothing ("cuts off every few letters") regardless of any
+    per-cell CSS. table-layout:fixed + explicit widths is the actual fix."""
+    style = report_html.STYLE
+    mobile_block = style[style.index("@media (max-width: 640px)"):]
+    assert "#explorer-table { table-layout: fixed; }" in mobile_block
+    assert "nth-child(2), #explorer-table td:nth-child(2) { width: 40%; }" in mobile_block
+
+
 def test_explorer_table_is_declared_before_first_use_in_script():
     """Regression for audit #2 §8: `explorerTable` was read (in the custom
     token-profile block) before its `var explorerTable = ...` declaration.
