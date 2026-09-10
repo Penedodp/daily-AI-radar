@@ -1,6 +1,6 @@
 # Daily AI Radar — 2026-09-10
 
-> Generado 10/09/2026 13:01 WEST · **625 modelos únicos** · **987 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **165 endpoints de 35 modelos OpenRouter monitorizados** · **76 modelos con benchmark**.
+> Generado 10/09/2026 13:15 WEST · **625 modelos únicos** · **987 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **165 endpoints de 35 modelos OpenRouter monitorizados** · **76 modelos con benchmark**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
@@ -95,6 +95,7 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 - **deepseek-v4-flash-0731** vía **OpenRouter → Baidu (baidu/fp8)** — +371.4% (ahora \$0.4400 in / \$1.3200 out)
 - **glm-5.3-flash** vía **OpenRouter** — +100.0% (ahora \$0.1500 in / \$0.5000 out)
 - **glm-5.3-flash** vía **OpenRouter → Z.AI (z-ai/fp8)** — +100.0% (ahora \$0.1500 in / \$0.5000 out)
+- **qwen3-30b-a3b-instruct-2507** vía **OpenRouter** — +86.9% (ahora \$0.0900 in / \$0.3000 out)
 - **glm-5.3-flash** vía **CheaperInference** — +73.8% (ahora \$0.1050 in / \$0.3500 out)
 - **glm-5.3-flash** vía **OpenRouter → GMICloud (gmicloud/fp8)** — +50.0% (ahora \$0.1125 in / \$0.3750 out)
 - **deepseek-v4-flash-0731** vía **OpenRouter → Inceptron (inceptron/fp4)** — +25.0% (ahora \$0.1300 in / \$0.3500 out)
