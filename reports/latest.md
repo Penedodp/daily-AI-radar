@@ -1,6 +1,6 @@
 # Daily AI Radar — 2026-09-18
 
-> Generado 18/09/2026 13:13 WEST · **597 modelos únicos** · **984 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **193 endpoints de 35 modelos OpenRouter monitorizados** · **73 modelos con benchmark**.
+> Generado 18/09/2026 13:15 WEST · **597 modelos únicos** · **984 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **193 endpoints de 35 modelos OpenRouter monitorizados** · **73 modelos con benchmark**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
