@@ -1,10 +1,10 @@
 # Daily AI Radar — 2026-09-23
 
-> Generado 23/09/2026 08:41 WEST · **605 modelos únicos** · **972 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **169 endpoints de 35 modelos OpenRouter monitorizados** · **73 modelos con benchmark**.
+> Generado 23/09/2026 13:46 WEST · **606 modelos únicos** · **974 rutas/precios** · **4 proveedores de precios** · **2 benchmarks activos** · **170 endpoints de 35 modelos OpenRouter monitorizados** · **73 modelos con benchmark**.
 
 _Coste estimado a partir de un perfil de tokens fijo (ver sección de Coding: 30K entrada + 6K salida). Es una estimación, no el coste real de tu carga de trabajo._
 
-_Cobertura de benchmark: 73 modelos con benchmark propio, 220 endpoints heredan ese score de su modelo, 0 endpoints benchmarkeados de forma específica (0 es lo esperado hoy — ver Metodología)._
+_Cobertura de benchmark: 73 modelos con benchmark propio, 221 endpoints heredan ese score de su modelo, 0 endpoints benchmarkeados de forma específica (0 es lo esperado hoy — ver Metodología)._
 
 _4 ruta(s) duplicada(s) exacta(s) detectada(s) y eliminada(s) antes de publicar._
 
@@ -14,13 +14,13 @@ _115 ruta(s) con precio `unknown` (0/0 sin señal explícita de gratis) — no e
 
 | Fuente | Estado | Registros |
 |---|---|---:|
-| openrouter | `ok` | 449 |
+| openrouter | `ok` | 450 |
 | cheaperinference | `ok` | 61 |
 | together | `ok` | 186 |
 | novita | `ok` | 120 |
 | aider_polyglot | `ok` | 68 |
 | lmarena_webdev | `ok` | 128 |
-| openrouter_routes | `ok` | 169 |
+| openrouter_routes | `ok` | 170 |
 
 ## 🆓 Mejor opción gratuita puntuada
 
@@ -40,7 +40,7 @@ _115 ruta(s) con precio `unknown` (0/0 sin señal explícita de gratis) — no e
 | Uso | Fuente | Modelo | Proveedor/ruta | Coste estimado | $/M input | $/M output | Calidad |
 |---|---|---|---|---:|---:|---:|---:|
 | 💻 Coding | Aider Polyglot Leaderboard | **o3** | OpenRouter | $0.10800 | $2.0000 | $8.0000 | 7.7/10 |
-| 💻 Coding | LMArena WebDev Arena | **qwen3.8-max** | CheaperInference | $0.08400 | $1.7500 | $5.2500 | 9.0/10 |
+| 💻 Coding | LMArena WebDev Arena | **qwen3.8-max** | CheaperInference | $0.10200 | $2.1250 | $6.3750 | 9.0/10 |
 
 _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin benchmark automatizado todavía)._
 
@@ -66,7 +66,7 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 | **deepseek-v3.1** | **Novita AI** | $0.01537 | $0.2700 | $1.0000 | Together AI ($0.03068) | **49.9%** |
 | **gpt-oss-20b** | **OpenRouter** | $0.00118 | $0.0180 | $0.0900 | Novita AI ($0.00229) | **48.5%** |
 | **glm-4.5** | **CheaperInference** | $0.01870 | $0.3300 | $1.2100 | OpenRouter ($0.03400) | **45.0%** |
-| **qwen3-coder-next** | **OpenRouter** | $0.00919 | $0.1200 | $0.8000 | Novita AI ($0.01643) | **44.0%** |
+| **deepseek-v4-pro** | **CheaperInference** | $0.02413 | $0.4620 | $1.3860 | OpenRouter ($0.04355) | **44.6%** |
 
 ## 🏆 Top 5 de pago por calidad/precio (por fuente)
 
@@ -86,29 +86,29 @@ _Próximamente: 🤖 Agentic coding · 🧠 Razonamiento · ⚡ General (sin ben
 
 ## 🔥 Bajadas reales de precio (vs ayer)
 
-- **deepseek-flash** vía **OpenRouter** — **-66.7%** (ahora \$0.0400 in / \$0.6400 out)
 - **gpt-luna** vía **OpenRouter** — **-58.3%** (ahora \$0.1000 in / \$0.5000 out)
 - **qwen3.8-27b** vía **CheaperInference** — **-49.6%** (ahora \$0.1498 in / \$1.7850 out)
+- **deepseek-v4-pro-0813** vía **OpenRouter** — **-48.1%** (ahora \$0.4987 in / \$1.4961 out)
+- **deepseek-v4-flash** vía **OpenRouter** — **-45.0%** (ahora \$0.0380 in / \$0.5500 out)
 - **gpt-oss-20b** vía **OpenRouter** — **-40.0%** (ahora \$0.0180 in / \$0.0900 out)
-- **deepseek-v4-pro-0813** vía **OpenRouter → Wafer** — **-35.0%** (ahora \$0.4550 in / \$2.9000 out)
-- **deepseek-v4-pro-0813** vía **OpenRouter → StreamLake** — **-30.9%** (ahora \$0.4620 in / \$1.3860 out)
+- **deepseek-v4-pro-0813** vía **OpenRouter → Baidu (baidu/fp8)** — **-35.8%** (ahora \$0.4000 in / \$1.1999 out)
 - **kimi-k3** vía **OpenRouter → Sail Research (sail-research/fp4)** — **-30.1%** (ahora \$1.4989 in / \$10.7580 out)
 - **qwen3-6-35b-a3b** vía **CheaperInference** — **-28.6%** (ahora \$0.0700 in / \$0.7000 out)
+- **deepseek-v4-pro-0813** vía **OpenRouter → Wafer** — **-28.6%** (ahora \$0.5000 in / \$2.9000 out)
+- **deepseek-v4-pro-0813** vía **OpenRouter → StreamLake** — **-25.8%** (ahora \$0.4963 in / \$1.4890 out)
 - **glm-5.3-flash:batch** vía **OpenRouter** — **-20.0%** (ahora \$0.0600 in / \$0.2000 out)
-- **deepseek-v4-flash** vía **OpenRouter** — **-20.0%** (ahora \$0.0300 in / \$0.8000 out)
 - **claude-opus** vía **OpenRouter** — **-20.0%** (ahora \$4.0000 in / \$20.0000 out)
-- **aion-labs.aion-2-0** vía **CheaperInference** — **-20.0%** (ahora \$0.5600 in / \$1.1200 out)
 
 ### Subidas
 
-- **deepseek-v4-flash** vía **CheaperInference** — +404.3% (ahora \$0.1800 in / \$0.7200 out)
 - **deepseek-v4-flash-0731** vía **OpenRouter → Baidu (baidu/fp8)** — +340.5% (ahora \$0.4400 in / \$1.3200 out)
+- **deepseek-v4-flash-0731** vía **OpenRouter → OpenInference (open-inference/fp8)** — +233.3% (ahora \$0.1000 in / \$1.0000 out)
+- **deepseek-v4-flash** vía **CheaperInference** — +152.1% (ahora \$0.0900 in / \$0.3600 out)
 - **gpt-5.6-luna** vía **CheaperInference** — +112.5% (ahora \$0.1700 in / \$1.0200 out)
 - **gpt-oss-120b** vía **CheaperInference** — +112.5% (ahora \$0.0850 in / \$0.4250 out)
-- **deepseek-v4-pro-0813** vía **OpenRouter → Baidu (baidu/fp8)** — +111.9% (ahora \$1.3200 in / \$3.9600 out)
-- **deepseek-v4-pro-0813** vía **OpenRouter** — +111.5% (ahora \$1.3200 in / \$3.9600 out)
-- **deepseek-v4.1-flash** vía **CheaperInference** — +111.0% (ahora \$0.2550 in / \$1.0200 out)
-- **deepseek-v4.1-flash** vía **OpenRouter** — +100.0% (ahora \$0.3000 in / \$1.2000 out)
+- **deepseek-v4-flash-0731** vía **OpenRouter → Inceptron (inceptron/fp4)** — +104.3% (ahora \$0.0908 in / \$0.6128 out)
+- **glm-5.3-flash** vía **OpenRouter → Cloudflare** — +100.0% (ahora \$0.3000 in / \$1.0000 out)
+- **qwen3.8-27b** vía **OpenRouter → Wafer** — +76.0% (ahora \$0.0990 in / \$4.4000 out)
 
 ## 🧪 Notas
 
