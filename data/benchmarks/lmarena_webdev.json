@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-19T14:43:19.486642+00:00",
+  "captured_at": "2026-10-21T12:58:07.161639+00:00",
   "entries": [
     {
       "model": "Claude Opus 5.5 (Max)",
@@ -9,7 +9,7 @@
         "5"
       ],
       "text_key": "claudeopusmax",
-      "raw": 1806.1951256724408,
+      "raw": 1807.3060564856307,
       "raw_unit": "Elo",
       "n_cases": null
     },
@@ -20,7 +20,7 @@
         "6"
       ],
       "text_key": "gptastramax",
-      "raw": 1775.652262790731,
+      "raw": 1773.7830236243688,
       "raw_unit": "Elo",
       "n_cases": null
     },
@@ -32,7 +32,7 @@
         "5"
       ],
       "text_key": "claudesonnetxhigh",
-      "raw": 1767.8459284869168,
+      "raw": 1768.3254240087845,
       "raw_unit": "Elo",
       "n_cases": null
     },
@@ -44,95 +44,104 @@
         "1"
       ],
       "text_key": "gptsolmax",
-      "raw": 1754.3426826713885,
+      "raw": 1753.0824878249728,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Fable 5.1 (Max)",
-      "score": 9.903624687393656,
+      "score": 9.908802139002098,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "claudefablemax",
-      "raw": 1742.2899749914925,
+      "raw": 1742.7041711201678,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "Muse Wonder Full (Max)",
+      "score": 9.699933008012732,
+      "numeric": [],
+      "text_key": "musewonderfullmax",
+      "raw": 1725.9946406410186,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Sonnet 5.5 (High)",
-      "score": 9.49083376408432,
+      "score": 9.499829788558085,
       "numeric": [
         "5",
         "5"
       ],
       "text_key": "claudesonnethigh",
-      "raw": 1709.2667011267456,
+      "raw": 1709.9863830846468,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 5 (Max)",
-      "score": 9.245338405276934,
+      "score": 9.235694209211303,
       "numeric": [
         "5"
       ],
       "text_key": "claudeopusmax",
-      "raw": 1689.6270724221547,
+      "raw": 1688.8555367369042,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-6 Sol (Max)",
-      "score": 9.154503978455551,
+      "score": 9.163223319290788,
       "numeric": [
         "6"
       ],
       "text_key": "gptsolmax",
-      "raw": 1682.360318276444,
+      "raw": 1683.057865543263,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 4 Argon (High)",
-      "score": 9.10177753714602,
+      "score": 9.103239823734015,
       "numeric": [
         "4"
       ],
       "text_key": "geminiargonhigh",
-      "raw": 1678.1422029716816,
+      "raw": 1678.2591858987212,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.8-Max (0902)",
-      "score": 9.050507779014506,
+      "score": 9.05358687926396,
       "numeric": [
         "3",
         "8",
         "0902"
       ],
       "text_key": "qwenmax",
-      "raw": 1674.0406223211605,
+      "raw": 1674.2869503411168,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.8-Max",
-      "score": 9.032818084686912,
+      "score": 9.027784086592234,
       "numeric": [
         "3",
         "8"
       ],
       "text_key": "qwenmax",
-      "raw": 1672.625446774953,
+      "raw": 1672.2227269273787,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4.1-Flash-20261017 (Max)",
-      "score": 9.005324581570619,
+      "score": 8.929185373248956,
       "numeric": [
         "4",
         "1",
@@ -141,150 +150,150 @@
         "17"
       ],
       "text_key": "deepseekvflashmax",
-      "raw": 1670.4259665256495,
+      "raw": 1664.3348298599165,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Spark 1.3 (Max)",
-      "score": 8.863083690499034,
+      "score": 8.865723654569768,
       "numeric": [
         "1",
         "3"
       ],
       "text_key": "musesparkmax",
-      "raw": 1659.0466952399227,
+      "raw": 1659.2578923655815,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 5 (High)",
-      "score": 8.848787387927505,
+      "score": 8.857168328804534,
       "numeric": [
         "5"
       ],
       "text_key": "claudeopushigh",
-      "raw": 1657.9029910342003,
+      "raw": 1658.5734663043627,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K3 (Max)",
-      "score": 8.807281486778317,
+      "score": 8.816090166564967,
       "numeric": [
         "3"
       ],
       "text_key": "kimikmax",
-      "raw": 1654.5825189422653,
+      "raw": 1655.2872133251974,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Wonder (Max)",
-      "score": 8.753700189112708,
+      "score": 8.768857230697812,
       "numeric": [],
       "text_key": "musewondermax",
-      "raw": 1650.2960151290167,
+      "raw": 1651.5085784558248,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.7 (xHigh)",
-      "score": 8.602097378846466,
+      "score": 8.587219939423175,
       "numeric": [
         "4",
         "7"
       ],
       "text_key": "grokxhigh",
-      "raw": 1638.1677903077173,
+      "raw": 1636.977595153854,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2.6-Flash",
-      "score": 8.540888517427797,
+      "score": 8.545400177778301,
       "numeric": [
         "2",
         "6"
       ],
       "text_key": "mimovflash",
-      "raw": 1633.2710813942238,
+      "raw": 1633.6320142222642,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Hy4 preview",
-      "score": 8.508839837613543,
+      "score": 8.512185699673665,
       "numeric": [
         "4"
       ],
       "text_key": "hypreview",
-      "raw": 1630.7071870090833,
+      "raw": 1630.9748559738932,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.8-Flash-Next",
-      "score": 8.487264864701329,
+      "score": 8.48257393211956,
       "numeric": [
         "3",
         "8"
       ],
       "text_key": "qwenflashnext",
-      "raw": 1628.9811891761062,
+      "raw": 1628.605914569565,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2.6-Pro",
-      "score": 8.44625337680286,
+      "score": 8.437340092546373,
       "numeric": [
         "2",
         "6"
       ],
       "text_key": "mimovpro",
-      "raw": 1625.7002701442289,
+      "raw": 1624.9872074037098,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Fable 5 (High)",
-      "score": 8.43121252512156,
+      "score": 8.428498816740674,
       "numeric": [
         "5"
       ],
       "text_key": "claudefablehigh",
-      "raw": 1624.4970020097248,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "GLM-5.3 (Max)",
-      "score": 8.39509079425206,
-      "numeric": [
-        "5",
-        "3"
-      ],
-      "text_key": "glmmax",
-      "raw": 1621.6072635401647,
+      "raw": 1624.279905339254,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Spark 1.3 (xHigh)",
-      "score": 8.38966418631874,
+      "score": 8.392671289471554,
       "numeric": [
         "1",
         "3"
       ],
       "text_key": "musesparkxhigh",
-      "raw": 1621.1731349054992,
+      "raw": 1621.4137031577243,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "GLM-5.3 (Max)",
+      "score": 8.38987619083899,
+      "numeric": [
+        "5",
+        "3"
+      ],
+      "text_key": "glmmax",
+      "raw": 1621.1900952671192,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4.1-Flash-20260910 (Max)",
-      "score": 8.35834824611448,
+      "score": 8.354304472862358,
       "numeric": [
         "4",
         "1",
@@ -293,121 +302,122 @@
         "10"
       ],
       "text_key": "deepseekvflashmax",
-      "raw": 1618.6678596891584,
+      "raw": 1618.3443578289887,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.6 (High)",
-      "score": 8.337945340951507,
+      "score": 8.332999066502445,
       "numeric": [
         "4",
         "6"
       ],
       "text_key": "grokhigh",
-      "raw": 1617.0356272761205,
+      "raw": 1616.6399253201955,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.6 Sol (xHigh, Codex Harness)",
-      "score": 8.32943147903502,
+      "score": 8.320303047538523,
       "numeric": [
         "5",
         "6"
       ],
       "text_key": "gptsolxhighcodexharness",
-      "raw": 1616.3545183228016,
+      "raw": 1615.624243803082,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-5.3-Flash",
-      "score": 8.210701876714584,
+      "score": 8.210390772102935,
       "numeric": [
         "5",
         "3"
       ],
       "text_key": "glmflash",
-      "raw": 1606.8561501371667,
+      "raw": 1606.8312617682348,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-5.2 (Max)",
-      "score": 8.179039385441808,
+      "score": 8.177702746712686,
       "numeric": [
         "5",
         "2"
       ],
       "text_key": "glmmax",
-      "raw": 1604.3231508353447,
+      "raw": 1604.2162197370149,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.8-27B",
-      "score": 8.025406717745568,
+      "score": 8.034525802239735,
       "numeric": [
         "3",
         "8",
         "27"
       ],
       "text_key": "qwenb",
-      "raw": 1592.0325374196455,
+      "raw": 1592.7620641791787,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.7 Flash (High)",
-      "score": 8.001290566182988,
+      "score": 8.009717673574249,
       "numeric": [
         "3",
         "7"
       ],
       "text_key": "geminiflashhigh",
-      "raw": 1590.103245294639,
+      "raw": 1590.77741388594,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "MiniMax-M3.1-Flash",
+      "score": 7.968458473885659,
+      "numeric": [
+        "3",
+        "1"
+      ],
+      "text_key": "minimaxmflash",
+      "raw": 1587.4766779108527,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Haiku 5.5 (High)",
-      "score": 7.949884914350528,
+      "score": 7.951935171063187,
       "numeric": [
         "5",
         "5"
       ],
       "text_key": "claudehaikuhigh",
-      "raw": 1585.9907931480423,
+      "raw": 1586.154813685055,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.8 Flash (High)",
-      "score": 7.946382842946155,
+      "score": 7.933696058402839,
       "numeric": [
         "3",
         "8"
       ],
       "text_key": "geminiflashhigh",
-      "raw": 1585.7106274356925,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "DeepSeek-V4-Flash (High)",
-      "score": 7.903775034901318,
-      "numeric": [
-        "4"
-      ],
-      "text_key": "deepseekvflashhigh",
-      "raw": 1582.3020027921054,
+      "raw": 1584.6956846722271,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4-Pro (High, 20260813)",
-      "score": 7.902957389202385,
+      "score": 7.9047225655601805,
       "numeric": [
         "4",
         "2026",
@@ -415,234 +425,245 @@
         "13"
       ],
       "text_key": "deepseekvprohigh",
-      "raw": 1582.2365911361908,
+      "raw": 1582.3778052448145,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "DeepSeek-V4-Flash (High)",
+      "score": 7.9012035844650965,
+      "numeric": [
+        "4"
+      ],
+      "text_key": "deepseekvflashhigh",
+      "raw": 1582.0962867572077,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-6 Luna (Max)",
-      "score": 7.832231796607081,
+      "score": 7.84750876717384,
       "numeric": [
         "6"
       ],
       "text_key": "gptlunamax",
-      "raw": 1576.5785437285665,
+      "raw": 1577.8007013739073,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Step 5 Preview (High)",
-      "score": 7.693658111860634,
+      "score": 7.710377015351676,
       "numeric": [
         "5"
       ],
       "text_key": "steppreviewhigh",
-      "raw": 1565.4926489488507,
+      "raw": 1566.830161228134,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.7 (High)",
-      "score": 7.597895718777812,
+      "score": 7.5984338317487214,
       "numeric": [
         "4",
         "7"
       ],
       "text_key": "claudeopushigh",
-      "raw": 1557.831657502225,
+      "raw": 1557.8747065398977,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.8 (High)",
-      "score": 7.574206967141981,
+      "score": 7.573522934787823,
       "numeric": [
         "4",
         "8"
       ],
       "text_key": "claudeopushigh",
-      "raw": 1555.9365573713585,
+      "raw": 1555.8818347830259,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.7",
-      "score": 7.573132560512863,
+      "score": 7.570842766633907,
       "numeric": [
         "4",
         "7"
       ],
       "text_key": "claudeopus",
-      "raw": 1555.850604841029,
+      "raw": 1555.6674213307126,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.5",
-      "score": 7.537343976015697,
+      "score": 7.5371003680499005,
       "numeric": [
         "4",
         "5"
       ],
       "text_key": "grok",
-      "raw": 1552.9875180812558,
+      "raw": 1552.968029443992,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.6 (High)",
-      "score": 7.457752513071262,
+      "score": 7.456938968410512,
       "numeric": [
         "4",
         "6"
       ],
       "text_key": "claudeopushigh",
-      "raw": 1546.620201045701,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "Muse Spark 1.1",
-      "score": 7.407192127199118,
-      "numeric": [
-        "1",
-        "1"
-      ],
-      "text_key": "musespark",
-      "raw": 1542.5753701759295,
+      "raw": 1546.555117472841,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Mistral Large 4",
-      "score": 7.402694871248702,
+      "score": 7.406548711476267,
       "numeric": [
         "4"
       ],
       "text_key": "mistrallarge",
-      "raw": 1542.215589699896,
+      "raw": 1542.5238969181014,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "Muse Spark 1.1",
+      "score": 7.405074777253756,
+      "numeric": [
+        "1",
+        "1"
+      ],
+      "text_key": "musespark",
+      "raw": 1542.4059821803005,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Sonnet 5 (High)",
-      "score": 7.38313929564192,
+      "score": 7.380110902236692,
       "numeric": [
         "5"
       ],
       "text_key": "claudesonnethigh",
-      "raw": 1540.6511436513536,
+      "raw": 1540.4088721789353,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.6 Flash (High)",
-      "score": 7.351251540366448,
+      "score": 7.350664589121417,
       "numeric": [
         "3",
         "6"
       ],
       "text_key": "geminiflashhigh",
-      "raw": 1538.1001232293158,
+      "raw": 1538.0531671297133,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.6",
-      "score": 7.343509489883684,
+      "score": 7.342558898379698,
       "numeric": [
         "4",
         "6"
       ],
       "text_key": "claudeopus",
-      "raw": 1537.4807591906947,
+      "raw": 1537.4047118703759,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.8",
-      "score": 7.324716051213429,
+      "score": 7.322525806401988,
       "numeric": [
         "4",
         "8"
       ],
       "text_key": "claudeopus",
-      "raw": 1535.9772840970743,
+      "raw": 1535.802064512159,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Spark 1.2 (xHigh)",
-      "score": 7.297468068085843,
+      "score": 7.297986812709092,
       "numeric": [
         "1",
         "2"
       ],
       "text_key": "musesparkxhigh",
-      "raw": 1533.7974454468674,
+      "raw": 1533.8389450167274,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Spark Open (Max)",
-      "score": 7.174262266393544,
+      "score": 7.226173626834427,
       "numeric": [],
       "text_key": "musesparkopenmax",
-      "raw": 1523.9409813114835,
+      "raw": 1528.0938901467541,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Sonnet 4.6",
-      "score": 7.1628224894418,
+      "score": 7.162008504255212,
       "numeric": [
         "4",
         "6"
       ],
       "text_key": "claudesonnet",
-      "raw": 1523.025799155344,
+      "raw": 1522.960680340417,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.6 Terra (xHigh, Codex Harness)",
-      "score": 7.147052917392961,
+      "score": 7.146151641956436,
       "numeric": [
         "5",
         "6"
       ],
       "text_key": "gptterraxhighcodexharness",
-      "raw": 1521.7642333914368,
+      "raw": 1521.692131356515,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Seed2.1 Pro Preview",
-      "score": 7.125520757844353,
+      "score": 7.12745847009046,
       "numeric": [
         "2",
         "1"
       ],
       "text_key": "seedpropreview",
-      "raw": 1520.0416606275483,
+      "raw": 1520.1966776072368,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.6 Luna (xHigh, Codex Harness)",
-      "score": 7.107646274986829,
+      "score": 7.103679558094558,
       "numeric": [
         "5",
         "6"
       ],
       "text_key": "gptlunaxhighcodexharness",
-      "raw": 1518.6117019989463,
+      "raw": 1518.2943646475646,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.7-Max (20260517)",
-      "score": 7.070491991054041,
+      "score": 7.068643174306786,
       "numeric": [
         "3",
         "7",
@@ -651,72 +672,72 @@
         "17"
       ],
       "text_key": "qwenmax",
-      "raw": 1515.6393592843233,
+      "raw": 1515.4914539445429,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.5 (xHigh, Codex Harness)",
-      "score": 7.032396243930188,
+      "score": 7.032079272947922,
       "numeric": [
         "5",
         "5"
       ],
       "text_key": "gptxhighcodexharness",
-      "raw": 1512.591699514415,
+      "raw": 1512.5663418358338,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K2.6",
-      "score": 6.994912292037219,
+      "score": 6.993469939327417,
       "numeric": [
         "2",
         "6"
       ],
       "text_key": "kimik",
-      "raw": 1509.5929833629775,
+      "raw": 1509.4775951461934,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-5.1",
-      "score": 6.976244817644605,
+      "score": 6.9767196169893815,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "glm",
-      "raw": 1508.0995854115683,
+      "raw": 1508.1375693591506,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Hy3",
-      "score": 6.957444552058629,
+      "score": 6.963798855778314,
       "numeric": [
         "3"
       ],
       "text_key": "hy",
-      "raw": 1506.5955641646904,
+      "raw": 1507.103908462265,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.5 Flash (High)",
-      "score": 6.868259353699667,
+      "score": 6.867905718317635,
       "numeric": [
         "3",
         "5"
       ],
       "text_key": "geminiflashhigh",
-      "raw": 1499.4607482959734,
+      "raw": 1499.4324574654108,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.5 (High, 32K, 20251101)",
-      "score": 6.797422407688041,
+      "score": 6.796672108251613,
       "numeric": [
         "4",
         "5",
@@ -726,84 +747,84 @@
         "01"
       ],
       "text_key": "claudeopushighk",
-      "raw": 1493.7937926150432,
+      "raw": 1493.733768660129,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.5 Flash (Medium)",
-      "score": 6.765273405982208,
+      "score": 6.7627332686435695,
       "numeric": [
         "3",
         "5"
       ],
       "text_key": "geminiflashmedium",
-      "raw": 1491.2218724785766,
+      "raw": 1491.0186614914855,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.5 (High, Codex Harness)",
-      "score": 6.714683997066322,
+      "score": 6.711447885857476,
       "numeric": [
         "5",
         "5"
       ],
       "text_key": "gpthighcodexharness",
-      "raw": 1487.1747197653058,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "Qwen3.6-Max-Preview",
-      "score": 6.656167091916945,
-      "numeric": [
-        "3",
-        "6"
-      ],
-      "text_key": "qwenmaxpreview",
-      "raw": 1482.4933673533556,
+      "raw": 1486.915830868598,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiniMax-M3",
-      "score": 6.653530772183974,
+      "score": 6.654587914802537,
       "numeric": [
         "3"
       ],
       "text_key": "minimaxm",
-      "raw": 1482.2824617747178,
+      "raw": 1482.367033184203,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "Qwen3.6-Max-Preview",
+      "score": 6.65423986631836,
+      "numeric": [
+        "3",
+        "6"
+      ],
+      "text_key": "qwenmaxpreview",
+      "raw": 1482.3391893054688,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2.5-Pro",
-      "score": 6.6344889216375655,
+      "score": 6.628281714922423,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "mimovpro",
-      "raw": 1480.7591137310053,
+      "raw": 1480.2625371937938,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K2.7 Code",
-      "score": 6.545442451542578,
+      "score": 6.545371770299698,
       "numeric": [
         "2",
         "7"
       ],
       "text_key": "kimikcode",
-      "raw": 1473.6353961234063,
+      "raw": 1473.6297416239759,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.5 (20251101)",
-      "score": 6.492928107702852,
+      "score": 6.491876696185517,
       "numeric": [
         "4",
         "5",
@@ -812,129 +833,129 @@
         "01"
       ],
       "text_key": "claudeopus",
-      "raw": 1469.4342486162282,
+      "raw": 1469.3501356948414,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4-Pro Preview (High)",
-      "score": 6.432104180616552,
+      "score": 6.432354380178009,
       "numeric": [
         "4"
       ],
       "text_key": "deepseekvpropreviewhigh",
-      "raw": 1464.568334449324,
+      "raw": 1464.5883504142407,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.4 (High, Codex Harness)",
-      "score": 6.424453358808395,
+      "score": 6.424206112077263,
       "numeric": [
         "5",
         "4"
       ],
       "text_key": "gpthighcodexharness",
-      "raw": 1463.9562687046716,
+      "raw": 1463.936488966181,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.6-Plus",
-      "score": 6.395736770527258,
+      "score": 6.393606701398522,
       "numeric": [
         "3",
         "6"
       ],
       "text_key": "qwenplus",
-      "raw": 1461.6589416421807,
+      "raw": 1461.4885361118818,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.5 (Codex Harness)",
-      "score": 6.3247581560740285,
+      "score": 6.325703609167954,
       "numeric": [
         "5",
         "5"
       ],
       "text_key": "gptcodexharness",
-      "raw": 1455.9806524859223,
+      "raw": 1456.0562887334363,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4-Pro",
-      "score": 6.218147792916117,
+      "score": 6.21677603667554,
       "numeric": [
         "4"
       ],
       "text_key": "deepseekvpro",
-      "raw": 1447.4518234332893,
+      "raw": 1447.3420829340432,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.1 Pro Preview",
-      "score": 6.211566819656287,
+      "score": 6.211509213963151,
       "numeric": [
         "3",
         "1"
       ],
       "text_key": "geminipropreview",
-      "raw": 1446.925345572503,
+      "raw": 1446.920737117052,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.4 (Medium, Codex Harness)",
-      "score": 6.177928299350305,
+      "score": 6.177133955341287,
       "numeric": [
         "5",
         "4"
       ],
       "text_key": "gptmediumcodexharness",
-      "raw": 1444.2342639480244,
+      "raw": 1444.170716427303,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3 Pro",
-      "score": 6.129389827347853,
+      "score": 6.128499387075038,
       "numeric": [
         "3"
       ],
       "text_key": "geminipro",
-      "raw": 1440.3511861878283,
+      "raw": 1440.279950966003,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3 Flash",
-      "score": 6.128641180575798,
+      "score": 6.125081228736644,
       "numeric": [
         "3"
       ],
       "text_key": "geminiflash",
-      "raw": 1440.2912944460638,
+      "raw": 1440.0064982989315,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2.5",
-      "score": 6.106354304496159,
+      "score": 6.103979166556729,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "mimov",
-      "raw": 1438.5083443596927,
+      "raw": 1438.3183333245383,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "beam-1.0-501b-a23b",
-      "score": 6.085378389503944,
+      "score": 6.085718499439627,
       "numeric": [
         "1",
         "0",
@@ -942,170 +963,185 @@
         "23"
       ],
       "text_key": "beambab",
-      "raw": 1436.8302711603155,
+      "raw": 1436.8574799551702,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K2.5 (Thinking)",
-      "score": 6.084955548349217,
+      "score": 6.082994310414648,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "kimikthinking",
-      "raw": 1436.7964438679373,
+      "raw": 1436.6395448331718,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-5",
-      "score": 6.070038509006843,
+      "score": 6.067349618312582,
       "numeric": [
         "5"
       ],
       "text_key": "glm",
-      "raw": 1435.6030807205475,
+      "raw": 1435.3879694650066,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-4.7",
-      "score": 6.067436699263356,
+      "score": 6.06670652104757,
       "numeric": [
         "4",
         "7"
       ],
       "text_key": "glm",
-      "raw": 1435.3949359410685,
+      "raw": 1435.3365216838056,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.5 Flash-Lite",
-      "score": 6.0618146025610855,
+      "score": 6.061435750583507,
       "numeric": [
         "3",
         "5"
       ],
       "text_key": "geminiflashlite",
-      "raw": 1434.9451682048868,
+      "raw": 1434.9148600466806,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2-Pro",
-      "score": 6.05052512278697,
+      "score": 6.049641716610261,
       "numeric": [
         "2"
       ],
       "text_key": "mimovpro",
-      "raw": 1434.0420098229577,
+      "raw": 1433.971337328821,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V4-Flash Preview (High)",
-      "score": 6.013849873706843,
+      "score": 6.012181616616203,
       "numeric": [
         "4"
       ],
       "text_key": "deepseekvflashpreviewhigh",
-      "raw": 1431.1079898965475,
+      "raw": 1430.9745293292963,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5 (Medium)",
-      "score": 5.845153577263233,
+      "score": 5.844432396809509,
       "numeric": [
         "5"
       ],
       "text_key": "gptmedium",
-      "raw": 1417.6122861810586,
+      "raw": 1417.5545917447607,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.2",
-      "score": 5.835354183590877,
+      "score": 5.834847230223099,
       "numeric": [
         "5",
         "2"
       ],
       "text_key": "gpt",
-      "raw": 1416.8283346872702,
+      "raw": 1416.787778417848,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Inkling",
-      "score": 5.794206458907939,
+      "score": 5.799040926288603,
       "numeric": [],
       "text_key": "inkling",
-      "raw": 1413.5365167126351,
+      "raw": 1413.9232741030883,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Inkling-Small",
-      "score": 5.74392320915813,
+      "score": 5.7421859509878175,
       "numeric": [],
       "text_key": "inklingsmall",
-      "raw": 1409.5138567326503,
+      "raw": 1409.3748760790254,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.3-Codex (Codex Harness)",
-      "score": 5.708338956239089,
+      "score": 5.706978776693836,
       "numeric": [
         "5",
         "3"
       ],
       "text_key": "gptcodexcodexharness",
-      "raw": 1406.6671164991271,
+      "raw": 1406.558302135507,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K2.5 (Instant)",
-      "score": 5.69666328941818,
+      "score": 5.693614541191017,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "kimikinstant",
-      "raw": 1405.7330631534544,
+      "raw": 1405.4891632952813,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "NVIDIA-Nemotron-3.5-Super-VL-120B-A12B (NVFP4)",
+      "score": 5.672726906343718,
+      "numeric": [
+        "3",
+        "5",
+        "120",
+        "12",
+        "4"
+      ],
+      "text_key": "nvidianemotronsupervlbabnvfp",
+      "raw": 1403.8181525074974,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-5V-Turbo",
-      "score": 5.648540743637895,
+      "score": 5.6472916639995,
       "numeric": [
         "5"
       ],
       "text_key": "glmvturbo",
-      "raw": 1401.8832594910316,
+      "raw": 1401.78333311996,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.4",
-      "score": 5.639605023445274,
+      "score": 5.631787429938203,
       "numeric": [
         "5",
         "4"
       ],
       "text_key": "gpt",
-      "raw": 1401.1684018756218,
+      "raw": 1400.5429943950562,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.5-397B-A17B",
-      "score": 5.629965976421164,
+      "score": 5.630233570913577,
       "numeric": [
         "3",
         "5",
@@ -1113,49 +1149,49 @@
         "17"
       ],
       "text_key": "qwenbab",
-      "raw": 1400.3972781136931,
+      "raw": 1400.4186856730862,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiniMax-M2.7",
-      "score": 5.607599123709867,
+      "score": 5.606749541118678,
       "numeric": [
         "2",
         "7"
       ],
       "text_key": "minimaxm",
-      "raw": 1398.6079298967893,
+      "raw": 1398.5399632894942,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.4 mini (High)",
-      "score": 5.595957982878287,
+      "score": 5.593013801739758,
       "numeric": [
         "5",
         "4"
       ],
       "text_key": "gptminihigh",
-      "raw": 1397.676638630263,
+      "raw": 1397.4411041391807,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.1 (Medium)",
-      "score": 5.572938248789347,
+      "score": 5.5744414276317205,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "gptmedium",
-      "raw": 1395.8350599031478,
+      "raw": 1395.9553142105376,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Sonnet 4.5 (High, 32K, 20250929)",
-      "score": 5.547548457625132,
+      "score": 5.546600921784016,
       "numeric": [
         "4",
         "5",
@@ -1165,13 +1201,13 @@
         "29"
       ],
       "text_key": "claudesonnethighk",
-      "raw": 1393.8038766100105,
+      "raw": 1393.7280737427213,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Opus 4.1 (20250805)",
-      "score": 5.506304947286793,
+      "score": 5.503627180550756,
       "numeric": [
         "4",
         "1",
@@ -1180,25 +1216,25 @@
         "05"
       ],
       "text_key": "claudeopus",
-      "raw": 1390.5043957829434,
+      "raw": 1390.2901744440605,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiniMax-M2.5",
-      "score": 5.454359225233816,
+      "score": 5.45419900638363,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "minimaxm",
-      "raw": 1386.3487380187053,
+      "raw": 1386.3359205106904,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Sonnet 4.5 (20250929)",
-      "score": 5.439476395349999,
+      "score": 5.439126651957241,
       "numeric": [
         "4",
         "5",
@@ -1207,84 +1243,84 @@
         "29"
       ],
       "text_key": "claudesonnet",
-      "raw": 1385.158111628,
+      "raw": 1385.1301321565793,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3 Flash (Minimal)",
-      "score": 5.436843597624695,
+      "score": 5.435602687586464,
       "numeric": [
         "3"
       ],
       "text_key": "geminiflashminimal",
-      "raw": 1384.9474878099757,
+      "raw": 1384.8482150069171,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiniMax-M2.1 Preview",
-      "score": 5.428436523056069,
+      "score": 5.428755308201858,
       "numeric": [
         "2",
         "1"
       ],
       "text_key": "minimaxmpreview",
-      "raw": 1384.2749218444856,
+      "raw": 1384.3004246561486,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.20 Beta (Reasoning, 0309)",
-      "score": 5.3221438736084625,
+      "score": 5.319584315496035,
       "numeric": [
         "4",
         "20",
         "0309"
       ],
       "text_key": "grokbetareasoning",
-      "raw": 1375.771509888677,
+      "raw": 1375.5667452396829,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Solar Pro 4",
-      "score": 5.2596794404228175,
+      "score": 5.258453012971501,
       "numeric": [
         "4"
       ],
       "text_key": "solarpro",
-      "raw": 1370.7743552338254,
+      "raw": 1370.67624103772,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemma 4 31B",
-      "score": 5.224166849750699,
+      "score": 5.218024858846572,
       "numeric": [
         "4",
         "31"
       ],
       "text_key": "gemmab",
-      "raw": 1367.933347980056,
+      "raw": 1367.4419887077258,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V3.2 (Thinking)",
-      "score": 5.1571193103208826,
+      "score": 5.154896382124826,
       "numeric": [
         "3",
         "2"
       ],
       "text_key": "deepseekvthinking",
-      "raw": 1362.5695448256706,
+      "raw": 1362.3917105699861,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.5-122B-A10B",
-      "score": 5.132709786178173,
+      "score": 5.13221748519679,
       "numeric": [
         "3",
         "5",
@@ -1292,141 +1328,130 @@
         "10"
       ],
       "text_key": "qwenbab",
-      "raw": 1360.616782894254,
+      "raw": 1360.5773988157432,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemma 4 26B A4B",
-      "score": 5.120657580433595,
+      "score": 5.119490990139513,
       "numeric": [
         "4",
         "26",
         "4"
       ],
       "text_key": "gemmabab",
-      "raw": 1359.6526064346876,
+      "raw": 1359.559279211161,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.5-27B",
-      "score": 5.10459489640819,
+      "score": 5.103413539951436,
       "numeric": [
         "3",
         "5",
         "27"
       ],
       "text_key": "qwenb",
-      "raw": 1358.3675917126552,
+      "raw": 1358.2730831961148,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.3",
-      "score": 5.097454958881099,
+      "score": 5.095679791030725,
       "numeric": [
         "4",
         "3"
       ],
       "text_key": "grok",
-      "raw": 1357.796396710488,
+      "raw": 1357.654383282458,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Hy3 preview",
-      "score": 5.091562056484116,
+      "score": 5.086494654679106,
       "numeric": [
         "3"
       ],
       "text_key": "hypreview",
-      "raw": 1357.3249645187293,
+      "raw": 1356.9195723743285,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Muse Glimmer",
-      "score": 5.065343791868051,
+      "score": 5.0617598464770195,
       "numeric": [],
       "text_key": "museglimmer",
-      "raw": 1355.227503349444,
+      "raw": 1354.9407877181616,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Laguna M.1",
-      "score": 4.998001617566398,
+      "score": 4.998189380195828,
       "numeric": [
         "1"
       ],
       "text_key": "lagunam",
-      "raw": 1349.840129405312,
+      "raw": 1349.8551504156662,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.1",
-      "score": 4.897406374191485,
+      "score": 4.895834717704733,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "gpt",
-      "raw": 1341.7925099353188,
+      "raw": 1341.6667774163786,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GLM-4.6",
-      "score": 4.8900450597054625,
+      "score": 4.889293015113935,
       "numeric": [
         "4",
         "6"
       ],
       "text_key": "glm",
-      "raw": 1341.203604776437,
+      "raw": 1341.1434412091148,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.2-Codex",
-      "score": 4.8599034930734035,
+      "score": 4.859955391833432,
       "numeric": [
         "5",
         "2"
       ],
       "text_key": "gptcodex",
-      "raw": 1338.7922794458723,
+      "raw": 1338.7964313466746,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.1-Codex",
-      "score": 4.838297054232754,
+      "score": 4.840491827579638,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "gptcodex",
-      "raw": 1337.0637643386203,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "MiMo-V2-Flash (Non-Thinking)",
-      "score": 4.754918980585359,
-      "numeric": [
-        "2"
-      ],
-      "text_key": "mimovflashnonthinking",
-      "raw": 1330.3935184468287,
+      "raw": 1337.239346206371,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Claude Haiku 4.5 (20251001)",
-      "score": 4.754684133562222,
+      "score": 4.7546077143238845,
       "numeric": [
         "4",
         "5",
@@ -1435,129 +1460,140 @@
         "01"
       ],
       "text_key": "claudehaiku",
-      "raw": 1330.3747306849777,
+      "raw": 1330.3686171459108,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "MiMo-V2-Flash (Non-Thinking)",
+      "score": 4.753984671058655,
+      "numeric": [
+        "2"
+      ],
+      "text_key": "mimovflashnonthinking",
+      "raw": 1330.3187736846924,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V3.2",
-      "score": 4.69905524882937,
+      "score": 4.699985770214812,
       "numeric": [
         "3",
         "2"
       ],
       "text_key": "deepseekv",
-      "raw": 1325.9244199063496,
+      "raw": 1325.998861617185,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Kimi K2 Thinking Turbo",
-      "score": 4.651883941806145,
+      "score": 4.651870176895909,
       "numeric": [
         "2"
       ],
       "text_key": "kimikthinkingturbo",
-      "raw": 1322.1507153444916,
+      "raw": 1322.1496141516727,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Laguna XS.2",
-      "score": 4.406366006335287,
+      "score": 4.405178828601109,
       "numeric": [
         "2"
       ],
       "text_key": "lagunaxs",
-      "raw": 1302.509280506823,
+      "raw": 1302.4143062880887,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiniMax-M2",
-      "score": 4.338727809197297,
+      "score": 4.338302333522918,
       "numeric": [
         "2"
       ],
       "text_key": "minimaxm",
-      "raw": 1297.0982247357838,
+      "raw": 1297.0641866818335,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "MiMo-V2-Flash (Thinking)",
-      "score": 4.284503431222956,
+      "score": 4.283646822534334,
       "numeric": [
         "2"
       ],
       "text_key": "mimovflashthinking",
-      "raw": 1292.7602744978365,
+      "raw": 1292.6917458027467,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3-Coder-480B-A35B-Instruct",
-      "score": 4.059905071188297,
+      "score": 4.058651669857772,
       "numeric": [
         "3",
         "480",
         "35"
       ],
       "text_key": "qwencoderbabinstruct",
-      "raw": 1274.7924056950637,
+      "raw": 1274.6921335886218,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "DeepSeek-V3.2-Exp",
-      "score": 4.022017674787409,
+      "score": 4.021440339986131,
       "numeric": [
         "3",
         "2"
       ],
       "text_key": "deepseekvexp",
-      "raw": 1271.7614139829927,
+      "raw": 1271.7152271988905,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Mistral Medium 3.5",
-      "score": 3.928876599012023,
+      "score": 3.9260646464875664,
       "numeric": [
         "3",
         "5"
       ],
       "text_key": "mistralmedium",
-      "raw": 1264.3101279209618,
+      "raw": 1264.0851717190053,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 3.1 Flash-Lite Preview",
-      "score": 3.834756057575251,
+      "score": 3.8319367942892995,
       "numeric": [
         "3",
         "1"
       ],
       "text_key": "geminiflashlitepreview",
-      "raw": 1256.78048460602,
+      "raw": 1256.554943543144,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "KAT-Coder-Pro V1",
-      "score": 3.8247307879460326,
+      "score": 3.82433005806646,
       "numeric": [
         "1"
       ],
       "text_key": "katcoderprov",
-      "raw": 1255.9784630356826,
+      "raw": 1255.9464046453168,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Qwen3.5-35B-A3B",
-      "score": 3.8016195112939837,
+      "score": 3.800629660013945,
       "numeric": [
         "3",
         "5",
@@ -1565,155 +1601,155 @@
         "3"
       ],
       "text_key": "qwenbab",
-      "raw": 1254.1295609035187,
-      "raw_unit": "Elo",
-      "n_cases": null
-    },
-    {
-      "model": "Qwen3.5-Flash",
-      "score": 3.6717500514152164,
-      "numeric": [
-        "3",
-        "5"
-      ],
-      "text_key": "qwenflash",
-      "raw": 1243.7400041132173,
+      "raw": 1254.0503728011156,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "GPT-5.1-Codex-Mini",
-      "score": 3.6717348453341687,
+      "score": 3.671093250364848,
       "numeric": [
         "5",
         "1"
       ],
       "text_key": "gptcodexmini",
-      "raw": 1243.7387876267335,
+      "raw": 1243.6874600291878,
+      "raw_unit": "Elo",
+      "n_cases": null
+    },
+    {
+      "model": "Qwen3.5-Flash",
+      "score": 3.670734595827204,
+      "numeric": [
+        "3",
+        "5"
+      ],
+      "text_key": "qwenflash",
+      "raw": 1243.6587676661763,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.1 Fast (Reasoning)",
-      "score": 3.6505134530424725,
+      "score": 3.6500746203219108,
       "numeric": [
         "4",
         "1"
       ],
       "text_key": "grokfastreasoning",
-      "raw": 1242.0410762433978,
+      "raw": 1242.0059696257529,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Trinity Large Thinking",
-      "score": 3.599128098325406,
+      "score": 3.5978867001370847,
       "numeric": [],
       "text_key": "trinitylargethinking",
-      "raw": 1237.9302478660325,
+      "raw": 1237.8309360109668,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Mistral Large 3",
-      "score": 3.5058972997791416,
+      "score": 3.5059745694768796,
       "numeric": [
         "3"
       ],
       "text_key": "mistrallarge",
-      "raw": 1230.4717839823313,
+      "raw": 1230.4779655581503,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Gemini 2.5 Pro",
-      "score": 3.4554290030200407,
+      "score": 3.454000472981471,
       "numeric": [
         "2",
         "5"
       ],
       "text_key": "geminipro",
-      "raw": 1226.4343202416032,
+      "raw": 1226.3200378385177,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4.1 (Thinking)",
-      "score": 3.3080515125682926,
+      "score": 3.307503256448095,
       "numeric": [
         "4",
         "1"
       ],
       "text_key": "grokthinking",
-      "raw": 1214.6441210054634,
+      "raw": 1214.6002605158476,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Devstral 2",
-      "score": 3.082149621223795,
+      "score": 3.081405764690089,
       "numeric": [
         "2"
       ],
       "text_key": "devstral",
-      "raw": 1196.5719696979036,
+      "raw": 1196.5124611752071,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Granite 4.1 8B",
-      "score": 3.039277919128,
+      "score": 3.0359536509970866,
       "numeric": [
         "4",
         "1",
         "8"
       ],
       "text_key": "graniteb",
-      "raw": 1193.14223353024,
+      "raw": 1192.876292079767,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Mercury 2",
-      "score": 2.75779598127009,
+      "score": 2.756852309625944,
       "numeric": [
         "2"
       ],
       "text_key": "mercury",
-      "raw": 1170.6236785016072,
+      "raw": 1170.5481847700755,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok Code Fast 1",
-      "score": 2.705577557534343,
+      "score": 2.7048884555941126,
       "numeric": [
         "1"
       ],
       "text_key": "grokcodefast",
-      "raw": 1166.4462046027475,
+      "raw": 1166.391076447529,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Grok 4 Fast (Reasoning)",
-      "score": 2.621005639213845,
+      "score": 2.613281393022953,
       "numeric": [
         "4"
       ],
       "text_key": "grokfastreasoning",
-      "raw": 1159.6804511371076,
+      "raw": 1159.0625114418363,
       "raw_unit": "Elo",
       "n_cases": null
     },
     {
       "model": "Devstral Medium (2507)",
-      "score": 1.519524120596941,
+      "score": 1.5187285153800814,
       "numeric": [
         "2507"
       ],
       "text_key": "devstralmedium",
-      "raw": 1071.5619296477553,
+      "raw": 1071.4982812304065,
       "raw_unit": "Elo",
       "n_cases": null
     }
